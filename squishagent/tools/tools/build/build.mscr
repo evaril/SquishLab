@@ -1,0 +1,16 @@
+
+# Build the UKI with systemd-ukify, signing with the DB key
+LINUX_PATH="$BOOT_MOUNT/vmlinuz-arch-minux"
+INITRAMFS_PATH="$BOOT_MOUNT/initramfs-arch-minux.img"
+OUTPUT="$EFI_MOUNT/EFI/Linux/$UKI_NAME"
+
+
+ukify build \
+  --linux=/boot/vmlinuz-arch-minux \
+  --initrd=/boot/initramfs-arch-minu.img \
+  --cmdline="$(</etc/kernel/cmdline)" \
+  --secureboot-private-key /etc/secureboot/db.key \
+  --secureboot-certificate /etc/secureboot/db.crt \
+  --output /boot/EFI/Linux/linux.efi
+
+

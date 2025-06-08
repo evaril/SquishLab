@@ -1,0 +1,789 @@
+/sys/class/:
+total 0
+drwxr-xr-x 71 root root 0 May 29 17:59 .
+dr-xr-xr-x 13 root root 0 May 29 17:59 ..
+drwxr-xr-x  2 root root 0 May 29 17:59 accel
+drwxr-xr-x  2 root root 0 May 29 17:59 ata_device
+drwxr-xr-x  2 root root 0 May 29 17:59 ata_link
+drwxr-xr-x  2 root root 0 May 29 17:59 ata_port
+drwxr-xr-x  2 root root 0 May 29 17:59 backlight
+drwxr-xr-x  2 root root 0 May 29 17:59 bdi
+drwxr-xr-x  2 root root 0 May 29 17:59 block
+drwxr-xr-x  2 root root 0 May 29 17:59 bluetooth
+drwxr-xr-x  2 root root 0 May 29 17:59 bsg
+drwxr-xr-x  2 root root 0 May 29 17:59 cpuid
+drwxr-xr-x  2 root root 0 May 29 17:59 devcoredump
+drwxr-xr-x  2 root root 0 May 29 17:59 devfreq
+drwxr-xr-x  2 root root 0 May 29 17:59 devfreq-event
+drwxr-xr-x  2 root root 0 May 29 17:59 devlink
+drwxr-xr-x  2 root root 0 May 29 17:59 dma
+drwxr-xr-x  2 root root 0 May 29 17:59 dma_heap
+drwxr-xr-x  2 root root 0 May 29 17:59 dmi
+drwxr-xr-x  2 root root 0 May 29 17:59 drm
+drwxr-xr-x  2 root root 0 May 29 17:59 drm_dp_aux_dev
+drwxr-xr-x  2 root root 0 May 29 17:59 extcon
+drwxr-xr-x  2 root root 0 May 29 17:59 firmware
+drwxr-xr-x  2 root root 0 May 29 17:59 graphics
+drwxr-xr-x  2 root root 0 May 29 17:59 hidraw
+drwxr-xr-x  2 root root 0 May 29 17:59 hwmon
+drwxr-xr-x  2 root root 0 May 29 17:59 i2c-dev
+drwxr-xr-x  2 root root 0 May 29 17:59 ieee80211
+drwxr-xr-x  2 root root 0 May 29 17:59 input
+drwxr-xr-x  2 root root 0 May 29 17:59 intel_scu_ipc
+drwxr-xr-x  2 root root 0 May 29 17:59 iommu
+drwxr-xr-x  2 root root 0 May 29 17:59 leds
+drwxr-xr-x  2 root root 0 May 29 17:59 lirc
+drwxr-xr-x  2 root root 0 May 29 17:59 mdio_bus
+drwxr-xr-x  2 root root 0 May 29 17:59 mei
+drwxr-xr-x  2 root root 0 May 29 17:59 mem
+drwxr-xr-x  2 root root 0 May 29 17:59 misc
+drwxr-xr-x  2 root root 0 May 29 17:59 msr
+drwxr-xr-x  2 root root 0 May 29 17:59 net
+drwxr-xr-x  2 root root 0 May 29 17:59 nvme
+drwxr-xr-x  2 root root 0 May 29 17:59 nvme-generic
+drwxr-xr-x  2 root root 0 May 29 17:59 nvme-subsystem
+drwxr-xr-x  2 root root 0 May 29 17:59 pci_bus
+drwxr-xr-x  2 root root 0 May 29 17:59 phy
+drwxr-xr-x  2 root root 0 May 29 17:59 platform-profile
+drwxr-xr-x  2 root root 0 May 29 17:59 powercap
+drwxr-xr-x  2 root root 0 May 29 17:59 power_supply
+drwxr-xr-x  2 root root 0 May 29 17:59 pwm
+drwxr-xr-x  2 root root 0 May 29 17:59 rc
+drwxr-xr-x  2 root root 0 May 29 17:59 regulator
+drwxr-xr-x  2 root root 0 May 29 17:59 remoteproc
+drwxr-xr-x  2 root root 0 May 29 17:59 rfkill
+drwxr-xr-x  2 root root 0 May 29 17:59 rtc
+drwxr-xr-x  2 root root 0 May 29 17:59 scsi_device
+drwxr-xr-x  2 root root 0 May 29 17:59 scsi_disk
+drwxr-xr-x  2 root root 0 May 29 17:59 scsi_host
+drwxr-xr-x  2 root root 0 May 29 17:59 sound
+drwxr-xr-x  2 root root 0 May 29 17:59 spi_master
+drwxr-xr-x  2 root root 0 May 29 17:59 spi_slave
+drwxr-xr-x  2 root root 0 May 29 17:59 tee
+drwxr-xr-x  2 root root 0 May 29 17:59 thermal
+drwxr-xr-x  2 root root 0 May 29 17:59 tpm
+drwxr-xr-x  2 root root 0 May 29 17:59 tpmrm
+drwxr-xr-x  2 root root 0 May 29 17:59 tty
+drwxr-xr-x  2 root root 0 May 29 17:59 usbmisc
+drwxr-xr-x  2 root root 0 May 29 17:59 usb_role
+drwxr-xr-x  2 root root 0 May 29 17:59 vc
+drwxr-xr-x  2 root root 0 May 29 17:59 vtconsole
+drwxr-xr-x  2 root root 0 May 29 17:59 wakeup
+drwxr-xr-x  2 root root 0 May 29 17:59 watchdog
+drwxr-xr-x  2 root root 0 May 29 17:59 wmi_bus
+
+/sys/class/accel:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/ata_device:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/ata_link:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/ata_port:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/backlight:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel_backlight -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-eDP-1/intel_backlight
+
+/sys/class/bdi:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 0:55 -> ../../devices/virtual/bdi/0:55
+lrwxrwxrwx  1 root root 0 May 29 17:59 254:0 -> ../../devices/virtual/bdi/254:0
+lrwxrwxrwx  1 root root 0 May 29 17:59 254:1 -> ../../devices/virtual/bdi/254:1
+lrwxrwxrwx  1 root root 0 May 29 17:59 259:0 -> ../../devices/virtual/bdi/259:0
+
+/sys/class/block:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 dm-0 -> ../../devices/virtual/block/dm-0
+lrwxrwxrwx  1 root root 0 May 29 17:59 dm-1 -> ../../devices/virtual/block/dm-1
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvme0n1 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0/nvme0n1
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvme0n1p1 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0/nvme0n1/nvme0n1p1
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvme0n1p2 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0/nvme0n1/nvme0n1p2
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvme0n1p3 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0/nvme0n1/nvme0n1p3
+
+/sys/class/bluetooth:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 hci0 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-5/1-5:1.0/bluetooth/hci0
+
+/sys/class/bsg:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/cpuid:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 cpu0 -> ../../devices/virtual/cpuid/cpu0
+lrwxrwxrwx  1 root root 0 May 29 17:59 cpu1 -> ../../devices/virtual/cpuid/cpu1
+lrwxrwxrwx  1 root root 0 May 29 17:59 cpu2 -> ../../devices/virtual/cpuid/cpu2
+lrwxrwxrwx  1 root root 0 May 29 17:59 cpu3 -> ../../devices/virtual/cpuid/cpu3
+
+/sys/class/devcoredump:
+total 0
+drwxr-xr-x  2 root root    0 May 29 17:59 .
+drwxr-xr-x 71 root root    0 May 29 17:59 ..
+-rw-r--r--  1 root root 4096 May 29 17:59 disabled
+
+/sys/class/devfreq:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/devfreq-event:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/devlink:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 pci:0000:00:02.0--pci:0000:00:1f.3 -> ../../devices/virtual/devlink/pci:0000:00:02.0--pci:0000:00:1f.3
+lrwxrwxrwx  1 root root 0 May 29 17:59 platform:MSHW0008:00--wmi:F7CC25ED-D20B-404C-8903-0ED4359C18AE -> ../../devices/virtual/devlink/platform:MSHW0008:00--wmi:F7CC25ED-D20B-404C-8903-0ED4359C18AE
+lrwxrwxrwx  1 root root 0 May 29 17:59 platform:MSHW0091:00--acpi:ACPI0003:00 -> ../../devices/virtual/devlink/platform:MSHW0091:00--acpi:ACPI0003:00
+lrwxrwxrwx  1 root root 0 May 29 17:59 platform:MSHW0091:00--acpi:ACPI000E:00 -> ../../devices/virtual/devlink/platform:MSHW0091:00--acpi:ACPI000E:00
+lrwxrwxrwx  1 root root 0 May 29 17:59 platform:MSHW0091:00--acpi:INT3400:00 -> ../../devices/virtual/devlink/platform:MSHW0091:00--acpi:INT3400:00
+lrwxrwxrwx  1 root root 0 May 29 17:59 platform:MSHW0091:00--acpi:PNP0C0A:00 -> ../../devices/virtual/devlink/platform:MSHW0091:00--acpi:PNP0C0A:00
+lrwxrwxrwx  1 root root 0 May 29 17:59 serial:serial0-0--platform:MSHW0091:00 -> ../../devices/virtual/devlink/serial:serial0-0--platform:MSHW0091:00
+lrwxrwxrwx  1 root root 0 May 29 17:59 serial:serial0-0--platform:MSHW0111:00 -> ../../devices/virtual/devlink/serial:serial0-0--platform:MSHW0111:00
+
+/sys/class/dma:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 dma0chan0 -> ../../devices/pci0000:00/0000:00:15.0/dma/dma0chan0
+lrwxrwxrwx  1 root root 0 May 29 17:59 dma0chan1 -> ../../devices/pci0000:00/0000:00:15.0/dma/dma0chan1
+lrwxrwxrwx  1 root root 0 May 29 17:59 dma1chan0 -> ../../devices/pci0000:00/0000:00:15.1/dma/dma1chan0
+lrwxrwxrwx  1 root root 0 May 29 17:59 dma1chan1 -> ../../devices/pci0000:00/0000:00:15.1/dma/dma1chan1
+lrwxrwxrwx  1 root root 0 May 29 17:59 dma2chan0 -> ../../devices/pci0000:00/0000:00:1e.0/dma/dma2chan0
+lrwxrwxrwx  1 root root 0 May 29 17:59 dma2chan1 -> ../../devices/pci0000:00/0000:00:1e.0/dma/dma2chan1
+
+/sys/class/dma_heap:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 system -> ../../devices/virtual/dma_heap/system
+
+/sys/class/dmi:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 id -> ../../devices/virtual/dmi/id
+
+/sys/class/drm:
+total 0
+drwxr-xr-x  2 root root    0 May 29 17:59 .
+drwxr-xr-x 71 root root    0 May 29 17:59 ..
+lrwxrwxrwx  1 root root    0 May 29 17:59 card1 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1
+lrwxrwxrwx  1 root root    0 May 29 17:59 card1-DP-1 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-DP-1
+lrwxrwxrwx  1 root root    0 May 29 17:59 card1-DP-2 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-DP-2
+lrwxrwxrwx  1 root root    0 May 29 17:59 card1-eDP-1 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-eDP-1
+lrwxrwxrwx  1 root root    0 May 29 17:59 card1-HDMI-A-1 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-HDMI-A-1
+lrwxrwxrwx  1 root root    0 May 29 17:59 card1-HDMI-A-2 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-HDMI-A-2
+lrwxrwxrwx  1 root root    0 May 29 17:59 renderD128 -> ../../devices/pci0000:00/0000:00:02.0/drm/renderD128
+-r--r--r--  1 root root 4096 May 29 17:59 version
+
+/sys/class/drm_dp_aux_dev:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 drm_dp_aux0 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-eDP-1/drm_dp_aux0
+lrwxrwxrwx  1 root root 0 May 29 17:59 drm_dp_aux1 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-DP-1/drm_dp_aux1
+lrwxrwxrwx  1 root root 0 May 29 17:59 drm_dp_aux2 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-DP-2/drm_dp_aux2
+
+/sys/class/extcon:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/firmware:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/graphics:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 fb0 -> ../../devices/pci0000:00/0000:00:02.0/graphics/fb0
+lrwxrwxrwx  1 root root 0 May 29 17:59 fbcon -> ../../devices/virtual/graphics/fbcon
+
+/sys/class/hidraw:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 hidraw0 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/hidraw/hidraw0
+lrwxrwxrwx  1 root root 0 May 29 17:59 hidraw1 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-3/1-3.3/1-3.3:1.0/0003:045E:0904.0002/hidraw/hidraw1
+lrwxrwxrwx  1 root root 0 May 29 17:59 hidraw2 -> ../../devices/pci0000:00/0000:00:16.4/0000:00:16.4-3e8d0870-271a-4208-8eb5-9acb9402ae04/0000:045E:001F.0003/hidraw/hidraw2
+
+/sys/class/hwmon:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwmon0 -> ../../devices/platform/ACPI0003:00/power_supply/ADP1/hwmon0
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwmon1 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0/hwmon1
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwmon2 -> ../../devices/virtual/thermal/thermal_zone0/hwmon2
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwmon3 -> ../../devices/platform/coretemp.0/hwmon/hwmon3
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwmon4 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1/hwmon4
+
+/sys/class/i2c-dev:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-0 -> ../../devices/pci0000:00/0000:00:02.0/i2c-0/i2c-dev/i2c-0
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-1 -> ../../devices/pci0000:00/0000:00:02.0/i2c-1/i2c-dev/i2c-1
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-2 -> ../../devices/pci0000:00/0000:00:02.0/i2c-2/i2c-dev/i2c-2
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-3 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-eDP-1/i2c-3/i2c-dev/i2c-3
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-4 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-DP-1/i2c-4/i2c-dev/i2c-4
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-5 -> ../../devices/pci0000:00/0000:00:02.0/drm/card1/card1-DP-2/i2c-5/i2c-dev/i2c-5
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-6 -> ../../devices/pci0000:00/0000:00:15.0/i2c_designware.0/i2c-6/i2c-dev/i2c-6
+lrwxrwxrwx  1 root root 0 May 29 17:59 i2c-7 -> ../../devices/pci0000:00/0000:00:15.1/i2c_designware.1/i2c-7/i2c-dev/i2c-7
+
+/sys/class/ieee80211:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 phy0 -> ../../devices/pci0000:00/0000:00:1c.0/0000:01:00.0/ieee80211/phy0
+
+/sys/class/input:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 event0 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0D:00/input/input0/event0
+lrwxrwxrwx  1 root root 0 May 29 17:59 event1 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/LNXVIDEO:00/input/input9/event1
+lrwxrwxrwx  1 root root 0 May 29 17:59 event10 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input18/event10
+lrwxrwxrwx  1 root root 0 May 29 17:59 event11 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input19/event11
+lrwxrwxrwx  1 root root 0 May 29 17:59 event12 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input20/event12
+lrwxrwxrwx  1 root root 0 May 29 17:59 event13 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input21/event13
+lrwxrwxrwx  1 root root 0 May 29 17:59 event14 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input22/event14
+lrwxrwxrwx  1 root root 0 May 29 17:59 event15 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input23/event15
+lrwxrwxrwx  1 root root 0 May 29 17:59 event16 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input24/event16
+lrwxrwxrwx  1 root root 0 May 29 17:59 event17 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input25/event17
+lrwxrwxrwx  1 root root 0 May 29 17:59 event18 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input26/event18
+lrwxrwxrwx  1 root root 0 May 29 17:59 event19 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input27/event19
+lrwxrwxrwx  1 root root 0 May 29 17:59 event2 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input10/event2
+lrwxrwxrwx  1 root root 0 May 29 17:59 event20 -> ../../devices/platform/MSHW0040:00/gpio-keys.1.auto/input/input29/event20
+lrwxrwxrwx  1 root root 0 May 29 17:59 event21 -> ../../devices/platform/MSHW0040:00/gpio-keys.2.auto/input/input30/event21
+lrwxrwxrwx  1 root root 0 May 29 17:59 event22 -> ../../devices/pci0000:00/0000:00:16.4/0000:00:16.4-3e8d0870-271a-4208-8eb5-9acb9402ae04/0000:045E:001F.0003/input/input31/event22
+lrwxrwxrwx  1 root root 0 May 29 17:59 event23 -> ../../devices/pci0000:00/0000:00:16.4/0000:00:16.4-3e8d0870-271a-4208-8eb5-9acb9402ae04/0000:045E:001F.0003/input/input32/event23
+lrwxrwxrwx  1 root root 0 May 29 17:59 event24 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input33/event24
+lrwxrwxrwx  1 root root 0 May 29 17:59 event25 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input34/event25
+lrwxrwxrwx  1 root root 0 May 29 17:59 event26 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input35/event26
+lrwxrwxrwx  1 root root 0 May 29 17:59 event27 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input36/event27
+lrwxrwxrwx  1 root root 0 May 29 17:59 event28 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input37/event28
+lrwxrwxrwx  1 root root 0 May 29 17:59 event29 -> ../../devices/virtual/input/input38/event29
+lrwxrwxrwx  1 root root 0 May 29 17:59 event3 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input11/event3
+lrwxrwxrwx  1 root root 0 May 29 17:59 event30 -> ../../devices/virtual/input/input39/event30
+lrwxrwxrwx  1 root root 0 May 29 17:59 event4 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input12/event4
+lrwxrwxrwx  1 root root 0 May 29 17:59 event5 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input13/event5
+lrwxrwxrwx  1 root root 0 May 29 17:59 event6 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input14/event6
+lrwxrwxrwx  1 root root 0 May 29 17:59 event7 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input15/event7
+lrwxrwxrwx  1 root root 0 May 29 17:59 event8 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input16/event8
+lrwxrwxrwx  1 root root 0 May 29 17:59 event9 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input17/event9
+lrwxrwxrwx  1 root root 0 May 29 17:59 input0 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0D:00/input/input0
+lrwxrwxrwx  1 root root 0 May 29 17:59 input10 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input10
+lrwxrwxrwx  1 root root 0 May 29 17:59 input11 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input11
+lrwxrwxrwx  1 root root 0 May 29 17:59 input12 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input12
+lrwxrwxrwx  1 root root 0 May 29 17:59 input13 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input13
+lrwxrwxrwx  1 root root 0 May 29 17:59 input14 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input14
+lrwxrwxrwx  1 root root 0 May 29 17:59 input15 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input15
+lrwxrwxrwx  1 root root 0 May 29 17:59 input16 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input16
+lrwxrwxrwx  1 root root 0 May 29 17:59 input17 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input17
+lrwxrwxrwx  1 root root 0 May 29 17:59 input18 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input18
+lrwxrwxrwx  1 root root 0 May 29 17:59 input19 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input19
+lrwxrwxrwx  1 root root 0 May 29 17:59 input20 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input20
+lrwxrwxrwx  1 root root 0 May 29 17:59 input21 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input21
+lrwxrwxrwx  1 root root 0 May 29 17:59 input22 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input22
+lrwxrwxrwx  1 root root 0 May 29 17:59 input23 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input23
+lrwxrwxrwx  1 root root 0 May 29 17:59 input24 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input24
+lrwxrwxrwx  1 root root 0 May 29 17:59 input25 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input25
+lrwxrwxrwx  1 root root 0 May 29 17:59 input26 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input26
+lrwxrwxrwx  1 root root 0 May 29 17:59 input27 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input27
+lrwxrwxrwx  1 root root 0 May 29 17:59 input29 -> ../../devices/platform/MSHW0040:00/gpio-keys.1.auto/input/input29
+lrwxrwxrwx  1 root root 0 May 29 17:59 input30 -> ../../devices/platform/MSHW0040:00/gpio-keys.2.auto/input/input30
+lrwxrwxrwx  1 root root 0 May 29 17:59 input31 -> ../../devices/pci0000:00/0000:00:16.4/0000:00:16.4-3e8d0870-271a-4208-8eb5-9acb9402ae04/0000:045E:001F.0003/input/input31
+lrwxrwxrwx  1 root root 0 May 29 17:59 input32 -> ../../devices/pci0000:00/0000:00:16.4/0000:00:16.4-3e8d0870-271a-4208-8eb5-9acb9402ae04/0000:045E:001F.0003/input/input32
+lrwxrwxrwx  1 root root 0 May 29 17:59 input33 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input33
+lrwxrwxrwx  1 root root 0 May 29 17:59 input34 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input34
+lrwxrwxrwx  1 root root 0 May 29 17:59 input35 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input35
+lrwxrwxrwx  1 root root 0 May 29 17:59 input36 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input36
+lrwxrwxrwx  1 root root 0 May 29 17:59 input37 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/input37
+lrwxrwxrwx  1 root root 0 May 29 17:59 input38 -> ../../devices/virtual/input/input38
+lrwxrwxrwx  1 root root 0 May 29 17:59 input39 -> ../../devices/virtual/input/input39
+lrwxrwxrwx  1 root root 0 May 29 17:59 input9 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/LNXVIDEO:00/input/input9
+lrwxrwxrwx  1 root root 0 May 29 17:59 mice -> ../../devices/virtual/input/mice
+lrwxrwxrwx  1 root root 0 May 29 17:59 mouse0 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input11/mouse0
+lrwxrwxrwx  1 root root 0 May 29 17:59 mouse1 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input14/mouse1
+lrwxrwxrwx  1 root root 0 May 29 17:59 mouse2 -> ../../devices/pci0000:00/0000:00:16.4/0000:00:16.4-3e8d0870-271a-4208-8eb5-9acb9402ae04/0000:045E:001F.0003/input/input31/mouse2
+lrwxrwxrwx  1 root root 0 May 29 17:59 mouse3 -> ../../devices/virtual/input/input38/mouse3
+lrwxrwxrwx  1 root root 0 May 29 17:59 mouse4 -> ../../devices/virtual/input/input39/mouse4
+
+/sys/class/intel_scu_ipc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/iommu:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 dmar0 -> ../../devices/virtual/iommu/dmar0
+lrwxrwxrwx  1 root root 0 May 29 17:59 dmar1 -> ../../devices/virtual/iommu/dmar1
+
+/sys/class/leds:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 input10::capslock -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input10/input10::capslock
+lrwxrwxrwx  1 root root 0 May 29 17:59 input10::numlock -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input10/input10::numlock
+lrwxrwxrwx  1 root root 0 May 29 17:59 input10::scrolllock -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/0003:045E:09C0.0001/input/input10/input10::scrolllock
+
+/sys/class/lirc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/mdio_bus:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/mei:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 mei0 -> ../../devices/pci0000:00/0000:00:16.0/mei/mei0
+lrwxrwxrwx  1 root root 0 May 29 17:59 mei1 -> ../../devices/pci0000:00/0000:00:16.4/mei/mei1
+
+/sys/class/mem:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 full -> ../../devices/virtual/mem/full
+lrwxrwxrwx  1 root root 0 May 29 17:59 kmsg -> ../../devices/virtual/mem/kmsg
+lrwxrwxrwx  1 root root 0 May 29 17:59 mem -> ../../devices/virtual/mem/mem
+lrwxrwxrwx  1 root root 0 May 29 17:59 null -> ../../devices/virtual/mem/null
+lrwxrwxrwx  1 root root 0 May 29 17:59 port -> ../../devices/virtual/mem/port
+lrwxrwxrwx  1 root root 0 May 29 17:59 random -> ../../devices/virtual/mem/random
+lrwxrwxrwx  1 root root 0 May 29 17:59 urandom -> ../../devices/virtual/mem/urandom
+lrwxrwxrwx  1 root root 0 May 29 17:59 zero -> ../../devices/virtual/mem/zero
+
+/sys/class/misc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 autofs -> ../../devices/virtual/misc/autofs
+lrwxrwxrwx  1 root root 0 May 29 17:59 cpu_dma_latency -> ../../devices/virtual/misc/cpu_dma_latency
+lrwxrwxrwx  1 root root 0 May 29 17:59 device-mapper -> ../../devices/virtual/misc/device-mapper
+lrwxrwxrwx  1 root root 0 May 29 17:59 fuse -> ../../devices/virtual/misc/fuse
+lrwxrwxrwx  1 root root 0 May 29 17:59 hpet -> ../../devices/virtual/misc/hpet
+lrwxrwxrwx  1 root root 0 May 29 17:59 hw_random -> ../../devices/virtual/misc/hw_random
+lrwxrwxrwx  1 root root 0 May 29 17:59 loop-control -> ../../devices/virtual/misc/loop-control
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvram -> ../../devices/virtual/misc/nvram
+lrwxrwxrwx  1 root root 0 May 29 17:59 psaux -> ../../devices/virtual/misc/psaux
+lrwxrwxrwx  1 root root 0 May 29 17:59 rfkill -> ../../devices/virtual/misc/rfkill
+lrwxrwxrwx  1 root root 0 May 29 17:59 snapshot -> ../../devices/virtual/misc/snapshot
+lrwxrwxrwx  1 root root 0 May 29 17:59 udmabuf -> ../../devices/virtual/misc/udmabuf
+lrwxrwxrwx  1 root root 0 May 29 17:59 uinput -> ../../devices/virtual/misc/uinput
+lrwxrwxrwx  1 root root 0 May 29 17:59 userfaultfd -> ../../devices/virtual/misc/userfaultfd
+lrwxrwxrwx  1 root root 0 May 29 17:59 vga_arbiter -> ../../devices/virtual/misc/vga_arbiter
+
+/sys/class/msr:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 msr0 -> ../../devices/virtual/msr/msr0
+lrwxrwxrwx  1 root root 0 May 29 17:59 msr1 -> ../../devices/virtual/msr/msr1
+lrwxrwxrwx  1 root root 0 May 29 17:59 msr2 -> ../../devices/virtual/msr/msr2
+lrwxrwxrwx  1 root root 0 May 29 17:59 msr3 -> ../../devices/virtual/msr/msr3
+
+/sys/class/net:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 enp0s20f0u3u2 -> ../../devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3.2/2-3.2:1.0/net/enp0s20f0u3u2
+lrwxrwxrwx  1 root root 0 May 29 17:59 lo -> ../../devices/virtual/net/lo
+lrwxrwxrwx  1 root root 0 May 29 17:59 wlp1s0 -> ../../devices/pci0000:00/0000:00:1c.0/0000:01:00.0/net/wlp1s0
+
+/sys/class/nvme:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvme0 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0
+
+/sys/class/nvme-generic:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 ng0n1 -> ../../devices/pci0000:00/0000:00:1d.0/0000:02:00.0/nvme/nvme0/ng0n1
+
+/sys/class/nvme-subsystem:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 nvme-subsys0 -> ../../devices/virtual/nvme-subsystem/nvme-subsys0
+
+/sys/class/pci_bus:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 0000:00 -> ../../devices/pci0000:00/pci_bus/0000:00
+lrwxrwxrwx  1 root root 0 May 29 17:59 0000:01 -> ../../devices/pci0000:00/0000:00:1c.0/pci_bus/0000:01
+lrwxrwxrwx  1 root root 0 May 29 17:59 0000:02 -> ../../devices/pci0000:00/0000:00:1d.0/pci_bus/0000:02
+
+/sys/class/phy:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/platform-profile:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 platform-profile-0 -> ../../devices/platform/MSHW0111:00/01:03:01:00:01/platform-profile/platform-profile-0
+
+/sys/class/powercap:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl -> ../../devices/virtual/powercap/intel-rapl
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl:0 -> ../../devices/virtual/powercap/intel-rapl/intel-rapl:0
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl:0:0 -> ../../devices/virtual/powercap/intel-rapl/intel-rapl:0/intel-rapl:0:0
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl:0:1 -> ../../devices/virtual/powercap/intel-rapl/intel-rapl:0/intel-rapl:0:1
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl:0:2 -> ../../devices/virtual/powercap/intel-rapl/intel-rapl:0/intel-rapl:0:2
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl:1 -> ../../devices/virtual/powercap/intel-rapl/intel-rapl:1
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl-mmio -> ../../devices/virtual/powercap/intel-rapl-mmio
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl-mmio:0 -> ../../devices/virtual/powercap/intel-rapl-mmio/intel-rapl-mmio:0
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel-rapl-mmio:0:0 -> ../../devices/virtual/powercap/intel-rapl-mmio/intel-rapl-mmio:0/intel-rapl-mmio:0:0
+
+/sys/class/power_supply:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 ADP1 -> ../../devices/platform/ACPI0003:00/power_supply/ADP1
+lrwxrwxrwx  1 root root 0 May 29 17:59 BAT1 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/power_supply/BAT1
+
+/sys/class/pwm:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/rc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/regulator:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 regulator.0 -> ../../devices/platform/reg-dummy/regulator/regulator.0
+
+/sys/class/remoteproc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/rfkill:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 rfkill0 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-5/1-5:1.0/bluetooth/hci0/rfkill0
+lrwxrwxrwx  1 root root 0 May 29 17:59 rfkill1 -> ../../devices/pci0000:00/0000:00:1c.0/0000:01:00.0/ieee80211/phy0/rfkill1
+
+/sys/class/rtc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 rtc0 -> ../../devices/pnp0/00:04/rtc/rtc0
+
+/sys/class/scsi_device:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/scsi_disk:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/scsi_host:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/sound:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 card0 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0
+lrwxrwxrwx  1 root root 0 May 29 17:59 controlC0 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/controlC0
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwC0D0 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/hwC0D0
+lrwxrwxrwx  1 root root 0 May 29 17:59 hwC0D2 -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/hwC0D2
+lrwxrwxrwx  1 root root 0 May 29 17:59 pcmC0D0c -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/pcmC0D0c
+lrwxrwxrwx  1 root root 0 May 29 17:59 pcmC0D0p -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/pcmC0D0p
+lrwxrwxrwx  1 root root 0 May 29 17:59 pcmC0D3p -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/pcmC0D3p
+lrwxrwxrwx  1 root root 0 May 29 17:59 pcmC0D7p -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/pcmC0D7p
+lrwxrwxrwx  1 root root 0 May 29 17:59 pcmC0D8p -> ../../devices/pci0000:00/0000:00:1f.3/sound/card0/pcmC0D8p
+lrwxrwxrwx  1 root root 0 May 29 17:59 seq -> ../../devices/virtual/sound/seq
+lrwxrwxrwx  1 root root 0 May 29 17:59 timer -> ../../devices/virtual/sound/timer
+
+/sys/class/spi_master:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/spi_slave:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/tee:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/thermal:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 cooling_device0 -> ../../devices/virtual/thermal/cooling_device0
+lrwxrwxrwx  1 root root 0 May 29 17:59 cooling_device1 -> ../../devices/virtual/thermal/cooling_device1
+lrwxrwxrwx  1 root root 0 May 29 17:59 cooling_device2 -> ../../devices/virtual/thermal/cooling_device2
+lrwxrwxrwx  1 root root 0 May 29 17:59 cooling_device3 -> ../../devices/virtual/thermal/cooling_device3
+lrwxrwxrwx  1 root root 0 May 29 17:59 cooling_device4 -> ../../devices/virtual/thermal/cooling_device4
+lrwxrwxrwx  1 root root 0 May 29 17:59 cooling_device5 -> ../../devices/virtual/thermal/cooling_device5
+lrwxrwxrwx  1 root root 0 May 29 17:59 thermal_zone0 -> ../../devices/virtual/thermal/thermal_zone0
+lrwxrwxrwx  1 root root 0 May 29 17:59 thermal_zone1 -> ../../devices/virtual/thermal/thermal_zone1
+lrwxrwxrwx  1 root root 0 May 29 17:59 thermal_zone2 -> ../../devices/virtual/thermal/thermal_zone2
+
+/sys/class/tpm:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/tpmrm:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/tty:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 console -> ../../devices/virtual/tty/console
+lrwxrwxrwx  1 root root 0 May 29 17:59 ptmx -> ../../devices/virtual/tty/ptmx
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty -> ../../devices/virtual/tty/tty
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty0 -> ../../devices/virtual/tty/tty0
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty1 -> ../../devices/virtual/tty/tty1
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty10 -> ../../devices/virtual/tty/tty10
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty11 -> ../../devices/virtual/tty/tty11
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty12 -> ../../devices/virtual/tty/tty12
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty13 -> ../../devices/virtual/tty/tty13
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty14 -> ../../devices/virtual/tty/tty14
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty15 -> ../../devices/virtual/tty/tty15
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty16 -> ../../devices/virtual/tty/tty16
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty17 -> ../../devices/virtual/tty/tty17
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty18 -> ../../devices/virtual/tty/tty18
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty19 -> ../../devices/virtual/tty/tty19
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty2 -> ../../devices/virtual/tty/tty2
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty20 -> ../../devices/virtual/tty/tty20
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty21 -> ../../devices/virtual/tty/tty21
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty22 -> ../../devices/virtual/tty/tty22
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty23 -> ../../devices/virtual/tty/tty23
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty24 -> ../../devices/virtual/tty/tty24
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty25 -> ../../devices/virtual/tty/tty25
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty26 -> ../../devices/virtual/tty/tty26
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty27 -> ../../devices/virtual/tty/tty27
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty28 -> ../../devices/virtual/tty/tty28
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty29 -> ../../devices/virtual/tty/tty29
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty3 -> ../../devices/virtual/tty/tty3
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty30 -> ../../devices/virtual/tty/tty30
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty31 -> ../../devices/virtual/tty/tty31
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty32 -> ../../devices/virtual/tty/tty32
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty33 -> ../../devices/virtual/tty/tty33
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty34 -> ../../devices/virtual/tty/tty34
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty35 -> ../../devices/virtual/tty/tty35
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty36 -> ../../devices/virtual/tty/tty36
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty37 -> ../../devices/virtual/tty/tty37
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty38 -> ../../devices/virtual/tty/tty38
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty39 -> ../../devices/virtual/tty/tty39
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty4 -> ../../devices/virtual/tty/tty4
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty40 -> ../../devices/virtual/tty/tty40
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty41 -> ../../devices/virtual/tty/tty41
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty42 -> ../../devices/virtual/tty/tty42
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty43 -> ../../devices/virtual/tty/tty43
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty44 -> ../../devices/virtual/tty/tty44
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty45 -> ../../devices/virtual/tty/tty45
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty46 -> ../../devices/virtual/tty/tty46
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty47 -> ../../devices/virtual/tty/tty47
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty48 -> ../../devices/virtual/tty/tty48
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty49 -> ../../devices/virtual/tty/tty49
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty5 -> ../../devices/virtual/tty/tty5
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty50 -> ../../devices/virtual/tty/tty50
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty51 -> ../../devices/virtual/tty/tty51
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty52 -> ../../devices/virtual/tty/tty52
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty53 -> ../../devices/virtual/tty/tty53
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty54 -> ../../devices/virtual/tty/tty54
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty55 -> ../../devices/virtual/tty/tty55
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty56 -> ../../devices/virtual/tty/tty56
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty57 -> ../../devices/virtual/tty/tty57
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty58 -> ../../devices/virtual/tty/tty58
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty59 -> ../../devices/virtual/tty/tty59
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty6 -> ../../devices/virtual/tty/tty6
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty60 -> ../../devices/virtual/tty/tty60
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty61 -> ../../devices/virtual/tty/tty61
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty62 -> ../../devices/virtual/tty/tty62
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty63 -> ../../devices/virtual/tty/tty63
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty7 -> ../../devices/virtual/tty/tty7
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty8 -> ../../devices/virtual/tty/tty8
+lrwxrwxrwx  1 root root 0 May 29 17:59 tty9 -> ../../devices/virtual/tty/tty9
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS0 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.0/tty/ttyS0
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS1 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.1/tty/ttyS1
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS10 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.10/tty/ttyS10
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS11 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.11/tty/ttyS11
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS12 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.12/tty/ttyS12
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS13 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.13/tty/ttyS13
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS14 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.14/tty/ttyS14
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS15 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.15/tty/ttyS15
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS16 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.16/tty/ttyS16
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS17 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.17/tty/ttyS17
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS18 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.18/tty/ttyS18
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS19 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.19/tty/ttyS19
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS2 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.2/tty/ttyS2
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS20 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.20/tty/ttyS20
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS21 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.21/tty/ttyS21
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS22 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.22/tty/ttyS22
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS23 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.23/tty/ttyS23
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS24 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.24/tty/ttyS24
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS25 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.25/tty/ttyS25
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS26 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.26/tty/ttyS26
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS27 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.27/tty/ttyS27
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS28 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.28/tty/ttyS28
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS29 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.29/tty/ttyS29
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS3 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.3/tty/ttyS3
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS30 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.30/tty/ttyS30
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS31 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.31/tty/ttyS31
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS5 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.5/tty/ttyS5
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS6 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.6/tty/ttyS6
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS7 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.7/tty/ttyS7
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS8 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.8/tty/ttyS8
+lrwxrwxrwx  1 root root 0 May 29 17:59 ttyS9 -> ../../devices/platform/serial8250/serial8250:0/serial8250:0.9/tty/ttyS9
+
+/sys/class/usbmisc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 hiddev0 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-7/1-7:1.0/usbmisc/hiddev0
+lrwxrwxrwx  1 root root 0 May 29 17:59 hiddev1 -> ../../devices/pci0000:00/0000:00:14.0/usb1/1-3/1-3.3/1-3.3:1.0/usbmisc/hiddev1
+
+/sys/class/usb_role:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 intel_xhci_usb_sw-role-switch -> ../../devices/pci0000:00/0000:00:14.0/intel_xhci_usb_sw/usb_role/intel_xhci_usb_sw-role-switch
+
+/sys/class/vc:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs -> ../../devices/virtual/vc/vcs
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs1 -> ../../devices/virtual/vc/vcs1
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs2 -> ../../devices/virtual/vc/vcs2
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs3 -> ../../devices/virtual/vc/vcs3
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs4 -> ../../devices/virtual/vc/vcs4
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs5 -> ../../devices/virtual/vc/vcs5
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcs6 -> ../../devices/virtual/vc/vcs6
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa -> ../../devices/virtual/vc/vcsa
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa1 -> ../../devices/virtual/vc/vcsa1
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa2 -> ../../devices/virtual/vc/vcsa2
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa3 -> ../../devices/virtual/vc/vcsa3
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa4 -> ../../devices/virtual/vc/vcsa4
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa5 -> ../../devices/virtual/vc/vcsa5
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsa6 -> ../../devices/virtual/vc/vcsa6
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu -> ../../devices/virtual/vc/vcsu
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu1 -> ../../devices/virtual/vc/vcsu1
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu2 -> ../../devices/virtual/vc/vcsu2
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu3 -> ../../devices/virtual/vc/vcsu3
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu4 -> ../../devices/virtual/vc/vcsu4
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu5 -> ../../devices/virtual/vc/vcsu5
+lrwxrwxrwx  1 root root 0 May 29 17:59 vcsu6 -> ../../devices/virtual/vc/vcsu6
+
+/sys/class/vtconsole:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 vtcon0 -> ../../devices/virtual/vtconsole/vtcon0
+lrwxrwxrwx  1 root root 0 May 29 17:59 vtcon1 -> ../../devices/virtual/vtconsole/vtcon1
+
+/sys/class/wakeup:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup0 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/LNXVIDEO:00/wakeup/wakeup0
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup1 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:18/wakeup/wakeup1
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup10 -> ../../devices/pci0000:00/0000:00:1d.0/wakeup/wakeup10
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup11 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:78/wakeup/wakeup11
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup12 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:1a/wakeup/wakeup12
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup13 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:1b/wakeup/wakeup13
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup14 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:34/wakeup/wakeup14
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup15 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:3c/device:3d/wakeup/wakeup15
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup16 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:47/device:48/wakeup/wakeup16
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup17 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/wakeup/wakeup17
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup18 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/INT344B:00/wakeup/wakeup18
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup19 -> ../../devices/LNXSYSTM:00/ACPI0003:00/wakeup/wakeup19
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup2 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:7c/wakeup/wakeup2
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup20 -> ../../devices/platform/ACPI0003:00/power_supply/ADP1/wakeup20
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup21 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0D:00/wakeup/wakeup21
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup22 -> ../../devices/pci0000:00/0000:00:14.0/wakeup/wakeup22
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup23 -> ../../devices/pnp0/00:04/wakeup/wakeup23
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup24 -> ../../devices/pnp0/00:04/rtc/rtc0/alarmtimer.0.auto/wakeup/wakeup24
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup25 -> ../../devices/LNXSYSTM:00/MSHW0008:00/wakeup/wakeup25
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup26 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI000C:00/wakeup/wakeup26
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup27 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/ACPI000E:00/wakeup/wakeup27
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup28 -> ../../devices/platform/ACPI000E:00/wakeup/wakeup28
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup29 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/MSHW0040:00/wakeup/wakeup29
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup3 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:1e/wakeup/wakeup3
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup30 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/MSHW0084:00/wakeup/wakeup30
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup31 -> ../../devices/platform/MSHW0040:00/gpio-keys.2.auto/wakeup/wakeup31
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup32 -> ../../devices/pci0000:00/0000:00:14.0/usb2/2-3/2-3.2/wakeup/wakeup32
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup33 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/MSHW0091:00/wakeup/wakeup33
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup34 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/MSHW0111:00/wakeup/wakeup34
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup35 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0A:00/wakeup/wakeup35
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup4 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:76/wakeup/wakeup4
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup5 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:77/wakeup/wakeup5
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup6 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:7d/wakeup/wakeup6
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup7 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:3c/wakeup/wakeup7
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup8 -> ../../devices/pci0000:00/0000:00:1c.0/wakeup/wakeup8
+lrwxrwxrwx  1 root root 0 May 29 17:59 wakeup9 -> ../../devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/device:47/wakeup/wakeup9
+
+/sys/class/watchdog:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+
+/sys/class/wmi_bus:
+total 0
+drwxr-xr-x  2 root root 0 May 29 17:59 .
+drwxr-xr-x 71 root root 0 May 29 17:59 ..
+lrwxrwxrwx  1 root root 0 May 29 17:59 wmi_bus-MSHW0008:00 -> ../../devices/platform/MSHW0008:00/wmi_bus/wmi_bus-MSHW0008:00

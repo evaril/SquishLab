@@ -1,0 +1,6 @@
+#!/bin/bash
+lspci -vvv > /tmp/lspci-$(date +%s).txt
+lsmod > /tmp/lsmod-$(date +%s).txt
+dmesg | tail -100 > /tmp/dmesg-$(date +%s).txt
+uname -a > /tmp/uname-$(date +%s).txt
+cat /proc/cmdline > /tmp/cmdline-$(date +%s).txt

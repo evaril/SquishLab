@@ -1,0 +1,62 @@
+#!/bin/bash
+set -euo pipefail
+
+##### Configuration (edit to match your setup) #####
+EFI_MOUNT="/efi"            # EFI system partition mount point
+BOOT_MOUNT="/boot"          # /boot mount point
+KEY_DIR="/etc/secureboot"   # directory where PK/KEK/db keys are stored
+DB_NAME="db"                # base name of the DB key (as above)
+CMDLINE_OPTIONS="quiet rw"  # extra kernel command-line options (omit 'root=')
+UKI_NAME="Manix.efi"        # filename for the generated UKI
+
+##### Checks #####
+for cmd in mkinitcpio ukify bootctl findmnt uuidgen; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "Error: Required command '$cmd' not found." >&2
+        exit 1
+    fi
+done
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Error: run as root to write to ESP." >&2
+    exit 1
+fi
+
+# Ensure EFI/Linux directory exists for UKIs
+mkdir -p "$EFI_MOUNT/EFI/Linux"
+
+echo "=== Generating initramfs and Unified Kernel Image ==="
+mkinitcpio -p linux
+
+# Determine root filesystem UUID for kernel cmdline
+ROOT_UUID=$(findmnt / -n -o UUID)
+if [ -z "$ROOT_UUID" ]; then
+    ROOT_DEV=$(findmnt / -n -o SOURCE)
+    ROOT_UUID=$(blkid -s UUID -o value "$ROOT_DEV")
+fi
+if [ -z "$ROOT_UUID" ]; then
+    echo "Error: Could not determine root filesystem UUID." >&2
+    exit 1
+fi
+
+# Build the UKI with systemd-ukify, signing with the DB key
+LINUX_PATH="$BOOT_MOUNT/vmlinuz-arch-minux"
+INITRAMFS_PATH="$BOOT_MOUNT/initramfs-arch-minux.img"
+OUTPUT="$EFI_MOUNT/EFI/Linux/$UKI_NAME"
+
+# Create Unified Kernel Image to /boot (ESP)
+ukify build \
+  --linux=/boot/vmlinuz-arch-minux \
+  --initrd=/boot/initramfs-arch-minux.img \
+  --cmdline="root=UUID=02f219db-8b19-4432-b360-e9f9946127a5 rw quiet" \
+  --secureboot-private-key /etc/secureboot/db.key \
+  --secureboot-certificate /etc/secureboot/db.crt \
+  --output /boot/EFI/Linux/linux.efi
+
+
+# Install systemd-boot to /boot
+bootctl --esp-path=/boot install
+bootctl --esp-path=/boot update
+
+
+echo "UKI created and signed. If using UKIs, systemd-boot will auto-detect it from /EFI/Linux/:contentReference[oaicite:7]{index=7}."
+echo "Otherwise, create a loader entry in $EFI_MOUNT/loader/entries pointing to EFI/Linux/$UKI_NAME if needed."

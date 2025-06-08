@@ -1,0 +1,61 @@
+#!/bin/bash
+set -euo pipefail
+
+##### Configuration parameters (tweak these as needed) #####
+OUTDIR="/etc/secureboot"             # Directory for keys and output files
+KEY_SIZE=4096                       # RSA key size in bits
+PK_SUBJECT="SquishLabsMasterKey"        # Common Name for Platform Key
+KEK_SUBJECT="SquiskLabsKEK"   # Common Name for KEK
+DB_SUBJECT="SquishLabsDB"    # Common Name for signature db
+PK_NAME="PKMarch"                        # Base name for PK files
+KEK_NAME="KEKMarch"                      # Base name for KEK files
+DB_NAME="dbMarch"                        # Base name for DB files (case-sensitive)
+
+##### Command checks #####
+for cmd in openssl uuidgen cert-to-efi-sig-list sign-efi-sig-list efi-updatevar efi-readvar; do
+    if ! command -v "$cmd" &>/dev/null; then
+        echo "Error: Required command '$cmd' not found. Install efitools (and util-linux for uuidgen)." >&2
+        exit 1
+    fi
+done
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo "Error: This script must be run as root." >&2
+    exit 1
+fi
+
+mkdir -p "$OUTDIR"
+cd "$OUTDIR"
+
+echo "=== Generating Secure Boot keys in ${OUTDIR} ==="
+# Generate X.509 keys (PEM format) for PK, KEK, and DB:
+openssl req -new -x509 -newkey rsa:$KEY_SIZE -sha256 -nodes -days 3650 \
+    -subj "/CN=$PK_SUBJECT/" -keyout ${PK_NAME}.key -out ${PK_NAME}.crt
+openssl req -new -x509 -newkey rsa:$KEY_SIZE -sha256 -nodes -days 3650 \
+    -subj "/CN=$KEK_SUBJECT/" -keyout ${KEK_NAME}.key -out ${KEK_NAME}.crt
+openssl req -new -x509 -newkey rsa:$KEY_SIZE -sha256 -nodes -days 3650 \
+    -subj "/CN=$DB_SUBJECT/" -keyout ${DB_NAME}.key -out ${DB_NAME}.crt
+
+echo "Converting certificates to EFI signature lists (ESL)..."
+GUID=$(uuidgen)
+cert-to-efi-sig-list -g "$GUID" ${PK_NAME}.crt ${PK_NAME}.esl
+cert-to-efi-sig-list -g "$GUID" ${KEK_NAME}.crt ${KEK_NAME}.esl
+cert-to-efi-sig-list -g "$GUID" ${DB_NAME}.crt ${DB_NAME}.esl
+
+echo "Signing the ESLs to create authenticated update files..."
+sign-efi-sig-list -g "$GUID" -k ${PK_NAME}.key -c ${PK_NAME}.crt   PK  ${PK_NAME}.esl ${PK_NAME}.auth
+sign-efi-sig-list -g "$GUID" -k ${PK_NAME}.key -c ${PK_NAME}.crt  KEK ${KEK_NAME}.esl ${KEK_NAME}.auth
+sign-efi-sig-list -g "$GUID" -k ${KEK_NAME}.key -c ${KEK_NAME}.crt db  ${DB_NAME}.esl  ${DB_NAME}.auth
+
+echo "Backing up existing Secure Boot variables (if any)..."
+efi-readvar -v PK  -o PK.old.auth  || true
+efi-readvar -v KEK -o KEK.old.auth || true
+efi-readvar -v db  -o db.old.auth  || true
+
+echo "Updating UEFI variables with new keys..."
+efi-updatevar -f ${DB_NAME}.auth db   # install db first (by KEK signature)
+efi-updatevar -f ${KEK_NAME}.auth KEK # install KEK next
+efi-updatevar -f ${PK_NAME}.auth PK   # install PK last (now out of setup mode)
+
+echo "Secure Boot keys installed. Reboot and enable Secure Boot in the firmware to use these keys."
+

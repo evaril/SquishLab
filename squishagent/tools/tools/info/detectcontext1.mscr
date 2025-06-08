@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Detect if you’re in a VM or container
+systemd-detect-virt --vm
+systemd-detect-virt --container
+hostnamectl status | grep Chassis
+grep -E -i '(vmx|svm)' /proc/cpuinfo   # Hardware virtualization flag (should exist on host)
+grep -i hypervisor /proc/cpuinfo       # Will show 'hypervisor' flag if virtualized
+dmidecode -s system-product-name       # Shows real hardware or virtual platform
+lsns                                  # See what namespaces you're in
+cat /proc/1/environ | tr '\0' '\n' | grep -i container # Container markers

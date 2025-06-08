@@ -1,0 +1,85 @@
+#!/bin/bash
+
+# VM Tunnel Manager - SSH tunnel with password prompts
+# Secure SSH tunnel setup for VM access with on-demand authentication
+
+set -euo pipefail
+
+# ========== CONFIGURATION ==========
+readonly SCRIPT_NAME="$(basename "$0")"
+readonly VERSION="2.1"
+readonly SERVICE_NAME="windows.service"
+readonly SERVICE_FILE="$HOME/.config/systemd/user/$SERVICE_NAME"
+readonly CONFIG_DIR="$HOME/.config/systemd/user"
+
+readonly MAX_VM_INDEX=9
+readonly MIN_VM_INDEX=0
+readonly VNC_BASE_PORT=11001
+readonly SPICE_BASE_PORT=11010
+
+readonly REMOTE_HOST="192.168.72.54"
+readonly REMOTE_PORT="7717"
+readonly REMOTE_USER="evm"
+readonly SSH_OPTS="-o ConnectTimeout=15 -o StrictHostKeyChecking=accept-new"
+
+# Initialize dynamic globals
+BACKUP_FILE=""
+VM_INDEX=""
+VNC_PORT=""
+SPICE_PORT=""
+CHANGES_MADE=false
+VALIDATION_ERRORS=()
+VALIDATION_WARNINGS=()
+
+# Logging
+log_info()    { echo "[INFO] $*"; }
+log_warn()    { echo "[WARN] $*" >&2; }
+log_error()   { echo "[ERROR] $*" >&2; }
+log_success() { echo "[OK] $*"; }
+
+# Main execution logic (partial - add functions here)
+main() {
+    trap cleanup EXIT
+    VM_INDEX="$1"
+    VNC_PORT=$((VNC_BASE_PORT + VM_INDEX))
+    SPICE_PORT=$((SPICE_BASE_PORT + VM_INDEX))
+
+    # Replace all instances of:
+    #   ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" <command>
+    # with:
+    #   ssh $SSH_OPTS -p "$REMOTE_PORT" -t "$REMOTE_USER@$REMOTE_HOST" <command>
+
+    # Replace all:
+    #   sudo -n <command>
+    # with:
+    #   sudo <command>
+
+    # Example execution:
+    echo "Validating VM $VM_INDEX on $REMOTE_HOST..."
+    ssh $SSH_OPTS -p "$REMOTE_PORT" -t "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo virsh dominfo $(get_vm_name "$VM_INDEX")"
+    # Add full main body below (see prior script structure)
+}
+
+get_vm_name() {
+    case "$1" in
+        0) echo "windows10-clean";;
+        1) echo "10-R2D2";;
+        *) echo "vm$1";;
+    esac
+}
+
+cleanup() {
+    local code=$?
+    [[ $code -ne 0 ]] && log_error "Script failed with code $code"
+    exit $code
+}
+
+# Entry point
+if [[ $# -eq 0 ]]; then
+    echo "Usage: $SCRIPT_NAME <vm-index>"
+    exit 1
+fi
+
+main "$1"
+ 

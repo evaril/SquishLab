@@ -1,0 +1,1 @@
+firejail --apparmor --nonewprivs --seccomp $1

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Show all VMs
+virsh list --all
+
+# Show all containers (docker/podman/systemd-nspawn)
+docker ps -a
+podman ps -a
+machinectl list
+
+# Show all namespaces
+lsns
+
+# Show all running processes, grouped by cgroup (best view of slice boundaries)
+ps auxf --forest
+
+# See what devices (GPU, block, etc.) are attached to what
+lspci -k
+lsblk
+ls -l /dev/disk/by-id/
+

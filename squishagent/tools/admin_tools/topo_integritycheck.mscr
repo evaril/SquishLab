@@ -1,0 +1,15 @@
+#!/bin/bash
+
+TIMESTAMP=$(date +%s)
+
+# AIDE check
+aide --check > /var/log/aide-check-$TIMESTAMP.txt 2>&1
+
+# Hash /boot kernel/initramfs
+sha256sum /boot/vmlinuz* /boot/initramfs* > /var/log/boot-hash-$TIMESTAMP.txt 2>&1
+
+# Recursively hash /etc and /usr/bin, one file per line, handle symlinks and errors gracefully
+find /etc /usr/bin -type f -print0 | xargs -0 sha256sum > /var/log/keyfiles-hash-$TIMESTAMP.txt 2>&1
+
+# Optional: Hash any other critical directories, add more as needed
+# find /sbin /usr/sbin -type f -print0 | xargs -0 sha256sum >> /var/log/keyfiles-hash-$TIMESTAMP.txt 2>&1
