@@ -1,0 +1,220 @@
+#!/bin/bash
+# Script to clean firewall configurations
+# For Arch Linux with Wayland/Hyperland, ensuring systemd-resolved remains primary
+
+echo "Starting system services cleanup..."
+
+# Stop and disable both firewalls
+systemctl stop ufw 2>/dev/null
+systemctl disable ufw 2>/dev/null
+systemctl stop firewalld 2>/dev/null
+systemctl disable firewalld 2>/dev/null
+
+# Ensure systemd-resolved is primary for DNS
+if systemctl is-active dnsmasq &>/dev/null; then
+    echo "Configuring dnsmasq to work alongside systemd-resolved..."
+    
+    # Check if libvirt needs dnsmasq
+    if systemctl is-active libvirtd &>/dev/null; then
+        echo "Keeping dnsmasq for libvirt but ensuring it doesn't interfere with systemd-resolved"
+        # Ensure dnsmasq only listens on virtual interfaces if needed for libvirt
+        if [ -f /etc/dnsmasq.conf ]; then
+            cp /etc/dnsmasq.conf /etc/dnsmasq.conf.bak
+            grep -v "^interface=" /etc/dnsmasq.conf > /tmp/dnsmasq.conf.new
+            echo "interface=virbr0" >> /tmp/dnsmasq.conf.new
+            echo "interface=virbr1" >> /tmp/dnsmasq.conf.new
+            echo "bind-interfaces" >> /tmp/dnsmasq.conf.new
+            mv /tmp/dnsmasq.conf.new /etc/dnsmasq.conf
+        fi
+    else
+        echo "Stopping and disabling dnsmasq as systemd-resolved is primary"
+        systemctl stop dnsmasq
+        systemctl disable dnsmasq
+    fi
+fi
+
+# Make sure systemd-resolved is enabled and running
+systemctl enable systemd-resolved
+systemctl start systemd-resolved
+
+# Update /etc/resolv.conf to use systemd-resolved
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+# Remove ufw completely if installed
+if pacman -Qi ufw &>/dev/null; then
+    echo "Removing ufw..."
+    pacman -Rns ufw --noconfirm
+fi
+
+# Flush all iptables rules
+echo "Flushing all iptables rules..."
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+
+# Same for ip6tables
+ip6tables -F
+ip6tables -X
+ip6tables -t nat -F
+ip6tables -t nat -X
+ip6tables -t mangle -F
+ip6tables -t mangle -X
+ip6tables -P INPUT ACCEPT
+ip6tables -P FORWARD ACCEPT
+ip6tables -P OUTPUT ACCEPT
+
+# Save the empty ruleset
+if command -v iptables-save >/dev/null 2>&1; then
+    mkdir -p /etc/iptables
+    iptables-save > /etc/iptables/iptables.rules
+    ip6tables-save > /etc/iptables/ip6tables.rules
+    echo "Saved empty ruleset to /etc/iptables/"
+fi
+
+# Clean up all firewall-related configuration files
+rm -f /etc/ufw/* 2>/dev/null
+rm -f /etc/default/ufw 2>/dev/null
+
+# Completely remove firewalld configuration to start fresh
+echo "Removing firewalld configuration for a clean start..."
+if pacman -Qi firewalld &>/dev/null; then
+    rm -rf /etc/firewalld/{zones,services}/* 2>/dev/null
+    rm -f /etc/firewalld/firewalld.conf.old 2>/dev/null
+    
+    # Restore default firewalld.conf
+    if [ -f /etc/firewalld/firewalld.conf ]; then
+        cp /etc/firewalld/firewalld.conf /etc/firewalld/firewalld.conf.bak
+        cat > /etc/firewalld/firewalld.conf << EOF
+# firewalld config file
+
+# default zone
+# The default zone used if an empty zone string is used.
+# Default: public
+DefaultZone=public
+
+# Clean up on exit
+# If set to no or false the firewall configuration will not get cleaned up
+# on exit or stop.
+# Default: yes
+CleanupOnExit=yes
+
+# Lockdown
+# If set to enabled, firewall changes with the D-Bus interface will be limited
+# to applications that are listed in the lockdown whitelist.
+# Default: no
+Lockdown=no
+
+# IPv6_rpfilter
+# Performs a reverse path filter test on a packet for IPv6. If a reply to the
+# packet would be sent via the same interface that the packet arrived on, the
+# packet will match and be accepted, otherwise dropped.
+# The rp_filter for IPv4 is controlled using sysctl.
+# Default: yes
+IPv6_rpfilter=yes
+
+# IndividualCalls
+# Do not use combined -restore calls, but individual calls. This increases the
+# time that is needed to apply changes and to start the daemon, but is good for
+# debugging.
+# Default: no
+IndividualCalls=no
+
+# LogDenied
+# Add logging rules right before reject and drop rules in the INPUT, FORWARD
+# and OUTPUT chains for the default rules and also final reject and drop rules
+# in zones. Possible values are: all, unicast, broadcast, multicast and off.
+# Default: off
+LogDenied=off
+
+# AutomaticHelpers
+# For the secure use of iptables and connection tracking helpers it is
+# recommended to turn AutomaticHelpers off. But this might have side effects on
+# other services using the netfilter helpers as the sysctl setting in
+# /proc/sys/net/netfilter/nf_conntrack_helper will be changed.
+# With the system setting, the default value set in the kernel or with sysctl
+# will be used. Possible values are: yes, no and system.
+# Default: system
+AutomaticHelpers=system
+
+# AllowZoneDrifting
+# Older versions of firewalld had undocumented behavior known as "zone
+# drifting". This allowed packets to ingress multiple zones - this is a
+# violation of zone based firewalls. However, to not break existing
+# setups, default value is yes. If set to no, the zone drifting is not
+# allowed anymore and ingress packets may only be matched against rules from
+# one zone.
+# Default: yes
+AllowZoneDrifting=yes
+
+# FirewallBackend
+# Selects the firewall backend implementation.
+# Choices are:
+#   - nftables
+#   - iptables
+# Note: iptables will open the iptables backend, not the iptables-compat frontend to
+# nftables.
+# Default: nftables
+FirewallBackend=nftables
+
+# FlushAllOnReload
+# Flush all runtime rules on a reload. In previous releases some runtime
+# configuration was retained during a reload, namely; interface to zone
+# assignment, and direct rules. This was confusing to users. To get the old
+# behavior set this to "no".
+# Default: yes
+FlushAllOnReload=yes
+
+# RFC3964_IPv4
+# As per RFC 3964, filter IPv6 traffic with 6to4 destination addresses that
+# correspond to IPv4 addresses that should not be routed over the public
+# internet.
+# Defaults to "yes".
+RFC3964_IPv4=yes
+
+# AllowPrelockIPv4
+# If set, firewalld will make xt_recent locks available for use with IPv4 protocols.
+# Note these locks are global and stateful across reloads.
+# Default: no
+AllowPrelockIPv4=no
+
+# AllowPrelockIPv6
+# If set, firewalld will make xt_recent locks available for use with IPv6 protocols.
+# Note these locks are global and stateful across reloads.
+# Default: no
+AllowPrelockIPv6=no
+EOF
+    fi
+else
+    echo "Firewalld not installed, skipping configuration cleanup"
+fi
+
+# Verify network interfaces are up
+echo "Checking network interfaces..."
+ip link
+
+# Ensure SSH and Home Assistant services can start properly
+if systemctl is-active sshd &>/dev/null; then
+    echo "Restarting SSH service..."
+    systemctl restart sshd
+fi
+
+if systemctl is-active home-assistant &>/dev/null; then
+    echo "Restarting Home Assistant service..."
+    systemctl restart home-assistant
+fi
+
+# Ensure libvirtd is properly configured
+if systemctl is-active libvirtd &>/dev/null; then
+    echo "Checking libvirt network configuration..."
+    virsh net-list --all
+fi
+
+echo "Firewall cleanup complete. System now has no firewall rules."
+echo "DNS resolution is handled by systemd-resolved."
+echo "All services should be accessible without restrictions."

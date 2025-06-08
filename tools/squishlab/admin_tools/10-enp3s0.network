@@ -1,0 +1,8 @@
+[Match]
+Name=en*
+
+[Network]
+DHCP=yes
+MulticastDNS=no
+LLMNR=no
+Cache=no

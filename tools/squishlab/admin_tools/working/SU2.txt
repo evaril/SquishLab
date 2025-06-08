@@ -1,0 +1,209 @@
+# SU (SquishUtils) Framework Architecture
+
+## Core Principles
+- **Extensible**: Modular plugin architecture
+- **Thoughtful**: Configuration validation and backup-first
+- **Resilient**: Error recovery and rollback mechanisms  
+- **Intuitive**: Consistent CLI interface and clear feedback
+- **Modular**: Loosely coupled components with defined interfaces
+
+## Framework Structure
+
+```
+su/
+├── core/
+│   ├── base.py           # Core framework classes
+│   ├── config.py         # Configuration management
+│   ├── logging.py        # Centralized logging
+│   └── utils.py          # Common utilities
+├── modules/
+│   ├── setup/            # System setup operations
+│   ├── rebuild/          # System rebuild/recovery
+│   ├── secure/           # Security hardening
+│   ├── connect/          # Network/service connectivity
+│   └── monitor/          # System monitoring
+├── providers/
+│   ├── package.py        # Package management abstraction
+│   ├── service.py        # Service management
+│   ├── firewall.py       # Firewall management
+│   └── virtualization.py # VM/container management
+└── cli/
+    ├── main.py           # Main CLI entry point
+    └── commands/         # Command implementations
+```
+
+## Module Mappings
+
+### Setup Module
+**Files**: `installpython.txt`, `newkernel-tight.txt`, `setupunbound.txt`, `pythonuserdirectories.txt`, `pythonvirtenvplushomeassist.txt`
+
+**Functions**:
+- Package installation workflows
+- Kernel compilation with hardening
+- DNS resolver setup
+- User/directory provisioning
+- Virtual environment management
+
+### Rebuild Module  
+**Files**: `cleanfirewallbase.txt`, `resetlibvirtd.txt`, `nvidia_purge.txt`, `alternativepermfix.txt`
+
+**Functions**:
+- Service cleanup and reset
+- Driver removal/replacement
+- Permission restoration
+- Configuration rebuilding
+- Process lifecycle management
+
+### Secure Module
+**Files**: `certs.txt`, `bootupd.txt`, `resolve.txt`, `addfirerestrict.txt`, `apparmorprofile.txt`
+
+**Functions**:
+- PKI certificate generation
+- Secure Boot setup
+- Network hardening
+- Firewall configuration
+- AppArmor profile creation
+
+### Connect Module
+**Files**: `finalsetup.txt`, `homeasssteps.txt`, `finalreconfigoauth.txt`, `configkitty.txt`
+
+**Functions**:
+- Service integration
+- OAuth/API configuration
+- Terminal setup
+- Remote access configuration
+- Tunneling setup
+
+### Monitor Module
+**Files**: `log.txt`, `recheckenv.txt`, `recheckenv2.txt`, `initsetuptestha.txt`
+
+**Functions**:
+- System diagnostics
+- Service status checking
+- Log analysis
+- Performance monitoring
+- Health verification
+
+## Core Classes
+
+### SuModule (Base)
+```python
+class SuModule:
+    def __init__(self, config_manager, logger)
+    def validate_prerequisites(self) -> bool
+    def backup_state(self) -> str
+    def execute(self, **kwargs) -> SuResult
+    def rollback(self, backup_id: str) -> bool
+    def verify(self) -> SuResult
+```
+
+### SuConfig
+```python
+class SuConfig:
+    def load_config(self, path: str)
+    def validate_schema(self) -> bool
+    def get_module_config(self, module: str) -> dict
+    def backup_config(self) -> str
+    def restore_config(self, backup_id: str)
+```
+
+### SuProvider (Interface)
+```python
+class SuProvider:
+    def detect_system(self) -> SystemInfo
+    def install_packages(self, packages: list)
+    def manage_service(self, name: str, action: str)
+    def apply_configuration(self, config: dict)
+```
+
+## Command Interface
+
+```bash
+# Setup operations
+su setup python --version 3.11 --components homeassistant
+su setup kernel --hardened --custom-flags
+su setup dns --resolver unbound --secure
+
+# Rebuild operations  
+su rebuild firewall --clean --provider firewalld
+su rebuild libvirt --reset-networks
+su rebuild permissions --service homeassistant
+
+# Security operations
+su secure boot --generate-keys --sign-kernel
+su secure network --disable-ipv6 --harden-dns
+su secure firewall --zone-based --restrict-ports
+
+# Connect operations
+su connect homeassistant --oauth --nest-integration
+su connect ssh --port 7717 --tunneling
+su connect terminal --wayland-optimized
+
+# Monitor operations
+su monitor services --check-health
+su monitor logs --service homeassistant --follow
+su monitor network --connectivity --dns-resolution
+```
+
+## Implementation Priority
+
+1. **Core Framework** (`core/`) - Base classes, config, logging
+2. **Package Provider** (`providers/package.py`) - Arch pacman integration  
+3. **Setup Module** (`modules/setup/`) - Basic installation workflows
+4. **CLI Interface** (`cli/`) - Command parsing and execution
+5. **Security Module** (`modules/secure/`) - Critical hardening functions
+6. **Remaining Modules** - Connect, Monitor, Rebuild
+
+## Configuration Schema
+
+```yaml
+su:
+  system:
+    distribution: arch
+    package_manager: pacman
+    init_system: systemd
+  
+  modules:
+    setup:t
+      python:
+        version: "3.11"
+        components: [homeassistant, pip, virtualenv]
+      kernel:
+        hardened: true
+        custom_flags: []
+    
+    secure:
+      boot:
+        secure_boot: true
+        generate_keys: true
+      network:
+        disable_ipv6: true
+        dns_hardening: true
+    
+    connect:
+      ssh:
+        port: 7717
+        key_auth_only: true
+        tunneling: true
+```
+
+This framework provides the foundation for your 40+ code samples with clear separation of concerns and extensible architecture.
+
+
+Next Steps:
+
+New chat: Start with "Implement SU Core Framework"
+Bring files: Core classes need base.py, config.py, logging.py from patterns in newkernel-tight.txt, addfirerestrict.txt, cleanfirewallbase.txt
+Module order: Setup → Secure → Connect → Monitor → Rebuild
+File groups per module: Reference the mappings in the framework
+
+This gives us a solid foundation with clear separation and extensibility. The architecture handles your common patterns: backup-before-modify, error recovery, service lifecycle, and configuration templating.
+Ready to implement in the next conversation?
+
+Good strategy. Separate artifacts for:
+
+Code implementation (actual modules/classes)
+Feedback/review (analysis, suggestions, issues)
+Chat (questions, clarifications, direction)
+
+This maximizes context for richer development sessions. Ready for implementation phase.

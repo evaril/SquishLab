@@ -1,0 +1,1508 @@
+#!/bin/bash
+# squishBootReset.mscr - Direct UEFI Boot Reset & Minimal Bootloader
+# Author: evm
+# Version: 1.1-secure-fixed
+# WARNING: This module can render your system unbootable. Use with extreme caution.
+
+set -euo pipefail
+
+# Color functions
+red() { printf '\033[0;31m%s\033[0m\n' "$*"; }
+green() { printf '\033[0;32m%s\033[0m\n' "$*"; }
+yellow() { printf '\033[1;33m%s\033[0m\n' "$*"; }
+blue() { printf '\033[0;34m%s\033[0m\n' "$*"; }
+cyan() { printf '\033[0;36m%s\033[0m\n' "$*"; }
+magenta() { printf '\033[0;35m%s\033[0m\n' "$*"; }
+
+# Configuration
+readonly DRY_RUN="${DRY_RUN:-false}"
+readonly LOG_FILE="$HOME/boot-reset.log"
+readonly BACKUP_DIR="$HOME/boot-backups"
+readonly TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+
+# System paths
+readonly ESP_MOUNT="/boot"
+readonly CURRENT_ESP_DEV=""
+readonly FALLBACK_USB=""
+
+# UKI Configuration
+readonly UKI_DIR="/boot/EFI/Linux"
+readonly UKI_NAME="direct-boot"
+readonly KERNEL_PKG="linux-hardened"
+
+# Safety gate counters
+SAFETY_CHECKS_PASSED=0
+REQUIRED_SAFETY_CHECKS=10
+
+# Generic fallback modules for broad hardware support
+readonly FALLBACK_MODULES=(
+    # Storage & Crypto (critical for boot)
+    "dm_mod" "dm_crypt" "vfat" "ext4" "btrfs" "xfs"
+    "nvme" "ahci" "sd_mod" "sr_mod" "cdrom"
+    
+    # Intel platform support
+    "i915" "intel_agp" "intel_gtt" "intel_iommu"
+    
+    # USB & Input (rescue access)
+    "xhci_pci" "ehci_pci" "ohci_pci" "uhci_hcd"
+    "usbhid" "hid_generic" "atkbd" "i8042"
+    
+    # Network (rescue connectivity)
+    "e1000e" "r8169" "iwlwifi" "ath9k" "rtl8192ce"
+    
+    # Basic system support
+    "rtc_cmos" "efivars" "efivarfs" "acpi"
+    
+    # VFIO for GPU passthrough compatibility
+    "vfio" "vfio_iommu_type1" "vfio_pci" "vfio_virqfd"
+)
+
+# Logging function
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a "$LOG_FILE"
+}
+
+# Safety gate tracker
+safety_gate_passed() {
+    local gate_name="$1"
+    SAFETY_CHECKS_PASSED=$((SAFETY_CHECKS_PASSED + 1))
+    log "SAFETY GATE PASSED: $gate_name ($SAFETY_CHECKS_PASSED/$REQUIRED_SAFETY_CHECKS)"
+    green "[GATE $SAFETY_CHECKS_PASSED/$REQUIRED_SAFETY_CHECKS] PASSED: $gate_name"
+}
+
+# Safety gate validation
+validate_safety_gates() {
+    if [[ $SAFETY_CHECKS_PASSED -lt $REQUIRED_SAFETY_CHECKS ]]; then
+        red "SAFETY GATE FAILURE: Only $SAFETY_CHECKS_PASSED/$REQUIRED_SAFETY_CHECKS gates passed"
+        red "Cannot proceed with destructive operations"
+        exit 1
+    fi
+    green "ALL SAFETY GATES PASSED: $SAFETY_CHECKS_PASSED/$REQUIRED_SAFETY_CHECKS"
+}
+
+# Execute with dry-run support
+safe_execute() {
+    local cmd="$1"
+    local description="$2"
+    
+    log "COMMAND: $description"
+    log "EXECUTE: $cmd"
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        cyan "[DRY RUN] $description"
+        cyan "[DRY RUN] Would execute: $cmd"
+        return 0
+    else
+        blue "$description"
+        eval "$cmd" || {
+            red "FAILED: $description"
+            log "ERROR: Command failed: $cmd"
+            return 1
+        }
+    fi
+}
+
+# Critical safety checks
+critical_safety_checks() {
+    blue "=== Critical Safety Checks ==="
+    
+    # Gate 1: Check if running as root
+    if [[ $EUID -eq 0 ]]; then
+        red "SAFETY GATE 1 FAILED: Running as root is prohibited"
+        red "Use sudo for individual commands that need elevation"
+        exit 1
+    fi
+    safety_gate_passed "Not running as root"
+    
+    # Gate 2: Check if we're on a UEFI system
+    if [[ ! -d /sys/firmware/efi ]]; then
+        red "SAFETY GATE 2 FAILED: This system is not UEFI"
+        red "Cannot proceed with UEFI-specific operations"
+        exit 1
+    fi
+    safety_gate_passed "UEFI system confirmed"
+    
+    # Gate 3: Check if ESP is mounted
+    if ! mountpoint -q "$ESP_MOUNT"; then
+        red "SAFETY GATE 3 FAILED: ESP not mounted at $ESP_MOUNT"
+        red "Expected ESP mount point: $ESP_MOUNT"
+        red "Mount your ESP partition with: sudo mount /dev/sdXY $ESP_MOUNT"
+        exit 1
+    fi
+    safety_gate_passed "ESP mounted correctly"
+    
+    # Gate 4: Check for required tools
+    local required_tools=("efibootmgr" "ukify" "lsblk" "findmnt" "cryptsetup")
+    local missing_tools=()
+    for tool in "${required_tools[@]}"; do
+        if ! command -v "$tool" >/dev/null 2>&1; then
+            missing_tools+=("$tool")
+        fi
+    done
+    
+    if [[ ${#missing_tools[@]} -gt 0 ]]; then
+        red "SAFETY GATE 4 FAILED: Missing required tools: ${missing_tools[*]}"
+        red "Install missing tools and retry"
+        exit 1
+    fi
+    safety_gate_passed "All required tools available"
+    
+    # Gate 5: Check for LUKS encryption
+    local luks_warning=false
+    if ! cryptsetup status /dev/mapper/cryptroot >/dev/null 2>&1; then
+        yellow "WARNING: No LUKS cryptroot device detected"
+        echo "Your system may not use LUKS encryption"
+        echo "Continue anyway? (y/N)"
+        read -r response
+        if [[ ! "$response" =~ ^[Yy]$ ]]; then
+            red "SAFETY GATE 5 FAILED: User cancelled due to LUKS concerns"
+            exit 1
+        fi
+        luks_warning=true
+    fi
+    if [[ "$luks_warning" == "true" ]]; then
+        safety_gate_passed "LUKS check completed (with warning)"
+    else
+        safety_gate_passed "LUKS encryption confirmed"
+    fi
+    
+    # Gate 6: Check ESP filesystem
+    local esp_fstype
+    esp_fstype=$(findmnt -n -o FSTYPE "$ESP_MOUNT")
+    if [[ "$esp_fstype" != "vfat" ]]; then
+        red "SAFETY GATE 6 FAILED: ESP filesystem is not FAT32: $esp_fstype"
+        red "UEFI requires FAT32 filesystem on ESP"
+        exit 1
+    fi
+    safety_gate_passed "ESP filesystem is FAT32"
+    
+    # Gate 7: Check ESP write permissions
+    local test_file="$ESP_MOUNT/.write_test_$$"
+    if ! sudo touch "$test_file" 2>/dev/null; then
+        red "SAFETY GATE 7 FAILED: Cannot write to ESP partition"
+        red "Check ESP mount permissions"
+        exit 1
+    fi
+    sudo rm -f "$test_file"
+    safety_gate_passed "ESP write permissions confirmed"
+    
+    # Gate 8: Check available disk space on ESP
+    local esp_available_kb
+    esp_available_kb=$(df --output=avail "$ESP_MOUNT" | tail -n1)
+    if [[ $esp_available_kb -lt 51200 ]]; then  # 50MB minimum
+        red "SAFETY GATE 8 FAILED: Insufficient ESP space: $((esp_available_kb/1024))MB available"
+        red "Need at least 50MB free on ESP"
+        exit 1
+    fi
+    safety_gate_passed "Sufficient ESP disk space available"
+    
+    # Gate 9: Check kernel package availability
+    if ! pacman -Q "$KERNEL_PKG" >/dev/null 2>&1; then
+        red "SAFETY GATE 9 FAILED: Kernel package not installed: $KERNEL_PKG"
+        red "Install $KERNEL_PKG package first"
+        exit 1
+    fi
+    safety_gate_passed "Target kernel package available"
+    
+    # Gate 10: Check if system is currently bootable
+    if [[ ! -f "/boot/vmlinuz-$KERNEL_PKG" ]] || [[ ! -f "/boot/initramfs-$KERNEL_PKG.img" ]]; then
+        red "SAFETY GATE 10 FAILED: Required kernel files missing"
+        red "Missing: /boot/vmlinuz-$KERNEL_PKG or /boot/initramfs-$KERNEL_PKG.img"
+        exit 1
+    fi
+    safety_gate_passed "Kernel files available for UKI creation"
+    
+    log "All safety checks passed"
+    green "ALL CRITICAL SAFETY CHECKS PASSED"
+}
+
+# Additional safety gate for destructive operations
+destructive_operation_gate() {
+    local operation_name="$1"
+    local confirmation_word="$2"
+    
+    red "DESTRUCTIVE OPERATION WARNING"
+    red "Operation: $operation_name"
+    red "This operation can make your system unbootable"
+    echo
+    echo "Prerequisites checklist:"
+    echo "[ ] You have created a USB rescue device"
+    echo "[ ] You have backed up your current boot configuration"
+    echo "[ ] You have verified all safety gates passed"
+    echo "[ ] You understand the risks"
+    echo
+    echo "If all prerequisites are met, type '$confirmation_word' to proceed:"
+    read -r user_input
+    
+    if [[ "$user_input" != "$confirmation_word" ]]; then
+        red "Operation cancelled - confirmation failed"
+        log "Destructive operation cancelled: $operation_name"
+        exit 1
+    fi
+    
+    log "Destructive operation confirmed: $operation_name"
+    yellow "Proceeding with destructive operation: $operation_name"
+}
+
+# Analyze current boot configuration (SAFE OPERATION)
+analyze_current_boot() {
+    blue "=== Current Boot System Analysis ==="
+    
+    # ESP information
+    local esp_device esp_size esp_free esp_used
+    esp_device=$(findmnt -n -o SOURCE "$ESP_MOUNT")
+    esp_size=$(df -h "$ESP_MOUNT" | awk 'NR==2 {print $2}')
+    esp_free=$(df -h "$ESP_MOUNT" | awk 'NR==2 {print $4}')
+    esp_used=$(df -h "$ESP_MOUNT" | awk 'NR==2 {print $3}')
+    
+    echo "ESP Information:"
+    echo "  Device: $esp_device"
+    echo "  Size: $esp_size (Used: $esp_used, Free: $esp_free)"
+    echo "  Mount: $ESP_MOUNT"
+    echo "  Filesystem: $(findmnt -n -o FSTYPE "$ESP_MOUNT")"
+    
+    # Current bootloader detection
+    echo
+    echo "Current Boot Configuration:"
+    local bootloader_found=false
+    
+    if [[ -f "$ESP_MOUNT/EFI/refind/refind.conf" ]]; then
+        yellow "  rEFInd bootloader detected"
+        echo "    Config: $ESP_MOUNT/EFI/refind/refind.conf"
+        bootloader_found=true
+    fi
+    
+    if [[ -d "$ESP_MOUNT/EFI/systemd" ]]; then
+        yellow "  systemd-boot detected"
+        echo "    Location: $ESP_MOUNT/EFI/systemd"
+        bootloader_found=true
+    fi
+    
+    if [[ -d "$ESP_MOUNT/EFI/BOOT" ]]; then
+        echo "  Generic UEFI boot files present"
+        ls -la "$ESP_MOUNT/EFI/BOOT/"
+    fi
+    
+    if [[ "$bootloader_found" == "false" ]]; then
+        yellow "  No known bootloader detected"
+    fi
+    
+    # UKI files
+    echo
+    echo "Current UKI Files:"
+    if [[ -d "$UKI_DIR" ]]; then
+        if ls "$UKI_DIR"/*.efi >/dev/null 2>&1; then
+            ls -la "$UKI_DIR"/*.efi
+        else
+            echo "  No UKI files found in $UKI_DIR"
+        fi
+    else
+        echo "  UKI directory does not exist: $UKI_DIR"
+    fi
+    
+    # UEFI boot entries
+    echo
+    echo "Current UEFI Boot Entries:"
+    if efibootmgr -v 2>/dev/null; then
+        echo "  [Boot entries listed above]"
+    else
+        red "  Could not read UEFI boot entries"
+    fi
+    
+    # Kernel information
+    echo
+    echo "Kernel Information:"
+    echo "  Running kernel: $(uname -r)"
+    echo "  Target package: $KERNEL_PKG"
+    if pacman -Q "$KERNEL_PKG" >/dev/null 2>&1; then
+        echo "  Package status: $(pacman -Q "$KERNEL_PKG")"
+    else
+        echo "  Package status: NOT INSTALLED"
+    fi
+    
+    # Current kernel parameters
+    echo
+    echo "Current Kernel Parameters:"
+    cat /proc/cmdline
+    
+    # LUKS analysis
+    echo
+    echo "LUKS Configuration:"
+    if cryptsetup status /dev/mapper/cryptroot >/dev/null 2>&1; then
+        echo "Root device:"
+        cryptsetup status /dev/mapper/cryptroot
+    else
+        echo "  No active LUKS cryptroot device found"
+    fi
+    
+    if cryptsetup status /dev/mapper/crypthome >/dev/null 2>&1; then
+        echo "Home device:"
+        cryptsetup status /dev/mapper/crypthome
+    else
+        echo "  No active LUKS crypthome device found"
+    fi
+    
+    # Security analysis
+    echo
+    echo "Security Configuration:"
+    if grep -q "lockdown=confidentiality" /proc/cmdline; then
+        green "  [PASS] Kernel lockdown enabled"
+    else
+        yellow "  [WARN] Kernel lockdown not detected"
+    fi
+    
+    if grep -q "intel_iommu=on" /proc/cmdline; then
+        green "  [PASS] Intel IOMMU enabled"
+    else
+        yellow "  [WARN] Intel IOMMU not detected"
+    fi
+    
+    if grep -q "apparmor=1" /proc/cmdline; then
+        green "  [PASS] AppArmor enabled"
+    else
+        yellow "  [WARN] AppArmor not detected"
+    fi
+    
+    log "Boot analysis completed"
+    green "Boot system analysis completed"
+}
+
+# Create external USB fallback (REQUIRES CONFIRMATION)
+create_usb_fallback() {
+    local usb_device="${1:-}"
+    
+    blue "=== Creating External USB Fallback ==="
+    
+    if [[ -z "$usb_device" ]]; then
+        yellow "Available storage devices:"
+        lsblk -d -o NAME,SIZE,MODEL,TYPE | grep -E "disk"
+        echo
+        echo "Enter USB device path (e.g., /dev/sdb): "
+        read -r usb_device
+    fi
+    
+    if [[ -z "$usb_device" ]]; then
+        red "No USB device specified"
+        return 1
+    fi
+    
+    if [[ ! -b "$usb_device" ]]; then
+        red "Invalid USB device: $usb_device"
+        red "Device does not exist or is not a block device"
+        return 1
+    fi
+    
+    # Enhanced safety check - prevent wiping system drives
+    local root_device boot_device
+    root_device=$(lsblk -n -o PKNAME "$(findmnt -n -o SOURCE /)" 2>/dev/null | head -1)
+    boot_device=$(lsblk -n -o PKNAME "$(findmnt -n -o SOURCE /boot)" 2>/dev/null | head -1)
+    
+    local usb_base_device
+    usb_base_device=$(basename "$usb_device")
+    
+    if [[ "$usb_base_device" == "$root_device" ]] || [[ "$usb_base_device" == "$boot_device" ]]; then
+        red "CRITICAL SAFETY ERROR: USB device appears to be a system drive!"
+        red "USB device: $usb_device ($usb_base_device)"
+        red "Root device: $root_device"
+        red "Boot device: $boot_device"
+        red "ABORTING to prevent system destruction"
+        return 1
+    fi
+    
+    # Show device information for confirmation
+    echo
+    echo "USB Device Information:"
+    lsblk "$usb_device"
+    echo
+    echo "Device details:"
+    if lsblk -n -o MODEL "$usb_device" >/dev/null 2>&1; then
+        echo "  Model: $(lsblk -n -o MODEL "$usb_device")"
+    fi
+    echo "  Size: $(lsblk -n -o SIZE "$usb_device")"
+    echo "  Type: $(lsblk -n -o TYPE "$usb_device")"
+    
+    destructive_operation_gate "USB Fallback Creation" "ERASE"
+    
+    # Create partition table and partitions
+    safe_execute "sudo sgdisk --zap-all '$usb_device'" \
+                "Wiping USB device partition table"
+    
+    safe_execute "sudo sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:'EFI System' '$usb_device'" \
+                "Creating EFI partition on USB"
+    
+    safe_execute "sudo sgdisk --new=2:0:0 --typecode=2:8300 --change-name=2:'Linux Root' '$usb_device'" \
+                "Creating Linux partition on USB"
+    
+    # Wait for device nodes to appear
+    safe_execute "sleep 3" \
+                "Waiting for device nodes to appear"
+    
+    # Determine partition naming convention
+    local usb_efi usb_root
+    if [[ "$usb_device" == *"nvme"* ]]; then
+        usb_efi="${usb_device}p1"
+        usb_root="${usb_device}p2"
+    else
+        usb_efi="${usb_device}1"
+        usb_root="${usb_device}2"
+    fi
+    
+    # Verify partitions were created
+    if [[ ! -b "$usb_efi" ]] || [[ ! -b "$usb_root" ]]; then
+        red "Failed to create USB partitions"
+        red "Expected: $usb_efi and $usb_root"
+        return 1
+    fi
+    
+    # Format partitions
+    safe_execute "sudo mkfs.fat -F32 -n 'RESCUE_EFI' '$usb_efi'" \
+                "Formatting USB EFI partition"
+    
+    safe_execute "sudo mkfs.ext4 -L 'RESCUE_ROOT' '$usb_root'" \
+                "Formatting USB root partition"
+    
+    # Mount USB partitions
+    local usb_mount="/mnt/usb-rescue-$$"
+    local usb_efi_mount="$usb_mount/boot"
+    
+    safe_execute "sudo mkdir -p '$usb_mount' '$usb_efi_mount'" \
+                "Creating USB mount points"
+    
+    safe_execute "sudo mount '$usb_root' '$usb_mount'" \
+                "Mounting USB root partition"
+    
+    safe_execute "sudo mount '$usb_efi' '$usb_efi_mount'" \
+                "Mounting USB EFI partition"
+    
+    # Create minimal rescue environment
+    safe_execute "sudo mkdir -p '$usb_mount'/{bin,sbin,etc,dev,proc,sys,tmp,var,home,root,mnt}" \
+                "Creating basic directory structure"
+    
+    # Copy essential rescue tools if available
+    if command -v busybox >/dev/null 2>&1; then
+        safe_execute "sudo cp /usr/bin/busybox '$usb_mount/bin/'" \
+                    "Copying busybox for rescue shell"
+    fi
+    
+    # Create fallback initramfs with broad hardware support
+    create_fallback_initramfs "$usb_efi_mount"
+    
+    # Create fallback UKI
+    create_fallback_uki "$usb_efi_mount"
+    
+    # Create UEFI boot structure
+    safe_execute "sudo mkdir -p '$usb_efi_mount/EFI'/{BOOT,Linux}" \
+                "Creating UEFI boot directories"
+    
+    # Copy fallback UKI as default UEFI boot file
+    safe_execute "sudo cp '$usb_efi_mount/EFI/Linux/fallback.efi' '$usb_efi_mount/EFI/BOOT/BOOTX64.EFI'" \
+                "Creating default UEFI boot file"
+    
+    # Create comprehensive rescue instructions
+    cat << 'EOF' | sudo tee "$usb_mount/RESCUE_INSTRUCTIONS.txt" >/dev/null
+SQUISHLAB BOOT RESCUE USB
+========================
+
+This USB contains a fallback boot environment for emergency recovery.
+
+EMERGENCY BOOT PROCEDURE:
+1. Insert this USB device
+2. Boot from USB (F12/F8/DEL for boot menu)
+3. Should boot to minimal rescue environment
+4. Follow recovery procedures below
+
+SYSTEM RECOVERY STEPS:
+1. Identify your encrypted root device:
+   lsblk -f
+   
+2. Open encrypted devices (replace sdXY with your LUKS devices):
+   cryptsetup open /dev/sdXY cryptroot
+   cryptsetup open /dev/sdXZ crypthome
+   
+3. Mount your system:
+   mount /dev/mapper/cryptroot /mnt
+   mount /dev/mapper/crypthome /mnt/home
+   
+4. Mount ESP (replace sdXZ with your ESP partition):
+   mount /dev/sdXZ /mnt/boot
+   
+5. Chroot into your system:
+   arch-chroot /mnt
+   
+6. Restore boot configuration from backup:
+   cd ~/boot-backups/
+   ls -la
+   # Choose most recent backup and run RESTORE.sh
+
+BACKUP LOCATIONS ON MAIN SYSTEM:
+- Boot backups: ~/boot-backups/boot-backup-YYYYMMDD-HHMMSS/
+- Boot reset logs: ~/boot-reset.log
+- ESP mount point: /boot
+
+MANUAL BOOT REPAIR:
+If automatic restore fails, manually recreate boot:
+1. Check if UKI exists: ls /mnt/boot/EFI/Linux/
+2. Create UEFI entry: efibootmgr -c -d /dev/sdX -p Y -L "Manual Boot" -l "\EFI\Linux\direct-boot.efi"
+3. Set boot order: efibootmgr -o XXXX
+
+EMERGENCY CHROOT:
+1. cryptsetup open /dev/your-luks-device cryptroot
+2. mount /dev/mapper/cryptroot /mnt
+3. mount /dev/your-esp-partition /mnt/boot
+4. arch-chroot /mnt
+
+EMERGENCY CONTACTS:
+- Created: $(date)
+- System: $(hostname)
+- Kernel: $(uname -r)
+
+Good luck with your recovery!
+EOF
+    
+    # Create system information file
+    cat << EOF | sudo tee "$usb_mount/SYSTEM_INFO.txt" >/dev/null
+ORIGINAL SYSTEM INFORMATION
+==========================
+Hostname: $(hostname)
+Kernel: $(uname -r)
+Created: $(date)
+ESP Device: $(findmnt -n -o SOURCE "$ESP_MOUNT")
+ESP Mount: $ESP_MOUNT
+
+Current Kernel Parameters:
+$(cat /proc/cmdline)
+
+LUKS Status:
+$(cryptsetup status /dev/mapper/cryptroot 2>/dev/null || echo "No LUKS cryptroot device active")
+$(cryptsetup status /dev/mapper/crypthome 2>/dev/null || echo "No LUKS crypthome device active")
+
+Hardware Information:
+CPU: $(lscpu | grep "Model name" | sed 's/Model name:\s*//')
+Memory: $(free -h | awk '/^Mem:/ {print $2}')
+EOF
+    
+    # Cleanup mounts
+    safe_execute "sudo umount '$usb_efi_mount' '$usb_mount'" \
+                "Unmounting USB rescue device"
+    
+    safe_execute "sudo rmdir '$usb_efi_mount' '$usb_mount'" \
+                "Cleaning up mount points"
+    
+    green "USB fallback created successfully: $usb_device"
+    green "Test the USB by booting from it before proceeding with system changes"
+    log "USB fallback created: $usb_device"
+}
+
+# Create fallback initramfs with generic modules
+create_fallback_initramfs() {
+    local output_dir="$1"
+    local initramfs_file="$output_dir/initramfs-fallback.img"
+    
+    blue "Creating generic fallback initramfs..."
+    
+    # Create temporary mkinitcpio config for fallback
+    local temp_config="/tmp/mkinitcpio-fallback-$$.conf"
+    
+    # Build module list string
+    local modules_str=""
+    for module in "${FALLBACK_MODULES[@]}"; do
+        modules_str+="$module "
+    done
+    
+    cat > "$temp_config" << EOF
+# Fallback mkinitcpio configuration for rescue USB
+MODULES=($modules_str)
+BINARIES=(cryptsetup)
+FILES=()
+HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck)
+COMPRESSION="zstd"
+EOF
+
+    # Include LUKS keys if they exist
+    if [[ -d /etc/keys ]]; then
+        sed -i 's/FILES=()/FILES=(\/etc\/keys\/root.key)/' "$temp_config"
+    fi
+    
+    # Build fallback initramfs
+    safe_execute "sudo mkinitcpio -c '$temp_config' -k '$KERNEL_PKG' -g '$initramfs_file'" \
+                "Building generic fallback initramfs"
+    
+    # Cleanup
+    rm -f "$temp_config"
+    
+    if [[ -f "$initramfs_file" ]]; then
+        green "Fallback initramfs created: $initramfs_file"
+    else
+        red "Failed to create fallback initramfs"
+        return 1
+    fi
+}
+
+# Create fallback UKI
+create_fallback_uki() {
+    local output_dir="$1"
+    local uki_file="$output_dir/EFI/Linux/fallback.efi"
+    
+    blue "Creating fallback UKI..."
+    
+    # Create generic fallback cmdline (remove system-specific UUIDs)
+    local fallback_cmdline="rw quiet intel_iommu=on iommu=pt"
+    fallback_cmdline+=" lockdown=confidentiality module.sig_enforce=1"
+    fallback_cmdline+=" security=apparmor apparmor=1 enforcing=1"
+    fallback_cmdline+=" ipv6.disable=1 modprobe.blacklist=mei,mei_me,nvidia,nouveau"
+    fallback_cmdline+=" i915.modeset=1 init=/bin/bash"
+    
+    # Build fallback UKI
+    safe_execute "sudo mkdir -p '$(dirname "$uki_file")'" \
+                "Creating UKI directory"
+    
+    safe_execute "sudo ukify build \
+        --linux=/boot/vmlinuz-$KERNEL_PKG \
+        --initrd='$output_dir/initramfs-fallback.img' \
+        --cmdline='$fallback_cmdline' \
+        --output='$uki_file'" \
+        "Building fallback UKI"
+    
+    if [[ -f "$uki_file" ]]; then
+        green "Fallback UKI created: $uki_file"
+    else
+        red "Failed to create fallback UKI"
+        return 1
+    fi
+}
+
+# Backup current boot configuration (SAFE OPERATION)
+backup_current_boot() {
+    blue "=== Backing Up Current Boot Configuration ==="
+    
+    local backup_full_path="$BACKUP_DIR/boot-backup-$TIMESTAMP"
+    safe_execute "mkdir -p '$backup_full_path'" \
+                "Creating backup directory"
+    
+    # Backup entire ESP
+    safe_execute "sudo cp -r '$ESP_MOUNT' '$backup_full_path/ESP-backup'" \
+                "Backing up ESP partition"
+    
+    # Backup UEFI boot entries
+    safe_execute "efibootmgr -v > '$backup_full_path/uefi-entries.txt'" \
+                "Backing up UEFI boot entries"
+    
+    # Backup kernel and initramfs
+    safe_execute "sudo cp '/boot/vmlinuz-$KERNEL_PKG' '$backup_full_path/'" \
+                "Backing up kernel"
+    
+    safe_execute "sudo cp '/boot/initramfs-$KERNEL_PKG.img' '$backup_full_path/'" \
+                "Backing up initramfs"
+    
+    # Backup current mkinitcpio config
+    safe_execute "sudo cp /etc/mkinitcpio.conf '$backup_full_path/'" \
+                "Backing up mkinitcpio config"
+    
+    # Backup LUKS keys if they exist
+    if [[ -d /etc/keys ]]; then
+        safe_execute "sudo cp -r /etc/keys '$backup_full_path/'" \
+                    "Backing up LUKS keys"
+    fi
+    
+    # Save current kernel cmdline
+    safe_execute "cat /proc/cmdline > '$backup_full_path/current-cmdline.txt'" \
+                "Saving current kernel parameters"
+    
+    # Save system information
+    cat > "$backup_full_path/system-info.txt" << EOF
+BACKUP SYSTEM INFORMATION
+========================
+Hostname: $(hostname)
+Backup Date: $(date)
+Kernel Version: $(uname -r)
+Kernel Package: $KERNEL_PKG
+ESP Mount: $ESP_MOUNT
+ESP Device: $(findmnt -n -o SOURCE "$ESP_MOUNT" 2>/dev/null || echo "Not mounted")
+ESP Filesystem: $(findmnt -n -o FSTYPE "$ESP_MOUNT")
+LUKS Status: $(cryptsetup status /dev/mapper/cryptroot 2>/dev/null || echo "No LUKS cryptroot")
+EOF
+    
+    # Create restore script
+    cat > "$backup_full_path/RESTORE.sh" << 'EOF'
+#!/bin/bash
+# Emergency restore script
+# Run this from a rescue environment to restore the backed up boot configuration
+
+set -euo pipefail
+
+ESP_MOUNT="/boot"
+
+red() { printf '\033[0;31m%s\033[0m\n' "$*"; }
+green() { printf '\033[0;32m%s\033[0m\n' "$*"; }
+yellow() { printf '\033[1;33m%s\033[0m\n' "$*"; }
+
+echo "EMERGENCY BOOT CONFIGURATION RESTORE"
+echo "===================================="
+echo
+yellow "This will restore the backed up boot configuration"
+yellow "Make sure ESP is mounted at $ESP_MOUNT"
+echo
+echo "Current ESP contents:"
+if [[ -d "$ESP_MOUNT" ]]; then
+    ls -la "$ESP_MOUNT"
+else
+    red "ESP not mounted at $ESP_MOUNT"
+    exit 1
+fi
+echo
+read -p "Continue with restore? (y/N): " -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Restore cancelled"
+    exit 1
+fi
+
+# Backup current (broken) state
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+mkdir -p "broken-backup-$TIMESTAMP"
+cp -r "$ESP_MOUNT" "broken-backup-$TIMESTAMP/"
+
+# Restore ESP
+echo "Restoring ESP contents..."
+sudo rm -rf "$ESP_MOUNT"/*
+sudo cp -r ESP-backup/* "$ESP_MOUNT/"
+
+green "ESP restore completed"
+yellow "Manual UEFI entry restoration may be required"
+yellow "Check uefi-entries.txt for original entries"
+echo
+echo "Example UEFI entry recreation:"
+echo "sudo efibootmgr -c -d /dev/sdX -p 1 -L 'Restored Boot' -l '\\EFI\\refind\\refind_x64.efi'"
+echo
+green "Restore completed. Reboot and test."
+EOF
+    
+    chmod +x "$backup_full_path/RESTORE.sh"
+    
+    green "Boot configuration backed up to: $backup_full_path"
+    green "Backup size: $(du -sh "$backup_full_path" | cut -f1)"
+    log "Boot backup created: $backup_full_path"
+}
+
+# Prepare new UKI for direct UEFI boot (SAFE OPERATION)
+prepare_new_uki() {
+    blue "=== Preparing New UKI for Direct UEFI Boot ==="
+    
+    # Extract current kernel parameters
+    local current_cmdline cmdline_clean
+    current_cmdline=$(cat /proc/cmdline)
+    
+    # Clean up cmdline - remove BOOT_IMAGE and other boot-specific params
+    cmdline_clean=$(echo "$current_cmdline" | sed -e 's/BOOT_IMAGE=[^ ]* //g' -e 's/initrd=[^ ]* //g')
+    
+    echo "Current kernel parameters:"
+    echo "$cmdline_clean"
+    echo
+    
+    # Verify critical parameters are present
+    local missing_params=()
+    
+    if ! echo "$cmdline_clean" | grep -q "cryptdevice\|rd.luks"; then
+        missing_params+=("LUKS encryption parameters")
+    fi
+    
+    if ! echo "$cmdline_clean" | grep -q "root="; then
+        missing_params+=("root filesystem specification")
+    fi
+    
+    if ! echo "$cmdline_clean" | grep -q "intel_iommu=on"; then
+        missing_params+=("Intel IOMMU (required for VFIO)")
+    fi
+    
+    if ! echo "$cmdline_clean" | grep -q "vfio-pci.ids="; then
+        missing_params+=("VFIO PCI device IDs")
+    fi
+    
+    if [[ ${#missing_params[@]} -gt 0 ]]; then
+        red "CRITICAL: Missing important kernel parameters:"
+        for param in "${missing_params[@]}"; do
+            red "  - $param"
+        done
+        echo
+        echo "These parameters are critical for your system configuration"
+        echo "Continue anyway? (y/N)"
+        read -r response
+        if [[ ! "$response" =~ ^[Yy]$ ]]; then
+            return 1
+        fi
+    fi
+    
+    # Ensure UKI directory exists
+    safe_execute "sudo mkdir -p '$UKI_DIR'" \
+                "Creating UKI directory"
+    
+    # Build new UKI
+    local new_uki="$UKI_DIR/$UKI_NAME.efi"
+    
+    safe_execute "sudo ukify build \
+        --linux='/boot/vmlinuz-$KERNEL_PKG' \
+        --initrd='/boot/initramfs-$KERNEL_PKG.img' \
+        --cmdline='$cmdline_clean' \
+        --output='$new_uki'" \
+        "Building new direct boot UKI"
+    
+    # Verify UKI was created and has reasonable size
+    if [[ ! -f "$new_uki" ]]; then
+        red "Failed to create UKI: $new_uki"
+        return 1
+    fi
+    
+    local uki_size_mb
+    uki_size_mb=$(du -m "$new_uki" | cut -f1)
+    if [[ $uki_size_mb -lt 5 ]]; then
+        red "UKI appears too small: ${uki_size_mb}MB"
+        red "This may indicate a build failure"
+        return 1
+    fi
+    
+    # Test UKI integrity
+    safe_execute "sudo ukify inspect '$new_uki'" \
+                "Verifying UKI integrity"
+    
+    green "New UKI prepared: $new_uki"
+    green "UKI size: ${uki_size_mb}MB"
+    log "UKI prepared: $new_uki (${uki_size_mb}MB)"
+}
+
+# Rebuild ESP from scratch (RECOVERY MODE)
+rebuild_esp_from_scratch() {
+    blue "=== Rebuilding ESP from Scratch (Recovery Mode) ==="
+    
+    # Verify we're in a recoverable state
+    if [[ ! -f "/boot/vmlinuz-$KERNEL_PKG" ]]; then
+        red "Kernel not found: /boot/vmlinuz-$KERNEL_PKG"
+        red "Cannot rebuild without kernel files"
+        return 1
+    fi
+    
+    if [[ ! -f "/boot/initramfs-$KERNEL_PKG.img" ]]; then
+        red "Initramfs not found: /boot/initramfs-$KERNEL_PKG.img"
+        red "Cannot rebuild without initramfs"
+        return 1
+    fi
+    
+    # Show current system state
+    echo "Current system information:"
+    echo "  Hostname: $(hostname)"
+    echo "  Kernel: $(uname -r)"
+    echo "  Root device: $(findmnt -n -o SOURCE /)"
+    echo "  ESP mount: $ESP_MOUNT"
+    echo "  ESP device: $(findmnt -n -o SOURCE "$ESP_MOUNT" 2>/dev/null || echo "Not found")"
+    echo
+    
+    # Verify ESP is mounted and empty/corrupted
+    if ! mountpoint -q "$ESP_MOUNT"; then
+        red "ESP not mounted at $ESP_MOUNT"
+        red "Mount your ESP partition first"
+        return 1
+    fi
+    
+    echo "ESP current contents:"
+    ls -la "$ESP_MOUNT" 2>/dev/null || echo "  (empty or unreadable)"
+    echo
+    
+    destructive_operation_gate "ESP Rebuild from Scratch" "REBUILD"
+    
+    # Create ESP directory structure
+    safe_execute "sudo mkdir -p '$ESP_MOUNT/EFI'/{BOOT,Linux}" \
+                "Creating ESP directory structure"
+    
+    # Extract current kernel parameters from running system
+    local current_cmdline
+    current_cmdline=$(cat /proc/cmdline)
+    
+    # Clean up cmdline - remove boot-specific parameters
+    local clean_cmdline
+    clean_cmdline=$(echo "$current_cmdline" | sed -e 's/BOOT_IMAGE=[^ ]* //g' -e 's/initrd=[^ ]* //g')
+    
+    echo "Using kernel parameters: $clean_cmdline"
+    echo
+    
+    # Build UKI from current system (using consistent naming)
+    local direct_uki="$ESP_MOUNT/EFI/Linux/$UKI_NAME.efi"
+    
+    safe_execute "sudo ukify build \
+        --linux='/boot/vmlinuz-$KERNEL_PKG' \
+        --initrd='/boot/initramfs-$KERNEL_PKG.img' \
+        --cmdline='$clean_cmdline' \
+        --output='$direct_uki'" \
+        "Building direct boot UKI from current system"
+    
+    # Create default UEFI boot file
+    safe_execute "sudo cp '$direct_uki' '$ESP_MOUNT/EFI/BOOT/BOOTX64.EFI'" \
+                "Creating default UEFI boot file"
+    
+    # Create UEFI boot entry
+    local esp_device esp_disk esp_part_num
+    esp_device=$(findmnt -n -o SOURCE "$ESP_MOUNT")
+    
+    # Handle different device naming schemes
+    if [[ "$esp_device" =~ nvme ]]; then
+        esp_disk=$(echo "$esp_device" | sed 's/p[0-9]*$//')
+        esp_part_num=$(echo "$esp_device" | sed 's/.*p//')
+    else
+        esp_disk=$(echo "$esp_device" | sed 's/[0-9]*$//')
+        esp_part_num=$(echo "$esp_device" | sed 's/.*[^0-9]//')
+    fi
+    
+    # Create UEFI boot entry using consistent naming
+    safe_execute "sudo efibootmgr -c -d '$esp_disk' -p '$esp_part_num' -L 'Direct Boot' -l '\\EFI\\Linux\\$UKI_NAME.efi'" \
+                "Creating direct UEFI boot entry"
+    
+    # Set as primary boot option
+    local new_entry
+    new_entry=$(efibootmgr | grep 'Direct Boot' | cut -c5-8 | head -1)
+    if [[ -n "$new_entry" ]]; then
+        safe_execute "sudo efibootmgr -o '$new_entry'" \
+                    "Setting direct boot as primary"
+    fi
+    
+    # Verify rebuild
+    echo
+    echo "ESP rebuild completed. New structure:"
+    find "$ESP_MOUNT" -type f -exec ls -la {} \;
+    echo
+    
+    green "ESP successfully rebuilt from current system"
+    green "You should now be able to boot from this ESP"
+    
+    log "ESP rebuilt from scratch"
+}
+
+# Quick recovery check (SAFE OPERATION)
+recovery_check() {
+    blue "=== Recovery System Check ==="
+    
+    echo "Checking system recovery readiness..."
+    echo
+    
+    # Check if we're running from root filesystem
+    local root_device
+    root_device=$(findmnt -n -o SOURCE /)
+    echo "Root filesystem: $root_device"
+    
+    # Check if ESP is available
+    if mountpoint -q "$ESP_MOUNT"; then
+        echo "ESP mount: $ESP_MOUNT (mounted)"
+        echo "ESP device: $(findmnt -n -o SOURCE "$ESP_MOUNT")"
+        echo "ESP filesystem: $(findmnt -n -o FSTYPE "$ESP_MOUNT")"
+        echo "ESP contents:"
+        ls -la "$ESP_MOUNT" 2>/dev/null || echo "  (empty or unreadable)"
+    else
+        yellow "ESP not mounted at $ESP_MOUNT"
+    fi
+    echo
+    
+    # Check kernel files
+    echo "Kernel files check:"
+    if [[ -f "/boot/vmlinuz-$KERNEL_PKG" ]]; then
+        green "  [PASS] Kernel found: /boot/vmlinuz-$KERNEL_PKG"
+    else
+        red "  [FAIL] Kernel missing: /boot/vmlinuz-$KERNEL_PKG"
+    fi
+    
+    if [[ -f "/boot/initramfs-$KERNEL_PKG.img" ]]; then
+        green "  [PASS] Initramfs found: /boot/initramfs-$KERNEL_PKG.img"
+    else
+        red "  [FAIL] Initramfs missing: /boot/initramfs-$KERNEL_PKG.img"
+    fi
+    echo
+    
+    # Check current boot parameters
+    echo "Current kernel parameters:"
+    cat /proc/cmdline
+    echo
+    
+    # Check LUKS status
+    echo "LUKS status:"
+    if cryptsetup status /dev/mapper/cryptroot >/dev/null 2>&1; then
+        echo "Root device:"
+        cryptsetup status /dev/mapper/cryptroot
+    else
+        echo "  No LUKS cryptroot device active"
+    fi
+    
+    if cryptsetup status /dev/mapper/crypthome >/dev/null 2>&1; then
+        echo "Home device:"
+        cryptsetup status /dev/mapper/crypthome
+    else
+        echo "  No LUKS crypthome device active"
+    fi
+    echo
+    
+    # Check UEFI boot entries
+    echo "Current UEFI boot entries:"
+    efibootmgr -v 2>/dev/null || echo "  Could not read UEFI entries"
+    echo
+    
+    # Recovery readiness assessment
+    echo "Recovery readiness:"
+    local can_recover=true
+    
+    if [[ ! -f "/boot/vmlinuz-$KERNEL_PKG" ]] || [[ ! -f "/boot/initramfs-$KERNEL_PKG.img" ]]; then
+        red "  [FAIL] Cannot recover - missing kernel files"
+        can_recover=false
+    fi
+    
+    if ! mountpoint -q "$ESP_MOUNT"; then
+        yellow "  [WARN] ESP not mounted - mount first"
+        can_recover=false
+    fi
+    
+    if ! command -v ukify >/dev/null 2>&1; then
+        red "  [FAIL] Cannot recover - ukify not available"
+        can_recover=false
+    fi
+    
+    if [[ "$can_recover" == "true" ]]; then
+        green "  [PASS] System ready for ESP recovery"
+        echo
+        green "You can run: $0 rebuild"
+    else
+        red "  [FAIL] System not ready for recovery"
+        echo
+        red "Fix the issues above before attempting recovery"
+    fi
+    
+    log "Recovery check completed"
+}
+
+# Reset ESP and install direct UEFI boot (DESTRUCTIVE OPERATION)
+reset_esp_direct_boot() {
+    blue "=== DANGER: Resetting ESP for Direct UEFI Boot ==="
+    
+    # Validate all safety gates first
+    validate_safety_gates
+    
+    # Verify prerequisites
+    local prerequisites_met=true
+    
+    if [[ ! -f "$UKI_DIR/$UKI_NAME.efi" ]]; then
+        red "PREREQUISITE FAILED: New UKI not found: $UKI_DIR/$UKI_NAME.efi"
+        prerequisites_met=false
+    fi
+    
+    if [[ ! -d "$BACKUP_DIR" ]] || [[ -z "$(ls -A "$BACKUP_DIR" 2>/dev/null)" ]]; then
+        red "PREREQUISITE FAILED: No boot backups found in $BACKUP_DIR"
+        prerequisites_met=false
+    fi
+    
+    if [[ "$prerequisites_met" == "false" ]]; then
+        red "Prerequisites not met. Run 'prepare' and 'backup' commands first"
+        return 1
+    fi
+    
+    # Show current ESP contents for final review
+    echo "Current ESP contents (WILL BE DELETED):"
+    ls -la "$ESP_MOUNT"
+    echo
+    
+    # Final destructive operation confirmation
+    destructive_operation_gate "ESP Reset and Direct UEFI Boot Installation" "RESET"
+    
+    # Remove UEFI boot entries (except active one to prevent boot loop)
+    blue "Cleaning UEFI boot entries..."
+    local current_boot
+    current_boot=$(efibootmgr | grep '^BootCurrent:' | cut -d' ' -f2)
+    
+    local boot_entries
+    boot_entries=$(efibootmgr | grep '^Boot[0-9]' | cut -c5-8)
+    for entry in $boot_entries; do
+        if [[ -n "$entry" ]] && [[ "$entry" != "$current_boot" ]]; then
+            safe_execute "sudo efibootmgr -b '$entry' -B" \
+                        "Removing UEFI boot entry $entry"
+        fi
+    done
+    
+    # Create backup of ESP contents right before wipe (last chance)
+    local last_chance_backup="$BACKUP_DIR/last-chance-esp-$TIMESTAMP"
+    safe_execute "sudo cp -r '$ESP_MOUNT' '$last_chance_backup'" \
+                "Creating last-chance ESP backup"
+    
+    # Wipe ESP (keeping mount point)
+    blue "Wiping ESP contents..."
+    safe_execute "sudo find '$ESP_MOUNT' -mindepth 1 -delete" \
+                "Wiping ESP partition contents"
+    
+    # Verify ESP is empty
+    local remaining_files
+    remaining_files=$(sudo find "$ESP_MOUNT" -mindepth 1 2>/dev/null | wc -l)
+    if [[ $remaining_files -gt 0 ]]; then
+        red "ESP wipe incomplete: $remaining_files files remain"
+        return 1
+    fi
+    
+    # Create minimal ESP structure for direct UEFI boot
+    safe_execute "sudo mkdir -p '$ESP_MOUNT/EFI'/{BOOT,Linux}" \
+                "Creating minimal ESP structure"
+    
+    # Copy new UKI to ESP
+    safe_execute "sudo cp '$UKI_DIR/$UKI_NAME.efi' '$ESP_MOUNT/EFI/Linux/'" \
+                "Installing new UKI to ESP"
+    
+    # Create default UEFI boot file (fallback boot path)
+    safe_execute "sudo cp '$UKI_DIR/$UKI_NAME.efi' '$ESP_MOUNT/EFI/BOOT/BOOTX64.EFI'" \
+                "Creating default UEFI boot file"
+    
+    # Determine ESP device information for UEFI entry creation
+    local esp_device esp_disk esp_part_num
+    esp_device=$(findmnt -n -o SOURCE "$ESP_MOUNT")
+    
+    # Handle different device naming schemes
+    if [[ "$esp_device" =~ nvme ]]; then
+        esp_disk=$(echo "$esp_device" | sed 's/p[0-9]*$//')
+        esp_part_num=$(echo "$esp_device" | sed 's/.*p//')
+    else
+        esp_disk=$(echo "$esp_device" | sed 's/[0-9]*$//')
+        esp_part_num=$(echo "$esp_device" | sed 's/.*[^0-9]//')
+    fi
+    
+    # Create UEFI boot entry for direct boot
+    safe_execute "sudo efibootmgr -c -d '$esp_disk' -p '$esp_part_num' -L 'Direct Boot' -l '\\EFI\\Linux\\$UKI_NAME.efi'" \
+                "Creating direct UEFI boot entry"
+    
+    # Set new entry as next boot option
+    local new_entry
+    new_entry=$(efibootmgr | grep 'Direct Boot' | cut -c5-8 | head -1)
+    if [[ -n "$new_entry" ]]; then
+        safe_execute "sudo efibootmgr -n '$new_entry'" \
+                    "Setting direct boot as next boot option"
+        
+        # Also set as first in boot order
+        safe_execute "sudo efibootmgr -o '$new_entry'" \
+                    "Setting direct boot as primary boot option"
+    fi
+    
+    green "ESP reset completed - Direct UEFI boot installed"
+    green "Last chance backup saved: $last_chance_backup"
+    log "ESP reset completed"
+}
+
+# Verify new boot configuration (SAFE OPERATION)
+verify_boot_config() {
+    blue "=== Verifying New Boot Configuration ==="
+    
+    # Check ESP structure
+    echo "New ESP structure:"
+    if [[ -d "$ESP_MOUNT/EFI" ]]; then
+        find "$ESP_MOUNT/EFI" -type f -exec ls -la {} \;
+    else
+        red "ESP EFI directory missing"
+        return 1
+    fi
+    echo
+    
+    # Check required UKI files (using consistent naming)
+    local verification_passed=true
+    
+    if [[ -f "$ESP_MOUNT/EFI/Linux/$UKI_NAME.efi" ]]; then
+        green "[PASS] UKI installed: $ESP_MOUNT/EFI/Linux/$UKI_NAME.efi"
+        local uki_size
+        uki_size=$(du -h "$ESP_MOUNT/EFI/Linux/$UKI_NAME.efi" | cut -f1)
+        echo "       Size: $uki_size"
+    else
+        red "[FAIL] UKI missing from ESP"
+        verification_passed=false
+    fi
+    
+    if [[ -f "$ESP_MOUNT/EFI/BOOT/BOOTX64.EFI" ]]; then
+        green "[PASS] Default UEFI boot file present"
+    else
+        red "[FAIL] Default UEFI boot file missing"
+        verification_passed=false
+    fi
+    
+    # Check UEFI boot entries
+    echo
+    echo "UEFI Boot Entries:"
+    efibootmgr -v
+    
+    # Verify our boot entry exists
+    if efibootmgr | grep -q "Direct Boot"; then
+        green "[PASS] Direct Boot entry found in UEFI"
+    else
+        red "[FAIL] Direct Boot entry missing from UEFI"
+        verification_passed=false
+    fi
+    
+    # Verify UKI integrity
+    echo
+    blue "Verifying UKI integrity:"
+    if sudo ukify inspect "$ESP_MOUNT/EFI/Linux/$UKI_NAME.efi"; then
+        green "[PASS] UKI integrity check passed"
+    else
+        red "[FAIL] UKI integrity check failed"
+        verification_passed=false
+    fi
+    
+    # Check ESP free space
+    echo
+    echo "ESP Usage:"
+    df -h "$ESP_MOUNT"
+    
+    # Verify ESP has reasonable free space remaining
+    local esp_free_kb
+    esp_free_kb=$(df --output=avail "$ESP_MOUNT" | tail -n1)
+    if [[ $esp_free_kb -gt 10240 ]]; then  # 10MB minimum
+        green "[PASS] Sufficient ESP space remaining"
+    else
+        yellow "[WARN] Low ESP space remaining: $((esp_free_kb/1024))MB"
+    fi
+    
+    # Overall verification result
+    echo
+    if [[ "$verification_passed" == "true" ]]; then
+        green "VERIFICATION PASSED: Boot configuration appears correct"
+        green "You may now reboot to test the new configuration"
+    else
+        red "VERIFICATION FAILED: Boot configuration has issues"
+        red "DO NOT REBOOT - Fix issues first or restore from backup"
+        return 1
+    fi
+    
+    log "Boot verification completed: $([[ "$verification_passed" == "true" ]] && echo "PASSED" || echo "FAILED")"
+}
+
+# Rollback from backup (RECOVERY OPERATION)
+rollback_from_backup() {
+    blue "=== Emergency Rollback from Backup ==="
+    
+    if [[ ! -d "$BACKUP_DIR" ]]; then
+        red "No backup directory found: $BACKUP_DIR"
+        return 1
+    fi
+    
+    echo "Available backups:"
+    ls -la "$BACKUP_DIR" | grep "boot-backup-"
+    echo
+    
+    if [[ -z "$(ls -A "$BACKUP_DIR" 2>/dev/null)" ]]; then
+        red "No backups found in $BACKUP_DIR"
+        return 1
+    fi
+    
+    echo "Enter backup directory name (e.g., boot-backup-20231225-143022): "
+    read -r backup_name
+    
+    local backup_path="$BACKUP_DIR/$backup_name"
+    if [[ ! -d "$backup_path" ]]; then
+        red "Backup not found: $backup_path"
+        return 1
+    fi
+    
+    if [[ ! -d "$backup_path/ESP-backup" ]]; then
+        red "Invalid backup: ESP-backup directory missing"
+        return 1
+    fi
+    
+    echo
+    echo "Backup information:"
+    if [[ -f "$backup_path/system-info.txt" ]]; then
+        cat "$backup_path/system-info.txt"
+    fi
+    echo
+    
+    destructive_operation_gate "Rollback from Backup" "ROLLBACK"
+    
+    # Create backup of current (broken) state
+    local broken_backup="$BACKUP_DIR/broken-state-$TIMESTAMP"
+    safe_execute "sudo mkdir -p '$broken_backup'" \
+                "Creating backup of current broken state"
+    
+    safe_execute "sudo cp -r '$ESP_MOUNT' '$broken_backup/'" \
+                "Backing up current broken ESP"
+    
+    # Restore ESP from backup
+    safe_execute "sudo rm -rf '$ESP_MOUNT'/*" \
+                "Clearing current ESP"
+    
+    safe_execute "sudo cp -r '$backup_path/ESP-backup'/* '$ESP_MOUNT/'" \
+                "Restoring ESP from backup"
+    
+    green "Rollback completed successfully"
+    green "Broken state backed up to: $broken_backup"
+    yellow "You may need to manually recreate UEFI boot entries"
+    
+    if [[ -f "$backup_path/uefi-entries.txt" ]]; then
+        yellow "Original UEFI entries saved in: $backup_path/uefi-entries.txt"
+    fi
+    
+    log "Rollback completed from: $backup_path"
+}
+
+# Show usage
+show_usage() {
+    green "squishBootReset v1.1-secure-fixed - Direct UEFI Boot Reset"
+    echo
+    red "EXTREME DANGER WARNING"
+    red "This module WIPES your entire boot configuration!"
+    red "Have rescue media ready before proceeding!"
+    echo
+    yellow "USAGE:"
+    echo "  $0 {check|rebuild|analyze|backup|fallback|prepare|reset|verify|rollback} [options]"
+    echo
+    yellow "RECOVERY COMMANDS (for corrupted/blank ESP):"
+    echo "  check       - Check if system is ready for ESP recovery (SAFE)"
+    echo "  rebuild     - Rebuild ESP from scratch using current system (DESTRUCTIVE)"
+    echo
+    yellow "NORMAL COMMANDS:"
+    echo "  analyze     - Analyze current boot system (SAFE)"
+    echo "  backup      - Backup current boot configuration (SAFE)"
+    echo "  fallback    - Create external USB rescue fallback (REQUIRED FIRST)"
+    echo "  prepare     - Build new UKI for direct boot (SAFE)"
+    echo "  reset       - DANGER: Wipe ESP and install direct UEFI boot"
+    echo "  verify      - Verify new boot configuration (SAFE)"
+    echo "  rollback    - Restore from backup (RECOVERY)"
+    echo
+    yellow "RECOVERY WORKFLOW (for blank/corrupted ESP):"
+    echo "  1. $0 check            # Verify system can be recovered"
+    echo "  2. $0 rebuild          # Rebuild ESP from current system"
+    echo "  3. reboot              # Test new boot configuration"
+    echo
+    yellow "MANDATORY WORKFLOW:"
+    echo "  1. $0 analyze          # Understand current setup"
+    echo "  2. $0 backup           # Backup everything"
+    echo "  3. $0 fallback /dev/sdX # Create USB rescue (CRITICAL)"
+    echo "  4. $0 prepare          # Build new UKI"
+    echo "  5. $0 reset            # POINT OF NO RETURN"
+    echo "  6. $0 verify           # Check configuration"
+    echo "  7. reboot              # Test new boot"
+    echo
+    yellow "SAFETY FEATURES:"
+    echo "  • 10 critical safety gates must pass before destructive operations"
+    echo "  • Multiple confirmation prompts for destructive actions"
+    echo "  • Comprehensive backups with automated restore scripts"
+    echo "  • Generic USB rescue device for emergency recovery"
+    echo "  • Dry-run mode available (--dry-run)"
+    echo "  • Complete logging of all actions"
+    echo
+    yellow "EMERGENCY RECOVERY:"
+    echo "  • Boot from USB rescue device created with 'fallback' command"
+    echo "  • Use 'rollback' command to restore from backup"
+    echo "  • Check ~/boot-backups/ for manual restore options"
+    echo "  • All rescue instructions included on USB device"
+    echo
+    yellow "TARGET ARCHITECTURE:"
+    echo "  UEFI Firmware -> Direct UKI Boot -> Kernel + LUKS"
+    echo "  • No bootloader (minimal attack surface)"
+    echo "  • Unified Kernel Image with embedded initramfs + cmdline"
+    echo "  • ESP mounted at /boot (not /boot/EFI)"
+    echo "  • Preserves current LUKS encryption and VFIO configuration"
+    echo "  • Compatible with Secure Boot when enabled"
+    echo
+    red "BACKUP YOUR SYSTEM BEFORE USING"
+    red "TEST USB RESCUE DEVICE BEFORE PROCEEDING"
+    red "THIS IS YOUR ONLY WARNING"
+}
+
+# Main function
+main() {
+    local command="${1:-}"
+    
+    # Check for dry-run flag
+    if [[ "$*" =~ --dry-run ]]; then
+        export DRY_RUN=true
+        blue "DRY RUN MODE - No destructive changes will be made"
+        echo
+    fi
+    
+    # Remove --dry-run from arguments
+    set -- "${@/--dry-run/}"
+    command="${1:-}"
+    
+    # Initialize logging
+    log "Starting squishBootReset: $command (DRY_RUN=$DRY_RUN)"
+    log "Arguments: $*"
+    
+    case "$command" in
+        "check")
+            # Recovery check doesn't need full safety checks
+            if [[ ! -d /sys/firmware/efi ]]; then
+                red "This system is not UEFI"
+                exit 1
+            fi
+            recovery_check
+            ;;
+        "rebuild")
+            if [[ "$DRY_RUN" == "true" ]]; then
+                red "Rebuild command not available in dry-run mode (too dangerous)"
+                red "Remove --dry-run flag to perform actual rebuild"
+                exit 1
+            fi
+            # Use minimal safety checks for recovery
+            if [[ $EUID -eq 0 ]]; then
+                red "DO NOT run this script as root!"
+                exit 1
+            fi
+            if [[ ! -d /sys/firmware/efi ]]; then
+                red "This system is not UEFI"
+                exit 1
+            fi
+            rebuild_esp_from_scratch
+            ;;
+        "analyze")
+            critical_safety_checks
+            analyze_current_boot
+            ;;
+        "backup")
+            critical_safety_checks
+            backup_current_boot
+            ;;
+        "fallback")
+            critical_safety_checks
+            create_usb_fallback "${2:-}"
+            ;;
+        "prepare")
+            critical_safety_checks
+            prepare_new_uki
+            ;;
+        "reset")
+            if [[ "$DRY_RUN" == "true" ]]; then
+                red "Reset command not available in dry-run mode (too dangerous)"
+                red "Remove --dry-run flag to perform actual reset"
+                exit 1
+            fi
+            critical_safety_checks
+            reset_esp_direct_boot
+            ;;
+        "verify")
+            # Verify doesn't need full safety checks, just basic ones
+            if [[ ! -d /sys/firmware/efi ]]; then
+                red "This system is not UEFI"
+                exit 1
+            fi
+            if ! mountpoint -q "$ESP_MOUNT"; then
+                red "ESP not mounted at $ESP_MOUNT"
+                exit 1
+            fi
+            verify_boot_config
+            ;;
+        "rollback")
+            critical_safety_checks
+            rollback_from_backup
+            ;;
+        "-h"|"--help"|"")
+            show_usage
+            ;;
+        *)
+            red "Unknown command: $command"
+            echo
+            show_usage
+            exit 1
+            ;;
+    esac
+    
+    log "Command completed successfully: $command"
+    green "Operation completed successfully"
+}
+
+# Entry point with error handling
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    set -E
+    trap 'log "FATAL ERROR: Line $LINENO, Command: $BASH_COMMAND"' ERR
+    main "$@"
+fi

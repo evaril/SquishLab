@@ -1,0 +1,989 @@
+2025-05-26 13:17:37 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:17:37 - Arguments: analyze
+2025-05-26 13:17:37 - FATAL ERROR: Line 68, Command: ((SAFETY_CHECKS_PASSED++))
+2025-05-26 13:19:56 - Starting squishBootReset: backup (DRY_RUN=false)
+2025-05-26 13:19:56 - Arguments: backup
+2025-05-26 13:19:56 - FATAL ERROR: Line 68, Command: ((SAFETY_CHECKS_PASSED++))
+2025-05-26 13:23:02 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:23:02 - Arguments: analyze
+2025-05-26 13:23:02 - FATAL ERROR: Line 68, Command: ((SAFETY_CHECKS_PASSED++))
+2025-05-26 13:24:45 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:24:45 - Arguments: analyze
+2025-05-26 13:25:22 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:25:22 - Arguments: analyze
+2025-05-26 13:25:22 - FATAL ERROR: Line 68, Command: ((SAFETY_CHECKS_PASSED++))
+2025-05-26 13:25:31 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:25:31 - Arguments: analyze -v
+2025-05-26 13:25:31 - FATAL ERROR: Line 68, Command: ((SAFETY_CHECKS_PASSED++))
+2025-05-26 13:25:37 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:25:37 - Arguments: analyze
+2025-05-26 13:25:37 - FATAL ERROR: Line 68, Command: ((SAFETY_CHECKS_PASSED++))
+2025-05-26 13:27:02 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:27:02 - Arguments: analyze
+2025-05-26 13:27:36 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:27:36 - Arguments: analyze
+2025-05-26 13:27:52 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 13:27:52 - Arguments: analyze
+2025-05-26 13:27:59 - Starting squishBootReset: backup (DRY_RUN=false)
+2025-05-26 13:27:59 - Arguments: backup
+2025-05-26 13:28:19 - Starting squishBootReset: backup (DRY_RUN=false)
+2025-05-26 13:28:19 - Arguments: backup
+2025-05-26 13:28:21 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-26 13:28:21 - Arguments: 
+2025-05-26 13:28:21 - Command completed successfully: 
+2025-05-26 13:28:34 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-26 13:28:34 - Arguments: prepare
+2025-05-26 14:24:27 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 14:24:27 - Arguments: analyze
+2025-05-26 14:26:25 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 14:26:25 - Arguments: analyze
+2025-05-26 14:26:25 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-26 14:26:25 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-26 15:07:45 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 15:07:45 - Arguments: analyze
+2025-05-26 15:07:45 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-26 15:07:45 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-26 16:06:07 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 16:06:07 - Arguments: analyze
+2025-05-26 16:06:07 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-26 16:06:07 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-26 16:08:33 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-26 16:08:33 - Arguments: analyze
+2025-05-26 16:08:33 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-26 16:08:33 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-26 16:08:33 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-26 16:08:33 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-26 16:08:58 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-26 16:08:58 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-26 16:08:58 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-26 16:08:58 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-26 16:08:58 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-26 16:08:58 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-26 16:08:58 - All safety checks passed
+2025-05-26 16:08:58 - Boot analysis completed
+2025-05-26 16:08:58 - Command completed successfully: analyze
+2025-05-26 19:41:56 - Starting squishBootReset: check (DRY_RUN=false)
+2025-05-26 19:41:56 - Arguments: check
+2025-05-26 19:41:56 - Recovery check completed
+2025-05-26 19:41:56 - Command completed successfully: check
+2025-05-26 19:42:08 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-26 19:42:08 - Arguments: rebuild
+2025-05-26 19:42:08 - FATAL ERROR: Line 1147, Command: hostname
+2025-05-26 19:42:24 - Destructive operation confirmed: ESP Rebuild from Scratch
+2025-05-26 19:42:24 - COMMAND: Creating ESP directory structure
+2025-05-26 19:42:24 - EXECUTE: sudo mkdir -p '/boot/EFI'/{BOOT,Linux}
+2025-05-26 19:42:30 - COMMAND: Building recovery UKI from current system
+2025-05-26 19:42:30 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='archisobasedir=sysresccd archisolabel=RESCUE1102 iomem=relaxed copytoram modprobe.blacklist=nvidia,nvidia_uvm,nvidia_modeset,nouveau,mei,mei_me,mei_hda,snd,wmi kptr_restrict=2 init_on_alloc=1 ipv6.disable=1 module.sig_enforce=1 lockdown=confidentiality debug=0 debugfs=0 video=efifb:off video=vesafb:off'         --output='/boot/EFI/Linux/recovery-boot.efi'
+2025-05-26 19:42:30 - COMMAND: Creating default UEFI boot file
+2025-05-26 19:42:30 - EXECUTE: sudo cp '/boot/EFI/Linux/recovery-boot.efi' '/boot/EFI/BOOT/BOOTX64.EFI'
+2025-05-26 19:42:30 - COMMAND: Creating recovery UEFI boot entry
+2025-05-26 19:42:30 - EXECUTE: sudo efibootmgr -c -d '/dev/sda' -p '1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-26 19:42:30 - COMMAND: Setting recovery boot as primary
+2025-05-26 19:42:31 - EXECUTE: sudo efibootmgr -o '0000'
+2025-05-26 19:42:31 - ESP rebuilt from scratch
+2025-05-26 19:42:31 - Command completed successfully: rebuild
+2025-05-26 19:43:12 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-26 19:43:12 - Arguments: verify
+2025-05-26 19:43:13 - FATAL ERROR: Line 1483, Command: return 1
+2025-05-27 00:22:47 - Starting squishBootReset: -h (DRY_RUN=false)
+2025-05-27 00:22:47 - Arguments: -h
+2025-05-27 00:22:47 - Command completed successfully: -h
+2025-05-27 00:23:38 - Starting squishBootReset: -h (DRY_RUN=false)
+2025-05-27 00:23:38 - Arguments: -h
+2025-05-27 00:23:38 - Command completed successfully: -h
+2025-05-27 00:23:45 - Starting squishBootReset: check (DRY_RUN=false)
+2025-05-27 00:23:45 - Arguments: check
+2025-05-27 00:23:45 - Recovery check completed
+2025-05-27 00:23:45 - Command completed successfully: check
+2025-05-27 00:24:07 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 00:24:07 - Arguments: analyze
+2025-05-27 00:24:07 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:24:07 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:24:07 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:24:07 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:29:29 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 00:29:29 - Arguments: analyze
+2025-05-27 00:29:29 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:29:29 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:29:29 - All safety checks passed
+2025-05-27 00:29:30 - Boot analysis completed
+2025-05-27 00:29:30 - Command completed successfully: analyze
+2025-05-27 00:29:58 - Starting squishBootReset: -h (DRY_RUN=false)
+2025-05-27 00:29:58 - Arguments: -h
+2025-05-27 00:29:58 - Command completed successfully: -h
+2025-05-27 00:30:11 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 00:30:11 - Arguments: prepare
+2025-05-27 00:30:11 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:30:11 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:30:11 - All safety checks passed
+2025-05-27 00:30:35 - FATAL ERROR: Line 1462, Command: return 1
+2025-05-27 00:33:57 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 00:33:57 - Arguments: prepare
+2025-05-27 00:33:57 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:33:57 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:33:57 - All safety checks passed
+2025-05-27 00:34:19 - FATAL ERROR: Line 1462, Command: return 1
+2025-05-27 00:40:19 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 00:40:19 - Arguments: prepare
+2025-05-27 00:40:19 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:40:19 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:40:19 - All safety checks passed
+2025-05-27 00:40:27 - COMMAND: Creating UKI directory
+2025-05-27 00:40:27 - EXECUTE: sudo mkdir -p '/boot/EFI/Linux'
+2025-05-27 00:40:27 - COMMAND: Building new direct boot UKI
+2025-05-27 00:40:27 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth   '         --output='/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 00:40:28 - COMMAND: Verifying UKI integrity
+2025-05-27 00:40:28 - EXECUTE: sudo ukify inspect '/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 00:40:28 - UKI prepared: /boot/EFI/Linux/direct-boot.efi (34MB)
+2025-05-27 00:40:28 - Command completed successfully: prepare
+2025-05-27 00:40:54 - Starting squishBootReset: -h (DRY_RUN=false)
+2025-05-27 00:40:54 - Arguments: -h
+2025-05-27 00:40:54 - Command completed successfully: -h
+2025-05-27 00:45:20 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 00:45:20 - Arguments: verify
+2025-05-27 00:45:21 - Boot verification completed: PASSED
+2025-05-27 00:45:21 - Command completed successfully: verify
+2025-05-27 00:45:45 - Starting squishBootReset: backup (DRY_RUN=false)
+2025-05-27 00:45:45 - Arguments: backup
+2025-05-27 00:45:45 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:45:45 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:45:45 - All safety checks passed
+2025-05-27 00:45:45 - COMMAND: Creating backup directory
+2025-05-27 00:45:45 - EXECUTE: mkdir -p '/home/evm/boot-backups/boot-backup-20250527-004545'
+2025-05-27 00:45:45 - COMMAND: Backing up ESP partition
+2025-05-27 00:45:45 - EXECUTE: sudo cp -r '/boot' '/home/evm/boot-backups/boot-backup-20250527-004545/ESP-backup'
+2025-05-27 00:45:45 - COMMAND: Backing up UEFI boot entries
+2025-05-27 00:45:45 - EXECUTE: efibootmgr -v > '/home/evm/boot-backups/boot-backup-20250527-004545/uefi-entries.txt'
+2025-05-27 00:45:45 - COMMAND: Backing up kernel
+2025-05-27 00:45:45 - EXECUTE: sudo cp '/boot/vmlinuz-linux-hardened' '/home/evm/boot-backups/boot-backup-20250527-004545/'
+2025-05-27 00:45:45 - COMMAND: Backing up initramfs
+2025-05-27 00:45:45 - EXECUTE: sudo cp '/boot/initramfs-linux-hardened.img' '/home/evm/boot-backups/boot-backup-20250527-004545/'
+2025-05-27 00:45:45 - COMMAND: Backing up mkinitcpio config
+2025-05-27 00:45:45 - EXECUTE: sudo cp /etc/mkinitcpio.conf '/home/evm/boot-backups/boot-backup-20250527-004545/'
+2025-05-27 00:45:45 - COMMAND: Backing up LUKS keys
+2025-05-27 00:45:45 - EXECUTE: sudo cp -r /etc/keys '/home/evm/boot-backups/boot-backup-20250527-004545/'
+2025-05-27 00:45:45 - COMMAND: Saving current kernel parameters
+2025-05-27 00:45:45 - EXECUTE: cat /etc/kernel/cmdline > '/home/evm/boot-backups/boot-backup-20250527-004545/current-cmdline.txt'
+2025-05-27 00:45:45 - FATAL ERROR: Line 706, Command: hostname
+2025-05-27 00:45:45 - Boot backup created: /home/evm/boot-backups/boot-backup-20250527-004545
+2025-05-27 00:45:45 - Command completed successfully: backup
+2025-05-27 00:45:49 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 00:45:49 - Arguments: prepare
+2025-05-27 00:45:49 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:45:49 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:45:49 - All safety checks passed
+2025-05-27 00:45:52 - COMMAND: Creating UKI directory
+2025-05-27 00:45:52 - EXECUTE: sudo mkdir -p '/boot/EFI/Linux'
+2025-05-27 00:45:52 - COMMAND: Building new direct boot UKI
+2025-05-27 00:45:52 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth   '         --output='/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 00:45:52 - COMMAND: Verifying UKI integrity
+2025-05-27 00:45:52 - EXECUTE: sudo ukify inspect '/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 00:45:52 - UKI prepared: /boot/EFI/Linux/direct-boot.efi (34MB)
+2025-05-27 00:45:52 - Command completed successfully: prepare
+2025-05-27 00:46:02 - Starting squishBootReset: -h (DRY_RUN=false)
+2025-05-27 00:46:02 - Arguments: -h
+2025-05-27 00:46:02 - Command completed successfully: -h
+2025-05-27 00:46:39 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 00:46:39 - Arguments: analyze
+2025-05-27 00:46:39 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 00:46:39 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 00:46:39 - All safety checks passed
+2025-05-27 00:46:39 - Boot analysis completed
+2025-05-27 00:46:39 - Command completed successfully: analyze
+2025-05-27 08:37:30 - Starting squishBootReset: check (DRY_RUN=false)
+2025-05-27 08:37:30 - Arguments: check
+2025-05-27 08:37:30 - Recovery check completed
+2025-05-27 08:37:30 - Command completed successfully: check
+2025-05-27 08:37:35 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 08:37:35 - Arguments: verify
+2025-05-27 08:37:36 - Boot verification completed: PASSED
+2025-05-27 08:37:36 - Command completed successfully: verify
+2025-05-27 09:41:50 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 09:41:50 - Arguments: analyze
+2025-05-27 09:41:50 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 09:41:50 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 09:41:50 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 09:41:50 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 09:42:15 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 09:42:15 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 09:42:15 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 09:42:15 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 09:42:15 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 09:42:15 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 09:42:15 - All safety checks passed
+2025-05-27 09:42:16 - Boot analysis completed
+2025-05-27 09:42:16 - Command completed successfully: analyze
+2025-05-27 09:42:22 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 09:42:22 - Arguments: 
+2025-05-27 09:42:22 - Command completed successfully: 
+2025-05-27 09:42:34 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 09:42:34 - Arguments: prepare
+2025-05-27 09:42:34 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 09:42:34 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 09:42:34 - All safety checks passed
+2025-05-27 09:42:38 - COMMAND: Creating UKI directory
+2025-05-27 09:42:38 - EXECUTE: sudo mkdir -p '/boot/EFI/Linux'
+2025-05-27 09:42:38 - COMMAND: Building new direct boot UKI
+2025-05-27 09:42:38 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth   '         --output='/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 09:42:39 - COMMAND: Verifying UKI integrity
+2025-05-27 09:42:39 - EXECUTE: sudo ukify inspect '/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 09:42:39 - UKI prepared: /boot/EFI/Linux/direct-boot.efi (34MB)
+2025-05-27 09:42:39 - Command completed successfully: prepare
+2025-05-27 09:42:41 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 09:42:41 - Arguments: 
+2025-05-27 09:42:41 - Command completed successfully: 
+2025-05-27 09:42:48 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 09:42:48 - Arguments: verify
+2025-05-27 09:42:49 - Boot verification completed: PASSED
+2025-05-27 09:42:49 - Command completed successfully: verify
+2025-05-27 13:09:52 - Starting squishBootReset: check (DRY_RUN=false)
+2025-05-27 13:09:52 - Arguments: check
+2025-05-27 13:09:52 - Recovery check completed
+2025-05-27 13:09:52 - Command completed successfully: check
+2025-05-27 13:10:20 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:10:20 - Arguments: 
+2025-05-27 13:10:20 - Command completed successfully: 
+2025-05-27 13:10:48 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 13:10:48 - Arguments: analyze
+2025-05-27 13:10:48 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:10:48 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:10:48 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:10:48 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:10:53 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:10:53 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:10:53 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:10:53 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:10:53 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:10:53 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:10:53 - All safety checks passed
+2025-05-27 13:10:53 - Boot analysis completed
+2025-05-27 13:10:53 - Command completed successfully: analyze
+2025-05-27 13:12:17 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 13:12:17 - Arguments: analyze
+2025-05-27 13:12:17 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:12:17 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:12:17 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:12:18 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:12:18 - All safety checks passed
+2025-05-27 13:12:18 - Boot analysis completed
+2025-05-27 13:12:18 - Command completed successfully: analyze
+2025-05-27 13:12:23 - Starting squishBootReset: check (DRY_RUN=false)
+2025-05-27 13:12:23 - Arguments: check
+2025-05-27 13:12:23 - Recovery check completed
+2025-05-27 13:12:23 - Command completed successfully: check
+2025-05-27 13:12:28 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:12:28 - Arguments: 
+2025-05-27 13:12:28 - Command completed successfully: 
+2025-05-27 13:13:13 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:13:13 - Arguments: 
+2025-05-27 13:13:13 - Command completed successfully: 
+2025-05-27 13:13:22 - Starting squishBootReset: backup (DRY_RUN=false)
+2025-05-27 13:13:22 - Arguments: backup
+2025-05-27 13:13:22 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:13:22 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:13:22 - All safety checks passed
+2025-05-27 13:13:22 - COMMAND: Creating backup directory
+2025-05-27 13:13:22 - EXECUTE: mkdir -p '/home/evm/boot-backups/boot-backup-20250527-131322'
+2025-05-27 13:13:22 - COMMAND: Backing up ESP partition
+2025-05-27 13:13:22 - EXECUTE: sudo cp -r '/boot' '/home/evm/boot-backups/boot-backup-20250527-131322/ESP-backup'
+2025-05-27 13:13:22 - COMMAND: Backing up UEFI boot entries
+2025-05-27 13:13:22 - EXECUTE: efibootmgr -v > '/home/evm/boot-backups/boot-backup-20250527-131322/uefi-entries.txt'
+2025-05-27 13:13:22 - COMMAND: Backing up kernel
+2025-05-27 13:13:22 - EXECUTE: sudo cp '/boot/vmlinuz-linux-hardened' '/home/evm/boot-backups/boot-backup-20250527-131322/'
+2025-05-27 13:13:22 - COMMAND: Backing up initramfs
+2025-05-27 13:13:22 - EXECUTE: sudo cp '/boot/initramfs-linux-hardened.img' '/home/evm/boot-backups/boot-backup-20250527-131322/'
+2025-05-27 13:13:22 - COMMAND: Backing up mkinitcpio config
+2025-05-27 13:13:22 - EXECUTE: sudo cp /etc/mkinitcpio.conf '/home/evm/boot-backups/boot-backup-20250527-131322/'
+2025-05-27 13:13:22 - COMMAND: Backing up LUKS keys
+2025-05-27 13:13:22 - EXECUTE: sudo cp -r /etc/keys '/home/evm/boot-backups/boot-backup-20250527-131322/'
+2025-05-27 13:13:22 - COMMAND: Saving current kernel parameters
+2025-05-27 13:13:22 - EXECUTE: cat /etc/kernel/cmdline > '/home/evm/boot-backups/boot-backup-20250527-131322/current-cmdline.txt'
+2025-05-27 13:13:22 - FATAL ERROR: Line 706, Command: hostname
+2025-05-27 13:13:22 - Boot backup created: /home/evm/boot-backups/boot-backup-20250527-131322
+2025-05-27 13:13:22 - Command completed successfully: backup
+2025-05-27 13:13:24 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:13:24 - Arguments: 
+2025-05-27 13:13:25 - Command completed successfully: 
+2025-05-27 13:14:24 - Starting squishBootReset: lsblk (DRY_RUN=false)
+2025-05-27 13:14:24 - Arguments: lsblk
+2025-05-27 13:15:32 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:15:32 - Arguments: 
+2025-05-27 13:15:32 - Command completed successfully: 
+2025-05-27 13:15:57 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 13:15:57 - Arguments: fallback /dev/sdb
+2025-05-27 13:15:57 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:15:57 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:15:57 - All safety checks passed
+2025-05-27 13:16:06 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 13:16:06 - COMMAND: Wiping USB device partition table
+2025-05-27 13:16:06 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 13:16:06 - ERROR: Command failed: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 13:16:06 - FATAL ERROR: Line 427, Command: return 1
+2025-05-27 13:19:43 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:19:43 - Arguments: 
+2025-05-27 13:19:43 - Command completed successfully: 
+2025-05-27 13:19:50 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 13:19:50 - Arguments: prepare
+2025-05-27 13:19:50 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:19:50 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:19:50 - All safety checks passed
+2025-05-27 13:19:55 - COMMAND: Creating UKI directory
+2025-05-27 13:19:55 - EXECUTE: sudo mkdir -p '/boot/EFI/Linux'
+2025-05-27 13:19:55 - COMMAND: Building new direct boot UKI
+2025-05-27 13:19:55 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth   '         --output='/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 13:19:56 - COMMAND: Verifying UKI integrity
+2025-05-27 13:19:56 - EXECUTE: sudo ukify inspect '/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 13:19:56 - UKI prepared: /boot/EFI/Linux/direct-boot.efi (34MB)
+2025-05-27 13:19:56 - Command completed successfully: prepare
+2025-05-27 13:20:02 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:20:02 - Arguments: 
+2025-05-27 13:20:02 - Command completed successfully: 
+2025-05-27 13:20:13 - Starting squishBootReset: reset (DRY_RUN=false)
+2025-05-27 13:20:13 - Arguments: reset
+2025-05-27 13:20:13 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:20:13 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:20:13 - All safety checks passed
+2025-05-27 13:20:16 - Destructive operation confirmed: ESP Reset and Direct UEFI Boot Installation
+2025-05-27 13:20:16 - FATAL ERROR: Line 904, Command: cut -c5-8
+2025-05-27 13:20:16 - FATAL ERROR: Line 904, Command: boot_entries=$(efibootmgr | grep '^Boot[0-9]' | cut -c5-8)
+2025-05-27 13:20:28 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:20:28 - Arguments: 
+2025-05-27 13:20:28 - Command completed successfully: 
+2025-05-27 13:20:37 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 13:20:37 - Arguments: rebuild
+2025-05-27 13:20:37 - FATAL ERROR: Line 1147, Command: hostname
+2025-05-27 13:20:41 - Destructive operation confirmed: ESP Rebuild from Scratch
+2025-05-27 13:20:41 - COMMAND: Creating ESP directory structure
+2025-05-27 13:20:41 - EXECUTE: sudo mkdir -p '/boot/EFI'/{BOOT,Linux}
+2025-05-27 13:20:41 - COMMAND: Building recovery UKI from current system
+2025-05-27 13:20:41 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth   '         --output='/boot/EFI/Linux/recovery-boot.efi'
+2025-05-27 13:20:41 - COMMAND: Creating default UEFI boot file
+2025-05-27 13:20:41 - EXECUTE: sudo cp '/boot/EFI/Linux/recovery-boot.efi' '/boot/EFI/BOOT/BOOTX64.EFI'
+2025-05-27 13:20:41 - COMMAND: Creating recovery UEFI boot entry
+2025-05-27 13:20:41 - EXECUTE: sudo efibootmgr -c -d '/dev/sda' -p '1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 13:20:42 - COMMAND: Setting recovery boot as primary
+2025-05-27 13:20:42 - EXECUTE: sudo efibootmgr -o '0000'
+2025-05-27 13:20:42 - ESP rebuilt from scratch
+2025-05-27 13:20:42 - Command completed successfully: rebuild
+2025-05-27 13:20:45 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 13:20:45 - Arguments: prepare
+2025-05-27 13:20:45 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:20:45 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:20:45 - All safety checks passed
+2025-05-27 13:20:47 - COMMAND: Creating UKI directory
+2025-05-27 13:20:47 - EXECUTE: sudo mkdir -p '/boot/EFI/Linux'
+2025-05-27 13:20:47 - COMMAND: Building new direct boot UKI
+2025-05-27 13:20:48 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth   '         --output='/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 13:20:48 - COMMAND: Verifying UKI integrity
+2025-05-27 13:20:48 - EXECUTE: sudo ukify inspect '/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 13:20:48 - UKI prepared: /boot/EFI/Linux/direct-boot.efi (34MB)
+2025-05-27 13:20:48 - Command completed successfully: prepare
+2025-05-27 13:20:51 - Starting squishBootReset: reset (DRY_RUN=false)
+2025-05-27 13:20:51 - Arguments: reset
+2025-05-27 13:20:51 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:20:51 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:20:51 - All safety checks passed
+2025-05-27 13:20:54 - Destructive operation confirmed: ESP Reset and Direct UEFI Boot Installation
+2025-05-27 13:20:54 - COMMAND: Creating last-chance ESP backup
+2025-05-27 13:20:54 - EXECUTE: sudo cp -r '/boot' '/home/evm/boot-backups/last-chance-esp-20250527-132051'
+2025-05-27 13:20:54 - COMMAND: Wiping ESP partition contents
+2025-05-27 13:20:54 - EXECUTE: sudo find '/boot' -mindepth 1 -delete
+2025-05-27 13:20:54 - COMMAND: Creating minimal ESP structure
+2025-05-27 13:20:54 - EXECUTE: sudo mkdir -p '/boot/EFI'/{BOOT,Linux}
+2025-05-27 13:20:54 - COMMAND: Installing new UKI to ESP
+2025-05-27 13:20:54 - EXECUTE: sudo cp '/boot/EFI/Linux/direct-boot.efi' '/boot/EFI/Linux/'
+2025-05-27 13:20:54 - ERROR: Command failed: sudo cp '/boot/EFI/Linux/direct-boot.efi' '/boot/EFI/Linux/'
+2025-05-27 13:20:54 - FATAL ERROR: Line 935, Command: return 1
+2025-05-27 13:21:52 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 13:21:52 - Arguments: rebuild
+2025-05-27 13:21:52 - FATAL ERROR: Line 1446, Command: return 1
+2025-05-27 13:56:39 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:56:39 - Arguments: 
+2025-05-27 13:56:39 - Command completed successfully: 
+2025-05-27 13:57:00 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 13:57:00 - Arguments: fallback /dev/sdb
+2025-05-27 13:57:00 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:57:00 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:58:07 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:58:07 - Arguments: 
+2025-05-27 13:58:07 - Command completed successfully: 
+2025-05-27 13:58:11 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 13:58:11 - Arguments: analyze
+2025-05-27 13:58:11 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:58:11 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:58:11 - All safety checks passed
+2025-05-27 13:58:11 - Boot analysis completed
+2025-05-27 13:58:11 - Command completed successfully: analyze
+2025-05-27 13:58:15 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 13:58:15 - Arguments: 
+2025-05-27 13:58:15 - Command completed successfully: 
+2025-05-27 13:58:21 - Starting squishBootReset: backup (DRY_RUN=false)
+2025-05-27 13:58:21 - Arguments: backup
+2025-05-27 13:58:21 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:58:21 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:58:21 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:58:21 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:58:21 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:58:22 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:58:22 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:58:22 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:58:22 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:58:22 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:58:22 - All safety checks passed
+2025-05-27 13:58:22 - COMMAND: Creating backup directory
+2025-05-27 13:58:22 - EXECUTE: mkdir -p '/home/evm/boot-backups/boot-backup-20250527-135821'
+2025-05-27 13:58:22 - COMMAND: Backing up ESP partition
+2025-05-27 13:58:22 - EXECUTE: sudo cp -r '/boot' '/home/evm/boot-backups/boot-backup-20250527-135821/ESP-backup'
+2025-05-27 13:58:22 - COMMAND: Backing up UEFI boot entries
+2025-05-27 13:58:22 - EXECUTE: efibootmgr -v > '/home/evm/boot-backups/boot-backup-20250527-135821/uefi-entries.txt'
+2025-05-27 13:58:22 - COMMAND: Backing up kernel
+2025-05-27 13:58:22 - EXECUTE: sudo cp '/boot/vmlinuz-linux-hardened' '/home/evm/boot-backups/boot-backup-20250527-135821/'
+2025-05-27 13:58:22 - COMMAND: Backing up initramfs
+2025-05-27 13:58:22 - EXECUTE: sudo cp '/boot/initramfs-linux-hardened.img' '/home/evm/boot-backups/boot-backup-20250527-135821/'
+2025-05-27 13:58:22 - COMMAND: Backing up mkinitcpio config
+2025-05-27 13:58:22 - EXECUTE: sudo cp /etc/mkinitcpio.conf '/home/evm/boot-backups/boot-backup-20250527-135821/'
+2025-05-27 13:58:22 - COMMAND: Backing up LUKS keys
+2025-05-27 13:58:22 - EXECUTE: sudo cp -r /etc/keys '/home/evm/boot-backups/boot-backup-20250527-135821/'
+2025-05-27 13:58:22 - COMMAND: Saving current kernel parameters
+2025-05-27 13:58:22 - EXECUTE: cat /etc/kernel/cmdline > '/home/evm/boot-backups/boot-backup-20250527-135821/current-cmdline.txt'
+2025-05-27 13:58:22 - FATAL ERROR: Line 706, Command: hostname
+2025-05-27 13:58:22 - Boot backup created: /home/evm/boot-backups/boot-backup-20250527-135821
+2025-05-27 13:58:22 - Command completed successfully: backup
+2025-05-27 13:58:27 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 13:58:27 - Arguments: fallback
+2025-05-27 13:58:27 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:58:27 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:58:27 - All safety checks passed
+2025-05-27 13:58:39 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 13:58:39 - COMMAND: Wiping USB device partition table
+2025-05-27 13:58:39 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 13:58:39 - ERROR: Command failed: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 13:58:39 - FATAL ERROR: Line 427, Command: return 1
+2025-05-27 13:59:03 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 13:59:03 - Arguments: fallback
+2025-05-27 13:59:03 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 13:59:03 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 13:59:03 - All safety checks passed
+2025-05-27 14:09:06 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 14:09:06 - COMMAND: Wiping USB device partition table
+2025-05-27 14:09:06 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 14:09:13 - COMMAND: Creating EFI partition on USB
+2025-05-27 14:09:13 - EXECUTE: sudo sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:'EFI System' '/dev/sdb'
+2025-05-27 14:09:14 - COMMAND: Creating Linux partition on USB
+2025-05-27 14:09:14 - EXECUTE: sudo sgdisk --new=2:0:0 --typecode=2:8300 --change-name=2:'Linux Root' '/dev/sdb'
+2025-05-27 14:09:15 - COMMAND: Waiting for device nodes to appear
+2025-05-27 14:09:15 - EXECUTE: sleep 3
+2025-05-27 14:09:18 - COMMAND: Formatting USB EFI partition
+2025-05-27 14:09:18 - EXECUTE: sudo mkfs.fat -F32 -n 'RESCUE_EFI' '/dev/sdb1'
+2025-05-27 14:09:18 - COMMAND: Formatting USB root partition
+2025-05-27 14:09:18 - EXECUTE: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:09:24 - COMMAND: Creating USB mount points
+2025-05-27 14:09:24 - EXECUTE: sudo mkdir -p '/mnt/usb-rescue-13584' '/mnt/usb-rescue-13584/boot'
+2025-05-27 14:09:24 - COMMAND: Mounting USB root partition
+2025-05-27 14:09:24 - EXECUTE: sudo mount '/dev/sdb2' '/mnt/usb-rescue-13584'
+2025-05-27 14:09:24 - COMMAND: Mounting USB EFI partition
+2025-05-27 14:09:24 - EXECUTE: sudo mount '/dev/sdb1' '/mnt/usb-rescue-13584/boot'
+2025-05-27 14:09:25 - ERROR: Command failed: sudo mount '/dev/sdb1' '/mnt/usb-rescue-13584/boot'
+2025-05-27 14:09:25 - FATAL ERROR: Line 474, Command: return 1
+2025-05-27 14:11:03 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 14:11:03 - Arguments: fallback
+2025-05-27 14:11:03 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 14:11:03 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 14:11:03 - All safety checks passed
+2025-05-27 14:11:10 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 14:11:10 - COMMAND: Wiping USB device partition table
+2025-05-27 14:11:10 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 14:11:11 - COMMAND: Creating EFI partition on USB
+2025-05-27 14:11:11 - EXECUTE: sudo sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:'EFI System' '/dev/sdb'
+2025-05-27 14:11:12 - COMMAND: Creating Linux partition on USB
+2025-05-27 14:11:12 - EXECUTE: sudo sgdisk --new=2:0:0 --typecode=2:8300 --change-name=2:'Linux Root' '/dev/sdb'
+2025-05-27 14:11:13 - COMMAND: Waiting for device nodes to appear
+2025-05-27 14:11:13 - EXECUTE: sleep 3
+2025-05-27 14:11:16 - COMMAND: Formatting USB EFI partition
+2025-05-27 14:11:16 - EXECUTE: sudo mkfs.fat -F32 -n 'RESCUE_EFI' '/dev/sdb1'
+2025-05-27 14:11:17 - COMMAND: Formatting USB root partition
+2025-05-27 14:11:17 - EXECUTE: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:11:17 - ERROR: Command failed: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:11:17 - FATAL ERROR: Line 461, Command: return 1
+2025-05-27 14:17:39 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 14:17:39 - Arguments: fallback /dev/sdb
+2025-05-27 14:17:39 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 14:17:39 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 14:17:39 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 14:17:39 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 14:17:43 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 14:17:43 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 14:17:43 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 14:17:43 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 14:17:43 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 14:17:43 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 14:17:43 - All safety checks passed
+2025-05-27 14:17:47 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 14:17:47 - COMMAND: Wiping USB device partition table
+2025-05-27 14:17:47 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 14:17:48 - COMMAND: Creating EFI partition on USB
+2025-05-27 14:17:48 - EXECUTE: sudo sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:'EFI System' '/dev/sdb'
+2025-05-27 14:17:49 - COMMAND: Creating Linux partition on USB
+2025-05-27 14:17:49 - EXECUTE: sudo sgdisk --new=2:0:0 --typecode=2:8300 --change-name=2:'Linux Root' '/dev/sdb'
+2025-05-27 14:17:50 - COMMAND: Waiting for device nodes to appear
+2025-05-27 14:17:50 - EXECUTE: sleep 3
+2025-05-27 14:17:53 - COMMAND: Formatting USB EFI partition
+2025-05-27 14:17:53 - EXECUTE: sudo mkfs.fat -F32 -n 'RESCUE_EFI' '/dev/sdb1'
+2025-05-27 14:17:53 - COMMAND: Formatting USB root partition
+2025-05-27 14:17:53 - EXECUTE: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:17:53 - ERROR: Command failed: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:17:53 - FATAL ERROR: Line 461, Command: return 1
+2025-05-27 14:18:37 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 14:18:37 - Arguments: fallback /dev/sdb
+2025-05-27 14:18:37 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 14:18:37 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 14:18:37 - All safety checks passed
+2025-05-27 14:18:39 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 14:18:39 - COMMAND: Wiping USB device partition table
+2025-05-27 14:18:40 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 14:18:41 - COMMAND: Creating EFI partition on USB
+2025-05-27 14:18:41 - EXECUTE: sudo sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:'EFI System' '/dev/sdb'
+2025-05-27 14:18:42 - COMMAND: Creating Linux partition on USB
+2025-05-27 14:18:42 - EXECUTE: sudo sgdisk --new=2:0:0 --typecode=2:8300 --change-name=2:'Linux Root' '/dev/sdb'
+2025-05-27 14:18:43 - COMMAND: Waiting for device nodes to appear
+2025-05-27 14:18:43 - EXECUTE: sleep 3
+2025-05-27 14:18:46 - COMMAND: Formatting USB EFI partition
+2025-05-27 14:18:46 - EXECUTE: sudo mkfs.fat -F32 -n 'RESCUE_EFI' '/dev/sdb1'
+2025-05-27 14:18:46 - COMMAND: Formatting USB root partition
+2025-05-27 14:18:46 - EXECUTE: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:19:01 - COMMAND: Creating USB mount points
+2025-05-27 14:19:01 - EXECUTE: sudo mkdir -p '/mnt/usb-rescue-14870' '/mnt/usb-rescue-14870/boot'
+2025-05-27 14:19:01 - COMMAND: Mounting USB root partition
+2025-05-27 14:19:01 - EXECUTE: sudo mount '/dev/sdb2' '/mnt/usb-rescue-14870'
+2025-05-27 14:19:01 - COMMAND: Mounting USB EFI partition
+2025-05-27 14:19:01 - EXECUTE: sudo mount '/dev/sdb1' '/mnt/usb-rescue-14870/boot'
+2025-05-27 14:19:01 - ERROR: Command failed: sudo mount '/dev/sdb1' '/mnt/usb-rescue-14870/boot'
+2025-05-27 14:19:01 - FATAL ERROR: Line 474, Command: return 1
+2025-05-27 14:24:14 - Starting squishBootReset: fallback (DRY_RUN=false)
+2025-05-27 14:24:14 - Arguments: fallback /dev/sdb
+2025-05-27 14:24:14 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: LUKS encryption confirmed (5/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 14:24:14 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 14:24:14 - All safety checks passed
+2025-05-27 14:24:17 - Destructive operation confirmed: USB Fallback Creation
+2025-05-27 14:24:17 - COMMAND: Wiping USB device partition table
+2025-05-27 14:24:17 - EXECUTE: sudo sgdisk --zap-all '/dev/sdb'
+2025-05-27 14:24:18 - COMMAND: Creating EFI partition on USB
+2025-05-27 14:24:18 - EXECUTE: sudo sgdisk --new=1:0:+512M --typecode=1:ef00 --change-name=1:'EFI System' '/dev/sdb'
+2025-05-27 14:24:19 - COMMAND: Creating Linux partition on USB
+2025-05-27 14:24:19 - EXECUTE: sudo sgdisk --new=2:0:0 --typecode=2:8300 --change-name=2:'Linux Root' '/dev/sdb'
+2025-05-27 14:24:20 - COMMAND: Waiting for device nodes to appear
+2025-05-27 14:24:20 - EXECUTE: sleep 3
+2025-05-27 14:24:23 - COMMAND: Formatting USB EFI partition
+2025-05-27 14:24:23 - EXECUTE: sudo mkfs.fat -F32 -n 'RESCUE_EFI' '/dev/sdb1'
+2025-05-27 14:24:24 - COMMAND: Formatting USB root partition
+2025-05-27 14:24:24 - EXECUTE: sudo mkfs.ext4 -L 'RESCUE_ROOT' '/dev/sdb2'
+2025-05-27 14:24:36 - COMMAND: Creating USB root mount point
+2025-05-27 14:24:36 - EXECUTE: sudo mkdir -p '/mnt/usb-rescue-15194'
+2025-05-27 14:24:36 - COMMAND: Mounting USB root partition
+2025-05-27 14:24:36 - EXECUTE: sudo mount '/dev/sdb2' '/mnt/usb-rescue-15194'
+2025-05-27 14:24:36 - COMMAND: Creating USB EFI mount point
+2025-05-27 14:24:36 - EXECUTE: sudo mkdir -p '/mnt/usb-rescue-15194/boot'
+2025-05-27 14:24:36 - COMMAND: Mounting USB EFI partition
+2025-05-27 14:24:36 - EXECUTE: sudo mount '/dev/sdb1' '/mnt/usb-rescue-15194/boot'
+2025-05-27 14:24:37 - COMMAND: Creating basic directory structure
+2025-05-27 14:24:37 - EXECUTE: sudo mkdir -p '/mnt/usb-rescue-15194'/{bin,sbin,etc,dev,proc,sys,tmp,var,home,root,mnt}
+2025-05-27 14:24:37 - COMMAND: Building generic fallback initramfs
+2025-05-27 14:24:37 - EXECUTE: sudo mkinitcpio -c '/tmp/mkinitcpio-fallback-15194.conf' -k 'linux-hardened' -g '/mnt/usb-rescue-15194/boot/initramfs-fallback.img'
+2025-05-27 14:24:37 - ERROR: Command failed: sudo mkinitcpio -c '/tmp/mkinitcpio-fallback-15194.conf' -k 'linux-hardened' -g '/mnt/usb-rescue-15194/boot/initramfs-fallback.img'
+2025-05-27 14:24:37 - FATAL ERROR: Line 624, Command: return 1
+2025-05-27 15:13:40 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 15:13:40 - Arguments: 
+2025-05-27 15:13:40 - Command completed successfully: 
+2025-05-27 15:13:46 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 15:13:46 - Arguments: verify
+2025-05-27 15:13:47 - FATAL ERROR: Line 1486, Command: return 1
+2025-05-27 15:19:18 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 15:19:18 - Arguments: verify
+2025-05-27 15:19:24 - FATAL ERROR: Line 1486, Command: return 1
+2025-05-27 16:42:42 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 16:42:42 - Arguments: 
+2025-05-27 16:42:42 - Command completed successfully: 
+2025-05-27 16:42:50 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 16:42:50 - Arguments: analyze
+2025-05-27 16:42:50 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:42:50 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:42:50 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:42:50 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:43:02 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:43:18 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 16:43:18 - Arguments: analyze
+2025-05-27 16:43:18 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:43:18 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:43:18 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:43:18 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:43:20 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:45:53 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 16:45:53 - Arguments: analyze
+2025-05-27 16:45:53 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:45:53 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:45:53 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:45:53 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:45:55 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:46:13 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 16:46:13 - Arguments: analyze
+2025-05-27 16:46:13 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:46:13 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:46:13 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:46:13 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:46:14 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:46:40 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 16:46:40 - Arguments: analyze
+2025-05-27 16:46:40 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:46:40 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:46:40 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:46:40 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:46:41 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:48:12 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 16:48:12 - Arguments: analyze
+2025-05-27 16:48:12 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:48:12 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:48:12 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:48:12 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:48:14 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:48:19 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 16:48:19 - Arguments: 
+2025-05-27 16:48:19 - Command completed successfully: 
+2025-05-27 16:48:39 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 16:48:39 - Arguments: rebuild /dev/sda1
+2025-05-27 16:48:39 - FATAL ERROR: Line 1449, Command: return 1
+2025-05-27 16:48:42 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 16:48:42 - Arguments: rebuild /dev/sda
+2025-05-27 16:48:42 - FATAL ERROR: Line 1449, Command: return 1
+2025-05-27 16:50:00 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 16:50:00 - Arguments: rebuild /dev/sda
+2025-05-27 16:50:00 - FATAL ERROR: Line 1150, Command: hostname
+2025-05-27 16:50:05 - Destructive operation confirmed: ESP Rebuild from Scratch
+2025-05-27 16:50:05 - COMMAND: Creating ESP directory structure
+2025-05-27 16:50:05 - EXECUTE: sudo mkdir -p '/boot/EFI'/{BOOT,Linux}
+2025-05-27 16:50:05 - COMMAND: Building recovery UKI from current system
+2025-05-27 16:50:05 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='rd.luks.name=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot rd.luks.name=65e52138-42b8-4d74-b602-7705fd58e6fb:crypthome root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth    '         --output='/boot/EFI/Linux/recovery-boot.efi'
+2025-05-27 16:50:05 - COMMAND: Creating default UEFI boot file
+2025-05-27 16:50:05 - EXECUTE: sudo cp '/boot/EFI/Linux/recovery-boot.efi' '/boot/EFI/BOOT/BOOTX64.EFI'
+2025-05-27 16:50:05 - COMMAND: Creating recovery UEFI boot entry
+2025-05-27 16:50:05 - EXECUTE: sudo efibootmgr -c -d 'systemd-
+/dev/sda' -p '1
+1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 16:50:05 - ERROR: Command failed: sudo efibootmgr -c -d 'systemd-
+/dev/sda' -p '1
+1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 16:50:05 - FATAL ERROR: Line 1213, Command: return 1
+2025-05-27 16:51:19 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 16:51:19 - Arguments: rebuild /dev/sda1
+2025-05-27 16:51:19 - FATAL ERROR: Line 1150, Command: hostname
+2025-05-27 16:51:24 - Destructive operation confirmed: ESP Rebuild from Scratch
+2025-05-27 16:51:24 - COMMAND: Creating ESP directory structure
+2025-05-27 16:51:24 - EXECUTE: sudo mkdir -p '/boot/EFI'/{BOOT,Linux}
+2025-05-27 16:51:27 - COMMAND: Building recovery UKI from current system
+2025-05-27 16:51:27 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='rd.luks.name=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot rd.luks.name=65e52138-42b8-4d74-b602-7705fd58e6fb:crypthome root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth    '         --output='/boot/EFI/Linux/recovery-boot.efi'
+2025-05-27 16:51:28 - COMMAND: Creating default UEFI boot file
+2025-05-27 16:51:28 - EXECUTE: sudo cp '/boot/EFI/Linux/recovery-boot.efi' '/boot/EFI/BOOT/BOOTX64.EFI'
+2025-05-27 16:51:28 - COMMAND: Creating recovery UEFI boot entry
+2025-05-27 16:51:28 - EXECUTE: sudo efibootmgr -c -d 'systemd-
+/dev/sda' -p '1
+1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 16:51:28 - ERROR: Command failed: sudo efibootmgr -c -d 'systemd-
+/dev/sda' -p '1
+1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 16:51:28 - FATAL ERROR: Line 1213, Command: return 1
+2025-05-27 16:52:41 - Starting squishBootReset: rebuild (DRY_RUN=false)
+2025-05-27 16:52:41 - Arguments: rebuild /dev/sda1
+2025-05-27 16:52:41 - FATAL ERROR: Line 1150, Command: hostname
+2025-05-27 16:52:45 - Destructive operation confirmed: ESP Rebuild from Scratch
+2025-05-27 16:52:46 - COMMAND: Creating ESP directory structure
+2025-05-27 16:52:46 - EXECUTE: sudo mkdir -p '/boot/EFI'/{BOOT,Linux}
+2025-05-27 16:52:46 - COMMAND: Building recovery UKI from current system
+2025-05-27 16:52:46 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='rd.luks.name=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot rd.luks.name=65e52138-42b8-4d74-b602-7705fd58e6fb:crypthome root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth    '         --output='/boot/EFI/Linux/recovery-boot.efi'
+2025-05-27 16:52:46 - COMMAND: Creating default UEFI boot file
+2025-05-27 16:52:46 - EXECUTE: sudo cp '/boot/EFI/Linux/recovery-boot.efi' '/boot/EFI/BOOT/BOOTX64.EFI'
+2025-05-27 16:52:46 - COMMAND: Creating recovery UEFI boot entry
+2025-05-27 16:52:46 - EXECUTE: sudo efibootmgr -c -d 'systemd-
+/dev/sda' -p '1
+1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 16:52:46 - ERROR: Command failed: sudo efibootmgr -c -d 'systemd-
+/dev/sda' -p '1
+1' -L 'Recovery Boot' -l '\EFI\Linux\recovery-boot.efi'
+2025-05-27 16:52:46 - FATAL ERROR: Line 1213, Command: return 1
+2025-05-27 16:53:36 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 16:53:36 - Arguments: 
+2025-05-27 16:53:36 - Command completed successfully: 
+2025-05-27 16:53:44 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 16:53:44 - Arguments: 
+2025-05-27 16:53:44 - Command completed successfully: 
+2025-05-27 16:53:50 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 16:53:50 - Arguments: prepare
+2025-05-27 16:53:50 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:53:50 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:53:50 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:53:50 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:53:53 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 16:53:56 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 16:53:56 - Arguments: 
+2025-05-27 16:53:56 - Command completed successfully: 
+2025-05-27 16:54:02 - Starting squishBootReset: reset (DRY_RUN=false)
+2025-05-27 16:54:02 - Arguments: reset
+2025-05-27 16:54:02 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 16:54:02 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 16:54:02 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 16:54:02 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 16:54:05 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 17:11:38 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 17:11:38 - Arguments: prepare
+2025-05-27 17:11:38 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 17:11:38 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 17:11:38 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 17:11:38 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 17:11:48 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 17:11:48 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 17:11:48 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 17:11:48 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 17:11:48 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 17:11:48 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 17:11:48 - All safety checks passed
+2025-05-27 17:11:51 - FATAL ERROR: Line 1465, Command: return 1
+2025-05-27 17:11:53 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-27 17:11:53 - Arguments: prepare
+2025-05-27 17:11:53 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 17:11:53 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 17:11:53 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 17:11:53 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 17:11:54 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 17:11:54 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 17:11:54 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 17:11:54 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 17:11:54 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 17:11:54 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 17:11:54 - All safety checks passed
+2025-05-27 17:11:55 - COMMAND: Creating UKI directory
+2025-05-27 17:11:55 - EXECUTE: sudo mkdir -p '/boot/EFI/Linux'
+2025-05-27 17:11:55 - COMMAND: Building new direct boot UKI
+2025-05-27 17:11:55 - EXECUTE: sudo ukify build         --linux='/boot/vmlinuz-linux-hardened'         --initrd='/boot/initramfs-linux-hardened.img'         --cmdline='rd.luks.name=5046cd3a-0df3-4b10-aef0-84e1fa432d69:cryptroot rd.luks.name=65e52138-42b8-4d74-b602-7705fd58e6fb:crypthome root=/dev/mapper/cryptroot zswap.enabled=0 rw intel_iommu=on iommu=pt kptr_restrict=2 loglevel=7 init_on_alloc=1 security=apparmor apparmor=1 enforcing=1 debug=0 debugfs=0 lockdown=confidentiality module.sig_enforce=1 acpi=strict apic=strict ipv6.disable=1 modprobe.blacklist=nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset,mei,mei_me,mei_hda,snd,bluetooth    '         --output='/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 17:11:55 - COMMAND: Verifying UKI integrity
+2025-05-27 17:11:55 - EXECUTE: sudo ukify inspect '/boot/EFI/Linux/direct-boot.efi'
+2025-05-27 17:11:56 - UKI prepared: /boot/EFI/Linux/direct-boot.efi (30MB)
+2025-05-27 17:11:56 - Command completed successfully: prepare
+2025-05-27 17:11:59 - Starting squishBootReset:  (DRY_RUN=false)
+2025-05-27 17:11:59 - Arguments: 
+2025-05-27 17:11:59 - Command completed successfully: 
+2025-05-27 17:12:10 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 17:12:10 - Arguments: verify
+2025-05-27 17:12:11 - FATAL ERROR: Line 1486, Command: return 1
+2025-05-27 17:12:41 - Starting squishBootReset: check (DRY_RUN=false)
+2025-05-27 17:12:41 - Arguments: check
+2025-05-27 17:12:41 - Recovery check completed
+2025-05-27 17:12:41 - Command completed successfully: check
+2025-05-27 17:14:29 - Starting squishBootReset: analyze (DRY_RUN=false)
+2025-05-27 17:14:29 - Arguments: analyze
+2025-05-27 17:14:29 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-27 17:14:29 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-27 17:14:29 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-27 17:14:29 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-27 17:14:32 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-27 17:14:32 - SAFETY GATE PASSED: ESP filesystem is FAT32 (6/10)
+2025-05-27 17:14:32 - SAFETY GATE PASSED: ESP write permissions confirmed (7/10)
+2025-05-27 17:14:32 - SAFETY GATE PASSED: Sufficient ESP disk space available (8/10)
+2025-05-27 17:14:32 - SAFETY GATE PASSED: Target kernel package available (9/10)
+2025-05-27 17:14:32 - SAFETY GATE PASSED: Kernel files available for UKI creation (10/10)
+2025-05-27 17:14:32 - All safety checks passed
+2025-05-27 17:14:32 - Boot analysis completed
+2025-05-27 17:14:32 - Command completed successfully: analyze
+2025-05-27 17:14:36 - Starting squishBootReset: verify (DRY_RUN=false)
+2025-05-27 17:14:36 - Arguments: verify
+2025-05-27 17:14:36 - FATAL ERROR: Line 1486, Command: return 1
+2025-05-28 08:57:35 - Starting squishBootReset: prepare (DRY_RUN=false)
+2025-05-28 08:57:35 - Arguments: prepare
+2025-05-28 08:57:35 - SAFETY GATE PASSED: Not running as root (1/10)
+2025-05-28 08:57:35 - SAFETY GATE PASSED: UEFI system confirmed (2/10)
+2025-05-28 08:57:35 - SAFETY GATE PASSED: ESP mounted correctly (3/10)
+2025-05-28 08:57:35 - SAFETY GATE PASSED: All required tools available (4/10)
+2025-05-28 08:57:41 - SAFETY GATE PASSED: LUKS check completed (with warning) (5/10)
+2025-05-28 19:53:58 - Starting squishBootReset: help
+2025-05-28 19:54:21 - Starting squishBootReset: verify
+2025-05-28 20:00:06 - Starting squishBootReset: help
+2025-05-28 20:00:11 - Starting squishBootReset: verify
+2025-05-28 20:06:19 - Starting squishBootReset: help
+2025-05-28 20:06:30 - Starting squishBootReset: reconfigure
+2025-05-28 20:10:26 - Starting squishBootReset: reconfigure
+2025-05-28 20:12:12 - Starting squishBootReset: reconfigure
+2025-05-28 20:12:58 - Starting squishBootReset: reconfigure
+2025-05-28 20:40:54 - Starting squishBootReset: help
+2025-05-28 20:40:59 - Starting squishBootReset: verify
+2025-05-28 21:11:12 - Starting squishBootReset: verify
+2025-05-28 23:36:55 - Starting squishBootReset: help

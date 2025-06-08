@@ -1,0 +1,3 @@
+#!/bin/bash
+
+firejail --seccomp --nonewprivs --apparmor $1 &

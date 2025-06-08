@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Back up existing config first
+sudo -u hass cp /var/lib/hass/configuration.yaml /var/lib/hass/configuration.yaml.bak
+sudo -u hass cp /var/lib/hass/secrets.yaml /var/lib/hass/secrets.yaml.bak 2>/dev/null || true
+
+# Create/update the configuration.yaml file
+sudo -u hass tee /var/lib/hass/configuration.yaml << 'EOF'
+homeassistant:
+  name: Home
+  latitude: 49.8951
+  longitude: -119.5103  
+  unit_system: metric
+  time_zone: America/Vancouver
+  external_url: http://squishlab.local:8123
+
+# Enable all components
+default_config:
+
+http:
+  server_port: 8123
+
+# Google Nest SDM API
+nest:
+  client_id: 1043201811320-dd8vhamr4o48mkfd453tl9lm4fclen5p.apps.googleusercontent.com
+  client_secret: !secret nest_client_secret
+  project_id: assingabout
+  subscriber_id: f49d73f5-e26b-4472-a02d-6b3fde91ccfd
+
+automation: []
+script: []
+scene: []
+EOF
+
+# Create/update the secrets.yaml file 
+sudo -u hass tee /var/lib/hass/secrets.yaml << 'EOF'
+# Replace this with your actual OAuth client secret
+nest_client_secret: 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
+EOF
+
+# Create required files
+sudo -u hass touch /var/lib/hass/automations.yaml
+sudo -u hass touch /var/lib/hass/scripts.yaml
+sudo -u hass touch /var/lib/hass/scenes.yaml
+
+# Restart Home Assistant
+sudo kill -HUP $(pgrep hass) || sudo -u hass /var/lib/hass/.venv/bin/hass --config /var/lib/hass/ --log-file /var/log/hass/home-assistant.log --log-rotate-days 1 &
+
+# Wait for restart
+echo "Waiting for Home Assistant to restart..."
+sleep 10
+echo "Done. You can now access Home Assistant at http://squishlab.local:8123"

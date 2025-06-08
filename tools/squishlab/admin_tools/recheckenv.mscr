@@ -1,0 +1,17 @@
+# Check Home Assistant status
+sudo systemctl status homeassistant
+
+# Check what's listening on 8123
+sudo ss -tlnp | grep 8123
+
+# Check your network interface
+ip addr show
+
+# Check if you can access the web interface
+curl -I http://localhost:8123
+
+# Check Home Assistant version and installation type
+sudo -u homeassistant /opt/homeassistant/venv/bin/hass --version
+
+# Check configuration directory contents
+sudo -u homeassistant ls -la /opt/homeassistant/config/

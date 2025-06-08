@@ -1,0 +1,22 @@
+# Complete reset with proper permissions
+sudo systemctl stop homeassistant 2>/dev/null || true
+sudo userdel homeassistant 2>/dev/null || true
+sudo rm -rf /opt/homeassistant
+
+# Recreate everything from scratch
+sudo mkdir -p /opt/homeassistant/{config,logs,backups}
+sudo useradd -r -m -s /bin/false -d /opt/homeassistant homeassistant
+
+# Set base permissions
+sudo chown -R homeassistant:homeassistant /opt/homeassistant
+sudo chmod 755 /opt/homeassistant
+
+# Create venv with explicit permissions
+sudo -u homeassistant -H python -m venv /opt/homeassistant/venv
+
+# Verify venv was created successfully
+sudo -u homeassistant ls -la /opt/homeassistant/venv/
+
+# Now install Home Assistant
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install --upgrade pip
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install homeassistant

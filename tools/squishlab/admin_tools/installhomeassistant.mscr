@@ -1,0 +1,12 @@
+# Create isolated user and directory
+sudo useradd -r -m -s /bin/false -d /opt/homeassistant homeassistant
+sudo mkdir -p /opt/homeassistant/{config,venv}
+
+# Install dependencies
+sudo pacman -S python python-pip python-virtualenv
+
+# Create virtual environment as homeassistant user
+sudo -u homeassistant python -m venv /opt/homeassistant/venv
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install homeassistant
+
+# Create systemd service with security restrictions

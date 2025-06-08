@@ -1,0 +1,14 @@
+# Stop the service if it's running
+sudo systemctl stop homeassistant
+
+# Remove the problematic venv directory
+sudo rm -rf /opt/homeassistant/venv
+
+# Make sure the homeassistant user owns the parent directory
+sudo chown -R homeassistant:homeassistant /opt/homeassistant
+
+# Now recreate the virtual environment with proper permissions
+sudo -u homeassistant python -m venv /opt/homeassistant/venv
+
+# Verify ownership
+ls -la /opt/homeassistant/venv/

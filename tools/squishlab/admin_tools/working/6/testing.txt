@@ -1,0 +1,8 @@
+# Check if the homeassistant user can access its home directory
+sudo -u homeassistant ls -la /opt/homeassistant/
+
+# Check if the Python executable is accessible
+sudo -u homeassistant /opt/homeassistant/venv/bin/python --version
+
+# Check venv activation
+sudo -u homeassistant /opt/homeassistant/venv/bin/python -c "import sys; print(sys.prefix)"

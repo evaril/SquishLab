@@ -1,0 +1,81 @@
+# Create basic configuration files
+sudo -u homeassistant mkdir -p /opt/homeassistant/config
+
+# Create configuration.yaml
+sudo -u homeassistant tee /opt/homeassistant/config/configuration.yaml << 'EOF'
+# Minimal secure configuration
+homeassistant:
+  name: SecureHome
+  latitude: !secret home_latitude
+  longitude: !secret home_longitude
+  unit_system: metric
+  time_zone: America/Vancouver
+  allowlist_external_dirs:
+    - /opt/homeassistant/config
+  allowlist_external_urls:
+    - "https://version-1.home-assistant.io"
+
+# Essential components only
+default_config:
+
+# Secure frontend
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Secure HTTP configuration
+http:
+  use_x_forwarded_for: false
+  trusted_proxies: []
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  cors_allowed_origins:
+    - "https://cast.home-assistant.io"
+  server_port: 8123
+
+# Minimal recorder (reduce disk usage)
+recorder:
+  purge_keep_days: 7
+  exclude:
+    domains:
+      - automation
+      - updater
+    entity_globs:
+      - sensor.*_last_boot
+      - sensor.date*
+
+# Security-focused logger
+logger:
+  default: warning
+  logs:
+    homeassistant.core: info
+    homeassistant.components.auth: info
+    homeassistant.components.http.ban: warning
+
+# Authentication
+auth:
+  providers:
+    - type: homeassistant
+
+# Include separate files
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+EOF
+
+# Create secrets file
+sudo -u homeassistant tee /opt/homeassistant/config/secrets.yaml << 'EOF'
+# Home coordinates (replace with yours)
+home_latitude: 49.8951
+home_longitude: -119.5103
+
+# Add other secrets as needed
+# weather_api_key: your_api_key_here
+# mqtt_username: your_mqtt_user
+# mqtt_password: your_mqtt_password
+EOF
+
+# Create empty automation files
+sudo -u homeassistant touch /opt/homeassistant/config/automations.yaml
+sudo -u homeassistant touch /opt/homeassistant/config/scripts.yaml
+sudo -u homeassistant touch /opt/homeassistant/config/scenes.yaml
+

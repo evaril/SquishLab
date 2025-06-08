@@ -1,0 +1,178 @@
+#!/bin/bash
+
+# VM Storage Pool Recreation Script
+# Based on context document requirements for windows10-minimal VM
+# Ensures proper storage pools are defined for VM operations
+
+set -euo pipefail
+
+SCRIPT_NAME="$(basename "$0")"
+LOG_PREFIX="[$SCRIPT_NAME]"
+
+# Color output functions
+log_info() { echo -e "\033[1;34m${LOG_PREFIX} INFO:\033[0m $*"; }
+log_success() { echo -e "\033[1;32m${LOG_PREFIX} SUCCESS:\033[0m $*"; }
+log_warning() { echo -e "\033[1;33m${LOG_PREFIX} WARNING:\033[0m $*"; }
+log_error() { echo -e "\033[1;31m${LOG_PREFIX} ERROR:\033[0m $*"; }
+
+# Check if running as root
+if [[ $EUID -ne 0 ]]; then
+    log_error "This script must be run as root (storage pool management requires privileges)"
+    exit 1
+fi
+
+log_info "Starting storage pool recreation..."
+
+# Storage pool definitions based on context document
+# Using paths that match your existing VM setup
+
+# Pool 1: VM Images Pool (for your windows10-minimal VM disk)
+WINDOWS_POOL_NAME="windows-vms"
+WINDOWS_POOL_PATH="/home/evm/windows"
+
+# Pool 2: ISO Pool (for VirtIO drivers and installation media)
+ISO_POOL_NAME="iso-images"
+ISO_POOL_PATH="/home/evm/iso"
+
+# Pool 3: Default pool (libvirt standard location)
+DEFAULT_POOL_NAME="default"
+DEFAULT_POOL_PATH="/var/lib/libvirt/images"
+
+# Function to safely define a storage pool
+define_storage_pool() {
+    local pool_name="$1"
+    local pool_path="$2"
+    
+    log_info "Processing storage pool: $pool_name -> $pool_path"
+    
+    # Check if pool already exists
+    if virsh pool-info "$pool_name" &>/dev/null; then
+        log_warning "Pool '$pool_name' already exists, checking state..."
+        
+        # Get current state
+        local state=$(virsh pool-info "$pool_name" | grep "State:" | awk '{print $2}')
+        
+        if [[ "$state" == "running" ]]; then
+            log_info "Pool '$pool_name' is already active"
+            return 0
+        else
+            log_info "Pool '$pool_name' exists but not running, starting..."
+            virsh pool-start "$pool_name"
+            log_success "Pool '$pool_name' started"
+            return 0
+        fi
+    fi
+    
+    # Ensure directory exists with proper ownership
+    if [[ ! -d "$pool_path" ]]; then
+        log_info "Creating directory: $pool_path"
+        mkdir -p "$pool_path"
+    fi
+    
+    # Set proper ownership for evm user paths
+    if [[ "$pool_path" == /home/evm/* ]]; then
+        chown -R evm:evm "$pool_path"
+        log_info "Set ownership evm:evm for $pool_path"
+    fi
+    
+    # Define the pool using virsh pool-define-as
+    # Syntax: virsh pool-define-as name type [source-host] [source-path] [source-dev] [source-name] [target]
+    # For directory pools: virsh pool-define-as name dir - - - - target_path
+    log_info "Defining storage pool '$pool_name'..."
+    
+    if virsh pool-define-as "$pool_name" dir - - - - "$pool_path"; then
+        log_success "Pool '$pool_name' defined successfully"
+    else
+        log_error "Failed to define pool '$pool_name'"
+        return 1
+    fi
+    
+    # Build the pool (creates directory structure if needed)
+    log_info "Building storage pool '$pool_name'..."
+    if virsh pool-build "$pool_name"; then
+        log_success "Pool '$pool_name' built successfully"
+    else
+        log_warning "Pool build may have failed, but continuing..."
+    fi
+    
+    # Start the pool
+    log_info "Starting storage pool '$pool_name'..."
+    if virsh pool-start "$pool_name"; then
+        log_success "Pool '$pool_name' started successfully"
+    else
+        log_error "Failed to start pool '$pool_name'"
+        return 1
+    fi
+    
+    # Set autostart
+    log_info "Enabling autostart for storage pool '$pool_name'..."
+    if virsh pool-autostart "$pool_name"; then
+        log_success "Pool '$pool_name' set to autostart"
+    else
+        log_warning "Failed to set autostart for pool '$pool_name'"
+    fi
+    
+    # Refresh the pool to detect existing volumes
+    log_info "Refreshing storage pool '$pool_name'..."
+    if virsh pool-refresh "$pool_name"; then
+        log_success "Pool '$pool_name' refreshed successfully"
+    else
+        log_warning "Failed to refresh pool '$pool_name'"
+    fi
+}
+
+# Create all storage pools
+log_info "Creating storage pools for VM infrastructure..."
+
+# Windows VMs pool (your existing VM disk location)
+define_storage_pool "$WINDOWS_POOL_NAME" "$WINDOWS_POOL_PATH"
+
+# ISO images pool
+define_storage_pool "$ISO_POOL_NAME" "$ISO_POOL_PATH"
+
+# Default pool (for libvirt compatibility)
+define_storage_pool "$DEFAULT_POOL_NAME" "$DEFAULT_POOL_PATH"
+
+# Verify all pools are working
+log_info "Verifying storage pool status..."
+echo
+echo "=== Storage Pool Status ==="
+virsh pool-list --all
+
+echo
+echo "=== Storage Pool Details ==="
+for pool in "$WINDOWS_POOL_NAME" "$ISO_POOL_NAME" "$DEFAULT_POOL_NAME"; do
+    if virsh pool-info "$pool" &>/dev/null; then
+        echo
+        echo "--- Pool: $pool ---"
+        virsh pool-info "$pool"
+        
+        # Show any existing volumes
+        local vol_count=$(virsh vol-list "$pool" 2>/dev/null | grep -c "\.qcow2\|\.iso\|\.img" || echo "0")
+        if [[ $vol_count -gt 0 ]]; then
+            echo "Volumes found:"
+            virsh vol-list "$pool" | grep -E "\.qcow2|\.iso|\.img" || true
+        fi
+    fi
+done
+
+echo
+log_success "Storage pool recreation completed!"
+
+# Show discovered volumes in windows pool (should find your existing VM disk)
+if virsh pool-info "$WINDOWS_POOL_NAME" &>/dev/null; then
+    echo
+    log_info "Checking for existing VM disks in windows pool..."
+    if virsh vol-list "$WINDOWS_POOL_NAME" | grep -q "winhome\|win10"; then
+        log_success "Found existing VM disk(s):"
+        virsh vol-list "$WINDOWS_POOL_NAME" | grep "winhome\|win10" || true
+    else
+        log_warning "No VM disks found in $WINDOWS_POOL_PATH"
+        log_info "This is normal if VM disks exist but pool was just created"
+        log_info "Run 'virsh pool-refresh $WINDOWS_POOL_NAME' to detect existing files"
+    fi
+fi
+
+echo
+log_info "Storage pools are ready for VM operations!"
+log_info "Your existing VM disk at /home/evm/windows/winhome should now be accessible via the '$WINDOWS_POOL_NAME' pool"

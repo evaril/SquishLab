@@ -1,0 +1,10 @@
+# Install Python and essential packages
+sudo pacman -S python python-pip python-virtualenv python-setuptools python-wheel
+
+# Install additional dependencies for Home Assistant
+sudo pacman -S python-cryptography python-requests python-yaml python-jinja \
+               python-aiohttp python-async-timeout python-charset-normalizer \
+               python-certifi python-pytz python-voluptuous python-attrs
+
+# Build dependencies (corrected for Arch)
+sudo pacman -S base-devel gcc libffi openssl

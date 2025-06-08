@@ -1,0 +1,453 @@
+#!/bin/bash
+# vm_configconnectivity.sh - Configure server-side connectivity
+# Security first, reusable, functional
+
+set -euo pipefail
+
+LOG_FILE="/tmp/vm_configconnectivity.log"
+SSH_PORT="${SSH_PORT:-7717}"
+VNC_PORT="${VNC_PORT:-11010}"
+SPICE_PORT="${SPICE_PORT:-11011}"
+RDP_TUNNEL_PORT="${RDP_TUNNEL_PORT:-11111}"
+SERVER_IP="${SERVER_IP:-192.168.72.54}"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+error_exit() {
+    log "ERROR: $1"
+    exit 1
+}
+
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+        error_exit "This script must be run as root"
+    fi
+}
+
+get_user_input() {
+    log "Gathering configuration parameters..."
+    
+    echo "=== VM Connectivity Configuration ==="
+    echo "Current settings:"
+    echo "  SSH Port: $SSH_PORT"
+    echo "  VNC Port: $VNC_PORT"
+    echo "  SPICE Port: $SPICE_PORT"
+    echo "  RDP Tunnel Port: $RDP_TUNNEL_PORT"
+    echo "  Server IP: $SERVER_IP"
+    echo ""
+    
+    read -p "Use these settings? (y/n): " -n 1 -r
+    echo
+    
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        read -p "SSH Port [7717]: " input_ssh
+        SSH_PORT="${input_ssh:-7717}"
+        
+        read -p "VNC Port [11010]: " input_vnc
+        VNC_PORT="${input_vnc:-11010}"
+        
+        read -p "SPICE Port [11011]: " input_spice
+        SPICE_PORT="${input_spice:-11011}"
+        
+        read -p "RDP Tunnel Port [11111]: " input_rdp
+        RDP_TUNNEL_PORT="${input_rdp:-11111}"
+        
+        read -p "Server IP [192.168.72.54]: " input_ip
+        SERVER_IP="${input_ip:-192.168.72.54}"
+    fi
+    
+    log "Using SSH Port: $SSH_PORT, VNC: $VNC_PORT, SPICE: $SPICE_PORT, RDP: $RDP_TUNNEL_PORT"
+}
+
+clean_existing_config() {
+    log "Cleaning existing connectivity configuration..."
+    
+    # Stop and disable any conflicting services
+    systemctl stop sshd-vm 2>/dev/null || true
+    systemctl disable sshd-vm 2>/dev/null || true
+    
+    # Remove existing vmuser if present
+    if id "vmuser" &>/dev/null; then
+        log "Removing existing vmuser..."
+        userdel -r vmuser 2>/dev/null || true
+    fi
+    
+    # Clean SSH config modifications
+    if [[ -f /etc/ssh/sshd_config.backup ]]; then
+        log "Restoring original SSH config..."
+        cp /etc/ssh/sshd_config.backup /etc/ssh/sshd_config
+    else
+        # Backup current config
+        cp /etc/ssh/sshd_config /etc/ssh/sshd_config.backup
+    fi
+    
+    # Remove VM access directory
+    rm -rf /opt/vm-access
+    
+    # Kill any existing SSH tunnels
+    pkill -f "vmuser@" 2>/dev/null || true
+    
+    log "✓ Existing configuration cleaned"
+}
+
+create_vmuser() {
+    log "Creating restricted vmuser account..."
+    
+    # Create user with no shell access
+    useradd -m -s /bin/false vmuser
+    
+    # Create SSH directory
+    mkdir -p /home/vmuser/.ssh
+    chmod 700 /home/vmuser/.ssh
+    touch /home/vmuser/.ssh/authorized_keys
+    chmod 600 /home/vmuser/.ssh/authorized_keys
+    chown -R vmuser:vmuser /home/vmuser/.ssh
+    
+    log "✓ vmuser account created"
+}
+
+generate_ssh_keys() {
+    log "Generating SSH keys for client devices..."
+    
+    mkdir -p /opt/vm-access/keys
+    cd /opt/vm-access/keys
+    
+    # Device list
+    DEVICES=("surface-pro" "windows-laptop" "android-mobile" "apple-mobile" "ipad")
+    
+    # Clear existing authorized_keys
+    > /home/vmuser/.ssh/authorized_keys
+    
+    for device in "${DEVICES[@]}"; do
+        log "Generating key for: $device"
+        
+        # Generate key pair
+        ssh-keygen -t ed25519 -f "vm-access-$device" -N "" -C "vm-access-$device" -q
+        
+        # Add restrictions to the public key and append to authorized_keys
+        KEY_CONTENT=$(cat "vm-access-$device.pub")
+        echo "restrict,port-forwarding,command=\"echo 'VM tunnel for $device'\" $KEY_CONTENT" >> /home/vmuser/.ssh/authorized_keys
+    done
+    
+    chown vmuser:vmuser /home/vmuser/.ssh/authorized_keys
+    
+    log "✓ SSH keys generated for ${#DEVICES[@]} devices"
+}
+
+configure_ssh() {
+    log "Configuring SSH daemon..."
+    
+    # Restore backup and add our configuration
+    cp /etc/ssh/sshd_config.backup /etc/ssh/sshd_config
+    
+    # Add VM access configuration
+    cat >> /etc/ssh/sshd_config << EOF
+
+# VM Access Configuration
+Port 22
+Port $SSH_PORT
+
+Match User vmuser Port $SSH_PORT
+    AllowTcpForwarding yes
+    X11Forwarding no
+    PermitTunnel no
+    GatewayPorts no
+    AllowAgentForwarding no
+    PermitOpen 127.0.0.1:$VNC_PORT 127.0.0.1:$SPICE_PORT 192.168.100.10:3389
+    ForceCommand echo "VM tunnel established - $(date)"
+EOF
+    
+    # Test SSH configuration
+    if ! sshd -t; then
+        error_exit "SSH configuration test failed"
+    fi
+    
+    # Reload SSH daemon
+    systemctl reload sshd
+    
+    log "✓ SSH daemon configured on port $SSH_PORT"
+}
+
+configure_firewall() {
+    log "Configuring firewall rules..."
+    
+    # Check if firewall is active
+    if systemctl is-active --quiet firewalld; then
+        log "Configuring firewalld..."
+        firewall-cmd --permanent --add-port="${SSH_PORT}/tcp"
+        firewall-cmd --reload
+    elif systemctl is-active --quiet ufw; then
+        log "Configuring ufw..."
+        ufw allow "${SSH_PORT}/tcp"
+    elif command -v iptables &> /dev/null; then
+        log "Configuring iptables..."
+        iptables -A INPUT -p tcp --dport "$SSH_PORT" -j ACCEPT
+        # Save iptables rules (method varies by distro)
+        if command -v iptables-save &> /dev/null; then
+            iptables-save > /etc/iptables/rules.v4 2>/dev/null || true
+        fi
+    else
+        log "⚠ No firewall detected - manual configuration may be needed"
+    fi
+    
+    log "✓ Firewall rules configured"
+}
+
+create_client_scripts() {
+    log "Creating client connection scripts..."
+    
+    mkdir -p /opt/vm-access/client-scripts
+    
+    # Windows/Surface Pro script
+    cat > /opt/vm-access/client-scripts/connect-surface-pro.bat << 'EOF'
+@echo off
+echo Connecting to VM via secure tunnel...
+
+if not exist "%USERPROFILE%\.ssh\vm-access-surface-pro" (
+    echo ERROR: SSH key not found!
+    echo Please copy vm-access-surface-pro to %USERPROFILE%\.ssh\
+    pause
+    exit /b 1
+)
+
+echo Establishing secure tunnel...
+ssh -i "%USERPROFILE%\.ssh\vm-access-surface-pro" ^
+    -p SSH_PORT_PLACEHOLDER ^
+    -L VNC_PORT_PLACEHOLDER:127.0.0.1:VNC_PORT_PLACEHOLDER ^
+    -L SPICE_PORT_PLACEHOLDER:127.0.0.1:SPICE_PORT_PLACEHOLDER ^
+    -L RDP_TUNNEL_PORT_PLACEHOLDER:192.168.100.10:3389 ^
+    -N -f ^
+    vmuser@SERVER_IP_PLACEHOLDER
+
+if %errorlevel% neq 0 (
+    echo Failed to establish tunnel
+    pause
+    exit /b 1
+)
+
+echo Tunnel established successfully!
+echo.
+echo Available connections:
+echo   VNC: localhost:VNC_PORT_PLACEHOLDER
+echo   RDP: localhost:RDP_TUNNEL_PORT_PLACEHOLDER
+echo.
+echo Starting Remote Desktop Connection...
+mstsc /v:localhost:RDP_TUNNEL_PORT_PLACEHOLDER
+EOF
+    
+    # Linux/Mac script
+    cat > /opt/vm-access/client-scripts/connect-vm.sh << 'EOF'
+#!/bin/bash
+DEVICE_NAME=${1:-surface-pro}
+KEY_FILE="$HOME/.ssh/vm-access-$DEVICE_NAME"
+SERVER="SERVER_IP_PLACEHOLDER"
+
+if [ ! -f "$KEY_FILE" ]; then
+    echo "ERROR: SSH key not found at $KEY_FILE"
+    exit 1
+fi
+
+chmod 600 "$KEY_FILE"
+
+echo "Connecting to VM server..."
+ssh -i "$KEY_FILE" \
+    -p SSH_PORT_PLACEHOLDER \
+    -L VNC_PORT_PLACEHOLDER:127.0.0.1:VNC_PORT_PLACEHOLDER \
+    -L SPICE_PORT_PLACEHOLDER:127.0.0.1:SPICE_PORT_PLACEHOLDER \
+    -L RDP_TUNNEL_PORT_PLACEHOLDER:192.168.100.10:3389 \
+    -N -f \
+    vmuser@$SERVER
+
+if [ $? -eq 0 ]; then
+    echo "✓ Tunnel established!"
+    echo "VNC: localhost:VNC_PORT_PLACEHOLDER"
+    echo "SPICE: localhost:SPICE_PORT_PLACEHOLDER" 
+    echo "RDP: localhost:RDP_TUNNEL_PORT_PLACEHOLDER"
+fi
+EOF
+    
+    # Replace placeholders
+    for script in /opt/vm-access/client-scripts/*; do
+        sed -i "s/SSH_PORT_PLACEHOLDER/$SSH_PORT/g" "$script"
+        sed -i "s/VNC_PORT_PLACEHOLDER/$VNC_PORT/g" "$script"
+        sed -i "s/SPICE_PORT_PLACEHOLDER/$SPICE_PORT/g" "$script"
+        sed -i "s/RDP_TUNNEL_PORT_PLACEHOLDER/$RDP_TUNNEL_PORT/g" "$script"
+        sed -i "s/SERVER_IP_PLACEHOLDER/$SERVER_IP/g" "$script"
+    done
+    
+    chmod +x /opt/vm-access/client-scripts/*.sh
+    
+    log "✓ Client scripts created"
+}
+
+test_connectivity() {
+    log "Testing connectivity configuration..."
+    
+    # Test SSH port
+    if ss -tlnp | grep -q ":$SSH_PORT "; then
+        log "✓ SSH port $SSH_PORT is listening"
+    else
+        log "✗ SSH port $SSH_PORT is not listening"
+    fi
+    
+    # Test VM display ports (if VM is running)
+    VM_RUNNING=false
+    if virsh domstate windows10-minimal 2>/dev/null | grep -q "running"; then
+        VM_RUNNING=true
+        
+        if ss -tlnp | grep -q ":$VNC_PORT "; then
+            log "✓ VNC port $VNC_PORT is accessible"
+        else
+            log "⚠ VNC port $VNC_PORT not accessible (VM may not be running)"
+        fi
+        
+        if ss -tlnp | grep -q ":$SPICE_PORT "; then
+            log "✓ SPICE port $SPICE_PORT is accessible"
+        else
+            log "⚠ SPICE port $SPICE_PORT not accessible (VM may not be running)"
+        fi
+    else
+        log "⚠ VM not running - display ports not testable"
+    fi
+    
+    # Test key permissions
+    if [[ -d /opt/vm-access/keys ]]; then
+        KEY_COUNT=$(find /opt/vm-access/keys -name "vm-access-*" -not -name "*.pub" | wc -l)
+        log "✓ $KEY_COUNT SSH keys generated"
+    fi
+    
+    # Test vmuser account
+    if id vmuser &>/dev/null; then
+        log "✓ vmuser account exists"
+        if [[ -f /home/vmuser/.ssh/authorized_keys ]]; then
+            KEY_COUNT=$(wc -l < /home/vmuser/.ssh/authorized_keys)
+            log "✓ $KEY_COUNT authorized keys configured"
+        fi
+    fi
+    
+    log "✓ Connectivity tests completed"
+}
+
+generate_summary() {
+    log "=== SERVER CONNECTIVITY CONFIGURATION SUMMARY ==="
+    
+    echo "=== Configuration Details ===" | tee -a "$LOG_FILE"
+    echo "  Server IP: $SERVER_IP" | tee -a "$LOG_FILE"
+    echo "  SSH Port: $SSH_PORT" | tee -a "$LOG_FILE"
+    echo "  VNC Port: $VNC_PORT" | tee -a "$LOG_FILE"
+    echo "  SPICE Port: $SPICE_PORT" | tee -a "$LOG_FILE"
+    echo "  RDP Tunnel Port: $RDP_TUNNEL_PORT" | tee -a "$LOG_FILE"
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Service Status ===" | tee -a "$LOG_FILE"
+    if systemctl is-active --quiet sshd; then
+        echo "✓ SSH Daemon: ACTIVE" | tee -a "$LOG_FILE"
+    else
+        echo "✗ SSH Daemon: INACTIVE" | tee -a "$LOG_FILE"
+    fi
+    
+    if ss -tlnp | grep -q ":$SSH_PORT "; then
+        echo "✓ SSH Port $SSH_PORT: LISTENING" | tee -a "$LOG_FILE"
+    else
+        echo "✗ SSH Port $SSH_PORT: NOT LISTENING" | tee -a "$LOG_FILE"
+    fi
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== VM Display Status ===" | tee -a "$LOG_FILE"
+    if virsh domstate windows10-minimal 2>/dev/null | grep -q "running"; then
+        echo "✓ VM: RUNNING" | tee -a "$LOG_FILE"
+        
+        for port in $VNC_PORT $SPICE_PORT; do
+            if ss -tlnp | grep -q ":$port "; then
+                echo "✓ Port $port: ACCESSIBLE" | tee -a "$LOG_FILE"
+            else
+                echo "⚠ Port $port: NOT ACCESSIBLE" | tee -a "$LOG_FILE"
+            fi
+        done
+    else
+        echo "⚠ VM: NOT RUNNING" | tee -a "$LOG_FILE"
+        echo "  Start VM with: virsh start windows10-minimal" | tee -a "$LOG_FILE"
+    fi
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Client Access ===" | tee -a "$LOG_FILE"
+    if [[ -d /opt/vm-access/keys ]]; then
+        echo "SSH Keys Location: /opt/vm-access/keys/" | tee -a "$LOG_FILE"
+        echo "Available Keys:" | tee -a "$LOG_FILE"
+        find /opt/vm-access/keys -name "vm-access-*" -not -name "*.pub" | while read key; do
+            echo "  - $(basename "$key")" | tee -a "$LOG_FILE"
+        done
+    fi
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "Client Scripts: /opt/vm-access/client-scripts/" | tee -a "$LOG_FILE"
+    if [[ -d /opt/vm-access/client-scripts ]]; then
+        ls -1 /opt/vm-access/client-scripts/ | sed 's/^/  - /' | tee -a "$LOG_FILE"
+    fi
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Connection Commands ===" | tee -a "$LOG_FILE"
+    echo "From client devices:" | tee -a "$LOG_FILE"
+    echo "  Windows: Run connect-surface-pro.bat" | tee -a "$LOG_FILE"
+    echo "  Linux/Mac: ./connect-vm.sh [device-name]" | tee -a "$LOG_FILE"
+    echo "" | tee -a "$LOG_FILE"
+    echo "Manual tunnel command:" | tee -a "$LOG_FILE"
+    echo "  ssh -i ~/.ssh/vm-access-DEVICE \\" | tee -a "$LOG_FILE"
+    echo "      -p $SSH_PORT \\" | tee -a "$LOG_FILE"
+    echo "      -L $VNC_PORT:127.0.0.1:$VNC_PORT \\" | tee -a "$LOG_FILE"
+    echo "      -L $SPICE_PORT:127.0.0.1:$SPICE_PORT \\" | tee -a "$LOG_FILE"
+    echo "      -L $RDP_TUNNEL_PORT:192.168.100.10:3389 \\" | tee -a "$LOG_FILE"
+    echo "      -N vmuser@$SERVER_IP" | tee -a "$LOG_FILE"
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Security Notes ===" | tee -a "$LOG_FILE"
+    echo "  - vmuser has restricted shell access" | tee -a "$LOG_FILE"
+    echo "  - Port forwarding limited to VM ports only" | tee -a "$LOG_FILE"
+    echo "  - Each device has unique SSH key" | tee -a "$LOG_FILE"
+    echo "  - SSH access logged with timestamps" | tee -a "$LOG_FILE"
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "Log file: $LOG_FILE" | tee -a "$LOG_FILE"
+}
+
+main() {
+    log "Starting server connectivity configuration..."
+    
+    check_root
+    
+    # Clear previous log
+    > "$LOG_FILE"
+    
+    log "Phase 1: Getting user input..."
+    get_user_input
+    
+    log "Phase 2: Cleaning existing configuration..."
+    clean_existing_config
+    
+    log "Phase 3: Creating vmuser account..."
+    create_vmuser
+    
+    log "Phase 4: Generating SSH keys..."
+    generate_ssh_keys
+    
+    log "Phase 5: Configuring SSH daemon..."
+    configure_ssh
+    
+    log "Phase 6: Configuring firewall..."
+    configure_firewall
+    
+    log "Phase 7: Creating client scripts..."
+    create_client_scripts
+    
+    log "Phase 8: Testing connectivity..."
+    test_connectivity
+    
+    log "Phase 9: Generating summary..."
+    generate_summary
+    
+    log "✓ Server connectivity configuration completed successfully"
+}
+
+main "$@"

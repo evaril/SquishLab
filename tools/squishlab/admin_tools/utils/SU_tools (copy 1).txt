@@ -1,0 +1,366 @@
+#!/bin/bash
+# squishTools.mscr - System Inspector with Tree View
+# Author: evm
+# Version: 3.0-fixed
+
+set -euo pipefail
+
+# Color functions
+red() { printf '\033[0;31m%s\033[0m\n' "$*"; }
+green() { printf '\033[0;32m%s\033[0m\n' "$*"; }
+yellow() { printf '\033[1;33m%s\033[0m\n' "$*"; }
+blue() { printf '\033[0;34m%s\033[0m\n' "$*"; }
+cyan() { printf '\033[0;36m%s\033[0m\n' "$*"; }
+bold() { printf '\033[1m%s\033[0m\n' "$*"; }
+
+# Check if running as root/sudo
+is_privileged() {
+    [[ $EUID -eq 0 ]] || [[ -n "${SUDO_USER:-}" ]]
+}
+
+# Privilege escalation with detailed prompt
+escalate_privilege() {
+    local cmd="$1"
+    local purpose="$2"
+    local fallback="${3:-none}"
+    
+    if is_privileged; then
+        eval "$cmd"
+        return $?
+    fi
+    
+    echo
+    yellow "[PRIVILEGE] $purpose"
+    echo "- Command: $cmd"
+    echo "- Purpose: $purpose"
+    [[ "$fallback" != "none" ]] && echo "- Fallback: $fallback"
+    echo -n "Escalate? (y/N/fallback): "
+    read -r response
+    
+    case "$response" in
+        y|Y)
+            sudo bash -c "$cmd"
+            ;;
+        f|F|fallback)
+            if [[ "$fallback" != "none" ]]; then
+                eval "$fallback"
+            else
+                return 1
+            fi
+            ;;
+        *)
+            return 1
+            ;;
+    esac
+}
+
+# Build tree structure with timestamps
+build_tree() {
+    local dir="${1}"
+    local prefix="${2:-}"
+    local max_depth="${3:-3}"
+    local current_depth="${4:-0}"
+    
+    [[ $current_depth -ge $max_depth ]] && return
+    
+    # Get entries sorted by modification time (newest first)
+    local entries=()
+    while IFS= read -r -d '' entry; do
+        entries+=("$entry")
+    done < <(find "$dir" -maxdepth 1 -mindepth 1 -print0 2>/dev/null | \
+              xargs -0 ls -dt --time-style='+%m-%d %H:%M' 2>/dev/null)
+    
+    local count=${#entries[@]}
+    local i=0
+    
+    for entry in "${entries[@]}"; do
+        ((i++))
+        local basename=$(basename "$entry")
+        local timestamp=$(stat -c '%y' "$entry" 2>/dev/null | cut -d' ' -f1 | sed 's/^.*-//')
+        timestamp+=" $(stat -c '%y' "$entry" 2>/dev/null | cut -d' ' -f2 | cut -d: -f1-2)"
+        
+        # Determine tree characters
+        local is_last=$([[ $i -eq $count ]] && echo true || echo false)
+        local tree_char=$([[ "$is_last" == "true" ]] && echo "└── " || echo "├── ")
+        local next_prefix=$([[ "$is_last" == "true" ]] && echo "$prefix    " || echo "$prefix│   ")
+        
+        # Print entry with timestamp
+        if [[ -d "$entry" ]]; then
+            echo "$prefix$tree_char$timestamp $basename/"
+            build_tree "$entry" "$next_prefix" "$max_depth" $((current_depth + 1))
+        else
+            echo "$prefix$tree_char$timestamp $basename"
+        fi
+    done
+}
+
+# Enhanced file listing with tree view
+do_ls() {
+    local path="${1:-.}"
+    local show_tree="${2:-false}"
+    local show_extended="${3:-false}"
+    
+    blue "[INFO] File listing for: $path"
+    echo "----------------------------------------"
+    
+    # Basic listing (newest first)
+    if [[ "$show_tree" == "true" ]]; then
+        green "Directory tree (sorted by time):"
+        echo "$path/"
+        build_tree "$path" "" $([ "$show_extended" == "true" ] && echo 5 || echo 3)
+    else
+        green "Files (newest first):"
+        ls -lat --time-style='+%m-%d %H:%M' "$path" 2>/dev/null | head -$([ "$show_extended" == "true" ] && echo 25 || echo 15)
+    fi
+    
+    # Extended information
+    if [[ "$show_extended" == "true" ]]; then
+        echo
+        green "Directory analysis:"
+        
+        # Sizes
+        echo "Top directories by size:"
+        du -sh "$path"/*/ 2>/dev/null | sort -hr | head -10 || echo "  No subdirectories"
+        
+        # Stats
+        echo
+        echo "Statistics:"
+        local total_files=$(find "$path" -type f 2>/dev/null | wc -l)
+        local total_dirs=$(find "$path" -type d 2>/dev/null | wc -l)
+        local total_size=$(du -sh "$path" 2>/dev/null | cut -f1)
+        echo "  Files: $total_files"
+        echo "  Directories: $total_dirs"
+        echo "  Total size: $total_size"
+        
+        # Recent changes
+        echo
+        echo "Recent modifications (last 24h):"
+        find "$path" -type f -mtime -1 2>/dev/null | head -10 | while read -r file; do
+            local mtime=$(stat -c '%y' "$file" | cut -d. -f1)
+            echo "  $mtime - $(basename "$file")"
+        done
+        
+        # Git status if applicable
+        if git -C "$path" rev-parse --git-dir >/dev/null 2>&1; then
+            echo
+            cyan "Git status:"
+            git -C "$path" status -s 2>/dev/null | head -10
+        fi
+    fi
+    
+    green "[OK] File listing completed"
+}
+
+# Enhanced network analysis
+do_net() {
+    local show_extended="${1:-false}"
+    
+    blue "[INFO] Network connection analysis"
+    echo "----------------------------------------"
+    
+    # Basic connections
+    green "Active connections:"
+    
+    # Try ss first (works better without root)
+    if command -v ss >/dev/null 2>&1; then
+        # Basic output without needing privileges
+        ss -tun 2>/dev/null | head -$([ "$show_extended" == "true" ] && echo 20 || echo 10)
+        
+        # Try to get process names with privilege escalation
+        if [[ "$show_extended" == "true" ]] || is_privileged; then
+            echo
+            green "Listening services:"
+            if escalate_privilege "ss -tlnp 2>/dev/null | grep LISTEN" \
+               "Show listening services with process names" \
+               "ss -tln 2>/dev/null | grep LISTEN"; then
+                # Success - output handled by escalate_privilege
+                true
+            fi
+            
+            echo
+            green "Established connections:"
+            if escalate_privilege "ss -tnp 2>/dev/null | grep ESTAB | head -10" \
+               "Show established connections with process names" \
+               "ss -tn 2>/dev/null | grep ESTAB | head -10"; then
+                # Success - output handled by escalate_privilege
+                true
+            fi
+        fi
+    else
+        # Fallback to netstat
+        netstat -tun 2>/dev/null | head -$([ "$show_extended" == "true" ] && echo 20 || echo 10)
+    fi
+    
+    # Extended analysis
+    if [[ "$show_extended" == "true" ]]; then
+        echo
+        green "Network statistics:"
+        
+        # Connection counts
+        echo "Connection summary:"
+        if command -v ss >/dev/null 2>&1; then
+            echo "  Listening: $(ss -tln 2>/dev/null | grep -c LISTEN)"
+            echo "  Established: $(ss -t state established 2>/dev/null | wc -l)"
+            echo "  Time-wait: $(ss -t state time-wait 2>/dev/null | wc -l)"
+        fi
+        
+        # Port ranges
+        echo
+        echo "Port usage:"
+        if escalate_privilege "ss -tan 2>/dev/null | awk '{print \$4}' | cut -d: -f2 | grep -E '^[0-9]+$' | sort -n | uniq -c | sort -nr | head -10" \
+           "Show most used ports" \
+           "echo 'Requires privileges for detailed port analysis'"; then
+            # Success - output handled by escalate_privilege
+            true
+        fi
+        
+        # Interface statistics
+        echo
+        echo "Interface statistics:"
+        ip -s link show 2>/dev/null | grep -A1 "^[0-9]" | head -10
+        
+        # Firewall status
+        echo
+        echo "Firewall status:"
+        if escalate_privilege "iptables -L -n -v --line-numbers 2>/dev/null | head -20" \
+           "Show firewall rules" \
+           "echo 'Requires privileges to view firewall rules'"; then
+            # Success - output handled by escalate_privilege
+            true
+        fi
+    fi
+    
+    green "[OK] Network analysis completed"
+}
+
+# Combined overview
+do_all() {
+    local path="${1:-.}"
+    local show_extended="${2:-false}"
+    
+    blue "[INFO] Combined system overview"
+    echo "========================================"
+    
+    # System info
+    green "System status:"
+    echo "Time: $(date '+%m-%d %H:%M:%S')"
+    echo "Uptime: $(uptime -p 2>/dev/null | sed 's/up //' || uptime)"
+    echo "Load: $(cat /proc/loadavg | cut -d' ' -f1-3)"
+    echo "Memory: $(free -h | awk '/^Mem:/ {print $3"/"$2" ("$7" available)"}')"
+    echo "Disk: $(df -h . | tail -1 | awk '{print $3"/"$2" ("$5")"}')"
+    
+    echo
+    echo "========================================"
+    do_ls "$path" false "$show_extended"
+    
+    echo
+    echo "========================================"
+    do_net "$show_extended"
+    
+    green "[OK] Combined overview completed"
+}
+
+# Help
+show_help() {
+    green "squishTools v3.0 - System Inspector"
+    echo
+    yellow "USAGE:"
+    echo "  $0 {ls|net|all} [path] [-options]"
+    echo
+    yellow "COMMANDS:"
+    echo "  ls [path]  - File listing (time-sorted)"
+    echo "  net        - Network connections"
+    echo "  all [path] - Combined overview"
+    echo
+    yellow "OPTIONS:"
+    echo "  -t  - Tree view for ls (time-sorted)"
+    echo "  -e  - Extended information"
+    echo "  -h  - Show help"
+    echo
+    yellow "EXAMPLES:"
+    echo "  $0 ls          - Basic file listing"
+    echo "  $0 ls -t       - Tree view (time-sorted)"
+    echo "  $0 ls -te      - Tree view with extended info"
+    echo "  $0 net         - Basic network info"
+    echo "  $0 net -e      - Extended network analysis"
+    echo "  $0 all -e      - Full system overview"
+    echo
+    cyan "Privilege escalation is interactive - you'll be prompted when needed"
+}
+
+# Main
+main() {
+    local module=""
+    local path="."
+    local show_tree=false
+    local show_extended=false
+    
+    # Parse arguments
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            ls|net|all)
+                module="$1"
+                shift
+                ;;
+            -t*)
+                show_tree=true
+                [[ "$1" == *e* ]] && show_extended=true
+                shift
+                ;;
+            -e*)
+                show_extended=true
+                [[ "$1" == *t* ]] && show_tree=true
+                shift
+                ;;
+            -te|-et)
+                show_tree=true
+                show_extended=true
+                shift
+                ;;
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+            -*)
+                red "[ERROR] Unknown option: $1"
+                exit 1
+                ;;
+            *)
+                if [[ -e "$1" ]] || [[ "$1" =~ ^[/.~] ]]; then
+                    path="$1"
+                else
+                    red "[ERROR] Invalid path: $1"
+                    exit 1
+                fi
+                shift
+                ;;
+        esac
+    done
+    
+    # Validate module
+    if [[ -z "$module" ]]; then
+        red "[ERROR] No module specified"
+        show_help
+        exit 1
+    fi
+    
+    # Expand path
+    path="${path/#\~/$HOME}"
+    
+    # Execute module
+    case "$module" in
+        ls)
+            do_ls "$path" "$show_tree" "$show_extended"
+            ;;
+        net)
+            do_net "$show_extended"
+            ;;
+        all)
+            do_all "$path" "$show_extended"
+            ;;
+    esac
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

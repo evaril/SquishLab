@@ -1,0 +1,15 @@
+#!/bin/bash
+# 1. Clean system
+sudo bash -c '...' # (the cleanup command above)
+
+# 2. Create full backup
+backup-system
+
+# 3. Create quick snapshots anytime
+quick-snap "before-vm-changes"
+quick-snap "clean-state"
+
+# 4. Restore data
+export RESTIC_REPOSITORY="$HOME/Backups/restic-repo"
+restic snapshots                    # List all backups
+restic restore latest --target /tmp/restore  # Restore latest

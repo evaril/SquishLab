@@ -1,0 +1,9 @@
+#!/bin/bash
+# Test DNS with systemd's resolvectl (already installed)
+resolvectl query google.com
+
+# Or use curl (likely already installed)
+curl -I google.com
+
+# Or use ping (definitely installed)
+ping -c 2 google.com

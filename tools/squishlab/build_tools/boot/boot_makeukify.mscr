@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sudo ukify build \
+    --linux=/boot/vmlinuz-linux-hardened \
+    --initrd=/boot/initramfs-linux-hardened.img \
+    --cmdline="$(</etc/kernel/cmdline)" \
+    --output=/boot/EFI/Linux/arch-hardened-SUUKI.efi
+
+sudo sbctl sign -s /boot/EFI/Linux/arch-hardened-SQ.efi
+sudo sbctl sign -s /boot/EFI/Linux/arch-hardened.efi
+sudo sbctl sign -s /boot/EFI/Linux/arch-pacman-hardened.efi
+sudo sbctl sign -s /boot/EFI/refind/refind_x64.efi
+
+
+sudo sbctl status

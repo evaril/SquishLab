@@ -1,0 +1,361 @@
+#!/bin/bash
+#!/bin/bash
+
+# VM Deployment Script for windows10-clean
+# Creates disk images and deploys the VM based on your clean XML configuration
+
+set -euo pipefail
+
+SCRIPT_NAME="$(basename "$0")"
+LOG_PREFIX="[$SCRIPT_NAME]"
+
+# Color output functions
+log_info() { echo -e "\033[1;34m${LOG_PREFIX} INFO:\033[0m $*"; }
+log_success() { echo -e "\033[1;32m${LOG_PREFIX} SUCCESS:\033[0m $*"; }
+log_warning() { echo -e "\033[1;33m${LOG_PREFIX} WARNING:\033[0m $*"; }
+log_error() { echo -e "\033[1;31m${LOG_PREFIX} ERROR:\033[0m $*"; }
+
+# Check if running as root
+if [[ $EUID -ne 0 ]]; then
+    log_error "This script must be run as root"
+    exit 1
+fi
+
+# VM configuration from your XML
+VM_NAME="windows10-clean"
+VM_UUID="b5fc0ae1-9e10-4374-bb6e-ee1c88085f25"
+ROOT_DISK="/home/evm/windows/win10-root.qcow2"
+DATA_DISK="/home/evm/windows/win10-data.qcow2"
+VIRTIO_ISO="/home/evm/iso/virtio-win.iso"
+NVRAM_FILE="/var/lib/libvirt/qemu/nvram/windows10-minimal-v2_VARS.fd"
+
+# Disk sizes (adjust as needed)
+ROOT_DISK_SIZE="60G"    # System disk - smaller
+DATA_DISK_SIZE="200G"   # Data disk - larger
+
+log_info "Deploying VM: $VM_NAME"
+log_info "Root disk: $ROOT_DISK ($ROOT_DISK_SIZE)"
+log_info "Data disk: $DATA_DISK ($DATA_DISK_SIZE)"
+
+# Function to create disk if it doesn't exist
+create_disk_if_needed() {
+    local disk_path="$1"
+    local disk_size="$2"
+    local disk_desc="$3"
+    
+    if [[ -f "$disk_path" ]]; then
+        log_info "$disk_desc already exists: $disk_path"
+        ls -lh "$disk_path"
+        
+        # Show disk info
+        if command -v qemu-img &>/dev/null; then
+            echo "Disk info:"
+            qemu-img info "$disk_path"
+        fi
+    else
+        log_info "Creating $disk_desc: $disk_path ($disk_size)"
+        
+        # Ensure directory exists
+        local disk_dir=$(dirname "$disk_path")
+        mkdir -p "$disk_dir"
+        chown evm:evm "$disk_dir"
+        
+        # Create the disk
+        if qemu-img create -f qcow2 "$disk_path" "$disk_size"; then
+            log_success "Created $disk_desc successfully"
+            chown evm:evm "$disk_path"
+            ls -lh "$disk_path"
+        else
+            log_error "Failed to create $disk_desc"
+            return 1
+        fi
+    fi
+}
+
+# Check prerequisites
+log_info "Checking prerequisites..."
+
+# Check if libvirt is working
+if ! virsh version &>/dev/null; then
+    log_error "libvirt is not working. Run the daemon fix script first."
+    exit 1
+fi
+
+# Check storage pools
+if ! virsh pool-info pool &>/dev/null; then
+    log_error "Storage pool 'pool' not found. Run storage pool creation script first."
+    exit 1
+fi
+
+# Check for OVMF files
+if [[ ! -f "/usr/share/edk2/x64/OVMF_CODE.4m.fd" ]]; then
+    log_error "OVMF firmware not found. Install: pacman -S edk2-ovmf"
+    exit 1
+fi
+
+# Create VM disks
+log_info "Setting up VM storage..."
+
+create_disk_if_needed "$ROOT_DISK" "$ROOT_DISK_SIZE" "Root disk"
+create_disk_if_needed "$DATA_DISK" "$DATA_DISK_SIZE" "Data disk"
+
+# Check for VirtIO ISO
+if [[ ! -f "$VIRTIO_ISO" ]]; then
+    log_warning "VirtIO drivers ISO not found: $VIRTIO_ISO"
+    log_info "You'll need to download this for Windows to see the VirtIO disks"
+    log_info "Download from: https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/"
+    
+    # Create placeholder or skip
+    mkdir -p "$(dirname "$VIRTIO_ISO")"
+    chown evm:evm "$(dirname "$VIRTIO_ISO")"
+    log_warning "Continuing without VirtIO ISO - you'll need to add it later"
+else
+    log_success "VirtIO ISO found: $VIRTIO_ISO"
+    ls -lh "$VIRTIO_ISO"
+fi
+
+# Clean up any existing VM definition
+log_info "Cleaning up existing VM definition..."
+if virsh dominfo "$VM_NAME" &>/dev/null; then
+    log_info "VM '$VM_NAME' already exists, removing..."
+    
+    # Stop if running
+    if virsh domstate "$VM_NAME" | grep -q "running"; then
+        log_info "Stopping running VM..."
+        virsh destroy "$VM_NAME" || true
+    fi
+    
+    # Undefine with NVRAM cleanup
+    log_info "Undefining VM with NVRAM cleanup..."
+    virsh undefine "$VM_NAME" --nvram || true
+    
+    # Clean NVRAM file manually if it still exists
+    if [[ -f "$NVRAM_FILE" ]]; then
+        log_info "Removing old NVRAM file..."
+        rm -f "$NVRAM_FILE"
+    fi
+fi
+
+# Create the VM XML file
+VM_XML_FILE="/tmp/${VM_NAME}.xml"
+log_info "Creating VM XML definition..."
+
+# Read the VM XML from your document and save it
+cat > "$VM_XML_FILE" << 'EOF'
+<domain type="kvm">
+  <name>windows10-clean</name>
+  <uuid>b5fc0ae1-9e10-4374-bb6e-ee1c88085f25</uuid>
+  
+  <!-- 8GB RAM, adjust as needed -->
+  <memory unit="KiB">8388608</memory>
+  <currentMemory unit="KiB">8388608</currentMemory>
+  <vcpu placement="static">6</vcpu>
+  
+  <!-- UEFI boot with secure boot disabled -->
+  <os firmware="efi">
+    <type arch="x86_64" machine="pc-q35-8.1">hvm</type>
+    <firmware>
+      <feature enabled="no" name="enrolled-keys"/>
+      <feature enabled="no" name="secure-boot"/>
+    </firmware>
+    <loader readonly="yes" secure="no" type="pflash" format="raw">/usr/share/edk2/x64/OVMF_CODE.4m.fd</loader>
+    <nvram template="/usr/share/edk2/x64/OVMF_VARS.4m.fd" format="raw">/var/lib/libvirt/qemu/nvram/windows10-minimal-v2_VARS.fd</nvram>
+    <boot dev="hd"/>
+  </os>
+  
+  <features>
+    <acpi/>
+    <apic/>
+    <hyperv mode="custom">
+      <relaxed state="on"/>
+      <vapic state="on"/>
+      <spinlocks state="on" retries="8191"/>
+      <vendor_id state="on" value="randomid"/>
+    </hyperv>
+    <vmport state="off"/>
+  </features>
+  
+  <!-- Host CPU passthrough for performance -->
+  <cpu mode="host-passthrough" check="none" migratable="on">
+    <topology sockets="1" dies="1" cores="6" threads="1"/>
+  </cpu>
+  
+  <clock offset="localtime">
+    <timer name="rtc" tickpolicy="catchup"/>
+    <timer name="pit" tickpolicy="delay"/>
+    <timer name="hpet" present="no"/>
+    <timer name="hypervclock" present="yes"/>
+  </clock>
+  
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+  
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    
+    <!-- Root disk - smaller, system only -->
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2" cache="writeback"/>
+      <source file="/home/evm/windows/win10-root.qcow2"/>
+      <target dev="sda" bus="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x04" slot="0x00" function="0x0"/>
+    </disk>
+    
+    <!-- Data disk - larger, for user files -->
+    <disk type="file" device="disk">
+      <driver name="qemu" type="qcow2" cache="writeback"/>
+      <source file="/home/evm/windows/win10-data.qcow2"/>
+      <target dev="sdb" bus="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x05" slot="0x00" function="0x0"/>
+    </disk>
+    
+    <!-- VirtIO drivers ISO for Windows -->
+    <disk type="file" device="cdrom">
+      <driver name="qemu" type="raw"/>
+      <source file="/home/evm/iso/virtio-win.iso"/>
+      <target dev="sdc" bus="sata"/>
+      <readonly/>
+      <address type="drive" controller="0" bus="0" target="0" unit="2"/>
+    </disk>
+    
+    <!-- Controllers -->
+    <controller type="usb" index="0" model="qemu-xhci">
+      <address type="pci" domain="0x0000" bus="0x02" slot="0x00" function="0x0"/>
+    </controller>
+    <controller type="sata" index="0">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x1f" function="0x2"/>
+    </controller>
+    <controller type="pci" index="0" model="pcie-root"/>
+    <controller type="pci" index="1" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="1" port="0x10"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x0" multifunction="on"/>
+    </controller>
+    <controller type="pci" index="2" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="2" port="0x11"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x1"/>
+    </controller>
+    <controller type="pci" index="3" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="3" port="0x12"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x2"/>
+    </controller>
+    <controller type="pci" index="4" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="4" port="0x13"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x3"/>
+    </controller>
+    <controller type="pci" index="5" model="pcie-root-port">
+      <model name="pcie-root-port"/>
+      <target chassis="5" port="0x14"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x02" function="0x4"/>
+    </controller>
+    <controller type="virtio-serial" index="0">
+      <address type="pci" domain="0x0000" bus="0x03" slot="0x00" function="0x0"/>
+    </controller>
+    
+    <!-- Network - isolated bridge for security -->
+    <interface type="bridge">
+      <mac address="52:54:00:a7:91:ce"/>
+      <source bridge="virbr1"/>
+      <model type="virtio"/>
+      <address type="pci" domain="0x0000" bus="0x01" slot="0x00" function="0x0"/>
+    </interface>
+    
+    <!-- VNC display for initial setup and remote access -->
+    <graphics type="vnc" port="11010" autoport="no" listen="127.0.0.1">
+      <listen type="address" address="127.0.0.1"/>
+    </graphics>
+    
+    <!-- QXL display adapter - good performance, supports multiple monitors -->
+    <video>
+      <model type="qxl" ram="65536" vram="65536" vgamem="16384" heads="1" primary="yes"/>
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x0"/>
+    </video>
+    
+    <!-- SPICE for better remote desktop experience -->
+    <graphics type="spice" port="11011" autoport="no" listen="127.0.0.1">
+      <listen type="address" address="127.0.0.1"/>
+      <image compression="off"/>
+    </graphics>
+    
+    <!-- Input devices -->
+    <input type="tablet" bus="usb">
+      <address type="usb" bus="0" port="1"/>
+    </input>
+    <input type="mouse" bus="ps2"/>
+    <input type="keyboard" bus="ps2"/>
+    
+    <!-- Audio - basic for now -->
+    <sound model="ich9">
+      <address type="pci" domain="0x0000" bus="0x00" slot="0x1b" function="0x0"/>
+    </sound>
+    <audio id="1" type="spice"/>
+    
+    <!-- VirtIO serial for QEMU guest agent -->
+    <channel type="spicevmc">
+      <target type="virtio" name="com.redhat.spice.0"/>
+      <address type="virtio-serial" controller="0" bus="0" port="1"/>
+    </channel>
+    
+    <!-- Memory balloon for dynamic memory management -->
+    <memballoon model="virtio">
+      <address type="pci" domain="0x0000" bus="0x06" slot="0x00" function="0x0"/>
+    </memballoon>
+  </devices>
+</domain>
+EOF
+
+# Define the VM
+log_info "Defining VM from XML..."
+if virsh define "$VM_XML_FILE"; then
+    log_success "VM '$VM_NAME' defined successfully"
+    rm -f "$VM_XML_FILE"
+else
+    log_error "Failed to define VM"
+    log_info "XML file saved at: $VM_XML_FILE"
+    exit 1
+fi
+
+# Refresh storage pools to see new disks
+log_info "Refreshing storage pools..."
+virsh pool-refresh pool 2>/dev/null || true
+virsh pool-refresh iso-images 2>/dev/null || true
+
+# Show final status
+echo
+echo "=== VM Deployment Summary ==="
+log_success "VM '$VM_NAME' is ready for use"
+
+echo
+echo "VM Details:"
+virsh dominfo "$VM_NAME"
+
+echo
+echo "Storage:"
+echo "  Root disk: $ROOT_DISK ($ROOT_DISK_SIZE)"
+echo "  Data disk: $DATA_DISK ($DATA_DISK_SIZE)"
+echo "  VirtIO ISO: $VIRTIO_ISO"
+
+echo
+echo "Network:"
+echo "  Bridge: virbr1 (isolated)"
+echo "  MAC: 52:54:00:a7:91:ce"
+
+echo
+echo "Display Access:"
+echo "  VNC: localhost:11010"
+echo "  SPICE: localhost:11011"
+
+echo
+echo "Next Steps:"
+echo "1. Ensure you have a Windows 10 installation ISO"
+echo "2. Download VirtIO drivers if not present: $VIRTIO_ISO"
+echo "3. Start the VM: virsh start $VM_NAME"
+echo "4. Connect via VNC: vncviewer localhost:11010"
+echo "5. Install Windows 10 on the root disk (sda)"
+echo "6. Install VirtIO drivers during installation for disk/network access"
+
+log_success "VM deployment completed successfully!"

@@ -1,0 +1,15 @@
+# Test that the service is running
+sudo systemctl status homeassistant
+
+# Check that it's listening on the correct port
+sudo ss -tlnp | grep 8170
+
+# Check AppArmor status
+sudo aa-status | grep homeassistant
+
+# View logs in real-time
+sudo journalctl -u homeassistant -f
+
+# Access Home Assistant web interface
+# Navigate to: http://localhost:8170
+# Or: http://your-server-ip:8170

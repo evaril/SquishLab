@@ -1,0 +1,8 @@
+# Check how Home Assistant is currently running
+ps aux | grep hass
+
+# Check if there's a configuration file
+ls -la /opt/homeassistant/config/ 2>/dev/null || echo "No config dir found"
+
+# Check where the hass process is running from
+sudo lsof -p 12908 | grep cwd

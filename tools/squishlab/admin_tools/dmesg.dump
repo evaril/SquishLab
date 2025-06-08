@@ -1,0 +1,1631 @@
+<6>[20452.793566] RAX: ffffffffffffffda RBX: 00007d5b5a5a99b8 RCX: 00007d5b796ade22
+<6>[20452.794194] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a99d8
+<6>[20452.794825] RBP: 00007d5b417fdd40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.795459] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.796097] R13: 00007d5b5a5a9990 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.796738]  </TASK>
+<6>[20452.797369] task:hass            state:S stack:0     pid:15010 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.798034] Call Trace:
+<6>[20452.798693]  <TASK>
+<6>[20452.799347]  __schedule+0x401/0x1350
+<6>[20452.800008]  schedule+0x27/0xf0
+<6>[20452.800665]  futex_wait_queue+0x67/0x90
+<6>[20452.801326]  __futex_wait+0x14e/0x1c0
+<6>[20452.801983]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.802645]  futex_wait+0x79/0x120
+<6>[20452.803304]  do_futex+0xc5/0x190
+<6>[20452.803965]  __x64_sys_futex+0x12e/0x210
+<6>[20452.804625]  do_syscall_64+0x7b/0x190
+<6>[20452.805285]  ? sched_balance_trigger+0x72/0x370
+<6>[20452.805948]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.806611]  ? update_process_times+0xa4/0xd0
+<6>[20452.807269]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.807928]  ? timerqueue_add+0xae/0xd0
+<6>[20452.808584]  ? __hrtimer_run_queues+0x165/0x2a0
+<6>[20452.809240]  ? ktime_get+0x38/0xd0
+<6>[20452.809899]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.810560]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.811222]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.811884]  ? sched_clock+0x10/0x30
+<6>[20452.812545]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.813192]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.813835]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.814478]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.815119] RIP: 0033:0x7d5b796ade22
+<6>[20452.815765] RSP: 002b:00007d5b40ffcd08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.816422] RAX: ffffffffffffffda RBX: 00007d5b5a5a9a38 RCX: 00007d5b796ade22
+<6>[20452.817078] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9a58
+<6>[20452.817725] RBP: 00007d5b40ffcd40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.818360] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.818998] R13: 00007d5b5a5a9a10 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.819637]  </TASK>
+<6>[20452.820269] task:hass            state:S stack:0     pid:15011 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.820935] Call Trace:
+<6>[20452.821594]  <TASK>
+<6>[20452.822247]  __schedule+0x401/0x1350
+<6>[20452.822909]  schedule+0x27/0xf0
+<6>[20452.823561]  futex_wait_queue+0x67/0x90
+<6>[20452.824217]  __futex_wait+0x14e/0x1c0
+<6>[20452.824872]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.825531]  futex_wait+0x79/0x120
+<6>[20452.826187]  do_futex+0xc5/0x190
+<6>[20452.826839]  __x64_sys_futex+0x12e/0x210
+<6>[20452.827498]  do_syscall_64+0x7b/0x190
+<6>[20452.828154]  ? place_entity+0x9f/0x150
+<6>[20452.828805]  ? reweight_entity+0x1d4/0x200
+<6>[20452.829460]  ? task_tick_fair+0x5e/0x4e0
+<6>[20452.830112]  ? sched_balance_trigger+0x72/0x370
+<6>[20452.830769]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.831425]  ? update_process_times+0xa4/0xd0
+<6>[20452.832074]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.832724]  ? __note_gp_changes+0x197/0x1f0
+<6>[20452.833381]  ? note_gp_changes+0x75/0x90
+<6>[20452.834032]  ? sched_clock+0x10/0x30
+<6>[20452.834685]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.835334]  ? rcu_core+0x19d/0x360
+<6>[20452.835977]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.836615]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.837246]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.837875]  ? handle_softirqs+0x192/0x2a0
+<6>[20452.838501]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.839130]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.839765] RIP: 0033:0x7d5b796ade22
+<6>[20452.840396] RSP: 002b:00007d5b25ffed08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.841023] RAX: ffffffffffffffda RBX: 00007d5b5a5a9ab8 RCX: 00007d5b796ade22
+<6>[20452.841646] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9ad8
+<6>[20452.842273] RBP: 00007d5b25ffed40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.842906] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.843537] R13: 00007d5b5a5a9a90 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.844169]  </TASK>
+<6>[20452.844797] task:hass            state:S stack:0     pid:15012 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.845457] Call Trace:
+<6>[20452.846098]  <TASK>
+<6>[20452.846745]  __schedule+0x401/0x1350
+<6>[20452.847403]  schedule+0x27/0xf0
+<6>[20452.848053]  futex_wait_queue+0x67/0x90
+<6>[20452.848702]  __futex_wait+0x14e/0x1c0
+<6>[20452.849353]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.850004]  futex_wait+0x79/0x120
+<6>[20452.850655]  do_futex+0xc5/0x190
+<6>[20452.851304]  __x64_sys_futex+0x12e/0x210
+<6>[20452.851959]  do_syscall_64+0x7b/0x190
+<6>[20452.852611]  ? sched_balance_find_src_group+0x51/0x550
+<6>[20452.853269]  ? update_load_avg+0x7a/0x7c0
+<6>[20452.853922]  ? update_curr+0x96/0x290
+<6>[20452.854571]  ? task_tick_fair+0x5e/0x4e0
+<6>[20452.855218]  ? sched_balance_trigger+0x72/0x370
+<6>[20452.855873]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.856530]  ? update_process_times+0xa4/0xd0
+<6>[20452.857182]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.857833]  ? timerqueue_add+0xae/0xd0
+<6>[20452.858482]  ? __hrtimer_run_queues+0x165/0x2a0
+<6>[20452.859123]  ? ktime_get+0x38/0xd0
+<6>[20452.859751]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.860385]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.861017]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.861650]  ? sched_clock+0x10/0x30
+<6>[20452.862281]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.862904]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.863516]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.864114]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.864722] RIP: 0033:0x7d5b796ade22
+<6>[20452.865333] RSP: 002b:00007d5b257fdd08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.865955] RAX: ffffffffffffffda RBX: 00007d5b5a5a9b38 RCX: 00007d5b796ade22
+<6>[20452.866584] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9b58
+<6>[20452.867218] RBP: 00007d5b257fdd40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.867853] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.868486] R13: 00007d5b5a5a9b10 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.869122]  </TASK>
+<6>[20452.869750] task:hass            state:S stack:0     pid:15013 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.870416] Call Trace:
+<6>[20452.871062]  <TASK>
+<6>[20452.871715]  __schedule+0x401/0x1350
+<6>[20452.872373]  schedule+0x27/0xf0
+<6>[20452.873025]  futex_wait_queue+0x67/0x90
+<6>[20452.873679]  __futex_wait+0x14e/0x1c0
+<6>[20452.874335]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.874990]  futex_wait+0x79/0x120
+<6>[20452.875643]  do_futex+0xc5/0x190
+<6>[20452.876294]  __x64_sys_futex+0x12e/0x210
+<6>[20452.876953]  do_syscall_64+0x7b/0x190
+<6>[20452.877612]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.878269]  ? sched_clock+0x10/0x30
+<6>[20452.878927]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.879586]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.880237]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.880899]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.881558] RIP: 0033:0x7d5b796ade22
+<6>[20452.882215] RSP: 002b:00007d5b24ffcd08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.882886] RAX: ffffffffffffffda RBX: 00007d5b5a5a9bb8 RCX: 00007d5b796ade22
+<6>[20452.883552] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9bd8
+<6>[20452.884214] RBP: 00007d5b24ffcd40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.884877] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.885541] R13: 00007d5b5a5a9b90 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.886200]  </TASK>
+<6>[20452.886854] task:hass            state:S stack:0     pid:15014 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.887538] Call Trace:
+<6>[20452.888197]  <TASK>
+<6>[20452.888842]  __schedule+0x401/0x1350
+<6>[20452.889497]  schedule+0x27/0xf0
+<6>[20452.890146]  futex_wait_queue+0x67/0x90
+<6>[20452.890799]  __futex_wait+0x14e/0x1c0
+<6>[20452.891453]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.892108]  futex_wait+0x79/0x120
+<6>[20452.892763]  do_futex+0xc5/0x190
+<6>[20452.893411]  __x64_sys_futex+0x12e/0x210
+<6>[20452.894063]  do_syscall_64+0x7b/0x190
+<6>[20452.894717]  ? sched_balance_trigger+0x72/0x370
+<6>[20452.895372]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.896025]  ? update_process_times+0xa4/0xd0
+<6>[20452.896677]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.897331]  ? timerqueue_add+0xae/0xd0
+<6>[20452.897981]  ? __hrtimer_run_queues+0x165/0x2a0
+<6>[20452.898635]  ? ktime_get+0x38/0xd0
+<6>[20452.899286]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.899934]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.900589]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.901243]  ? sched_clock+0x10/0x30
+<6>[20452.901901]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.902555]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.903203]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.903859]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.904516] RIP: 0033:0x7d5b796ade22
+<6>[20452.905171] RSP: 002b:00007d5b247fbd08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.905843] RAX: ffffffffffffffda RBX: 00007d5b5a5a9c38 RCX: 00007d5b796ade22
+<6>[20452.906520] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9c58
+<6>[20452.907199] RBP: 00007d5b247fbd40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.907880] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.908557] R13: 00007d5b5a5a9c10 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.909228]  </TASK>
+<6>[20452.909887] task:hass            state:S stack:0     pid:15015 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.910587] Call Trace:
+<6>[20452.911264]  <TASK>
+<6>[20452.911939]  __schedule+0x401/0x1350
+<6>[20452.912620]  schedule+0x27/0xf0
+<6>[20452.913288]  futex_wait_queue+0x67/0x90
+<6>[20452.913949]  __futex_wait+0x14e/0x1c0
+<6>[20452.914596]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.915245]  futex_wait+0x79/0x120
+<6>[20452.915895]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.916549]  do_futex+0xc5/0x190
+<6>[20452.917198]  __x64_sys_futex+0x12e/0x210
+<6>[20452.917852]  do_syscall_64+0x7b/0x190
+<6>[20452.918506]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.919156]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.919810]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.920468]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.921126] RIP: 0033:0x7d5b796ade22
+<6>[20452.921788] RSP: 002b:00007d5b23ffad08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.922458] RAX: ffffffffffffffda RBX: 00007d5b5a5a9cb8 RCX: 00007d5b796ade22
+<6>[20452.923140] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9cd8
+<6>[20452.923827] RBP: 00007d5b23ffad40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.924513] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.925196] R13: 00007d5b5a5a9c90 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.925877]  </TASK>
+<6>[20452.926549] task:hass            state:S stack:0     pid:15016 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.927243] Call Trace:
+<6>[20452.927928]  <TASK>
+<6>[20452.928606]  __schedule+0x401/0x1350
+<6>[20452.929288]  schedule+0x27/0xf0
+<6>[20452.929967]  futex_wait_queue+0x67/0x90
+<6>[20452.930640]  __futex_wait+0x14e/0x1c0
+<6>[20452.931303]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.931958]  futex_wait+0x79/0x120
+<6>[20452.932605]  ? cpu_util+0x81/0xf0
+<6>[20452.933255]  do_futex+0xc5/0x190
+<6>[20452.933899]  __x64_sys_futex+0x12e/0x210
+<6>[20452.934554]  do_syscall_64+0x7b/0x190
+<6>[20452.935203]  ? sched_balance_find_src_group+0x51/0x550
+<6>[20452.935859]  ? update_load_avg+0x7a/0x7c0
+<6>[20452.936513]  ? update_curr+0x96/0x290
+<6>[20452.937165]  ? task_tick_fair+0x5e/0x4e0
+<6>[20452.937821]  ? sched_balance_trigger+0x72/0x370
+<6>[20452.938478]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.939136]  ? update_process_times+0xa4/0xd0
+<6>[20452.939791]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.940448]  ? timerqueue_add+0xae/0xd0
+<6>[20452.941099]  ? __hrtimer_run_queues+0x165/0x2a0
+<6>[20452.941759]  ? ktime_get+0x38/0xd0
+<6>[20452.942418]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.943073]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.943734]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.944392]  ? sched_clock+0x10/0x30
+<6>[20452.945045]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.945694]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.946347]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.947006]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.947668] RIP: 0033:0x7d5b796ade22
+<6>[20452.948330] RSP: 002b:00007d5b237f9d08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.949000] RAX: ffffffffffffffda RBX: 00007d5b5a5a9d38 RCX: 00007d5b796ade22
+<6>[20452.949668] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9d58
+<6>[20452.950333] RBP: 00007d5b237f9d40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.950993] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.951653] R13: 00007d5b5a5a9d10 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.952310]  </TASK>
+<6>[20452.952965] task:hass            state:S stack:0     pid:15017 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.953649] Call Trace:
+<6>[20452.954302]  <TASK>
+<6>[20452.954948]  __schedule+0x401/0x1350
+<6>[20452.955601]  ? __seccomp_filter+0x2f0/0x500
+<6>[20452.956255]  ? update_group_capacity+0x163/0x260
+<6>[20452.956914]  schedule+0x27/0xf0
+<6>[20452.957571]  futex_wait_queue+0x67/0x90
+<6>[20452.958229]  __futex_wait+0x14e/0x1c0
+<6>[20452.958886]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.959542]  futex_wait+0x79/0x120
+<6>[20452.960196]  do_futex+0xc5/0x190
+<6>[20452.960849]  __x64_sys_futex+0x12e/0x210
+<6>[20452.961505]  do_syscall_64+0x7b/0x190
+<6>[20452.962158]  ? update_load_avg+0x7a/0x7c0
+<6>[20452.962813]  ? update_curr+0x96/0x290
+<6>[20452.963469]  ? task_tick_fair+0x5e/0x4e0
+<6>[20452.964121]  ? sched_balance_trigger+0x72/0x370
+<6>[20452.964774]  ? perf_event_task_tick+0x4f/0xb0
+<6>[20452.965422]  ? update_process_times+0xa4/0xd0
+<6>[20452.966060]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.966696]  ? timerqueue_add+0xae/0xd0
+<6>[20452.967325]  ? __hrtimer_run_queues+0x165/0x2a0
+<6>[20452.967956]  ? ktime_get+0x38/0xd0
+<6>[20452.968586]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.969214]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.969843]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.970457]  ? sched_clock+0x10/0x30
+<6>[20452.971056]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.971657]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.972259]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.972866]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.973478] RIP: 0033:0x7d5b796ade22
+<6>[20452.974091] RSP: 002b:00007d5b22ff8d08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.974716] RAX: ffffffffffffffda RBX: 00007d5b5a5a9db8 RCX: 00007d5b796ade22
+<6>[20452.975349] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9dd8
+<6>[20452.975983] RBP: 00007d5b22ff8d40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.976618] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.977249] R13: 00007d5b5a5a9d90 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.977889]  </TASK>
+<6>[20452.978522] task:hass            state:S stack:0     pid:15018 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20452.979187] Call Trace:
+<6>[20452.979843]  <TASK>
+<6>[20452.980496]  __schedule+0x401/0x1350
+<6>[20452.981155]  schedule+0x27/0xf0
+<6>[20452.981808]  futex_wait_queue+0x67/0x90
+<6>[20452.982462]  __futex_wait+0x14e/0x1c0
+<6>[20452.983115]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20452.983774]  futex_wait+0x79/0x120
+<6>[20452.984429]  do_futex+0xc5/0x190
+<6>[20452.985081]  __x64_sys_futex+0x12e/0x210
+<6>[20452.985736]  do_syscall_64+0x7b/0x190
+<6>[20452.986390]  ? update_process_times+0xa4/0xd0
+<6>[20452.987041]  ? tick_nohz_handler+0xb1/0x140
+<6>[20452.987693]  ? timerqueue_add+0xae/0xd0
+<6>[20452.988347]  ? __hrtimer_run_queues+0x165/0x2a0
+<6>[20452.989001]  ? ktime_get+0x38/0xd0
+<6>[20452.989657]  ? lapic_next_deadline+0x2c/0x40
+<6>[20452.990307]  ? clockevents_program_event+0x9f/0x120
+<6>[20452.990962]  ? hrtimer_interrupt+0x125/0x230
+<6>[20452.991610]  ? sched_clock+0x10/0x30
+<6>[20452.992244]  ? sched_clock_cpu+0xf/0x200
+<6>[20452.992877]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20452.993508]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20452.994140]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20452.994780] RIP: 0033:0x7d5b796ade22
+<6>[20452.995419] RSP: 002b:00007d5b227f7d08 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20452.996051] RAX: ffffffffffffffda RBX: 00007d5b5a5a9e38 RCX: 00007d5b796ade22
+<6>[20452.996675] RDX: 0000000000000000 RSI: 0000000000000189 RDI: 00007d5b5a5a9e58
+<6>[20452.997303] RBP: 00007d5b227f7d40 R08: 0000000000000000 R09: 00000000ffffffff
+<6>[20452.997947] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+<6>[20452.998583] R13: 00007d5b5a5a9e10 R14: 0000000000000000 R15: 0000000000000000
+<6>[20452.999217]  </TASK>
+<6>[20452.999845] task:hass            state:S stack:0     pid:17331 tgid:14991 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20453.000508] Call Trace:
+<6>[20453.001159]  <TASK>
+<6>[20453.001810]  __schedule+0x401/0x1350
+<6>[20453.002462]  ? ep_autoremove_wake_function+0x16/0x60
+<6>[20453.003122]  ? kmalloc_reserve+0x64/0x100
+<6>[20453.003780]  ? kmalloc_reserve+0x64/0x100
+<6>[20453.004434]  schedule+0x27/0xf0
+<6>[20453.005085]  schedule_hrtimeout_range+0xf4/0x100
+<6>[20453.005741]  do_epoll_wait+0x714/0x860
+<6>[20453.006397]  ? __seccomp_filter+0x2f0/0x500
+<6>[20453.007054]  ? __pfx_ep_autoremove_wake_function+0x10/0x10
+<6>[20453.007719]  __x64_sys_epoll_wait+0x71/0x120
+<6>[20453.008381]  do_syscall_64+0x7b/0x190
+<6>[20453.009044]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.009712]  ? do_syscall_64+0x87/0x190
+<6>[20453.010381]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.011048]  ? do_syscall_64+0x87/0x190
+<6>[20453.011717]  ? clockevents_program_event+0x9f/0x120
+<6>[20453.012387]  ? hrtimer_interrupt+0x125/0x230
+<6>[20453.013054]  ? sched_clock+0x10/0x30
+<6>[20453.013718]  ? sched_clock_cpu+0xf/0x200
+<6>[20453.014386]  ? irqtime_account_irq+0x3c/0xc0
+<6>[20453.015056]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.015730]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.016404] RIP: 0033:0x7d5b796ade22
+<6>[20453.017075] RSP: 002b:00007d5b1a0ded18 EFLAGS: 00000246 ORIG_RAX: 00000000000000e8
+<6>[20453.017752] RAX: ffffffffffffffda RBX: 000055acc27164b0 RCX: 00007d5b796ade22
+<6>[20453.018427] RDX: 0000000000000008 RSI: 00007d5b1a0deda0 RDI: 0000000000000028
+<6>[20453.019101] RBP: 00007d5b1a0ded50 R08: 0000000000000000 R09: 0000000000000000
+<6>[20453.019778] R10: ffffffffffffffff R11: 0000000000000246 R12: 20c49ba5e353f7cf
+<6>[20453.020457] R13: 0000000000000000 R14: 00007d5b1a0deda0 R15: 00007ffc1724bd07
+<6>[20453.021140]  </TASK>
+<6>[20453.021811] task:NetworkManager  state:S stack:0     pid:15051 tgid:15051 ppid:1      task_flags:0x400100 flags:0x00000002
+<6>[20453.022512] Call Trace:
+<6>[20453.023184]  <TASK>
+<6>[20453.023860]  __schedule+0x401/0x1350
+<6>[20453.024542]  ? get_nohz_timer_target+0x2f/0x150
+<6>[20453.025225]  ? timerqueue_add+0x73/0xd0
+<6>[20453.025910]  schedule+0x27/0xf0
+<6>[20453.026595]  schedule_hrtimeout_range+0xc0/0x100
+<6>[20453.027279]  ? __pfx_hrtimer_wakeup+0x10/0x10
+<6>[20453.027964]  do_sys_poll+0x459/0x610
+<6>[20453.028654]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.029340]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.030020]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.030697]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.031365]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.032025]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.032681]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.033329]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.033970]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.034605]  __x64_sys_ppoll+0xe4/0x180
+<6>[20453.035237]  do_syscall_64+0x7b/0x190
+<6>[20453.035870]  ? pollwake+0x78/0xa0
+<6>[20453.036504]  ? __pfx_default_wake_function+0x10/0x10
+<6>[20453.037143]  ? __wake_up_common+0x6f/0xa0
+<6>[20453.037781]  ? eventfd_write+0xde/0x1e0
+<6>[20453.038418]  ? security_file_permission+0x5d/0x130
+<6>[20453.039054]  ? vfs_write+0xf1/0x470
+<6>[20453.039685]  ? __x64_sys_ppoll+0xf8/0x180
+<6>[20453.040306]  ? ksys_write+0xa9/0xf0
+<6>[20453.040924]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.041544]  ? do_syscall_64+0x87/0x190
+<6>[20453.042159]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.042785]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.043405] RIP: 0033:0x7008fd53ce22
+<6>[20453.044008] RSP: 002b:00007fff4fe78b98 EFLAGS: 00000246 ORIG_RAX: 000000000000010f
+<6>[20453.044613] RAX: ffffffffffffffda RBX: 00006306b78f9220 RCX: 00007008fd53ce22
+<6>[20453.045226] RDX: 00007fff4fe78c10 RSI: 000000000000000a RDI: 00006306b7a04eb0
+<6>[20453.045843] RBP: 00007fff4fe78bd0 R08: 0000000000000008 R09: 0000000000000000
+<6>[20453.046459] R10: 0000000000000000 R11: 0000000000000246 R12: 000000007fffffff
+<6>[20453.047072] R13: 00007fff4fe78c80 R14: 000000000000000a R15: 00006306b7a04eb0
+<6>[20453.047695]  </TASK>
+<6>[20453.048311] task:gmain           state:S stack:0     pid:15052 tgid:15051 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20453.048959] Call Trace:
+<6>[20453.049600]  <TASK>
+<6>[20453.050236]  __schedule+0x401/0x1350
+<6>[20453.050871]  ? get_nohz_timer_target+0x2f/0x150
+<6>[20453.051512]  ? timerqueue_add+0x73/0xd0
+<6>[20453.052149]  schedule+0x27/0xf0
+<6>[20453.052783]  schedule_hrtimeout_range+0xc0/0x100
+<6>[20453.053420]  ? __pfx_hrtimer_wakeup+0x10/0x10
+<6>[20453.054051]  do_sys_poll+0x459/0x610
+<6>[20453.054689]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.055320]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.055946]  __x64_sys_ppoll+0xe4/0x180
+<6>[20453.056567]  do_syscall_64+0x7b/0x190
+<6>[20453.057189]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.057821]  ? do_syscall_64+0x87/0x190
+<6>[20453.058449]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.059076]  ? do_syscall_64+0x87/0x190
+<6>[20453.059702]  ? poll_select_finish+0x211/0x250
+<6>[20453.060321]  ? __rseq_handle_notify_resume+0x9c/0x4d0
+<6>[20453.060934]  ? __x64_sys_ppoll+0xf8/0x180
+<6>[20453.061549]  ? switch_fpu_return+0x4e/0xd0
+<6>[20453.062156]  ? arch_exit_to_user_mode_prepare.isra.0+0x7c/0x90
+<6>[20453.062772]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.063382]  ? do_syscall_64+0x87/0x190
+<6>[20453.063986]  ? do_syscall_64+0x87/0x190
+<6>[20453.064569]  ? arch_exit_to_user_mode_prepare.isra.0+0x7c/0x90
+<6>[20453.065145]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.065727]  ? do_syscall_64+0x87/0x190
+<6>[20453.066307]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.066892]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.067482] RIP: 0033:0x7008fd53ce22
+<6>[20453.068068] RSP: 002b:00007008fc1fe198 EFLAGS: 00000246 ORIG_RAX: 000000000000010f
+<6>[20453.068669] RAX: ffffffffffffffda RBX: 00006306b78fcd80 RCX: 00007008fd53ce22
+<6>[20453.069272] RDX: 00007008fc1fe210 RSI: 0000000000000002 RDI: 00007008f4000b70
+<6>[20453.069878] RBP: 00007008fc1fe1d0 R08: 0000000000000008 R09: 0000000000000000
+<6>[20453.070484] R10: 0000000000000000 R11: 0000000000000246 R12: 000000007fffffff
+<6>[20453.071095] R13: 00007008fc1fe280 R14: 0000000000000002 R15: 00007008f4000b70
+<6>[20453.071717]  </TASK>
+<6>[20453.072338] task:pool-spawner    state:S stack:0     pid:15053 tgid:15051 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20453.072999] Call Trace:
+<6>[20453.073660]  <TASK>
+<6>[20453.074324]  __schedule+0x401/0x1350
+<6>[20453.074995]  ? start_dl_timer+0x9c/0x150
+<6>[20453.075676]  ? enqueue_dl_entity+0x323/0xb60
+<6>[20453.076357]  ? sched_clock+0x10/0x30
+<6>[20453.077036]  ? sched_clock_cpu+0xf/0x200
+<6>[20453.077718]  schedule+0x27/0xf0
+<6>[20453.078394]  futex_wait_queue+0x67/0x90
+<6>[20453.079070]  __futex_wait+0x14e/0x1c0
+<6>[20453.079745]  ? __pfx_futex_wake_mark+0x10/0x10
+<6>[20453.080422]  futex_wait+0x79/0x120
+<6>[20453.081093]  do_futex+0xc5/0x190
+<6>[20453.081767]  __x64_sys_futex+0x12e/0x210
+<6>[20453.082444]  do_syscall_64+0x7b/0x190
+<6>[20453.083115]  ? try_to_wake_up+0x312/0x790
+<6>[20453.083784]  ? __do_sys_clone3+0xdb/0x120
+<6>[20453.084452]  ? wake_up_q+0x3c/0x80
+<6>[20453.085115]  ? futex_wake+0x164/0x190
+<6>[20453.085777]  ? do_futex+0x11f/0x190
+<6>[20453.086432]  ? __x64_sys_futex+0x12e/0x210
+<6>[20453.087078]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.087726]  ? do_syscall_64+0x87/0x190
+<6>[20453.088373]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.089021]  ? do_syscall_64+0x87/0x190
+<6>[20453.089670]  ? do_syscall_64+0x87/0x190
+<6>[20453.090301]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.090928]  ? do_syscall_64+0x87/0x190
+<6>[20453.091543]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.092164]  ? do_syscall_64+0x87/0x190
+<6>[20453.092783]  ? do_futex+0x11f/0x190
+<6>[20453.093398]  ? __x64_sys_futex+0x12e/0x210
+<6>[20453.094015]  ? _copy_from_user+0x27/0x60
+<6>[20453.094633]  ? _copy_to_user+0x36/0x50
+<6>[20453.095243]  ? __x64_sys_rt_sigprocmask+0xff/0x160
+<6>[20453.095860]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.096480]  ? do_syscall_64+0x87/0x190
+<6>[20453.097094]  ? do_syscall_64+0x87/0x190
+<6>[20453.097708]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.098328]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.098950] RIP: 0033:0x7008fd5b5eed
+<6>[20453.099575] RSP: 002b:00007008fb9fd228 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+<6>[20453.100207] RAX: ffffffffffffffda RBX: 00006306b78fd8d0 RCX: 00007008fd5b5eed
+<6>[20453.100846] RDX: 000000000000002b RSI: 0000000000000080 RDI: 00006306b78fd8e0
+<6>[20453.101487] RBP: 00007008fb9fd260 R08: 0000000000000000 R09: 0000000000000000
+<6>[20453.102131] R10: 0000000000000000 R11: 0000000000000246 R12: 00007008fb9fdb78
+<6>[20453.102775] R13: 000000000000002b R14: 00006306b78fd8e0 R15: 0000000000000000
+<6>[20453.103419]  </TASK>
+<6>[20453.104055] task:gdbus           state:S stack:0     pid:15054 tgid:15051 ppid:1      task_flags:0x400040 flags:0x00000002
+<6>[20453.104724] Call Trace:
+<6>[20453.105378]  <TASK>
+<6>[20453.106027]  __schedule+0x401/0x1350
+<6>[20453.106693]  schedule+0x27/0xf0
+<6>[20453.107344]  schedule_hrtimeout_range+0xf4/0x100
+<6>[20453.107993]  ? add_wait_queue+0x1d/0xb0
+<6>[20453.108645]  do_sys_poll+0x459/0x610
+<6>[20453.109297]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.109943]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.110586]  __x64_sys_ppoll+0xe4/0x180
+<6>[20453.111215]  do_syscall_64+0x7b/0x190
+<6>[20453.111837]  ? vfs_read+0x2ae/0x390
+<6>[20453.112454]  ? ksys_read+0xa9/0xf0
+<6>[20453.113071]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.113694]  ? do_syscall_64+0x87/0x190
+<6>[20453.114312]  ? ksys_write+0xa9/0xf0
+<6>[20453.114924]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.115527]  ? do_syscall_64+0x87/0x190
+<6>[20453.116113]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.116708]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.117309] RIP: 0033:0x7008fd53ce22
+<6>[20453.117912] RSP: 002b:00007008fb1fc198 EFLAGS: 00000246 ORIG_RAX: 000000000000010f
+<6>[20453.118527] RAX: ffffffffffffffda RBX: 00006306b790b370 RCX: 00007008fd53ce22
+<6>[20453.119139] RDX: 0000000000000000 RSI: 0000000000000002 RDI: 00007008ec000bb0
+<6>[20453.119764] RBP: 00007008fb1fc1d0 R08: 0000000000000008 R09: 0000000000000000
+<6>[20453.120391] R10: 0000000000000000 R11: 0000000000000246 R12: 000000007fffffff
+<6>[20453.121016] R13: 0000000000000000 R14: 0000000000000002 R15: 00007008ec000bb0
+<6>[20453.121645]  </TASK>
+<6>[20453.122266] task:kworker/8:1     state:I stack:0     pid:15105 tgid:15105 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.122928] Workqueue:  0x0 (events)
+<6>[20453.123591] Call Trace:
+<6>[20453.124240]  <TASK>
+<6>[20453.124889]  __schedule+0x401/0x1350
+<6>[20453.125539]  ? queue_delayed_work_on+0x81/0x90
+<6>[20453.126192]  ? psi_avgs_work+0xc8/0xd0
+<6>[20453.126848]  schedule+0x27/0xf0
+<6>[20453.127504]  worker_thread+0x1af/0x400
+<6>[20453.128157]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.128815]  kthread+0xec/0x230
+<6>[20453.129471]  ? __pfx_kthread+0x10/0x10
+<6>[20453.130122]  ret_from_fork+0x31/0x50
+<6>[20453.130771]  ? __pfx_kthread+0x10/0x10
+<6>[20453.131419]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.132075]  </TASK>
+<6>[20453.132722] task:login           state:S stack:0     pid:15131 tgid:15131 ppid:1      task_flags:0x400100 flags:0x00000002
+<6>[20453.133403] Call Trace:
+<6>[20453.134071]  <TASK>
+<6>[20453.134738]  __schedule+0x401/0x1350
+<6>[20453.135408]  schedule+0x27/0xf0
+<6>[20453.136071]  do_wait+0x55/0x100
+<6>[20453.136735]  kernel_wait4+0xb7/0x160
+<6>[20453.137404]  ? __pfx_child_wait_callback+0x10/0x10
+<6>[20453.138075]  __do_sys_wait4+0xa9/0xc0
+<6>[20453.138746]  do_syscall_64+0x7b/0x190
+<6>[20453.139413]  ? __mod_memcg_lruvec_state+0xb1/0x1c0
+<6>[20453.140090]  ? __lruvec_stat_mod_folio+0x85/0xd0
+<6>[20453.140764]  ? flush_tlb_mm_range+0x13f/0x190
+<6>[20453.141435]  ? __folio_mod_stat+0x2d/0x90
+<6>[20453.142106]  ? set_ptes.isra.0+0x36/0x80
+<6>[20453.142771]  ? do_wp_page+0x872/0xd90
+<6>[20453.143428]  ? __handle_mm_fault+0xad1/0xfc0
+<6>[20453.144081]  ? do_sigaction+0x145/0x440
+<6>[20453.144733]  ? __x64_sys_rt_sigaction+0x11b/0x140
+<6>[20453.145385]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.146038]  ? do_syscall_64+0x87/0x190
+<6>[20453.146682]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.147316]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.147941] RIP: 0033:0x741e797fc006
+<6>[20453.148576] RSP: 002b:00007ffefcc12300 EFLAGS: 00000202 ORIG_RAX: 000000000000003d
+<6>[20453.149221] RAX: ffffffffffffffda RBX: 0000741e79733388 RCX: 0000741e797fc006
+<6>[20453.149870] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffffffffff
+<6>[20453.150528] RBP: 00007ffefcc12320 R08: 0000000000000000 R09: 0000000000000000
+<6>[20453.151186] R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000000
+<6>[20453.151844] R13: 00007ffefcc12530 R14: 0000000000000000 R15: 0000564729461e20
+<6>[20453.152504]  </TASK>
+<6>[20453.153163] task:bash            state:S stack:0     pid:15137 tgid:15137 ppid:15131  task_flags:0x400100 flags:0x00000002
+<6>[20453.153861] Call Trace:
+<6>[20453.154548]  <TASK>
+<6>[20453.155234]  __schedule+0x401/0x1350
+<6>[20453.155926]  ? add_wait_queue+0x1d/0xb0
+<6>[20453.156618]  schedule+0x27/0xf0
+<6>[20453.157301]  schedule_hrtimeout_range+0xf4/0x100
+<6>[20453.157990]  do_select+0x692/0x990
+<6>[20453.158679]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.159363]  ? __pfx_pollwake+0x10/0x10
+<6>[20453.160043]  core_sys_select+0x297/0x4a0
+<6>[20453.160720]  do_pselect.constprop.0+0xea/0x180
+<6>[20453.161395]  __x64_sys_pselect6+0x4a/0x70
+<6>[20453.162063]  do_syscall_64+0x7b/0x190
+<6>[20453.162723]  ? do_syscall_64+0x87/0x190
+<6>[20453.163377]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.164031]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.164692] RIP: 0033:0x74bd7b832006
+<6>[20453.165360] RSP: 002b:00007ffd8613e3d0 EFLAGS: 00000202 ORIG_RAX: 000000000000010e
+<6>[20453.166024] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 000074bd7b832006
+<6>[20453.166683] RDX: 0000000000000000 RSI: 00007ffd8613e530 RDI: 0000000000000001
+<6>[20453.167331] RBP: 00007ffd8613e3f0 R08: 0000000000000000 R09: 00007ffd8613e440
+<6>[20453.167978] R10: 0000000000000000 R11: 0000000000000202 R12: 00007ffd8613e530
+<6>[20453.168633] R13: 0000000000000000 R14: 0000000000000000 R15: 000074bd7b9e4de0
+<6>[20453.169291]  </TASK>
+<6>[20453.169946] task:kworker/4:1     state:I stack:0     pid:17229 tgid:17229 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.170640] Workqueue:  0x0 (cgroup_destroy)
+<6>[20453.171338] Call Trace:
+<6>[20453.172017]  <TASK>
+<6>[20453.172697]  __schedule+0x401/0x1350
+<6>[20453.173378]  ? cgroup_rstat_flush_locked+0x2d/0x620
+<6>[20453.174067]  schedule+0x27/0xf0
+<6>[20453.174755]  worker_thread+0x1af/0x400
+<6>[20453.175444]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.176132]  kthread+0xec/0x230
+<6>[20453.176821]  ? __pfx_kthread+0x10/0x10
+<6>[20453.177498]  ret_from_fork+0x31/0x50
+<6>[20453.178160]  ? __pfx_kthread+0x10/0x10
+<6>[20453.178826]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.179493]  </TASK>
+<6>[20453.180145] task:kworker/2:1     state:I stack:0     pid:17233 tgid:17233 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.180845] Call Trace:
+<6>[20453.181536]  <TASK>
+<6>[20453.182218]  __schedule+0x401/0x1350
+<6>[20453.182908]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.183598]  ? __schedule+0x409/0x1350
+<6>[20453.184287]  ? __smp_call_single_queue+0xb6/0x120
+<6>[20453.184976]  schedule+0x27/0xf0
+<6>[20453.185662]  worker_thread+0x1af/0x400
+<6>[20453.186353]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.187042]  kthread+0xec/0x230
+<6>[20453.187733]  ? __pfx_kthread+0x10/0x10
+<6>[20453.188423]  ret_from_fork+0x31/0x50
+<6>[20453.189107]  ? __pfx_kthread+0x10/0x10
+<6>[20453.189799]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.190486]  </TASK>
+<6>[20453.191160] task:kworker/10:0    state:I stack:0     pid:17271 tgid:17271 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.191875] Call Trace:
+<6>[20453.192573]  <TASK>
+<6>[20453.193265]  __schedule+0x401/0x1350
+<6>[20453.193957]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.194647]  ? __schedule+0x409/0x1350
+<6>[20453.195327]  ? wakeup_preempt+0x86/0xa0
+<6>[20453.196004]  schedule+0x27/0xf0
+<6>[20453.196682]  worker_thread+0x1af/0x400
+<6>[20453.197359]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.198028]  kthread+0xec/0x230
+<6>[20453.198685]  ? __pfx_kthread+0x10/0x10
+<6>[20453.199328]  ret_from_fork+0x31/0x50
+<6>[20453.199972]  ? __pfx_kthread+0x10/0x10
+<6>[20453.200619]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.201268]  </TASK>
+<6>[20453.201908] task:kworker/u48:3   state:I stack:0     pid:17396 tgid:17396 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.202587] Workqueue:  0x0 (events_unbound)
+<6>[20453.203267] Call Trace:
+<6>[20453.203935]  <TASK>
+<6>[20453.204608]  __schedule+0x401/0x1350
+<6>[20453.205281]  schedule+0x27/0xf0
+<6>[20453.205950]  worker_thread+0x1af/0x400
+<6>[20453.206623]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.207294]  kthread+0xec/0x230
+<6>[20453.207968]  ? __pfx_kthread+0x10/0x10
+<6>[20453.208639]  ret_from_fork+0x31/0x50
+<6>[20453.209307]  ? __pfx_kthread+0x10/0x10
+<6>[20453.209972]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.210631]  </TASK>
+<6>[20453.211275] task:kworker/u48:1   state:I stack:0     pid:17415 tgid:17415 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.211952] Workqueue:  0x0 (flush-253:0)
+<6>[20453.212633] Call Trace:
+<6>[20453.213302]  <TASK>
+<6>[20453.213969]  __schedule+0x401/0x1350
+<6>[20453.214634]  ? queue_delayed_work_on+0x81/0x90
+<6>[20453.215287]  schedule+0x27/0xf0
+<6>[20453.215919]  worker_thread+0x1af/0x400
+<6>[20453.216553]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.217191]  kthread+0xec/0x230
+<6>[20453.217831]  ? __pfx_kthread+0x10/0x10
+<6>[20453.218472]  ret_from_fork+0x31/0x50
+<6>[20453.219102]  ? __pfx_kthread+0x10/0x10
+<6>[20453.219737]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.220375]  </TASK>
+<6>[20453.221003] task:kworker/1:1     state:I stack:0     pid:17427 tgid:17427 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.221669] Call Trace:
+<6>[20453.222327]  <TASK>
+<6>[20453.222979]  __schedule+0x401/0x1350
+<6>[20453.223638]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.224297]  ? __schedule+0x409/0x1350
+<6>[20453.224943]  ? __smp_call_single_queue+0xb6/0x120
+<6>[20453.225579]  schedule+0x27/0xf0
+<6>[20453.226214]  worker_thread+0x1af/0x400
+<6>[20453.226846]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.227486]  kthread+0xec/0x230
+<6>[20453.228120]  ? __pfx_kthread+0x10/0x10
+<6>[20453.228758]  ret_from_fork+0x31/0x50
+<6>[20453.229393]  ? __pfx_kthread+0x10/0x10
+<6>[20453.230029]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.230668]  </TASK>
+<6>[20453.231296] task:kworker/u48:0   state:I stack:0     pid:17434 tgid:17434 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.231963] Workqueue:  0x0 (events_unbound)
+<6>[20453.232637] Call Trace:
+<6>[20453.233297]  <TASK>
+<6>[20453.233959]  __schedule+0x401/0x1350
+<6>[20453.234625]  schedule+0x27/0xf0
+<6>[20453.235269]  worker_thread+0x1af/0x400
+<6>[20453.235902]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.236536]  kthread+0xec/0x230
+<6>[20453.237168]  ? __pfx_kthread+0x10/0x10
+<6>[20453.237803]  ret_from_fork+0x31/0x50
+<6>[20453.238439]  ? __pfx_kthread+0x10/0x10
+<6>[20453.239075]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.239716]  </TASK>
+<6>[20453.240347] task:systemd-userwor state:S stack:0     pid:17444 tgid:17444 ppid:1154   task_flags:0x400100 flags:0x00000002
+<6>[20453.241011] Call Trace:
+<6>[20453.241671]  <TASK>
+<6>[20453.242332]  __schedule+0x401/0x1350
+<6>[20453.242992]  ? lock_timer_base+0x70/0x90
+<6>[20453.243657]  schedule+0x27/0xf0
+<6>[20453.244317]  schedule_timeout+0x84/0x100
+<6>[20453.244982]  ? __pfx_process_timeout+0x10/0x10
+<6>[20453.245630]  __skb_wait_for_more_packets+0x11e/0x170
+<6>[20453.246264]  ? __pfx_receiver_wake_function+0x10/0x10
+<6>[20453.246905]  __skb_recv_datagram+0x75/0xd0
+<6>[20453.247550]  skb_recv_datagram+0x39/0x60
+<6>[20453.248193]  unix_accept+0x71/0x1a0
+<6>[20453.248840]  do_accept+0xfa/0x190
+<6>[20453.249486]  __sys_accept4+0x85/0xf0
+<6>[20453.250126]  __x64_sys_accept4+0x1c/0x30
+<6>[20453.250766]  do_syscall_64+0x7b/0x190
+<6>[20453.251410]  ? __do_sys_prctl+0x21e/0xe60
+<6>[20453.252052]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.252702]  ? do_syscall_64+0x87/0x190
+<6>[20453.253356]  ? do_syscall_64+0x87/0x190
+<6>[20453.253996]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.254627]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.255245] RIP: 0033:0x79e8f12a2006
+<6>[20453.255870] RSP: 002b:00007ffe2fe39af0 EFLAGS: 00000202 ORIG_RAX: 0000000000000120
+<6>[20453.256506] RAX: ffffffffffffffda RBX: 00007ffe2fe39b90 RCX: 000079e8f12a2006
+<6>[20453.257148] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+<6>[20453.257795] RBP: 00007ffe2fe39b10 R08: 0000000000000000 R09: 0000000000000000
+<6>[20453.258438] R10: 0000000000080800 R11: 0000000000000202 R12: 00000004c1b7f6fa
+<6>[20453.259081] R13: 0000000000000039 R14: 00000000fffffff5 R15: 00000004b5c19727
+<6>[20453.259729]  </TASK>
+<6>[20453.260371] task:systemd-userwor state:S stack:0     pid:17445 tgid:17445 ppid:1154   task_flags:0x400100 flags:0x00000002
+<6>[20453.261048] Call Trace:
+<6>[20453.261723]  <TASK>
+<6>[20453.262393]  __schedule+0x401/0x1350
+<6>[20453.263069]  ? lock_timer_base+0x70/0x90
+<6>[20453.263749]  schedule+0x27/0xf0
+<6>[20453.264410]  schedule_timeout+0x84/0x100
+<6>[20453.265055]  ? __pfx_process_timeout+0x10/0x10
+<6>[20453.265705]  __skb_wait_for_more_packets+0x11e/0x170
+<6>[20453.266362]  ? __pfx_receiver_wake_function+0x10/0x10
+<6>[20453.267017]  __skb_recv_datagram+0x75/0xd0
+<6>[20453.267674]  skb_recv_datagram+0x39/0x60
+<6>[20453.268331]  unix_accept+0x71/0x1a0
+<6>[20453.268983]  do_accept+0xfa/0x190
+<6>[20453.269638]  __sys_accept4+0x85/0xf0
+<6>[20453.270286]  __x64_sys_accept4+0x1c/0x30
+<6>[20453.270935]  do_syscall_64+0x7b/0x190
+<6>[20453.271586]  ? _copy_to_user+0x36/0x50
+<6>[20453.272236]  ? __do_sys_capget+0x127/0x200
+<6>[20453.272890]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.273546]  ? do_syscall_64+0x87/0x190
+<6>[20453.274200]  ? __seccomp_filter+0x2f0/0x500
+<6>[20453.274844]  ? do_syscall_64+0x87/0x190
+<6>[20453.275470]  ? __seccomp_filter+0x2f0/0x500
+<6>[20453.276094]  ? __seccomp_filter+0x2f0/0x500
+<6>[20453.276718]  ? cap_validate_magic+0x12/0xb0
+<6>[20453.277344]  ? __do_sys_capget+0x62/0x200
+<6>[20453.277967]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.278598]  ? do_syscall_64+0x87/0x190
+<6>[20453.279226]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.279860]  ? do_syscall_64+0x87/0x190
+<6>[20453.280492]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.281127]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.281770] RIP: 0033:0x7ed142a75006
+<6>[20453.282412] RSP: 002b:00007ffee45e7ac0 EFLAGS: 00000202 ORIG_RAX: 0000000000000120
+<6>[20453.283066] RAX: ffffffffffffffda RBX: 00007ffee45e7b60 RCX: 00007ed142a75006
+<6>[20453.283712] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+<6>[20453.284347] RBP: 00007ffee45e7ae0 R08: 0000000000000000 R09: 0000000000000000
+<6>[20453.284984] R10: 0000000000080800 R11: 0000000000000202 R12: 00000004c1b7f6ee
+<6>[20453.285625] R13: 0000000000000039 R14: 00000000fffffff5 R15: 00000004b5c19723
+<6>[20453.286265]  </TASK>
+<6>[20453.286899] task:systemd-userwor state:S stack:0     pid:17446 tgid:17446 ppid:1154   task_flags:0x400100 flags:0x00000002
+<6>[20453.287572] Call Trace:
+<6>[20453.288235]  <TASK>
+<6>[20453.288895]  __schedule+0x401/0x1350
+<6>[20453.289558]  ? lock_timer_base+0x70/0x90
+<6>[20453.290219]  schedule+0x27/0xf0
+<6>[20453.290878]  schedule_timeout+0x84/0x100
+<6>[20453.291536]  ? __pfx_process_timeout+0x10/0x10
+<6>[20453.292199]  __skb_wait_for_more_packets+0x11e/0x170
+<6>[20453.292864]  ? __pfx_receiver_wake_function+0x10/0x10
+<6>[20453.293533]  __skb_recv_datagram+0x75/0xd0
+<6>[20453.294201]  skb_recv_datagram+0x39/0x60
+<6>[20453.294874]  unix_accept+0x71/0x1a0
+<6>[20453.295542]  do_accept+0xfa/0x190
+<6>[20453.296207]  __sys_accept4+0x85/0xf0
+<6>[20453.296877]  __x64_sys_accept4+0x1c/0x30
+<6>[20453.297544]  do_syscall_64+0x7b/0x190
+<6>[20453.298207]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.298878]  ? do_syscall_64+0x87/0x190
+<6>[20453.299535]  ? __do_sys_prctl+0x8dc/0xe60
+<6>[20453.300185]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.300837]  ? do_syscall_64+0x87/0x190
+<6>[20453.301489]  ? __seccomp_filter+0x2f0/0x500
+<6>[20453.302139]  ? apparmor_capget+0x72/0x240
+<6>[20453.302791]  ? __check_object_size+0x4a/0x220
+<6>[20453.303438]  ? _copy_to_user+0x36/0x50
+<6>[20453.304067]  ? __do_sys_capget+0x127/0x200
+<6>[20453.304675]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.305292]  ? __seccomp_filter+0x2f0/0x500
+<6>[20453.305914]  ? __do_sys_prctl+0x21e/0xe60
+<6>[20453.306537]  ? syscall_exit_to_user_mode+0x37/0x1c0
+<6>[20453.307160]  ? do_syscall_64+0x87/0x190
+<6>[20453.307786]  ? do_syscall_64+0x87/0x190
+<6>[20453.308403]  ? irqentry_exit_to_user_mode+0x2c/0x1b0
+<6>[20453.309025]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+<6>[20453.309647] RIP: 0033:0x7dda00e5c006
+<6>[20453.310270] RSP: 002b:00007ffd22c29b60 EFLAGS: 00000202 ORIG_RAX: 0000000000000120
+<6>[20453.310902] RAX: ffffffffffffffda RBX: 00007ffd22c29c00 RCX: 00007dda00e5c006
+<6>[20453.311541] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+<6>[20453.312184] RBP: 00007ffd22c29b80 R08: 0000000000000000 R09: 0000000000000000
+<6>[20453.312828] R10: 0000000000080800 R11: 0000000000000202 R12: 00000004c1b7f6f7
+<6>[20453.313473] R13: 0000000000000039 R14: 00000000fffffff5 R15: 00000004b5c1975a
+<6>[20453.314118]  </TASK>
+<6>[20453.314762] task:kworker/u48:2   state:I stack:0     pid:17447 tgid:17447 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.315443] Workqueue:  0x0 (kcryptd-253:0-1)
+<6>[20453.316125] Call Trace:
+<6>[20453.316797]  <TASK>
+<6>[20453.317470]  __schedule+0x401/0x1350
+<6>[20453.318140]  ? kcryptd_crypt_write_io_submit+0x112/0x190 [dm_crypt 9657bcdb67d6e7acc25f6087ab31d75033bccab1]
+<6>[20453.318843]  schedule+0x27/0xf0
+<6>[20453.319548]  worker_thread+0x1af/0x400
+<6>[20453.320250]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.320954]  kthread+0xec/0x230
+<6>[20453.321654]  ? __pfx_kthread+0x10/0x10
+<6>[20453.322356]  ret_from_fork+0x31/0x50
+<6>[20453.323055]  ? __pfx_kthread+0x10/0x10
+<6>[20453.323752]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.324446]  </TASK>
+<6>[20453.325131] task:kworker/7:0     state:I stack:0     pid:17463 tgid:17463 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.325851] Workqueue:  0x0 (events)
+<6>[20453.326564] Call Trace:
+<6>[20453.327258]  <TASK>
+<6>[20453.327946]  __schedule+0x401/0x1350
+<6>[20453.328643]  ? prb_read_valid+0x1b/0x30
+<6>[20453.329337]  schedule+0x27/0xf0
+<6>[20453.330028]  worker_thread+0x1af/0x400
+<6>[20453.330717]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.331388]  kthread+0xec/0x230
+<6>[20453.332043]  ? __pfx_kthread+0x10/0x10
+<6>[20453.332701]  ret_from_fork+0x31/0x50
+<6>[20453.333362]  ? __pfx_kthread+0x10/0x10
+<6>[20453.334018]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.334681]  </TASK>
+<6>[20453.335336] task:kworker/7:3     state:I stack:0     pid:17464 tgid:17464 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.336025] Call Trace:
+<6>[20453.336702]  <TASK>
+<6>[20453.337375]  __schedule+0x401/0x1350
+<6>[20453.338050]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.338728]  ? __schedule+0x409/0x1350
+<6>[20453.339404]  ? wakeup_preempt+0x86/0xa0
+<6>[20453.340079]  schedule+0x27/0xf0
+<6>[20453.340755]  worker_thread+0x1af/0x400
+<6>[20453.341435]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.342111]  kthread+0xec/0x230
+<6>[20453.342785]  ? __pfx_kthread+0x10/0x10
+<6>[20453.343458]  ret_from_fork+0x31/0x50
+<6>[20453.344129]  ? __pfx_kthread+0x10/0x10
+<6>[20453.344800]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.345470]  </TASK>
+<6>[20453.346128] task:kworker/u48:4   state:I stack:0     pid:17465 tgid:17465 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.346826] Workqueue:  0x0 (kcryptd-253:0-1)
+<6>[20453.347531] Call Trace:
+<6>[20453.348217]  <TASK>
+<6>[20453.348908]  __schedule+0x401/0x1350
+<6>[20453.349604]  ? kcryptd_crypt_write_io_submit+0x112/0x190 [dm_crypt 9657bcdb67d6e7acc25f6087ab31d75033bccab1]
+<6>[20453.350325]  schedule+0x27/0xf0
+<6>[20453.351042]  worker_thread+0x1af/0x400
+<6>[20453.351760]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.352477]  kthread+0xec/0x230
+<6>[20453.353195]  ? __pfx_kthread+0x10/0x10
+<6>[20453.353916]  ret_from_fork+0x31/0x50
+<6>[20453.354634]  ? __pfx_kthread+0x10/0x10
+<6>[20453.355349]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.356056]  </TASK>
+<6>[20453.356747] task:kworker/u48:5   state:I stack:0     pid:17466 tgid:17466 ppid:2      task_flags:0x4208060 flags:0x00004000
+<6>[20453.357474] Workqueue:  0x0 (kcryptd-253:0-1)
+<6>[20453.358208] Call Trace:
+<6>[20453.358932]  <TASK>
+<6>[20453.359649]  __schedule+0x401/0x1350
+<6>[20453.360366]  ? kcryptd_crypt_write_io_submit+0x112/0x190 [dm_crypt 9657bcdb67d6e7acc25f6087ab31d75033bccab1]
+<6>[20453.361095]  schedule+0x27/0xf0
+<6>[20453.361804]  worker_thread+0x1af/0x400
+<6>[20453.362517]  ? __pfx_worker_thread+0x10/0x10
+<6>[20453.363230]  kthread+0xec/0x230
+<6>[20453.363946]  ? __pfx_kthread+0x10/0x10
+<6>[20453.364646]  ret_from_fork+0x31/0x50
+<6>[20453.365336]  ? __pfx_kthread+0x10/0x10
+<6>[20453.366021]  ret_from_fork_asm+0x1a/0x30
+<6>[20453.366710]  </TASK>
+<4>[20453.367391] Sched Debug Version: v0.11, 6.14.6-arch1-1 #1
+<4>[20453.368083] ktime                                   : 20452890.073630
+<4>[20453.368786] sched_clk                               : 20453371.688241
+<4>[20453.369486] cpu_clk                                 : 20453367.391340
+<4>[20453.370182] jiffies                                 : 4315120052
+<4>[20453.370880] sched_clock_stable()                    : 1
+
+<4>[20453.372213] sysctl_sched
+<4>[20453.372870]   .sysctl_sched_base_slice                 : 3.000000
+<4>[20453.373542]   .sysctl_sched_features                   : 32696287
+<4>[20453.374210]   .sysctl_sched_tunable_scaling            : 1 (logarithmic)
+
+<4>[20453.375550] cpu#0, 3700.000 MHz
+<4>[20453.376214]   .nr_running                    : 0
+<4>[20453.376883]   .nr_switches                   : 5333520
+<4>[20453.377553]   .nr_uninterruptible            : 40
+<4>[20453.378217]   .next_balance                  : 4315.120062
+<4>[20453.378883]   .curr->pid                     : 0
+<4>[20453.379550]   .clock                         : 20453378.346477
+<4>[20453.380219]   .clock_task                    : 20392861.359872
+<4>[20453.380890]   .avg_idle                      : 1000000
+<4>[20453.381545]   .max_idle_balance_cost         : 500000
+
+<4>[20453.382812] rt_rq[0]:
+<4>[20453.383443]   .rt_nr_running                 : 0
+
+<4>[20453.384703] dl_rq[0]:
+<4>[20453.385326]   .dl_nr_running                 : 0
+<4>[20453.385953]   .dl_bw->bw                     : 996147
+<4>[20453.386580]   .dl_bw->total_bw               : 629136
+
+<4>[20453.387817] runnable tasks:
+<4>[20453.388430]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.389103] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.389813]  S pool_workqueue_     3        29.689973   E          32.682763           3.000000         0.007210         3     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.390564]  I kworker/R-rcu_g     4        -1.048576   E          -1.039924           0.750000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.391314]  I kworker/R-sync_     5        -1.048576   E          -1.039924           0.750000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.392051]  I kworker/R-kvfre     6        -1.048576   E          -1.039924           0.750000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.392767]  I kworker/R-slub_     7        -1.048576   E          -1.039924           0.750000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.393475]  I kworker/R-netns     8        -1.048576   E          -1.039924           0.750000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.394185]  I    kworker/0:0H    10        29.694539   E          29.729100           3.000000         0.010000         5     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.394901]  I kworker/R-mm_pe    13        -1.048576   E          -1.039924           0.750000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.395606]  I rcu_tasks_rude_    16        -1.048576   E           0.298576           0.750000         0.000000         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.396296]  I rcu_tasks_trace    17        -1.046866   E           0.298576           0.750000         0.001710         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.396981]  S     ksoftirqd/0    18    793070.003623   E      793072.987841           3.000000       413.588950     35182     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.397674]  I     rcu_preempt    19         0.946446   E           0.572613           0.750000      4126.865236    643706      98         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.398377]  S          rcub/0    20         0.941536   E           0.567568           0.750000         0.004785         3      98         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.399082]  S rcu_exp_par_gp_    21         0.934193   E           0.184823           0.750000         0.001651         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.399792]  S     migration/0    23         0.921136   E           0.171739           0.750000        32.921603      5208       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.400504]  S   idle_inject/0    24         0.758067   E           0.748950           0.750000         0.003605         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.401216]  S         cpuhp/0    25     10178.899891   E       10180.832928           3.000000         1.355376        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.401944]  S       kdevtmpfs    92     38530.369483   E       38533.354922           3.000000         2.036569       249     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.402657]  I kworker/R-acpi_   118        29.548666   E          29.583250           3.000000         0.026122         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.403366]  S       scsi_eh_5   134        36.256974   E          36.681641           3.000000         6.505420        25     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.404074]  I    kworker/0:1H   161    793071.137801   E      793071.172182           3.000000        10.399021       710     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.404796]  S systemd-timesyn  1259      7434.727170   E        7437.504588           3.000000       128.859302       454     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.405537]  S    pool-spawner  2558         0.425763   E           2.527128           3.000000         0.086796         2     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.406972]  S    pool-spawner  4084         2.265375   E           3.732369           3.000000         0.033006         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.408485]  I     kworker/0:0 12570    793099.527979   E      793102.526713           3.000000       127.531674     11133     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.409290]  I     kworker/0:2 14269    692812.610345   E      692815.608753           3.000000         0.025807         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.410103]  I   kworker/u48:2 17447    793099.444149   E      793102.312850           3.000000         3.192993       155     120         0.000000         0.000000         0.000000   0      0        /
+
+<4>[20453.411714] cpu#1, 3700.000 MHz
+<4>[20453.412504]   .nr_running                    : 0
+<4>[20453.413302]   .nr_switches                   : 4168617
+<4>[20453.414093]   .nr_uninterruptible            : -44
+<4>[20453.414879]   .next_balance                  : 4315.120098
+<4>[20453.415667]   .curr->pid                     : 0
+<4>[20453.416453]   .clock                         : 20453416.320561
+<4>[20453.417239]   .clock_task                    : 20422939.236782
+<4>[20453.418025]   .avg_idle                      : 1000000
+<4>[20453.418805]   .max_idle_balance_cost         : 500000
+
+<4>[20453.420358] cfs_rq[1]:/
+<4>[20453.421127]   .left_deadline                 : 0.000001
+<4>[20453.421904]   .left_vruntime                 : 0.000001
+<4>[20453.422677]   .min_vruntime                  : 875527.680377
+<4>[20453.423453]   .avg_vruntime                  : 875527.680377
+<4>[20453.424222]   .right_vruntime                : 0.000001
+<4>[20453.424996]   .spread                        : 0.000000
+<4>[20453.425766]   .nr_queued                     : 0
+<4>[20453.426531]   .h_nr_runnable                 : 0
+<4>[20453.427295]   .h_nr_queued                   : 0
+<4>[20453.428056]   .h_nr_idle                     : 0
+<4>[20453.428814]   .load                          : 0
+<4>[20453.429568]   .load_avg                      : 0
+<4>[20453.430312]   .runnable_avg                  : 0
+<4>[20453.431063]   .util_avg                      : 0
+<4>[20453.431815]   .util_est                      : 0
+<4>[20453.432561]   .removed.load_avg              : 0
+<4>[20453.433306]   .removed.util_avg              : 0
+<4>[20453.434050]   .removed.runnable_avg          : 0
+<4>[20453.434795]   .tg_load_avg_contrib           : 0
+<4>[20453.435536]   .tg_load_avg                   : 0
+<4>[20453.436273]   .throttled                     : 0
+<4>[20453.437008]   .throttle_count                : 0
+
+<4>[20453.438458] rt_rq[1]:
+<4>[20453.439130]   .rt_nr_running                 : 0
+
+<4>[20453.440397] dl_rq[1]:
+<4>[20453.441025]   .dl_nr_running                 : 0
+<4>[20453.441663]   .dl_bw->bw                     : 996147
+<4>[20453.442300]   .dl_bw->total_bw               : 629136
+
+<4>[20453.443572] runnable tasks:
+<4>[20453.444198]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.444884] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.445605]  I rcu_tasks_kthre    15    782016.867034   E      782019.851701           3.000000         2.965889       117     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.446357]  S         cpuhp/1    26     10382.796879   E       10385.793828           3.000000         0.202933        29     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.447106]  S   idle_inject/1    27        -1.059044   E           0.750000           0.750000         0.001610         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.447860]  S     migration/1    28         0.288802   E           0.460635           0.750000       209.077223      5207       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.448614]  S     ksoftirqd/1    29    875448.695296   E      875451.695296           3.000000        38.344504      6828     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.449372]  I    kworker/1:0H    31       144.049880   E         144.084392           3.000000         0.012744         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.450133]  S      irq/9-acpi   106        -1.042200   E           3.000000           3.000000         0.002184         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.450894]  I    kworker/1:1H   214    875427.953683   E      875427.988292           3.000000        16.365889      1031     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.451658]  I kworker/R-ext4-  1005      5534.124502   E        5534.159085           3.000000         0.027487         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.452422]  S        nv_queue  1330     10105.837548   E       10108.836238           3.000000         0.006737         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.453183]  S        nv_queue  1376    875527.664750   E      875530.651514           3.000000    682283.891029    201287     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.453945]  S systemd-resolve  1384      9691.422756   E        9693.945770           3.000000     16887.211448     15126     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.454708]  I kworker/R-kdmfl  2071     35901.495307   E       35901.529886           3.000000         0.025884         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.455466]  S           gmain  2220      9690.945770   E        9693.894720           3.000000       438.627955      5096     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.456209]  S    pool-spawner  2221         0.980707   E           1.986907           3.000000         0.067869         2     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.456934]  S    dconf worker  2548         4.524381   E           7.509986           3.000000         0.564208         8     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.458319]  S           gdbus  2550      2706.006756   E        2708.984197           3.000000         2.712756        46     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.459770]  S           gdbus  2566      2841.966077   E        2844.873714           3.000000        11.964671       131     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.461282]  S    rtkit-daemon  2577      9691.441611   E        9694.422756           3.000000        98.044553      3229     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.462093]  S        pipewire  2784      2841.650058   E        2844.631995           3.000000        62.537655       997     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.463728]  S     wireplumber  2785      2841.873714   E        2844.858521           3.000000       373.046644      1804     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.465473]  I     kworker/1:2 11114    875527.680377   E      875530.673852           3.000000       177.316446     14002     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.466403]  S            hass 14997      9554.052636   E        9556.116026           3.000000       188.165019      1414     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.467347]  S            hass 15004      9684.091701   E        9685.100766           3.000000       275.498643      1607     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.468287]  S            hass 15011      8739.061715   E        8739.325769           3.000000        72.462543         2     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.469233]  I     kworker/1:1 17427    875288.910225   E      875291.908195           3.000000         0.037342         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.470182]  S systemd-userwor 17444      9688.460100   E        9691.362563           3.000000         7.132476        10     120         0.000000         0.000000         0.000000   0      0        /system.slice
+
+<4>[20453.472082] cpu#2, 3700.000 MHz
+<4>[20453.473022]   .nr_running                    : 0
+<4>[20453.473964]   .nr_switches                   : 4162634
+<4>[20453.474909]   .nr_uninterruptible            : 18
+<4>[20453.475855]   .next_balance                  : 4315.119168
+<4>[20453.476802]   .curr->pid                     : 0
+<4>[20453.477749]   .clock                         : 20453474.349597
+<4>[20453.478699]   .clock_task                    : 20430870.872600
+<4>[20453.479656]   .avg_idle                      : 875203
+<4>[20453.480609]   .max_idle_balance_cost         : 500000
+
+<4>[20453.482535] cfs_rq[2]:/system.slice
+<4>[20453.483502]   .left_deadline                 : 0.000001
+<4>[20453.484478]   .left_vruntime                 : 0.000001
+<4>[20453.485455]   .min_vruntime                  : 8499.386464
+<4>[20453.486437]   .avg_vruntime                  : 8499.386464
+<4>[20453.487419]   .right_vruntime                : 0.000001
+<4>[20453.488402]   .spread                        : 0.000000
+<4>[20453.489385]   .nr_queued                     : 0
+<4>[20453.490368]   .h_nr_runnable                 : 0
+<4>[20453.491346]   .h_nr_queued                   : 0
+<4>[20453.492325]   .h_nr_idle                     : 0
+<4>[20453.493299]   .load                          : 0
+<4>[20453.494270]   .load_avg                      : 0
+<4>[20453.495247]   .runnable_avg                  : 0
+<4>[20453.496224]   .util_avg                      : 0
+<4>[20453.497200]   .util_est                      : 0
+<4>[20453.498171]   .removed.load_avg              : 0
+<4>[20453.499139]   .removed.util_avg              : 0
+<4>[20453.500101]   .removed.runnable_avg          : 0
+<4>[20453.501064]   .tg_load_avg_contrib           : 0
+<4>[20453.502027]   .tg_load_avg                   : 0
+<4>[20453.502967]   .throttled                     : 0
+<4>[20453.503871]   .throttle_count                : 0
+<4>[20453.504733]   .se->exec_start                : 20429877.848305
+<4>[20453.505596]   .se->vruntime                  : 865982.371767
+<4>[20453.506447]   .se->sum_exec_runtime          : 8500.709642
+<4>[20453.507290]   .se->load.weight               : 1048576
+<4>[20453.508128]   .se->avg.load_avg              : 0
+<4>[20453.508960]   .se->avg.util_avg              : 0
+<4>[20453.509782]   .se->avg.runnable_avg          : 0
+
+<4>[20453.511394] cfs_rq[2]:/
+<4>[20453.512180]   .left_deadline                 : 0.000001
+<4>[20453.512974]   .left_vruntime                 : 0.000001
+<4>[20453.513753]   .min_vruntime                  : 865982.371767
+<4>[20453.514525]   .avg_vruntime                  : 865982.371767
+<4>[20453.515276]   .right_vruntime                : 0.000001
+<4>[20453.516023]   .spread                        : 0.000000
+<4>[20453.516761]   .nr_queued                     : 0
+<4>[20453.517471]   .h_nr_runnable                 : 0
+<4>[20453.518154]   .h_nr_queued                   : 0
+<4>[20453.518812]   .h_nr_idle                     : 0
+<4>[20453.519442]   .load                          : 0
+<4>[20453.520039]   .load_avg                      : 0
+<4>[20453.520610]   .runnable_avg                  : 0
+<4>[20453.521167]   .util_avg                      : 0
+<4>[20453.521695]   .util_est                      : 0
+<4>[20453.522189]   .removed.load_avg              : 0
+<4>[20453.522658]   .removed.util_avg              : 0
+<4>[20453.523100]   .removed.runnable_avg          : 0
+<4>[20453.523532]   .tg_load_avg_contrib           : 0
+<4>[20453.523963]   .tg_load_avg                   : 0
+<4>[20453.524388]   .throttled                     : 0
+<4>[20453.524795]   .throttle_count                : 0
+
+<4>[20453.525562] rt_rq[2]:
+<4>[20453.525936]   .rt_nr_running                 : 0
+
+<4>[20453.526687] dl_rq[2]:
+<4>[20453.527054]   .dl_nr_running                 : 0
+<4>[20453.527428]   .dl_bw->bw                     : 996147
+<4>[20453.527799]   .dl_bw->total_bw               : 629136
+
+<4>[20453.528534] runnable tasks:
+<4>[20453.528900]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.529329] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.529783]  S        kthreadd     2    865963.952854   E      865966.898157           3.000000         8.593123       387     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.530283]  S         cpuhp/2    32     10951.978374   E       10954.973638           3.000000         0.233586        26     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.530780]  S   idle_inject/2    33        -1.044088   E           1.498295           1.500000         0.003382         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.531290]  S     migration/2    34         0.186129   E           0.563871           0.750000       210.263655      5185       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.531806]  S     ksoftirqd/2    35    865981.679310   E      865984.679310           3.000000        16.444712      2897     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.532329]  I    kworker/2:0H    37       140.496860   E         140.531424           3.000000         0.007134         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.532862]  S      oom_reaper    96        -1.002034   E           1.997966           3.000000         0.000000         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.533401]  I    kworker/2:1H   115    865966.013717   E      865966.048105           3.000000        19.754949      1055     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.533944]  S       scsi_eh_0   124       185.660966   E         188.645700           3.000000         7.575143        26     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.534497]  I kworker/R-scsi_   125       171.286446   E         171.321005           3.000000         0.025493         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.535055]  I kworker/R-scsi_   127       171.326642   E         171.361230           3.000000         0.017493         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.535618]  I kworker/R-scsi_   129       171.333384   E         171.367978           3.000000         0.003958         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.536180]  I kworker/R-scsi_   131       171.339867   E         171.374461           3.000000         0.004064         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.536747]  I kworker/R-scsi_   133       171.346294   E         171.380888           3.000000         0.003978         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.537314]  I kworker/R-scsi_   135       171.352730   E         171.387324           3.000000         0.004007         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.537884]  I   kworker/R-mld   140       171.421288   E         171.455850           3.000000         0.025547         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.538463]  I kworker/R-ipv6_   142       171.443965   E         171.478544           3.000000         0.023823         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.539043]  I kworker/R-kstrp   150       175.612787   E         175.647375           3.000000         0.005105         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.539630]  I   kworker/u49:0   159       177.846720   E         177.881299           3.000000         0.029909         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.540220]  I kworker/R-kcryp   966      6506.281661   E        6506.316240           3.000000         0.025582         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.540816]  S     jbd2/dm-0-8  1004    865966.045380   E      865969.025099           3.000000       160.931980      4628     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.541425]  S      sd-resolve  2092      8465.566407   E        8468.435377           3.000000         8.790565        54     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.542054]  S    rtkit-daemon  2578         0.001314   E           1.836448           3.000000        95.083271      3074       0         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.542697]  I     kworker/2:0 14417    865982.213238   E      865985.082095           3.000000       116.924248     11343     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.543347]  S            hass 15015      7771.540268   E        7774.540268           3.000000        72.418049         2     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.543999]  S           gmain 15052      8499.386464   E        8502.361668           3.000000       140.624355      2762     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.544656]  S           login 15131         0.277889   E           2.432877           3.000000        58.483563        43     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/session-3.scope
+<4>[20453.545973]  S            bash 15137     34238.901597   E       34241.767864           3.000000        71.493597       418     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/session-3.scope
+<4>[20453.547397]  I     kworker/2:1 17233    864236.733311   E      864239.729897           3.000000         0.035563         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.548161]  I   kworker/u48:4 17465    865965.758360   E      865968.706860           3.000000         0.270061         5     120         0.000000         0.000000         0.000000   0      0        /
+
+<4>[20453.549678] cpu#3, 3700.000 MHz
+<4>[20453.550430]   .nr_running                    : 0
+<4>[20453.551178]   .nr_switches                   : 4063156
+<4>[20453.551936]   .nr_uninterruptible            : 46
+<4>[20453.552691]   .next_balance                  : 4315.119168
+<4>[20453.553450]   .curr->pid                     : 0
+<4>[20453.554204]   .clock                         : 20453538.347474
+<4>[20453.554966]   .clock_task                    : 20433532.635282
+<4>[20453.555727]   .avg_idle                      : 1000000
+<4>[20453.556493]   .max_idle_balance_cost         : 500000
+
+<4>[20453.558023] rt_rq[3]:
+<4>[20453.558791]   .rt_nr_running                 : 0
+
+<4>[20453.560334] dl_rq[3]:
+<4>[20453.561096]   .dl_nr_running                 : 0
+<4>[20453.561874]   .dl_bw->bw                     : 996147
+<4>[20453.562657]   .dl_bw->total_bw               : 629136
+
+<4>[20453.564218] runnable tasks:
+<4>[20453.564999]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.565845] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.566729]  S         cpuhp/3    38      4865.641460   E        4868.636562           3.000000         0.202035        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.567657]  S   idle_inject/3    39        -1.048576   E           1.500000           1.500000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.568592]  S     migration/3    40         0.186129   E           0.563871           0.750000       210.000965      5224       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.569534]  S     ksoftirqd/3    41    896290.926431   E      896293.926431           3.000000        15.438239      1747     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.570485]  I    kworker/3:0H    43       135.558301   E         135.592834           3.000000         0.013060         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.571448]  I kworker/R-inet_    93        -1.044200   E          -1.009591           3.000000         0.004376         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.572414]  S            ksmd   100        -1.042813   E           8.127336           3.000000         0.000599         2     125         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.573384]  I kworker/R-kinte   102        -1.041757   E          -1.007148           3.000000         0.000520         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.574353]  I kworker/R-kbloc   103        -1.041244   E          -1.006635           3.000000         0.000513         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.575326]  I kworker/R-blkcg   104        -1.040673   E          -1.006064           3.000000         0.000571         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.576277]  I    kworker/3:1H   237    896328.078698   E      896328.113307           3.000000        11.240203       766     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.577198]  I kworker/R-crypt   239       227.498263   E         227.532839           3.000000         0.008804         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.578089]  S systemd-journal  1053      6936.627865   E        6939.531055           3.000000       531.435258      3922     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.578989]  S          psimon  1179      1343.597766   E           2.993280           3.000000         3.482251       321      98         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.579885]  S nvidia-modeset/  1372    895985.079075   E      895988.073718           3.000000      8117.176661    353409     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.580790]  S           gmain  2547         1.922915   E           4.915534           3.000000         0.063112         2     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.582597]  S       module-rt  2808        15.935537   E          18.886899           3.000000         0.222098         8     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.584473]  I     kworker/3:2 10331    896331.623629   E      896334.622357           3.000000        70.783054      7988     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.585451]  I     kworker/3:0 14300    806095.451575   E      806098.424722           3.000000       103.482732       558     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.586431]  S            hass 14998      6934.431125   E        6936.531592           3.000000        46.487291       397     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.587427]  S            hass 15007      6788.282102   E        6791.157666           3.000000         0.601495        21     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.588426]  S            hass 15012      6627.222474   E        6627.469497           3.000000        72.466868         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+
+<4>[20453.590397] cpu#4, 3700.000 MHz
+<4>[20453.591370]   .nr_running                    : 0
+<4>[20453.592345]   .nr_switches                   : 3950994
+<4>[20453.593317]   .nr_uninterruptible            : 56
+<4>[20453.594287]   .next_balance                  : 4315.119168
+<4>[20453.595261]   .curr->pid                     : 0
+<4>[20453.596223]   .clock                         : 20453570.351114
+<4>[20453.597181]   .clock_task                    : 20434280.942749
+<4>[20453.598127]   .avg_idle                      : 1000000
+<4>[20453.599068]   .max_idle_balance_cost         : 500000
+
+<4>[20453.600902] rt_rq[4]:
+<4>[20453.601810]   .rt_nr_running                 : 0
+
+<4>[20453.603577] dl_rq[4]:
+<4>[20453.604420]   .dl_nr_running                 : 0
+<4>[20453.605242]   .dl_bw->bw                     : 996147
+<4>[20453.606047]   .dl_bw->total_bw               : 629136
+
+<4>[20453.607619] runnable tasks:
+<4>[20453.608394]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.609228] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.610099]  S         systemd     1       412.309653   E         415.031862           3.000000      7805.428599     11491     120         0.000000         0.000000         0.000000   0      0        /init.scope
+<4>[20453.611020]  S         cpuhp/4    44      4950.349672   E        4953.344515           3.000000         0.774561        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.611943]  S   idle_inject/4    45        -1.048576   E           2.250000           2.250000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.612867]  S     migration/4    46         0.186129   E           0.563871           0.750000       210.460520      5226       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.613792]  S     ksoftirqd/4    47    875229.376201   E      875232.376201           3.000000        10.852669      1187     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.614729]  I    kworker/4:0H    49        80.018762   E          80.053326           3.000000         0.009880         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.615676]  S      khungtaskd    95    875227.960245   E      875230.898792           3.000000        18.289133       168     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.616626]  I kworker/R-write    98        -1.022288   E           0.987679           3.000000         0.001075         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.617582]  I kworker/R-ata_s   110        -1.022288   E           0.987679           3.000000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.618536]  I kworker/R-edac-   111        -1.022288   E           0.987679           3.000000         0.000000         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.619487]  I kworker/R-devfr   112        -1.020764   E           0.986155           3.000000         0.001524         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.620441]  S       watchdogd   113        -1.020764   E           0.479236           3.000000         0.000000         2      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.621402]  S           hwrng   120    875237.067151   E      875240.060546           3.000000      2201.375830     67967     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.622372]  S       scsi_eh_2   128         2.371772   E           5.355928           3.000000         3.224138        25     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.623352]  I    kworker/4:1H   238    875191.101502   E      875191.136111           3.000000        10.264004       694     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.624341]  S nvidia-modeset/  1373      4950.233636   E        4953.230527           3.000000         0.027250         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.625332]  S UVM global queu  1377      4950.480909   E        4953.479340           3.000000         0.025114         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.626331]  S     jbd2/dm-1-8  2088    873245.793222   E      873248.759158           3.000000       856.922363     22244     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.627310]  S  systemd-logind  2118      5188.645835   E        5191.582854           3.000000       531.603373      9163     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.628268]  S           gdbus  2350     16074.321143   E       16077.300185           3.000000         1.505433        23     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.630119]  S           gdbus  2561        12.407365   E          15.383506           3.000000         0.837853        18     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.632048]  S xdg-document-po  2562      3151.280105   E        3154.266555           3.000000        10.703826       211     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.634056]  S    pool-spawner  2810      3044.991040   E        3047.963788           3.000000         0.260263         5     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.636151]  S at-spi2-registr  4083     16074.400127   E       16077.321143           3.000000        10.205265        48     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.638351]  I     kworker/4:0  8341    875237.135380   E      875240.130850           3.000000        83.062658      8790     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.639499]  S            hass 14999      5162.706746   E        5164.821543           3.000000        33.402819       491     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.640651]  S            hass 15003      5167.658312   E        5169.715347           3.000000        18.591610       528     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.641794]  S            hass 15016      4498.255764   E        4498.435359           3.000000        72.459064         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.642932]  S  NetworkManager 15051      5188.264738   E        5191.022638           3.000000       254.469860       831     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.644070]  I     kworker/4:1 17229    873261.726353   E      873264.723807           3.000000         0.039351         4     120         0.000000         0.000000         0.000000   0      0        /
+
+<4>[20453.646271] cpu#5, 3700.000 MHz
+<4>[20453.647321]   .nr_running                    : 0
+<4>[20453.648350]   .nr_switches                   : 3989329
+<4>[20453.649357]   .nr_uninterruptible            : 63
+<4>[20453.650356]   .next_balance                  : 4315.119168
+<4>[20453.651349]   .curr->pid                     : 0
+<4>[20453.652332]   .clock                         : 20453634.351735
+<4>[20453.653316]   .clock_task                    : 20434888.632067
+<4>[20453.654289]   .avg_idle                      : 1000000
+<4>[20453.655259]   .max_idle_balance_cost         : 500000
+
+<4>[20453.657196] rt_rq[5]:
+<4>[20453.658160]   .rt_nr_running                 : 0
+
+<4>[20453.660096] dl_rq[5]:
+<4>[20453.661050]   .dl_nr_running                 : 0
+<4>[20453.662015]   .dl_bw->bw                     : 996147
+<4>[20453.662981]   .dl_bw->total_bw               : 629136
+
+<4>[20453.664908] runnable tasks:
+<4>[20453.665866]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.666894] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.667957]  S         cpuhp/5    50     10032.278842   E       10035.271411           3.000000         0.190852        27     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.669058]  S   idle_inject/5    51        -1.048576   E           2.250000           2.250000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.670163]  S     migration/5    52         0.186129   E           0.563871           0.750000       209.675965      5214       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.671278]  S     ksoftirqd/5    53    872574.996991   E      872577.971580           3.000000        11.805207      1172     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.672401]  I    kworker/5:0H    55        56.325611   E          56.360161           3.000000         0.011822         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.673535]  S      khugepaged   101    872575.675477   E      872778.642448           3.000000      1240.546773      5348     139         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.674675]  I kworker/R-tpm_d   109        -1.039794   E          -1.005185           3.000000         0.002406         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.675804]  I     kworker/5:1   119    872576.065494   E      872579.065065           3.000000       345.544121     22744     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.676899]  S       scsi_eh_4   132        15.161136   E          17.067234           3.000000        24.148376        51     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.677963]  I    kworker/5:1H   217    872535.279483   E      872535.314092           3.000000        15.377792       821     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.679027]  I kworker/R-kdmfl   962      4754.349161   E        4754.383742           3.000000         0.025947         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.680090]  I kworker/R-kcryp   967      4754.374562   E        4754.409123           3.000000         0.027202         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.681152]  S      sd-resolve  1266      5536.789387   E        5539.661066           3.000000        19.269534       120     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.682219]  S          psimon  1268      8236.328378   E           2.998630           3.000000         0.129972        13      98         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.683287]  S          nvidia  1375     10057.953558   E       10060.949884           3.000000         0.027915         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.684351]  S UVM Tools Event  1379     10057.979447   E       10060.977989           3.000000         0.025889         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.685407]  I kworker/R-kcryp  2073     24037.993688   E       24038.028268           3.000000         0.025795         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.686471]  S dbus-broker-lau  2111      5457.856653   E        5460.661864           3.000000        75.642354      1313     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.687551]  S           gmain  2232         0.994102   E           0.451424           3.000000         0.054474         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.688639]  S           gdbus  2222      5457.661864   E        5460.393780           3.000000       124.191873      1344     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.689726]  S     dbus-broker  2345      2440.314417   E        2443.309971           3.000000        66.217960      3008     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.691900]  S    pool-spawner  2564      2436.960846   E        2439.934605           3.000000         1.204737        27     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.694148]  S     fuse_worker  2572         0.602981   E           2.046388           3.000000         0.056593         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.696484]  S     data-loop.0  2807      2440.257366   E        2443.252767           3.000000     33461.176390    956044     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.698882]  S     dbus-broker  4080      2216.012779   E        2218.988511           3.000000         3.368253       118     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.701302]  I     kworker/5:0 14322    786772.625142   E      786775.619413           3.000000         1.345412        82     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.702533]  S            hass 14996      5451.041159   E        5453.545992           3.000000         0.804014        15     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.703748]  S            hass 15014      5234.005645   E        5234.227111           3.000000        72.452592         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.704934]  I   kworker/u48:0 17434    872576.078131   E      872579.078131           3.000000        92.815901      2561     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.706105]  I   kworker/u48:5 17466    872567.273334   E      872570.101002           3.000000         0.600288        26     120         0.000000         0.000000         0.000000   0      0        /
+
+<4>[20453.708345] cpu#6, 3700.000 MHz
+<4>[20453.709404]   .nr_running                    : 0
+<4>[20453.710455]   .nr_switches                   : 4000222
+<4>[20453.711492]   .nr_uninterruptible            : -263
+<4>[20453.712522]   .next_balance                  : 4315.119168
+<4>[20453.713549]   .curr->pid                     : 0
+<4>[20453.714570]   .clock                         : 20453698.351231
+<4>[20453.715587]   .clock_task                    : 20431629.378286
+<4>[20453.716588]   .avg_idle                      : 1000000
+<4>[20453.717584]   .max_idle_balance_cost         : 500000
+
+<4>[20453.719571] cfs_rq[6]:/
+<4>[20453.720564]   .left_deadline                 : 0.000001
+<4>[20453.721562]   .left_vruntime                 : 0.000001
+<4>[20453.722561]   .min_vruntime                  : 826085.182704
+<4>[20453.723558]   .avg_vruntime                  : 826085.182704
+<4>[20453.724553]   .right_vruntime                : 0.000001
+<4>[20453.725544]   .spread                        : 0.000000
+<4>[20453.726535]   .nr_queued                     : 0
+<4>[20453.727521]   .h_nr_runnable                 : 0
+<4>[20453.728508]   .h_nr_queued                   : 0
+<4>[20453.729497]   .h_nr_idle                     : 0
+<4>[20453.730483]   .load                          : 0
+<4>[20453.731468]   .load_avg                      : 0
+<4>[20453.732449]   .runnable_avg                  : 0
+<4>[20453.733428]   .util_avg                      : 0
+<4>[20453.734406]   .util_est                      : 0
+<4>[20453.735379]   .removed.load_avg              : 0
+<4>[20453.736350]   .removed.util_avg              : 0
+<4>[20453.737293]   .removed.runnable_avg          : 0
+<4>[20453.738204]   .tg_load_avg_contrib           : 0
+<4>[20453.739079]   .tg_load_avg                   : 0
+<4>[20453.739939]   .throttled                     : 0
+<4>[20453.740789]   .throttle_count                : 0
+
+<4>[20453.742456] rt_rq[6]:
+<4>[20453.743275]   .rt_nr_running                 : 0
+
+<4>[20453.744895] dl_rq[6]:
+<4>[20453.745685]   .dl_nr_running                 : 0
+<4>[20453.746473]   .dl_bw->bw                     : 996147
+<4>[20453.747251]   .dl_bw->total_bw               : 629136
+
+<4>[20453.748791] runnable tasks:
+<4>[20453.749545]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.750353] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.751197]  S         cpuhp/6    56      4165.553093   E        4168.548066           3.000000         0.230317        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.752072]  S   idle_inject/6    57        -1.043314   E           2.244738           2.250000         0.008369         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.752944]  S     migration/6    58         0.068987   E           2.318987           2.250000       209.461919      5141       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.753816]  S     ksoftirqd/6    59    826085.071636   E      826088.071636           3.000000        31.838656      2302     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.754692]  I    kworker/6:0H    61        80.413005   E          80.447514           3.000000         0.008779         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.755564]  S      kcompactd0    99    826085.182704   E      826088.175561           3.000000       430.846501     40585     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.756417]  I    kworker/6:1H   223    826084.405063   E      826084.439532           3.000000       139.023140     18190     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.757249]  S dbus-broker-lau  2344      3175.728514   E        3178.708517           3.000000        17.423615       142     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.758860]  S           gmain  2349         0.994844   E           0.451424           3.000000         0.053732         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.760469]  S     data-loop.0  2819      3103.862470   E        3106.857674           3.000000         0.327319        26     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.762059]  I     kworker/6:1  4722    329473.601914   E      329476.594447           3.000000         0.037053         4     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.762863]  I     kworker/6:0  8742    826085.110492   E      826088.110492           3.000000       169.127411     15713     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.763660]  S            hass 15002      5328.447590   E        5330.494138           3.000000      1006.232558       887     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.764457]  S            hass 15013      5240.162952   E        5240.402637           3.000000        72.352560         3     120         0.000000         0.000000         0.000000   0      0        /system.slice
+
+<4>[20453.766010] cpu#7, 3700.000 MHz
+<4>[20453.766770]   .nr_running                    : 1
+<4>[20453.767514]   .nr_switches                   : 5102704
+<4>[20453.768256]   .nr_uninterruptible            : 16
+<4>[20453.768996]   .next_balance                  : 4315.115979
+<4>[20453.769745]   .curr->pid                     : 0
+<4>[20453.770815]   .clock                         : 20449297.026261
+<4>[20453.771696]   .clock_task                    : 20369483.510641
+<4>[20453.772442]   .avg_idle                      : 1000000
+<4>[20453.773183]   .max_idle_balance_cost         : 500000
+
+<4>[20453.774661] cfs_rq[7]:/
+<4>[20453.775396]   .left_deadline                 : 977960.640322
+<4>[20453.776134]   .left_vruntime                 : 977957.640322
+<4>[20453.776879]   .min_vruntime                  : 977957.640322
+<4>[20453.777624]   .avg_vruntime                  : 977957.640322
+<4>[20453.778367]   .right_vruntime                : 977957.640322
+<4>[20453.779107]   .spread                        : 0.000000
+<4>[20453.779855]   .nr_queued                     : 1
+<4>[20453.780597]   .h_nr_runnable                 : 1
+<4>[20453.781340]   .h_nr_queued                   : 1
+<4>[20453.782080]   .h_nr_idle                     : 0
+<4>[20453.782818]   .load                          : 1048576
+<4>[20453.783557]   .load_avg                      : 0
+<4>[20453.784295]   .runnable_avg                  : 0
+<4>[20453.785035]   .util_avg                      : 0
+<4>[20453.785778]   .util_est                      : 7
+<4>[20453.786522]   .removed.load_avg              : 0
+<4>[20453.787262]   .removed.util_avg              : 0
+<4>[20453.788006]   .removed.runnable_avg          : 0
+<4>[20453.788748]   .tg_load_avg_contrib           : 0
+<4>[20453.789492]   .tg_load_avg                   : 0
+<4>[20453.790234]   .throttled                     : 0
+<4>[20453.790974]   .throttle_count                : 0
+
+<4>[20453.792442] rt_rq[7]:
+<4>[20453.793173]   .rt_nr_running                 : 0
+
+<4>[20453.794659] dl_rq[7]:
+<4>[20453.795401]   .dl_nr_running                 : 0
+<4>[20453.796144]   .dl_bw->bw                     : 996147
+<4>[20453.796891]   .dl_bw->total_bw               : 629136
+
+<4>[20453.798379] runnable tasks:
+<4>[20453.799120]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.799920] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.800761]  S         cpuhp/7    62      6086.426568   E        6089.421666           3.000000         0.213608        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.801614]  S   idle_inject/7    63        -1.048576   E           2.250000           2.250000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.802445]  S     migration/7    64         0.068987   E           2.318987           2.250000       209.547828      5128       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.803241]  S     ksoftirqd/7    65    977956.822598   E      977959.822598           3.000000        25.024217     17789     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.804043]  I    kworker/7:0H    67        35.543176   E          35.577646           3.000000         0.012134         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.804846]  S         kauditd    94      3613.770682   E        3616.767045           3.000000        23.088892       153     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.805649]  I    kworker/7:1H   219    977957.112212   E      977957.146821           3.000000        20.410570      1365     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.806449]  S systemd-userdbd  1154      7288.189087   E        7290.984638           3.000000       179.470972       284     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.807251]  S        nv_queue  1329      5459.778594   E        5462.776938           3.000000         0.007889         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.808059]  S       nv_open_q  1331      5462.951082   E        5465.949581           3.000000         0.004908         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.808854]  S       firewalld  2115      6593.775052   E        6596.775052           3.000000       639.221041      1317     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.809631]  S at-spi-bus-laun  2538      2679.729352   E        2682.691118           3.000000         8.921068        34     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.811122]  S           gdbus  2553      2782.395105   E        2785.075500           3.000000        66.662002       538     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.812612]  S xdg-permission-  2555         9.968736   E          12.917670           3.000000         5.347204        12     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.814133]  S     fuse_worker  2571         8.573639   E           9.972136           3.000000         0.101503         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.815723]  S     fusermount3  2569         8.472136   E          11.426395           3.000000         0.825957         5     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.817381]  S           gmain  4085         0.633600   E           0.820316           3.000000         0.046084         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.819137]  R     kworker/7:1 13115    977957.640322   E      977960.640322           3.000000       236.820733     17800     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.820070]  I     kworker/7:2 14710    977891.598772   E      977894.588897           3.000000        11.899698        15     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.821001]  S            hass 15017      6430.827569   E        6430.989263           3.000000        72.348992         2     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.821944]  S           gdbus 15054      7288.322527   E        7291.189087           3.000000        59.252362       598     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.822892]  I     kworker/7:0 17463    977863.604947   E      977866.602042           3.000000         0.036451         3     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.823849]  I     kworker/7:3 17464    977863.696607   E      977866.695870           3.000000         0.030553         2     120         0.000000         0.000000         0.000000   0      0        /
+
+<4>[20453.825725] cpu#8, 3700.000 MHz
+<4>[20453.826648]   .nr_running                    : 0
+<4>[20453.827576]   .nr_switches                   : 5131057
+<4>[20453.828502]   .nr_uninterruptible            : 23
+<4>[20453.829432]   .next_balance                  : 4315.120457
+<4>[20453.830368]   .curr->pid                     : 0
+<4>[20453.831306]   .clock                         : 20453826.354256
+<4>[20453.832252]   .clock_task                    : 20363940.213835
+<4>[20453.833192]   .avg_idle                      : 1000000
+<4>[20453.834136]   .max_idle_balance_cost         : 500000
+
+<4>[20453.836024] cfs_rq[8]:/system.slice
+<4>[20453.836972]   .left_deadline                 : 0.000001
+<4>[20453.837929]   .left_vruntime                 : 0.000001
+<4>[20453.838888]   .min_vruntime                  : 9483.231330
+<4>[20453.839850]   .avg_vruntime                  : 9483.231330
+<4>[20453.840811]   .right_vruntime                : 0.000001
+<4>[20453.841778]   .spread                        : 0.000000
+<4>[20453.842747]   .nr_queued                     : 0
+<4>[20453.843712]   .h_nr_runnable                 : 0
+<4>[20453.844676]   .h_nr_queued                   : 0
+<4>[20453.845639]   .h_nr_idle                     : 0
+<4>[20453.846595]   .load                          : 0
+<4>[20453.847559]   .load_avg                      : 0
+<4>[20453.848515]   .runnable_avg                  : 0
+<4>[20453.849475]   .util_avg                      : 0
+<4>[20453.850435]   .util_est                      : 0
+<4>[20453.851391]   .removed.load_avg              : 0
+<4>[20453.852345]   .removed.util_avg              : 0
+<4>[20453.853299]   .removed.runnable_avg          : 0
+<4>[20453.854254]   .tg_load_avg_contrib           : 0
+<4>[20453.855208]   .tg_load_avg                   : 0
+<4>[20453.856159]   .throttled                     : 0
+<4>[20453.857105]   .throttle_count                : 0
+<4>[20453.858050]   .se->exec_start                : 20363486.550177
+<4>[20453.858982]   .se->vruntime                  : 691868.974348
+<4>[20453.859875]   .se->sum_exec_runtime          : 7948.901589
+<4>[20453.860732]   .se->load.weight               : 1048576
+<4>[20453.861582]   .se->avg.load_avg              : 0
+<4>[20453.862421]   .se->avg.util_avg              : 0
+<4>[20453.863250]   .se->avg.runnable_avg          : 0
+
+<4>[20453.864882] cfs_rq[8]:/
+<4>[20453.865681]   .left_deadline                 : 0.000001
+<4>[20453.866479]   .left_vruntime                 : 0.000001
+<4>[20453.867263]   .min_vruntime                  : 691868.974348
+<4>[20453.868051]   .avg_vruntime                  : 691868.974348
+<4>[20453.868830]   .right_vruntime                : 0.000001
+<4>[20453.869588]   .spread                        : 0.000000
+<4>[20453.870318]   .nr_queued                     : 0
+<4>[20453.871022]   .h_nr_runnable                 : 0
+<4>[20453.871699]   .h_nr_queued                   : 0
+<4>[20453.872348]   .h_nr_idle                     : 0
+<4>[20453.872962]   .load                          : 0
+<4>[20453.873549]   .load_avg                      : 0
+<4>[20453.874112]   .runnable_avg                  : 0
+<4>[20453.874648]   .util_avg                      : 0
+<4>[20453.875156]   .util_est                      : 0
+<4>[20453.875639]   .removed.load_avg              : 0
+<4>[20453.876095]   .removed.util_avg              : 0
+<4>[20453.876529]   .removed.runnable_avg          : 0
+<4>[20453.876954]   .tg_load_avg_contrib           : 0
+<4>[20453.877372]   .tg_load_avg                   : 0
+<4>[20453.877781]   .throttled                     : 0
+<4>[20453.878178]   .throttle_count                : 0
+
+<4>[20453.878944] rt_rq[8]:
+<4>[20453.879314]   .rt_nr_running                 : 0
+
+<4>[20453.880058] dl_rq[8]:
+<4>[20453.880425]   .dl_nr_running                 : 0
+<4>[20453.880798]   .dl_bw->bw                     : 996147
+<4>[20453.881170]   .dl_bw->total_bw               : 629136
+
+<4>[20453.881900] runnable tasks:
+<4>[20453.882259]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.882684] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.883142]  S         cpuhp/8    68      5480.363296   E        5483.359605           3.000000         0.178910        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.883636]  S   idle_inject/8    69        -1.048576   E           3.000000           3.000000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.884130]  S     migration/8    70         0.068987   E           2.318987           2.250000       209.048490      5132       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.884637]  S     ksoftirqd/8    71    691668.725500   E      691671.725500           3.000000        13.339166       931     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.885149]  I    kworker/8:0H    73        43.838051   E          43.872598           3.000000         0.014643         5     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.885678]  I    kworker/8:1H   221    691817.075971   E      691817.110580           3.000000        22.433019      1272     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.886205]  S   systemd-udevd  1265      9482.959026   E        9485.803424           3.000000       168.438095       956     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.886748]  S  irq/135-nvidia  1374     10057.925643   E           2.995453           3.000000     10950.815074    545675      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.887300]  I kworker/R-kcryp  2072      7158.315816   E        7158.350378           3.000000         0.026232         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.887864]  S         polkitd  2210      7365.362458   E        7368.282208           3.000000       362.471730      2508     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.888442]  S    pool-spawner  2348        -1.008771   E           0.451424           3.000000         0.039805         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.889617]  S           gmain  2551      1730.856243   E        1733.773427           3.000000         0.545711         8     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.890903]  S    dconf worker  2575         9.407032   E          12.396852           3.000000         0.364871        11     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.892295]  S           gmain  2565         8.848817   E          10.299877           3.000000         0.048940         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.893800]  I     kworker/8:0 10060    625042.711414   E      625045.698580           3.000000       157.632306      5182     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.894607]  S          psimon 14948    623536.473538   E           2.997522           3.000000         0.032065         2      98         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.895426]  S            hass 14991      9483.231330   E        9486.174873           3.000000      1926.225522      6110     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.896259]  S            hass 15009      7035.138663   E        7035.430946           3.000000        72.478490         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.897097]  S    pool-spawner 15053      9460.481737   E        9463.365431           3.000000         5.622475        45     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.897944]  I     kworker/8:1 15105    691868.317632   E      691871.316068           3.000000       116.036494     11281     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.898797]  S systemd-userwor 17445      9481.885665   E        9484.785530           3.000000         6.437984         9     120         0.000000         0.000000         0.000000   0      0        /system.slice
+
+<4>[20453.900495] cpu#9, 3700.000 MHz
+<4>[20453.901334]   .nr_running                    : 0
+<4>[20453.902174]   .nr_switches                   : 4541344
+<4>[20453.903020]   .nr_uninterruptible            : 22
+<4>[20453.903863]   .next_balance                  : 4315.119685
+<4>[20453.904710]   .curr->pid                     : 0
+<4>[20453.905559]   .clock                         : 20453890.353442
+<4>[20453.906414]   .clock_task                    : 20417743.650974
+<4>[20453.907268]   .avg_idle                      : 1000000
+<4>[20453.908121]   .max_idle_balance_cost         : 500000
+
+<4>[20453.909833] rt_rq[9]:
+<4>[20453.910696]   .rt_nr_running                 : 0
+
+<4>[20453.912407] dl_rq[9]:
+<4>[20453.913259]   .dl_nr_running                 : 0
+<4>[20453.914124]   .dl_bw->bw                     : 996147
+<4>[20453.914990]   .dl_bw->total_bw               : 629136
+
+<4>[20453.916716] runnable tasks:
+<4>[20453.917580]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.918513] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.919483]  S rcu_exp_gp_kthr    22    857408.392212   E      857411.388604           3.000000        15.277542      1651     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.920499]  S         cpuhp/9    74      4760.321660   E        4763.317059           3.000000         0.187944        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.921524]  S   idle_inject/9    75        -1.048576   E           3.000000           3.000000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.922553]  S     migration/9    76         0.081232   E           2.331232           2.250000       209.985576      5129       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.923590]  S     ksoftirqd/9    77    857861.482277   E      857864.470180           3.000000        13.617277      2254     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.924637]  I    kworker/9:0H    79        46.528165   E          46.559931           3.000000         0.259809         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.925691]  I    kworker/9:1H   224    857885.303675   E      857885.338098           3.000000        18.486727      1137     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.926752]  S dmcrypt_write/2   968    857885.646606   E      857888.605594           3.000000       212.745795      5778     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.927824]  S UVM deferred re  1378      4764.410054   E        4767.408693           3.000000         0.024470         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.928905]  S dmcrypt_write/2  2074    836797.588524   E      836800.529904           3.000000       895.744123     30821     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.929992]  I kworker/R-ext4-  2089      7369.396822   E        7369.431306           3.000000         0.065544         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.931092]  I     kworker/9:3  2117    857885.682265   E      857888.680283           3.000000       264.080659     21900     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.932207]  S systemd-tty-ask  2229         2.508882   E           5.463915           3.000000         8.218444         3     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.933333]  S         systemd  2291         6.847779   E           9.822660           3.000000       422.943927       268     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/init.scope
+<4>[20453.935593]  S   dconf-service  2347     12384.372790   E       12387.324943           3.000000         8.183611        27     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20453.937939]  S    pool-spawner  2546        -1.002501   E           1.951424           3.000000         0.057742         2     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.940260]  S           gmain  2809         0.715492   E           2.273636           3.000000         0.065897         2     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.942621]  S dbus-broker-lau  4079       653.431328   E         656.384415           3.000000         2.402144        24     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.945066]  I     kworker/9:1 14703    835499.683875   E      835502.671689           3.000000        18.172207        13     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.946333]  S            hass 14995      9922.977682   E        9925.075934           3.000000       119.453275       786     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.947598]  S            hass 15018      9114.300700   E        9114.445685           3.000000        72.453022         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.948856]  S systemd-userwor 17446      9950.389859   E        9953.292584           3.000000         5.975456         9     120         0.000000         0.000000         0.000000   0      0        /system.slice
+
+<4>[20453.951334] cpu#10, 3700.000 MHz
+<4>[20453.952537]   .nr_running                    : 0
+<4>[20453.953717]   .nr_switches                   : 4323794
+<4>[20453.954877]   .nr_uninterruptible            : 8
+<4>[20453.956008]   .next_balance                  : 4315.119168
+<4>[20453.957114]   .curr->pid                     : 0
+<4>[20453.958194]   .clock                         : 20453954.357944
+<4>[20453.959257]   .clock_task                    : 20434549.966170
+<4>[20453.960288]   .avg_idle                      : 1000000
+<4>[20453.961305]   .max_idle_balance_cost         : 500000
+
+<4>[20453.963295] rt_rq[10]:
+<4>[20453.964278]   .rt_nr_running                 : 0
+
+<4>[20453.966231] dl_rq[10]:
+<4>[20453.967188]   .dl_nr_running                 : 0
+<4>[20453.968132]   .dl_bw->bw                     : 996147
+<4>[20453.969076]   .dl_bw->total_bw               : 629136
+
+<4>[20453.970940] runnable tasks:
+<4>[20453.971876]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20453.972868] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20453.973901]  S        cpuhp/10    80     10754.152623   E       10757.147763           3.000000         0.188495        24     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.974971]  S  idle_inject/10    81        -1.048576   E           3.000000           3.000000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.976047]  S    migration/10    82         0.081232   E           2.331232           2.250000       209.131165      5123       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.977121]  S    ksoftirqd/10    83    843079.506128   E      843082.504426           3.000000        12.563118       683     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.978209]  I   kworker/10:0H    85        83.358964   E          83.393435           3.000000         0.012157         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.979304]  S         kswapd0   116         0.914328   E           2.082135           3.000000         0.011766         3     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.980406]  S       scsi_eh_3   130         4.957839   E           6.574095           3.000000         1.523234        25     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.981513]  I   kworker/10:1H   218    843124.267005   E      843124.301614           3.000000        16.218896       939     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.982631]  S xdg-desktop-por  2539      2395.841339   E        2398.696724           3.000000        53.424059       658     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.984891]  S    rtkit-daemon  2576        33.617325   E          37.290577           3.000000         9.946786        28     121         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.986079]  S           gdbus  2818      2247.505403   E        2250.451626           3.000000         2.618658        45     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20453.988466]  I    kworker/10:1 14309    843186.009782   E      843189.004723           3.000000        92.793864      7103     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.989709]  S            hass 15010      6329.057930   E        6329.338361           3.000000        72.446832         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.990942]  S            hass 17331      6526.406702   E        6529.307349           3.000000        29.606611       262     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20453.992151]  I    kworker/10:0 17271    842756.410133   E      842759.408793           3.000000         0.024741         2     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20453.993321]  I   kworker/u48:3 17396    843186.015609   E      843189.015609           3.000000       210.834058      6726     120         0.000000         0.000000         0.000000   0      0        /
+
+<4>[20453.995629] cpu#11, 3700.000 MHz
+<4>[20453.996764]   .nr_running                    : 0
+<4>[20453.997901]   .nr_switches                   : 4219810
+<4>[20453.999026]   .nr_uninterruptible            : 15
+<4>[20454.000148]   .next_balance                  : 4315.119168
+<4>[20454.001260]   .curr->pid                     : 0
+<4>[20454.002371]   .clock                         : 20453986.355594
+<4>[20454.003474]   .clock_task                    : 20434634.503760
+<4>[20454.004567]   .avg_idle                      : 1000000
+<4>[20454.005654]   .max_idle_balance_cost         : 500000
+
+<4>[20454.007783] rt_rq[11]:
+<4>[20454.008809]   .rt_nr_running                 : 0
+
+<4>[20454.010791] dl_rq[11]:
+<4>[20454.011739]   .dl_nr_running                 : 0
+<4>[20454.012666]   .dl_bw->bw                     : 996147
+<4>[20454.013565]   .dl_bw->total_bw               : 629136
+
+<4>[20454.015278] runnable tasks:
+<4>[20454.016091]  S            task   PID       vruntime   eligible    deadline             slice          sum-exec      switches  prio         wait-time        sum-sleep       sum-block  node   group-id  group-path
+<4>[20454.016947] -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<4>[20454.017832]  S        cpuhp/11    86      2522.424658   E        2525.418800           3.000000         0.170311        25     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.018751]  S  idle_inject/11    87        -1.048576   E           3.000000           3.000000         0.000000         3      49         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.019669]  S    migration/11    88         0.087628   E           2.337628           2.250000       209.475619      5132       0         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.020577]  S    ksoftirqd/11    89    847776.754552   E      847779.754552           3.000000        12.303991       747     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.021567]  I   kworker/11:0H    91         0.614271   E           0.579761           3.000000         0.012395         4     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.022636]  I kworker/R-kthro   117        -1.008506   E           0.973920           3.000000         0.007599         2     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.023569]  S       scsi_eh_1   126        15.019557   E          16.540638           3.000000         5.434744        26     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.024508]  I   kworker/11:1H   143    847748.802016   E      847748.836446           3.000000        15.091925       849     100         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.025456]  S     dbus-broker  2113      7197.382363   E        7200.351210           3.000000       692.247936     28318     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20454.026408]  S nvidia-persiste  2119         0.581462   E           3.337874           3.000000         1.932833        12     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20454.027369]  S        (sd-pam)  2294         8.474733   E           9.652776           3.000000         0.321957         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/init.scope
+<4>[20454.029288]  S    pool-spawner  2552      3247.401344   E        3250.384031           3.000000         2.019954        46     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20454.031320]  S           gmain  2559         0.529987   E           0.919675           3.000000         0.050338         1     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20454.033450]  S   fuse mainloop  2568         0.145504   E           2.819578           3.000000         0.180884         4     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20454.035690]  S       module-rt  2803         4.581350   E           7.543646           3.000000         0.232975         6     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/session.slice
+<4>[20454.038024]  S           gdbus  4086         0.624513   E           2.336496           3.000000         0.424063         9     120         0.000000         0.000000         0.000000   0      0        /user.slice/user-1000.slice/user@1000.service/app.slice
+<4>[20454.040458]  I    kworker/11:1  9649    847786.588217   E      847789.586969           3.000000       220.678436     13101     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.041732]  I    kworker/11:0 14700    760055.213547   E      760058.213137           3.000000         0.038120         6     120         0.000000         0.000000         0.000000   0      0        /
+<4>[20454.042991]  S            hass 15000      7195.910506   E        7197.947594           3.000000        60.958831      1860     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20454.044223]  S            hass 15008      6693.151863   E        6693.456612           3.000000        72.475547         1     120         0.000000         0.000000         0.000000   0      0        /system.slice
+<4>[20454.045424]  I   kworker/u48:1 17415    847786.153878   E      847788.910265           3.000000       102.283289      2435     120         0.000000         0.000000         0.000000   0      0        /
+
+<44>[20454.048115] systemd-journald[1053]: /dev/kmsg buffer overrun, some messages lost.

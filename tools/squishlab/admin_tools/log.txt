@@ -1,0 +1,1700 @@
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Linux version 6.14.7-hardened1-1-hardened (linux-hardened@archlinux) (gcc (GCC) 15.1.1 20250425, GNU ld (GNU Binutils) 2.44.0) #1 SMP PREEMPT_DYNAMIC Thu, 22 May 2025 19:55:05 +0000
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Command line: vfio-pci.disable_vga=1 modprobe.blacklist=nvidia,nouveau,mei,mei_me video=efifb:off video=vesafb:off
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-provided physical RAM map:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000000000000-0x0000000000057fff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000000058000-0x0000000000058fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000000059000-0x000000000009dfff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000000009e000-0x00000000000fffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000000100000-0x000000003fffffff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000040000000-0x00000000403fffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000040400000-0x000000006f9cdfff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000006f9ce000-0x000000006f9cefff] ACPI NVS
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000006f9cf000-0x000000006f9cffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000006f9d0000-0x000000007915afff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000007915b000-0x0000000079658fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000079659000-0x00000000796c8fff] ACPI data
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000796c9000-0x0000000079b2dfff] ACPI NVS
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000079b2e000-0x000000007affdfff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000007affe000-0x000000007affefff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x000000007afff000-0x000000007fffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000e0000000-0x00000000efffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000fe000000-0x00000000fe010fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000fec00000-0x00000000fec00fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000fed00000-0x00000000fed00fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000fee00000-0x00000000fee00fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x00000000ff000000-0x00000000ffffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: BIOS-e820: [mem 0x0000000100000000-0x000000087effffff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NX (Execute Disable) protection: active
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: APIC: Static calls initialized
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: update [mem 0x65ce5018-0x65d04857] usable ==> usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: update [mem 0x65cd4018-0x65ce4057] usable ==> usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: update [mem 0x65cc5018-0x65cd3057] usable ==> usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: extended physical RAM map:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000000000000-0x0000000000057fff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000000058000-0x0000000000058fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000000059000-0x000000000009dfff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000000009e000-0x00000000000fffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000000100000-0x000000003fffffff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000040000000-0x00000000403fffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000040400000-0x0000000065cc5017] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000065cc5018-0x0000000065cd3057] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000065cd3058-0x0000000065cd4017] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000065cd4018-0x0000000065ce4057] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000065ce4058-0x0000000065ce5017] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000065ce5018-0x0000000065d04857] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000065d04858-0x000000006f9cdfff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000006f9ce000-0x000000006f9cefff] ACPI NVS
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000006f9cf000-0x000000006f9cffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000006f9d0000-0x000000007915afff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000007915b000-0x0000000079658fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000079659000-0x00000000796c8fff] ACPI data
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000796c9000-0x0000000079b2dfff] ACPI NVS
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000079b2e000-0x000000007affdfff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000007affe000-0x000000007affefff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x000000007afff000-0x000000007fffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000e0000000-0x00000000efffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000fe000000-0x00000000fe010fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000fec00000-0x00000000fec00fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000fed00000-0x00000000fed00fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000fee00000-0x00000000fee00fff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x00000000ff000000-0x00000000ffffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: reserve setup_data: [mem 0x0000000100000000-0x000000087effffff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: EFI v2.7 by American Megatrends
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: TPMFinalLog=0x79afd000 ACPI 2.0=0x79a77000 ACPI=0x79a77000 SMBIOS=0x7ad29000 MEMATTR=0x74a95018 ESRT=0x75ee8218 RNG=0x796c8f18 INITRD=0x6e6aae18 TPMEventLog=0x796c6018 
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: random: crng init done
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: Remove mem58: MMIO range=[0xe0000000-0xefffffff] (256MB) from e820 map
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: remove [mem 0xe0000000-0xefffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: Not removing mem59: MMIO range=[0xfe000000-0xfe010fff] (68KB) from e820 map
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: Not removing mem60: MMIO range=[0xfec00000-0xfec00fff] (4KB) from e820 map
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: Not removing mem61: MMIO range=[0xfed00000-0xfed00fff] (4KB) from e820 map
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: Not removing mem62: MMIO range=[0xfee00000-0xfee00fff] (4KB) from e820 map
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efi: Remove mem63: MMIO range=[0xff000000-0xffffffff] (16MB) from e820 map
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: remove [mem 0xff000000-0xffffffff] reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: SMBIOS 2.8 present.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMI: Micro-Star International Co., Ltd. MS-7B48/Z370-A PRO (MS-7B48), BIOS 2.D0 07/06/2024
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMI: Memory slots populated: 2/4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: tsc: Detected 3700.000 MHz processor
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: tsc: Detected 3699.850 MHz TSC
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: update [mem 0x00000000-0x00000fff] usable ==> reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: remove [mem 0x000a0000-0x000fffff] usable
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: last_pfn = 0x87f000 max_arch_pfn = 0x400000000
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: MTRR map: 4 entries (3 fixed + 1 variable; max 23), built from 10 variable MTRRs
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/PAT: Configuration [0-7]: WB  WC  UC- UC  WB  WP  UC- WT  
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: last_pfn = 0x7afff max_arch_pfn = 0x400000000
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: esrt: Reserving ESRT space from 0x0000000075ee8218 to 0x0000000075ee8250.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: update [mem 0x75ee8000-0x75ee8fff] usable ==> reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Using GB pages for direct mapping
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Secure boot disabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RAMDISK: [mem 0x65d05000-0x69a24fff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Early table checksum verification disabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: RSDP 0x0000000079A77000 000024 (v02 ALASKA)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: XSDT 0x0000000079A770A8 0000D4 (v01 ALASKA A M I    01072009 AMI  00010013)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: FACP 0x0000000079AA5AD0 000114 (v06 ALASKA A M I    01072009 AMI  00010013)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: DSDT 0x0000000079A77218 02E8B8 (v02 ALASKA A M I    01072009 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: FACS 0x0000000079B2DF80 000040
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: APIC 0x0000000079AA5BE8 0000A0 (v03 ALASKA A M I    01072009 AMI  00010013)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: FPDT 0x0000000079AA5C88 000044 (v01 ALASKA A M I    01072009 AMI  00010013)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: FIDT 0x0000000079AA5CD0 00009C (v01 ALASKA A M I    01072009 AMI  00010013)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: MCFG 0x0000000079AA5D70 00003C (v01 ALASKA A M I    01072009 MSFT 00000097)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AA5DB0 0003A3 (v01 SataRe SataTabl 00001000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AA6158 003165 (v02 SaSsdt SaSsdt   00003000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AA92C0 002743 (v02 PegSsd PegSsdt  00001000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AABA08 0011AA (v02 INTEL  Ther_Rvp 00001000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AACBB8 000A2C (v02 INTEL  xh_rvp08 00000000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AAD5E8 0017AE (v02 CpuRef CpuSsdt  00003000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LPIT 0x0000000079AAED98 000094 (v01 INTEL  KBL      00000000 MSFT 0000005F)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AAEE30 000141 (v02 INTEL  HdaDsp   00000000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AAEF78 00029F (v02 INTEL  sensrhub 00000000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AAF218 003002 (v02 INTEL  PtidDevc 00001000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AB2220 000517 (v02 INTEL  TbtTypeC 00000000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0x0000000079AB2738 000306 (v02 INTEL  Wwan     00000001 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: DBGP 0x0000000079AB2A40 000034 (v01 INTEL           00000002 MSFT 0000005F)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: DBG2 0x0000000079AB2A78 000054 (v00 INTEL           00000002 MSFT 0000005F)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: DMAR 0x0000000079AB2AD0 0000A8 (v01 INTEL  EDK2     00000001 INTL 00000001)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: TPM2 0x0000000079AB2B78 000034 (v04 ALASKA A M I    00000001 AMI  00000000)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: WSMT 0x0000000079AB2BB0 000028 (v01 ALASKA A M I    01072009 AMI  00010013)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving FACP table memory at [mem 0x79aa5ad0-0x79aa5be3]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving DSDT table memory at [mem 0x79a77218-0x79aa5acf]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving FACS table memory at [mem 0x79b2df80-0x79b2dfbf]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving APIC table memory at [mem 0x79aa5be8-0x79aa5c87]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving FPDT table memory at [mem 0x79aa5c88-0x79aa5ccb]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving FIDT table memory at [mem 0x79aa5cd0-0x79aa5d6b]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving MCFG table memory at [mem 0x79aa5d70-0x79aa5dab]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aa5db0-0x79aa6152]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aa6158-0x79aa92bc]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aa92c0-0x79aaba02]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aaba08-0x79aacbb1]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aacbb8-0x79aad5e3]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aad5e8-0x79aaed95]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving LPIT table memory at [mem 0x79aaed98-0x79aaee2b]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aaee30-0x79aaef70]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aaef78-0x79aaf216]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79aaf218-0x79ab2219]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79ab2220-0x79ab2736]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving SSDT table memory at [mem 0x79ab2738-0x79ab2a3d]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving DBGP table memory at [mem 0x79ab2a40-0x79ab2a73]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving DBG2 table memory at [mem 0x79ab2a78-0x79ab2acb]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving DMAR table memory at [mem 0x79ab2ad0-0x79ab2b77]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving TPM2 table memory at [mem 0x79ab2b78-0x79ab2bab]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Reserving WSMT table memory at [mem 0x79ab2bb0-0x79ab2bd7]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: No NUMA configuration found
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Faking a node at [mem 0x0000000000000000-0x000000087effffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NODE_DATA(0) allocated [mem 0x87efd52c0-0x87effffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Zone ranges:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   DMA      [mem 0x0000000000001000-0x0000000000ffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   DMA32    [mem 0x0000000001000000-0x00000000ffffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   Normal   [mem 0x0000000100000000-0x000000087effffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   Device   empty
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Movable zone start for each node
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Early memory node ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x0000000000001000-0x0000000000057fff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x0000000000059000-0x000000000009dfff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x0000000000100000-0x000000003fffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x0000000040400000-0x000000006f9cdfff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x000000006f9d0000-0x000000007915afff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x000000007affe000-0x000000007affefff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   node   0: [mem 0x0000000100000000-0x000000087effffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Initmem setup node 0 [mem 0x0000000000001000-0x000000087effffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone DMA: 1 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone DMA: 1 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone DMA: 98 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone DMA32: 1024 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone DMA32: 2 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone DMA32: 7843 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone Normal: 20481 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: On node 0, zone Normal: 4096 pages in unavailable ranges
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Reserving Intel graphics memory at [mem 0x7c000000-0x7fffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PM-Timer IO Port: 0x1808
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0x01] high edge lint[0x1])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0x02] high edge lint[0x1])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0x03] high edge lint[0x1])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0x04] high edge lint[0x1])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0x05] high edge lint[0x1])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: LAPIC_NMI (acpi_id[0x06] high edge lint[0x1])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: IOAPIC[0]: apic_id 2, version 32, address 0xfec00000, GSI 0-119
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 dfl dfl)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: INT_SRC_OVR (bus 0 bus_irq 9 global_irq 9 high level)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Using ACPI (MADT) for SMP configuration information
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: TSC deadline timer available
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Max. logical packages:   1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Max. logical dies:       1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Max. dies per package:   1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Max. threads per core:   1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Num. cores per package:     6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Num. threads per package:   6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU topo: Allowing 6 present CPUs plus 0 hotplug CPUs
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: [mem 0x80000000-0xfdffffff] available for PCI devices
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Booting paravirtualized kernel on bare hardware
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: refined-jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1910969940391419 ns
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: setup_percpu: NR_CPUS:8192 nr_cpumask_bits:6 nr_cpu_ids:6 nr_node_ids:1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: percpu: Embedded 88 pages/cpu s237568 r8192 d114688 u524288
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pcpu-alloc: s237568 r8192 d114688 u524288 alloc=1*2097152
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pcpu-alloc: [0] 0 1 2 3 [0] 4 5 - - 
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Kernel command line: pti=on page_alloc.shuffle=1 vfio-pci.disable_vga=1 modprobe.blacklist=nvidia,nouveau,mei,mei_me video=efifb:off video=vesafb:off
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: printk: log buffer data + meta data: 131072 + 458752 = 589824 bytes
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Dentry cache hash table entries: 4194304 (order: 13, 33554432 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Inode-cache hash table entries: 2097152 (order: 12, 16777216 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Fallback order for Node 0: 0 
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Built 1 zonelists, mobility grouping on.  Total pages: 8355062
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Policy zone: Normal
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: mem auto-init: stack:all(zero), heap alloc:on, heap free:on
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: mem auto-init: clearing system memory may take some time...
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: software IO TLB: area num 8.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=6, Nodes=1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Kernel/User page tables isolation: enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ftrace: allocating 54460 entries in 213 pages
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ftrace: allocated 213 pages with 5 groups
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Dynamic Preempt: full
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: Preemptible hierarchical RCU implementation.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: 	RCU restricting CPUs from NR_CPUS=8192 to nr_cpu_ids=6.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: 	RCU priority boosting: priority 1 delay 500 ms.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: 	Trampoline variant of Tasks RCU enabled.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: 	Rude variant of Tasks RCU enabled.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: 	Tracing variant of Tasks RCU enabled.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: RCU calculated value of scheduler-enlistment delay is 100 jiffies.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RCU Tasks: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=6.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RCU Tasks Rude: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=6.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RCU Tasks Trace: Setting shift to 3 and lim to 1 rcu_task_cb_adjust=1 rcu_task_cpu_ids=6.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NR_IRQS: 524544, nr_irqs: 1536, preallocated irqs: 16
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: srcu_init: Setting srcu_struct sizes based on contention.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: kfence: initialized - using 2097152 bytes for 255 objects at 0x(____ptrval____)-0x(____ptrval____)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Console: colour dummy device 80x25
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: printk: legacy console [tty0] enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Core revision 20240827
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: APIC: Switch to symmetric I/O mode setup
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: Host address width 39
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: DRHD base: 0x000000fed90000 flags: 0x0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: dmar0: reg_base_addr fed90000 ver 1:0 cap 1c0000c40660462 ecap 19e2ff0505e
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: DRHD base: 0x000000fed91000 flags: 0x1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: dmar1: reg_base_addr fed91000 ver 1:0 cap d2008c40660462 ecap f050da
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: RMRR base: 0x0000007aaba000 end: 0x0000007ad03fff
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR: RMRR base: 0x0000007b800000 end: 0x0000007fffffff
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR-IR: IOAPIC id 2 under DRHD base  0xfed91000 IOMMU 1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR-IR: HPET id 0 under DRHD base 0xfed91000
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR-IR: Queued invalidation will be enabled to support x2apic and Intr-remapping.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMAR-IR: Enabled IRQ remapping in x2apic mode
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x2apic enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: APIC: Switched APIC routing to: cluster x2apic
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: tsc-early: mask: 0xffffffffffffffff max_cycles: 0x6aa99074b1c, max_idle_ns: 881590506587 ns
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Calibrating delay loop (skipped), value calculated using timer frequency.. 7399.70 BogoMIPS (lpj=3699850)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/cpu: SGX disabled or unsupported by BIOS.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: CPU0: Thermal monitoring enabled (TM1)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Last level iTLB entries: 4KB 128, 2MB 8, 4MB 8
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Last level dTLB entries: 4KB 64, 2MB 32, 4MB 32, 1GB 4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: process: using mwait in idle threads
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Spectre V1 : Mitigation: usercopy/swapgs barriers and __user pointer sanitization
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Spectre V2 : Mitigation: IBRS
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Spectre V2 : Spectre v2 / SpectreRSB: Filling RSB on context switch and VMEXIT
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RETBleed: Mitigation: IBRS
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Spectre V2 : mitigation: Enabling conditional Indirect Branch Prediction Barrier
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Speculative Store Bypass: Mitigation: Speculative Store Bypass disabled via prctl
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: MDS: Mitigation: Clear CPU buffers
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: TAA: Mitigation: TSX disabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: MMIO Stale Data: Mitigation: Clear CPU buffers
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: SRBDS: Mitigation: Microcode
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: GDS: Mitigation: Microcode
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: Supporting XSAVE feature 0x001: 'x87 floating point registers'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: Supporting XSAVE feature 0x002: 'SSE registers'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: Supporting XSAVE feature 0x004: 'AVX registers'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: Supporting XSAVE feature 0x008: 'MPX bounds registers'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: Supporting XSAVE feature 0x010: 'MPX CSR'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: xstate_offset[2]:  576, xstate_sizes[2]:  256
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: xstate_offset[3]:  832, xstate_sizes[3]:   64
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: xstate_offset[4]:  896, xstate_sizes[4]:   64
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/fpu: Enabled xstate features 0x1f, context size is 960 bytes, using 'compacted' format.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Freeing SMP alternatives memory: 48K
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pid_max: default: 32768 minimum: 301
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: LSM: initializing lsm=capability,landlock,lockdown,yama,bpf
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: landlock: Up and running.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Yama: becoming mindful.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: LSM support for eBPF active
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Mount-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Mountpoint-cache hash table entries: 65536 (order: 7, 524288 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: smpboot: CPU0: Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz (family: 0x6, model: 0x9e, stepping: 0xa)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Performance Events: PEBS fmt3+, Skylake events, 32-deep LBR, full-width counters, Intel PMU driver.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... version:                4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... bit width:              48
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... generic registers:      8
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... value mask:             0000ffffffffffff
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... max period:             00007fffffffffff
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... fixed-purpose events:   3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ... event mask:             00000007000000ff
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: signal: max sigframe size: 2032
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Estimated ratio of average max frequency by base frequency (times 1024): 1162
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: Hierarchical SRCU implementation.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rcu: 	Max phase no-delay instances is 400.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Timer migration: 1 hierarchy levels; 8 children per group; 1 crossnode level
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NMI watchdog: Enabled. Permanently consumes one hw-PMU counter.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: smp: Bringing up secondary CPUs ...
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: smpboot: x86: Booting SMP configuration:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: .... node  #0, CPUs:      #1 #2 #3 #4 #5
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: smp: Brought up 1 node, 6 CPUs
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: smpboot: Total of 6 processors activated (44398.20 BogoMIPS)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Memory: 32638016K/33420248K available (18844K kernel code, 2859K rwdata, 15184K rodata, 4964K init, 4908K bss, 763284K reserved, 0K cma-reserved)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: devtmpfs: initialized
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/mm: Memory block size: 128MB
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PM: Registering ACPI NVS region [mem 0x6f9ce000-0x6f9cefff] (4096 bytes)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PM: Registering ACPI NVS region [mem 0x796c9000-0x79b2dfff] (4608000 bytes)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: jiffies: mask: 0xffffffff max_cycles: 0xffffffff, max_idle_ns: 1911260446275000 ns
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: futex hash table entries: 2048 (order: 5, 131072 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pinctrl core: initialized pinctrl subsystem
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pinctrl core: failed to create debugfs directory
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PM: RTC time: 07:16:07, date: 2025-05-25
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_NETLINK/PF_ROUTE protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMA: preallocated 4096 KiB GFP_KERNEL pool for atomic allocations
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMA: preallocated 4096 KiB GFP_KERNEL|GFP_DMA pool for atomic allocations
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: DMA: preallocated 4096 KiB GFP_KERNEL|GFP_DMA32 pool for atomic allocations
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: audit: initializing netlink subsys (disabled)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: audit: type=2000 audit(1748157367.015:1): state=initialized audit_enabled=0 res=1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal_sys: Registered thermal governor 'fair_share'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal_sys: Registered thermal governor 'bang_bang'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal_sys: Registered thermal governor 'step_wise'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal_sys: Registered thermal governor 'user_space'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal_sys: Registered thermal governor 'power_allocator'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: cpuidle: using governor ladder
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: cpuidle: using governor menu
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI FADT declares the system doesn't support PCIe ASPM, so disable it
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: ECAM [mem 0xe0000000-0xefffffff] (base 0xe0000000) for domain 0000 [bus 00-ff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: Using configuration type 1 for base access
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: kprobes: kprobe jump-optimization is enabled. All kprobes are optimized if possible.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: HugeTLB: registered 1.00 GiB page size, pre-allocated 0 pages
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: HugeTLB: 16380 KiB vmemmap can be freed for a 1.00 GiB page
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: HugeTLB: registered 2.00 MiB page size, pre-allocated 0 pages
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: HugeTLB: 28 KiB vmemmap can be freed for a 2.00 MiB page
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: raid6: skipped pq benchmark and selected avx2x4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: raid6: using avx2x2 recovery algorithm
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: fbcon: Taking over console
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Added _OSI(Module Device)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Added _OSI(Processor Device)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Added _OSI(3.0 _SCP Extensions)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Added _OSI(Processor Aggregator Device)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: 12 ACPI AML tables successfully acquired and loaded
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Dynamic OEM Table Load:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0xFFFF952C88685000 00077A (v02 PmRef  Cpu0Ist  00003000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Dynamic OEM Table Load:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0xFFFF952C8868E000 000D14 (v02 PmRef  ApIst    00003000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Dynamic OEM Table Load:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: SSDT 0xFFFF952B01600800 000317 (v02 PmRef  ApHwp    00003000 INTL 20160422)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Interpreter enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PM: (supports S0 S3 S5)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Using IOAPIC for interrupt routing
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: Ignoring E820 reservations for host bridge windows
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: Enabled 8 GPEs in block 00 to 7F
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_SB_.PCI0.PEG0.PG00: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_SB_.PCI0.PEG1.PG01: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_SB_.PCI0.PEG2.PG02: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_TZ_.FN00: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_TZ_.FN01: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_TZ_.FN02: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_TZ_.FN03: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: \_TZ_.FN04: New power resource
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-fe])
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: acpi PNP0A08:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI EDR HPX-Type3]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: acpi PNP0A08:00: _OSC: platform does not support [PCIeHotplug SHPCHotplug PME AER]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: acpi PNP0A08:00: _OSC: OS now controls [PCIeCapability LTR DPC]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: acpi PNP0A08:00: FADT indicates ASPM is unsupported, using BIOS configuration
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI host bridge to bus 0000:00
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7 window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: root bus resource [io  0x0d00-0xffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000fffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: root bus resource [mem 0x80000000-0xdfffffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: root bus resource [mem 0xfd000000-0xfe7fffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: root bus resource [bus 00-fe]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:00.0: [8086:3ec2] type 00 class 0x060000 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0: [8086:1901] type 01 class 0x060400 PCIe Root Port
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0: PCI bridge to [bus 01]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0:   bridge window [io  0xe000-0xefff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0:   bridge window [mem 0xde000000-0xdf0fffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0:   bridge window [mem 0xc0000000-0xd1ffffff 64bit pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0: PME# supported from D0 D3hot D3cold
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: [8086:3e92] type 00 class 0x030000 PCIe Root Complex Integrated Endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: BAR 0 [mem 0xdd000000-0xddffffff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: BAR 2 [mem 0xb0000000-0xbfffffff 64bit pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: BAR 4 [io  0xf000-0xf03f]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: Video device with shadowed ROM at [mem 0x000c0000-0x000dffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:08.0: [8086:1911] type 00 class 0x088000 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:08.0: BAR 0 [mem 0xdf21b000-0xdf21bfff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:14.0: [8086:a2af] type 00 class 0x0c0330 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:14.0: BAR 0 [mem 0xdf200000-0xdf20ffff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:14.0: PME# supported from D3hot D3cold
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:14.2: [8086:a2b1] type 00 class 0x118000 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:14.2: BAR 0 [mem 0xdf21a000-0xdf21afff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:16.0: [8086:a2ba] type 00 class 0x078000 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:16.0: BAR 0 [mem 0xdf219000-0xdf219fff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:16.0: PME# supported from D3hot
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: [8086:a282] type 00 class 0x010601 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: BAR 0 [mem 0xdf214000-0xdf215fff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: BAR 1 [mem 0xdf218000-0xdf2180ff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: BAR 2 [io  0xf090-0xf097]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: BAR 3 [io  0xf080-0xf083]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: BAR 4 [io  0xf060-0xf07f]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: BAR 5 [mem 0xdf217000-0xdf2177ff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:17.0: PME# supported from D3hot
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.0: [8086:a290] type 01 class 0x060400 PCIe Root Port
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.0: PCI bridge to [bus 02]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.0: PME# supported from D0 D3hot D3cold
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3: [8086:a293] type 01 class 0x060400 PCIe Root Port
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3: PCI bridge to [bus 03]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3:   bridge window [io  0xd000-0xdfff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3:   bridge window [mem 0xdf100000-0xdf1fffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3: PME# supported from D0 D3hot D3cold
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.0: [8086:a2c9] type 00 class 0x060100 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.2: [8086:a2a1] type 00 class 0x058000 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.2: BAR 0 [mem 0xdf210000-0xdf213fff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.4: [8086:a2a3] type 00 class 0x0c0500 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.4: BAR 0 [mem 0xdf216000-0xdf2160ff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.4: BAR 4 [io  0xf040-0xf05f]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: [10de:1b81] type 00 class 0x030000 PCIe Legacy Endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: BAR 0 [mem 0xde000000-0xdeffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: BAR 1 [mem 0xc0000000-0xcfffffff 64bit pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: BAR 3 [mem 0xd0000000-0xd1ffffff 64bit pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: BAR 5 [io  0xe000-0xe07f]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: ROM [mem 0xdf000000-0xdf07ffff pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.1: [10de:10f0] type 00 class 0x040300 PCIe Endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.1: BAR 0 [mem 0xdf080000-0xdf083fff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0: PCI bridge to [bus 01]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: acpiphp: Slot [1] registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.0: PCI bridge to [bus 02]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:03:00.0: [10ec:8168] type 00 class 0x020000 PCIe Endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:03:00.0: BAR 0 [io  0xd000-0xd0ff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:03:00.0: BAR 2 [mem 0xdf104000-0xdf104fff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:03:00.0: BAR 4 [mem 0xdf100000-0xdf103fff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:03:00.0: supports D1 D2
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:03:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3: PCI bridge to [bus 03]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKA configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKB configured for IRQ 10
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKC configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKD configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKE configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKF configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKG configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: PCI: Interrupt link LNKH configured for IRQ 11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: iommu: Default domain type: Translated
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: iommu: DMA domain TLB invalidation policy: strict mode
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: SCSI subsystem initialized
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: libata version 3.00 loaded.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: bus type USB registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbcore: registered new interface driver usbfs
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbcore: registered new interface driver hub
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbcore: registered new device driver usb
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: EDAC MC: Ver: 3.0.0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: efivars: Registered efivars operations
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NetLabel: Initializing
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NetLabel:  domain hash size = 128
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NetLabel:  protocols = UNLABELED CIPSOv4 CALIPSO
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NetLabel:  unlabeled traffic allowed by default
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: mctp: management component transport protocol core
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_MCTP protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: Using ACPI for IRQ routing
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: pci_cache_line_size set to 64 bytes
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x00058000-0x0005ffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x0009e000-0x0009ffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x65cc5018-0x67ffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x65cd4018-0x67ffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x65ce5018-0x67ffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x6f9ce000-0x6fffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x75ee8000-0x77ffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x7915b000-0x7bffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x7afff000-0x7bffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: e820: reserve RAM buffer [mem 0x87f000000-0x87fffffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: vgaarb: setting as boot VGA device
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: vgaarb: bridge control possible
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:02.0: vgaarb: VGA device added: decodes=io+mem,owns=io+mem,locks=none
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: vgaarb: bridge control possible
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.0: vgaarb: VGA device added: decodes=io+mem,owns=none,locks=none
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: vgaarb: loaded
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Could not create 'lock_event_counts' debugfs entries
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: Switched to clocksource tsc-early
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: VFS: Disk quotas dquot_6.6.0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pnp: PnP ACPI init
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:00: [mem 0x40000000-0x403fffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:01: [io  0x0a00-0x0a0f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:01: [io  0x0a10-0x0a1f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:01: [io  0x0a20-0x0a2f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:01: [io  0x0a30-0x0a3f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:03: [io  0x0680-0x069f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:03: [io  0xffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:03: [io  0xffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:03: [io  0xffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:03: [io  0x1800-0x18fe] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:03: [io  0x164e-0x164f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:04: [io  0x0800-0x087f] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:05: [io  0x1854-0x1857] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed10000-0xfed17fff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed18000-0xfed18fff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed19000-0xfed19fff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xe0000000-0xefffffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed20000-0xfed3ffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed90000-0xfed93fff] could not be reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed45000-0xfed8ffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xff000000-0xffffffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfee00000-0xfeefffff] could not be reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xdffc0000-0xdffdffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:06: [mem 0xfed00000-0xfed003ff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:07: [mem 0xfd000000-0xfdabffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:07: [mem 0xfdad0000-0xfdadffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:07: [mem 0xfdb00000-0xfdffffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:07: [mem 0xfe000000-0xfe01ffff] could not be reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:07: [mem 0xfe036000-0xfe03bfff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:07: [mem 0xfe03d000-0xfe3fffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:08: [io  0xff00-0xfffe] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:09: [mem 0xfdaf0000-0xfdafffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:09: [mem 0xfdae0000-0xfdaeffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: system 00:09: [mem 0xfdac0000-0xfdacffff] has been reserved
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pnp: PnP ACPI: found 10 devices
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: acpi_pm: mask: 0xffffff max_cycles: 0xffffff, max_idle_ns: 2085701024 ns
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_INET protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: IP idents hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: tcp_listen_portaddr_hash hash table entries: 16384 (order: 6, 262144 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Table-perturb hash table entries: 65536 (order: 6, 262144 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: TCP established hash table entries: 262144 (order: 9, 2097152 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: TCP bind hash table entries: 65536 (order: 9, 2097152 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: TCP: Hash tables configured (established 262144 bind 65536)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: MPTCP token hash table entries: 32768 (order: 7, 786432 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: UDP hash table entries: 16384 (order: 8, 1048576 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: UDP-Lite hash table entries: 16384 (order: 8, 1048576 bytes, linear)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_UNIX/PF_LOCAL protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_XDP protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0: PCI bridge to [bus 01]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0:   bridge window [io  0xe000-0xefff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0:   bridge window [mem 0xde000000-0xdf0fffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:01.0:   bridge window [mem 0xc0000000-0xd1ffffff 64bit pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.0: PCI bridge to [bus 02]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3: PCI bridge to [bus 03]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3:   bridge window [io  0xd000-0xdfff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1c.3:   bridge window [mem 0xdf100000-0xdf1fffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: resource 4 [io  0x0000-0x0cf7 window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: resource 5 [io  0x0d00-0xffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: resource 6 [mem 0x000a0000-0x000fffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: resource 7 [mem 0x80000000-0xdfffffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:00: resource 8 [mem 0xfd000000-0xfe7fffff window]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:01: resource 0 [io  0xe000-0xefff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:01: resource 1 [mem 0xde000000-0xdf0fffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:01: resource 2 [mem 0xc0000000-0xd1ffffff 64bit pref]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:03: resource 0 [io  0xd000-0xdfff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci_bus 0000:03: resource 1 [mem 0xdf100000-0xdf1fffff]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.1: extending delay after power-on from D3hot to 20 msec
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:01:00.1: D0 power state depends on 0000:01:00.0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI: CLS 64 bytes, default 64
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.1: [8086:a2a0] type 00 class 0x058000 conventional PCI endpoint
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: pci 0000:00:1f.1: BAR 0 [mem 0xfd000000-0xfdffffff 64bit]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PCI-DMA: Using software bounce buffering for IO (SWIOTLB)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: software IO TLB: mapped [mem 0x0000000070a95000-0x0000000074a95000] (64MB)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Trying to unpack rootfs image as initramfs...
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: platform rtc_cmos: registered platform RTC device (no PNP device found)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Initialise system trusted keyrings
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Key type blacklist registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: workingset: timestamp_bits=36 max_order=23 bucket_order=0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: zsmalloc: debugfs not available, stat dir not created
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: fuse: init (API version 7.42)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: integrity: Platform Keyring initialized
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: integrity: Machine keyring initialized
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xor: automatically using best checksumming function   avx       
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Key type asymmetric registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Asymmetric key parser 'x509' registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Block layer SCSI generic (bsg) driver version 0.4 loaded (major 247)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: io scheduler mq-deadline registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: io scheduler kyber registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: io scheduler bfq registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: atomic64_test: passed for x86-64 platform with CX8 and with SSE
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ledtrig-cpu: registered to indicate activity on CPUs
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Sleep Button as /devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0E:00/input/input0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: button: Sleep Button [SLPB]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Power Button as /devices/LNXSYSTM:00/LNXSYBUS:00/PNP0C0C:00/input/input1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: button: Power Button [PWRB]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input2
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: button: Power Button [PWRF]
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal LNXTHERM:00: registered as thermal_zone0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: thermal: Thermal Zone [TZ00] (28 C)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: thermal LNXTHERM:01: registered as thermal_zone1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: thermal: Thermal Zone [TZ01] (30 C)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Serial: 8250/16550 driver, 32 ports, IRQ sharing enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: serial8250: ttyS1 at I/O 0x2f8 (irq = 3, base_baud = 115200) is a 16550A
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Linux agpgart interface v0.103
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Freeing initrd memory: 62592K
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ACPI: bus type drm_connector registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ahci 0000:00:17.0: version 3.0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ahci 0000:00:17.0: AHCI vers 0001.0301, 32 command slots, 6 Gbps, SATA mode
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ahci 0000:00:17.0: 6/6 ports implemented (port mask 0x3f)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ahci 0000:00:17.0: flags: 64bit ncq sntf led clo only pio slum part ems deso sadm sds apst 
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi host0: ahci
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi host1: ahci
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi host2: ahci
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi host3: ahci
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi host4: ahci
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi host5: ahci
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata1: SATA max UDMA/133 abar m2048@0xdf217000 port 0xdf217100 irq 123 lpm-pol 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata2: SATA max UDMA/133 abar m2048@0xdf217000 port 0xdf217180 irq 123 lpm-pol 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata3: SATA max UDMA/133 abar m2048@0xdf217000 port 0xdf217200 irq 123 lpm-pol 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata4: SATA max UDMA/133 abar m2048@0xdf217000 port 0xdf217280 irq 123 lpm-pol 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5: SATA max UDMA/133 abar m2048@0xdf217000 port 0xdf217300 irq 123 lpm-pol 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata6: SATA max UDMA/133 abar m2048@0xdf217000 port 0xdf217380 irq 123 lpm-pol 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xhci_hcd 0000:00:14.0: xHCI Host Controller
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xhci_hcd 0000:00:14.0: new USB bus registered, assigned bus number 1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xhci_hcd 0000:00:14.0: hcc params 0x200077c1 hci version 0x100 quirks 0x0000000000009810
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xhci_hcd 0000:00:14.0: xHCI Host Controller
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xhci_hcd 0000:00:14.0: new USB bus registered, assigned bus number 2
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: xhci_hcd 0000:00:14.0: Host supports USB 3.0 SuperSpeed
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb1: New USB device found, idVendor=1d6b, idProduct=0002, bcdDevice= 6.14
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb1: Product: xHCI Host Controller
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb1: Manufacturer: Linux 6.14.7-hardened1-1-hardened xhci-hcd
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb1: SerialNumber: 0000:00:14.0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 1-0:1.0: USB hub found
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 1-0:1.0: 16 ports detected
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb2: New USB device found, idVendor=1d6b, idProduct=0003, bcdDevice= 6.14
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb2: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb2: Product: xHCI Host Controller
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb2: Manufacturer: Linux 6.14.7-hardened1-1-hardened xhci-hcd
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb usb2: SerialNumber: 0000:00:14.0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 2-0:1.0: USB hub found
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 2-0:1.0: 10 ports detected
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbcore: registered new interface driver usbserial_generic
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbserial: USB Serial support registered for generic
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rtc_cmos rtc_cmos: RTC can wake from S4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rtc_cmos rtc_cmos: registered as rtc0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rtc_cmos rtc_cmos: setting system clock to 2025-05-25T07:16:07 UTC (1748157367)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rtc_cmos rtc_cmos: alarms up to one month, y3k, 114 bytes nvram
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: intel_pstate: Intel P-state driver initializing
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: intel_pstate: Disabling energy efficiency optimization
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: intel_pstate: HWP enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: simple-framebuffer simple-framebuffer.0: [drm] Registered 1 planes with drm panic
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: [drm] Initialized simpledrm 1.0.0 for simple-framebuffer.0 on minor 0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Console: switching to colour frame buffer device 128x48
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: simple-framebuffer simple-framebuffer.0: [drm] fb0: simpledrmdrmfb frame buffer device
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid: raw HID events driver (C) Jiri Kosina
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: drop_monitor: Initializing network drop monitor service
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_INET6 protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Segment Routing with IPv6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RPL Segment Routing with IPv6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: In-situ OAM (IOAM) with IPv6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: NET: Registered PF_PACKET protocol family
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ENERGY_PERF_BIAS: Set to 'normal', was 'performance'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: microcode: Current revision: 0x000000fa
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: microcode: Updated early from: 0x000000ea
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: IPI shorthand broadcast: enabled
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sched_clock: Marking stable (3537001239, 6120142)->(3577186202, -34064821)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: registered taskstats version 1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Loading compiled-in X.509 certificates
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Loaded X.509 cert 'Build time autogenerated kernel key: da14668b2103c49877a63b72d92def1dcd4b4e4d'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: zsmalloc: no root stat dir, not creating <zswap1> stat dir
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: zswap: loaded using pool zstd/zsmalloc
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: zswap: debugfs initialization failed
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Demotion targets for Node 0: null
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Key type .fscrypt registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Key type fscrypt-provisioning registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Btrfs loaded, zoned=yes, fsverity=yes
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PM:   Magic number: 9:333:269
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: memory memory139: hash matches
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: RAS: Correctable Errors collector initialized.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clk: Disabling unused clocks
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: PM: genpd: Disabling unused power domains
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8: new high-speed USB device number 2 using xhci_hcd
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata3: SATA link down (SStatus 4 SControl 300)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata6: SATA link down (SStatus 4 SControl 300)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata4: SATA link down (SStatus 4 SControl 300)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata2: SATA link down (SStatus 4 SControl 300)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: Model 'Apacer AS340 240GB', rev 'AP612PE0', applying quirks: nolpm
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: LPM support broken, forcing max_power
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata1: SATA link down (SStatus 4 SControl 300)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: ACPI cmd f5/00:00:00:00:00:00(SECURITY FREEZE LOCK) filtered out
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: ACPI cmd b1/c1:00:00:00:00:00(DEVICE CONFIGURATION OVERLAY) filtered out
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: ATA-11: Apacer AS340 240GB, AP612PE0, max UDMA/133
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: 468862128 sectors, multi 16: LBA48 NCQ (depth 32), AA
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: LPM support broken, forcing max_power
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: ACPI cmd f5/00:00:00:00:00:00(SECURITY FREEZE LOCK) filtered out
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: ACPI cmd b1/c1:00:00:00:00:00(DEVICE CONFIGURATION OVERLAY) filtered out
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: ata5.00: configured for UDMA/133
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: scsi 4:0:0:0: Direct-Access     ATA      Apacer AS340 240 2PE0 PQ: 0 ANSI: 5
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sd 4:0:0:0: [sda] 468862128 512-byte logical blocks: (240 GB/224 GiB)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sd 4:0:0:0: [sda] Write Protect is off
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sd 4:0:0:0: [sda] Mode Sense: 00 3a 00 00
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sd 4:0:0:0: [sda] Write cache: enabled, read cache: enabled, doesn't support DPO or FUA
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sd 4:0:0:0: [sda] Preferred minimum I/O size 512 bytes
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:  sda: sda1 sda2 sda3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: sd 4:0:0:0: [sda] Attached SCSI disk
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Freeing unused decrypted memory: 2028K
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Freeing unused kernel image (initmem) memory: 4964K
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Write protecting the kernel read-only data: 36864k
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Freeing unused kernel image (text/rodata gap) memory: 1632K
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Freeing unused kernel image (rodata/data gap) memory: 1200K
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/mm: Checked W+X mappings: passed, no W+X pages found.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: rodata_test: all tests were successful
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/mm: Checking user space page tables
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: x86/mm: Checked W+X mappings: passed, no W+X pages found.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Run /init as init process
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   with arguments:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:     /init
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:   with environment:
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:     HOME=/
+Sun 2025-05-25 00:16:08 PDT archlinux kernel:     TERM=linux
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8: New USB device found, idVendor=05e3, idProduct=0610, bcdDevice=92.26
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8: Product: USB2.0 Hub
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8: Manufacturer: GenesysLogic
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 1-8:1.0: USB hub found
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 1-8:1.0: 4 ports detected
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Successfully made /usr/ read-only.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: systemd 257.5-3-arch running in system mode (+PAM +AUDIT -SELINUX -APPARMOR -IMA +IPE +SMACK +SECCOMP +GCRYPT +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF +XKBCOMMON +UTMP -SYSVINIT +LIBARCHIVE)
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Detected architecture x86-64.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Running in initrd.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Initializing machine ID from random generator.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 2-6: new SuperSpeed USB device number 2 using xhci_hcd
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Queued start job for default target Initrd Default Target.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 2-6: New USB device found, idVendor=05e3, idProduct=0612, bcdDevice=92.26
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 2-6: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 2-6: Product: USB3.1 Hub
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 2-6: Manufacturer: GenesysLogic
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 2-6:1.0: USB hub found
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hub 2-6:1.0: 4 ports detected
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Expecting device /dev/gpt-auto-root...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Path Units.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Slice Units.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Swaps.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Timer Units.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Listening on Journal Socket (/dev/log).
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Listening on Journal Sockets.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Listening on udev Control Socket.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Listening on udev Kernel Socket.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Socket Units.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Create List of Static Device Nodes...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Check battery level during early boot was skipped because of an unmet condition check (ConditionDirectoryNotEmpty=/sys/class/power_supply).
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Started Display Boot-Time Emergency Messages In Full Screen.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Journal Service...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Load Kernel Modules...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting TPM PCR Barrier (initrd)...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Create Static Device Nodes in /dev...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Coldplug All udev Devices...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Finished Create List of Static Device Nodes.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Finished Create Static Device Nodes in /dev.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Preparation for Local File Systems.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Local File Systems.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Rule-based Manager for Device Events and Files...
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: device-mapper: uevent: version 1.0.3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: device-mapper: ioctl: 4.49.0-ioctl (2025-01-17) initialised: dm-devel@lists.linux.dev
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-journald[137]: Collecting audit messages is disabled.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Key type trusted registered
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: cryptd: max_cpu_qlen set to 1000
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Started Rule-based Manager for Device Events and Files.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: AES CTR mode by8 optimization enabled
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Finished TPM PCR Barrier (initrd).
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Reached target Local Encrypted Volumes.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-journald[137]: Journal started
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-journald[137]: Runtime Journal (/run/log/journal/e33d1546f9204f7796189432d93ae38b) is 8M, max 639.2M, 631.2M free.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-modules-load[138]: Inserted module 'dm_mod'
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-udevd[147]: Using default interface naming scheme 'v257'.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Started Journal Service.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-pcrextend[139]: Extended PCR index 11 with 'enter-initrd' (banks sha1, sha256).
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Key type encrypted registered
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-modules-load[138]: Inserted module 'dm_crypt'
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-modules-load[138]: Inserted module 'exfat'
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-modules-load[138]: Inserted module 'vfat'
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: cec: Failed to create debugfs cec dir
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.2: new full-speed USB device number 3 using xhci_hcd
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Finished Coldplug All udev Devices.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Condition check resulted in Apacer_AS340_240GB 2 being skipped.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Condition check resulted in Apacer_AS340_240GB 2 being skipped.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: i8042: PNP: PS/2 Controller [PNP0303:PS2K] at 0x60,0x64 irq 1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: i8042: PNP: PS/2 appears to have AUX port disabled, if this is incorrect please boot with i8042.nopnp
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: serio: i8042 KBD port at 0x60,0x64 irq 1
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Created slice Slice /system/systemd-cryptsetup.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Cryptography Setup for root...
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-cryptsetup[200]: Set cipher aes, mode xts-plain64, key size 512 bits for device /dev/gpt-auto-root-luks.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-cryptsetup[200]: No valid TPM2 token data found.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Starting Virtual Console Setup...
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.2: New USB device found, idVendor=1b1c, idProduct=1b5d, bcdDevice= 3.24
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.2: Product: CORSAIR IRONCLAW RGB Gaming Mouse
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.2: Manufacturer: Corsair
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.2: SerialNumber: 0C00E019AF3821225B60C632F5001BC4
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Finished Virtual Console Setup.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd[1]: Started Dispatch Password Requests to Console.
+Sun 2025-05-25 00:16:08 PDT archlinux systemd-tty-ask-password-agent[211]: Starting password query on /dev/tty1.
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.3: new full-speed USB device number 4 using xhci_hcd
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: tsc: Refined TSC clocksource calibration: 3696.000 MHz
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: tsc: mask: 0xffffffffffffffff max_cycles: 0x6a8d280fdb9, max_idle_ns: 881591151302 ns
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: clocksource: Switched to clocksource tsc
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.3: New USB device found, idVendor=1038, idProduct=161a, bcdDevice= 0.28
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.3: New USB device strings: Mfr=1, Product=2, SerialNumber=0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.3: Product: SteelSeries Apex 3
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usb 1-8.3: Manufacturer: SteelSeries
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: i915 0000:00:02.0: [drm] Found coffeelake (device ID 3e92) integrated display version 9.00 stepping N/A
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbcore: registered new interface driver usbhid
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: usbhid: USB HID core driver
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Corsair CORSAIR IRONCLAW RGB Gaming Mouse as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.2/1-8.2:1.0/0003:1B1C:1B5D.0001/input/input4
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Corsair CORSAIR IRONCLAW RGB Gaming Mouse Consumer Control as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.2/1-8.2:1.0/0003:1B1C:1B5D.0001/input/input5
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: Console: switching to colour dummy device 80x25
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: i915 0000:00:02.0: vgaarb: deactivate vga console
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: i915 0000:00:02.0: vgaarb: VGA decodes changed: olddecodes=io+mem,decodes=none:owns=io+mem
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: i915 0000:00:02.0: [drm] Finished loading DMC firmware i915/kbl_dmc_ver1_04.bin (v1.4)
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Corsair CORSAIR IRONCLAW RGB Gaming Mouse as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.2/1-8.2:1.0/0003:1B1C:1B5D.0001/input/input6
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Corsair CORSAIR IRONCLAW RGB Gaming Mouse as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.2/1-8.2:1.0/0003:1B1C:1B5D.0001/input/input7
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: Corsair CORSAIR IRONCLAW RGB Gaming Mouse Keyboard as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.2/1-8.2:1.0/0003:1B1C:1B5D.0001/input/input8
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid-generic 0003:1B1C:1B5D.0001: input,hiddev96,hidraw0: USB HID v1.11 Mouse [Corsair CORSAIR IRONCLAW RGB Gaming Mouse] on usb-0000:00:14.0-8.2/input0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid-generic 0003:1B1C:1B5D.0002: hiddev97,hidraw1: USB HID v1.11 Device [Corsair CORSAIR IRONCLAW RGB Gaming Mouse] on usb-0000:00:14.0-8.2/input1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: SteelSeries SteelSeries Apex 3 as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.3/1-8.3:1.0/0003:1038:161A.0003/input/input9
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid-generic 0003:1038:161A.0003: input,hidraw2: USB HID v1.11 Keyboard [SteelSeries SteelSeries Apex 3] on usb-0000:00:14.0-8.3/input0
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: SteelSeries SteelSeries Apex 3 as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.3/1-8.3:1.1/0003:1038:161A.0004/input/input10
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid-generic 0003:1038:161A.0004: input,hidraw3: USB HID v1.11 Keyboard [SteelSeries SteelSeries Apex 3] on usb-0000:00:14.0-8.3/input1
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: SteelSeries SteelSeries Apex 3 Consumer Control as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.3/1-8.3:1.2/0003:1038:161A.0005/input/input11
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: input: SteelSeries SteelSeries Apex 3 Mouse as /devices/pci0000:00/0000:00:14.0/usb1/1-8/1-8.3/1-8.3:1.2/0003:1038:161A.0005/input/input12
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid-generic 0003:1038:161A.0005: input,hidraw4: USB HID v1.11 Mouse [SteelSeries SteelSeries Apex 3] on usb-0000:00:14.0-8.3/input2
+Sun 2025-05-25 00:16:08 PDT archlinux kernel: hid-generic 0003:1038:161A.0006: hiddev98,hidraw5: USB HID v1.11 Device [SteelSeries SteelSeries Apex 3] on usb-0000:00:14.0-8.3/input3
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: i915 0000:00:02.0: [drm] [ENCODER:98:DDI A/PHY A] failed to retrieve link info, disabling eDP
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: [drm] Initialized i915 1.6.0 for 0000:00:02.0 on minor 1
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: ACPI: video: Video Device [GFX0] (multi-head: yes  rom: no  post: no)
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: input: Video Bus as /devices/LNXSYSTM:00/LNXSYBUS:00/PNP0A08:00/LNXVIDEO:00/input/input13
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: fbcon: i915drmfb (fb0) is primary device
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: systemd-vconsole-setup.service: Deactivated successfully.
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Stopped Virtual Console Setup.
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Stopping Virtual Console Setup...
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Starting Virtual Console Setup...
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: Console: switching to colour frame buffer device 240x67
+Sun 2025-05-25 00:16:09 PDT archlinux kernel: i915 0000:00:02.0: [drm] fb0: i915drmfb frame buffer device
+Sun 2025-05-25 00:16:09 PDT archlinux systemd-modules-load[138]: Inserted module 'i915'
+Sun 2025-05-25 00:16:09 PDT archlinux systemd-modules-load[138]: Module 'virtio' is built in
+Sun 2025-05-25 00:16:09 PDT archlinux systemd-modules-load[138]: Inserted module 'virtio_blk'
+Sun 2025-05-25 00:16:09 PDT archlinux systemd-modules-load[138]: Module 'virtio_pci' is built in
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Finished Virtual Console Setup.
+Sun 2025-05-25 00:16:09 PDT archlinux systemd-modules-load[138]: Inserted module 'virtio_net'
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Finished Load Kernel Modules.
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Reached target System Initialization.
+Sun 2025-05-25 00:16:09 PDT archlinux systemd[1]: Reached target Basic System.
+Sun 2025-05-25 00:16:17 PDT archlinux systemd-tty-ask-password-agent[211]: Password query on /dev/tty1 finished successfully.
+Sun 2025-05-25 00:16:17 PDT archlinux systemd-cryptsetup[200]: Set cipher aes, mode xts-plain64, key size 512 bits for device /dev/gpt-auto-root-luks.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Found device /dev/gpt-auto-root.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Reached target Initrd Root Device.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Starting File System Check on /dev/gpt-auto-root...
+Sun 2025-05-25 00:16:27 PDT archlinux systemd-fsck[914]: /dev/mapper/root: clean, 252162/2097152 files, 2552149/8384512 blocks
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Finished File System Check on /dev/gpt-auto-root.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Mounting Root Partition...
+Sun 2025-05-25 00:16:27 PDT archlinux systemd-cryptsetup[200]: Successfully extended PCR index 15 with 'cryptsetup:root:5046cd3a-0df3-4b10-aef0-84e1fa432d69' and volume key (banks sha1, sha256).
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Finished Cryptography Setup for root.
+Sun 2025-05-25 00:16:27 PDT archlinux kernel: EXT4-fs (dm-0): orphan cleanup on readonly fs
+Sun 2025-05-25 00:16:27 PDT archlinux kernel: EXT4-fs (dm-0): mounted filesystem 52067193-03d1-4958-88b4-f88f2a33b28f ro with ordered data mode. Quota mode: none.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Mounted Root Partition.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Reached target Initrd Root File System.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Starting Mountpoints Configured in the Real Root...
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: initrd-parse-etc.service: Deactivated successfully.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Finished Mountpoints Configured in the Real Root.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Reached target Initrd File Systems.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Reached target Initrd Default Target.
+Sun 2025-05-25 00:16:27 PDT archlinux systemd[1]: Starting Cleaning Up and Shutting Down Daemons...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Initrd Default Target.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Basic System.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Initrd Root Device.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Path Units.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Slice Units.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Socket Units.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target System Initialization.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Local Encrypted Volumes.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Local File Systems.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Preparation for Local File Systems.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Swaps.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped target Timer Units.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: kmod-static-nodes.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Create List of Static Device Nodes.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopping Dispatch Password Requests to Console...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopping Display Boot-Time Emergency Messages In Full Screen...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-modules-load.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Load Kernel Modules.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopping TPM PCR Barrier (initrd)...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-udev-trigger.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Coldplug All udev Devices.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopping Rule-based Manager for Device Events and Files...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-bsod.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Display Boot-Time Emergency Messages In Full Screen.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-ask-password-console.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Dispatch Password Requests to Console.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: initrd-cleanup.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Finished Cleaning Up and Shutting Down Daemons.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-ask-password-console.path: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Dispatch Password Requests to Console Directory Watch.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-vconsole-setup.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Virtual Console Setup.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-udevd.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Rule-based Manager for Device Events and Files.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-udevd-control.socket: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Closed udev Control Socket.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-udevd-kernel.socket: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Closed udev Kernel Socket.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Starting Cleanup udev Database...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-tmpfiles-setup-dev.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped Create Static Device Nodes in /dev.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: initrd-udevadm-cleanup-db.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Finished Cleanup udev Database.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd-pcrextend[927]: Extended PCR index 11 with 'leave-initrd' (banks sha1, sha256).
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: systemd-pcrphase-initrd.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Stopped TPM PCR Barrier (initrd).
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Reached target Switch Root.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Starting Switch Root...
+Sun 2025-05-25 00:16:28 PDT archlinux systemd[1]: Switching root.
+Sun 2025-05-25 00:16:28 PDT archlinux systemd-journald[137]: Journal stopped
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-journald[137]: Received SIGTERM from PID 1 (systemd).
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: systemd 257.5-3-arch running in system mode (+PAM +AUDIT -SELINUX -APPARMOR -IMA +IPE +SMACK +SECCOMP +GCRYPT +GNUTLS +OPENSSL +ACL +BLKID +CURL +ELFUTILS +FIDO2 +IDN2 -IDN +IPTC +KMOD +LIBCRYPTSETUP +LIBCRYPTSETUP_PLUGINS +LIBFDISK +PCRE2 +PWQUALITY +P11KIT +QRENCODE +TPM2 +BZIP2 +LZ4 +XZ +ZLIB +ZSTD +BPF_FRAMEWORK +BTF +XKBCOMMON +UTMP -SYSVINIT +LIBARCHIVE)
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Detected architecture x86-64.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Hostname set to <squishlab>.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: bpf-restrict-fs: LSM BPF program attached
+Sun 2025-05-25 00:16:28 PDT squishlab zram_generator::config[955]: No configuration found.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: initrd-switch-root.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Stopped Switch Root.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: systemd-journald.service: Scheduled restart job, restart counter is at 1.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Virtual Machine and Container Slice.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/dirmngr.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/getty.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/gpg-agent.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/gpg-agent-browser.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/gpg-agent-extra.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/gpg-agent-ssh.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/keyboxd.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/modprobe.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice Slice /system/systemd-fsck.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Created slice User and Session Slice.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Started Dispatch Password Requests to Console Directory Watch.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Started Forward Password Requests to Wall Directory Watch.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Set up automount Arbitrary Executable File Formats File System Automount Point.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Expecting device /dev/disk/by-uuid/65e52138-42b8-4d74-b602-7705fd58e6fb...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Expecting device /dev/disk/by-uuid/E3EA-284F...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Expecting device /dev/disk/by-uuid/f4110af7-de95-4125-92b2-ff92a041d045...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Block Device Preparation for /dev/mapper/root.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Stopped target Switch Root.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Stopped target Initrd File Systems.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Stopped target Initrd Root File System.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Local Integrity Protected Volumes.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Path Units.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Remote File Systems.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Slice Units.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Swaps.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Reached target Local Verity Protected Volumes.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on Device-mapper event daemon FIFOs.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on Process Core Dump Socket.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on Credential Encryption/Decryption.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on TPM PCR Measurements.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on Make TPM PCR Policy.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on udev Control Socket.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on udev Kernel Socket.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Listening on User Database Manager Socket.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounting Huge Pages File System...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounting POSIX Message Queue File System...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Kernel Debug File System was skipped because of an unmet condition check (ConditionPathExists=/sys/kernel/debug).
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounting Kernel Trace File System...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounting Temporary Directory /tmp...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Load AppArmor profiles was skipped because of an unmet condition check (ConditionSecurity=apparmor).
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Create List of Static Device Nodes...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load Kernel Module configfs...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load Kernel Module dm_mod...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load Kernel Module drm...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load Kernel Module fuse...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load Kernel Module loop...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Clear Stale Hibernate Storage Info was skipped because of an unmet condition check (ConditionPathExists=/sys/firmware/efi/efivars/HibernateLocation-8cf2644b-4b0b-428f-9387-6d876050dc67).
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Journal Service...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load Kernel Modules...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting TPM PCR Machine ID Measurement...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Remount Root and Kernel File Systems...
+Sun 2025-05-25 00:16:28 PDT squishlab kernel: loop: module loaded
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Early TPM SRK Setup...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load udev Rules from Credentials...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Coldplug All udev Devices...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounted Huge Pages File System.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounted POSIX Message Queue File System.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounted Kernel Trace File System.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounted Temporary Directory /tmp.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Create List of Static Device Nodes.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: modprobe@configfs.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load Kernel Module configfs.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: modprobe@dm_mod.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load Kernel Module dm_mod.
+Sun 2025-05-25 00:16:28 PDT squishlab kernel: EXT4-fs (dm-0): re-mounted 52067193-03d1-4958-88b4-f88f2a33b28f r/w. Quota mode: none.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: modprobe@drm.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load Kernel Module drm.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: modprobe@fuse.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load Kernel Module fuse.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: modprobe@loop.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load Kernel Module loop.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-journald[970]: Collecting audit messages is disabled.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Remount Root and Kernel File Systems.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load udev Rules from Credentials.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounting FUSE Control File System...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounting Kernel Configuration File System...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-journald[970]: Journal started
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-journald[970]: Runtime Journal (/run/log/journal/a052a4d37af443c18948f619792f3aaf) is 8M, max 639.2M, 631.2M free.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Queued start job for default target Graphical Interface.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Unnecessary job was removed for /dev/disk/by-uuid/5046cd3a-0df3-4b10-aef0-84e1fa432d69.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: systemd-journald.service: Deactivated successfully.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-modules-load[971]: Inserted module 'crypto_user'
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-modules-load[971]: Inserted module 'tls'
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Rebuild Hardware Database was skipped because of an unmet condition check (ConditionNeedsUpdate=/etc).
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Load/Save OS Random Seed...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Create Static Device Nodes in /dev gracefully...
+Sun 2025-05-25 00:16:28 PDT squishlab kernel: VFIO - User Level meta-driver version: 0.3
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Started Journal Service.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounted FUSE Control File System.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Mounted Kernel Configuration File System.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-modules-load[971]: Inserted module 'vfio'
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Flush Journal to Persistent Storage...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load/Save OS Random Seed.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-modules-load[971]: Inserted module 'vfio_pci'
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-modules-load[971]: Failed to find module 'vfio_virqfd'
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Load Kernel Modules.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting Apply Kernel Variables...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Starting User Database Manager...
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-journald[970]: Time spent on flushing to /var/log/journal/a052a4d37af443c18948f619792f3aaf is 75.907ms for 1008 entries.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-journald[970]: System Journal (/var/log/journal/a052a4d37af443c18948f619792f3aaf) is 73.3M, max 500M, 426.6M free.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-journald[970]: Received client request to flush runtime journal.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Finished Apply Kernel Variables.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd-tpm2-setup[975]: SRK already stored in the TPM.
+Sun 2025-05-25 00:16:28 PDT squishlab systemd[1]: Started User Database Manager.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-tpm2-setup[975]: SRK fingerprint is b7a54cc593738a9d4cd21a404d95e2f2fd3e5f12a3e016023845066da144f0af.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-tpm2-setup[975]: SRK public key saved to '/run/systemd/tpm2-srk-public-key.pem' in PEM format.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-tpm2-setup[975]: SRK public key saved to '/run/systemd/tpm2-srk-public-key.tpm2b_public' in TPM2B_PUBLIC format.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-pcrextend[972]: Extended PCR index 15 with 'machine-id:a052a4d37af443c18948f619792f3aaf' (banks sha1, sha256).
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Early TPM SRK Setup.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished TPM PCR Machine ID Measurement.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting TPM PCR Root File System Measurement...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Repartition Root Disk was skipped because no trigger condition checks were met.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting TPM SRK Setup...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Create Static Device Nodes in /dev gracefully.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Create System Users was skipped because no trigger condition checks were met.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Network Name Resolution...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Network Time Synchronization...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Create Static Device Nodes in /dev...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Flush Journal to Persistent Storage.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-tpm2-setup[1017]: SRK already stored in the TPM.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-tpm2-setup[1017]: SRK fingerprint is b7a54cc593738a9d4cd21a404d95e2f2fd3e5f12a3e016023845066da144f0af.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-tpm2-setup[1017]: SRK saved in '/var/lib/systemd/tpm2-srk-public-key.pem' matches SRK in TPM2.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Create Static Device Nodes in /dev.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished TPM SRK Setup.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Reached target Preparation for Local File Systems.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Rule-based Manager for Device Events and Files...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Started Network Time Synchronization.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Reached target System Time Set.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-resolved[1019]: Positive Trust Anchors:
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-resolved[1019]: . IN DS 20326 8 2 e06d44b80b8f1d39a95c0b0d7c65d08458e880409bbc683457104237c7f8ec8d
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-resolved[1019]: . IN DS 38696 8 2 683d2d0acb8c9b712a1948b27f741219298d0a450d612c483af444a4c0fb2b16
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-pcrextend[1016]: Extended PCR index 15 with 'file-system:/:ext4:52067193-03d1-4958-88b4-f88f2a33b28f::::' (banks sha1, sha256).
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-resolved[1019]: Negative trust anchors: home.arpa 10.in-addr.arpa 16.172.in-addr.arpa 17.172.in-addr.arpa 18.172.in-addr.arpa 19.172.in-addr.arpa 20.172.in-addr.arpa 21.172.in-addr.arpa 22.172.in-addr.arpa 23.172.in-addr.arpa 24.172.in-addr.arpa 25.172.in-addr.arpa 26.172.in-addr.arpa 27.172.in-addr.arpa 28.172.in-addr.arpa 29.172.in-addr.arpa 30.172.in-addr.arpa 31.172.in-addr.arpa 170.0.0.192.in-addr.arpa 171.0.0.192.in-addr.arpa 168.192.in-addr.arpa d.f.ip6.arpa ipv4only.arpa resolver.arpa corp home internal intranet lan local private test
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished TPM PCR Root File System Measurement.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Coldplug All udev Devices.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-resolved[1019]: Using system hostname 'squishlab'.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Started Network Name Resolution.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Reached target Host and Network Name Lookups.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-udevd[1032]: Using default interface naming scheme 'v257'.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Started Rule-based Manager for Device Events and Files.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Load Kernel Module configfs...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Load Kernel Module fuse...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: modprobe@fuse.service: Deactivated successfully.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Load Kernel Module fuse.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: modprobe@configfs.service: Deactivated successfully.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Load Kernel Module configfs.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Condition check resulted in /dev/tpmrm0 being skipped.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Reached target Trusted Platform Module.
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: mousedev: PS/2 mouse device common for all mice
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Condition check resulted in Apacer_AS340_240GB 3 being skipped.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Cryptography Setup for home...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Condition check resulted in Apacer_AS340_240GB 1 being skipped.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting File System Check on /dev/disk/by-uuid/E3EA-284F...
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: resource: resource sanity check: requesting [mem 0x00000000fdffe800-0x00000000fe0007ff], which spans more than pnp 00:07 [mem 0xfdb00000-0xfdffffff]
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: caller get_primary_reg_base+0x4d/0xa0 [intel_pmc_core] mapping multiple BARs
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: intel_pmc_core INT33A1:00:  initialized
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-cryptsetup[1081]: Set cipher aes, mode xts-plain64, key size 512 bits for device /dev/disk/by-uuid/65e52138-42b8-4d74-b602-7705fd58e6fb.
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: i801_smbus 0000:00:1f.4: SMBus using PCI interrupt
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: i2c i2c-5: Successfully instantiated SPD at 0x51
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: i2c i2c-5: Successfully instantiated SPD at 0x53
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-fsck[1096]: fsck.fat 4.2 (2021-01-31)
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-fsck[1096]: /dev/sda1: 115 files, 199755/261627 clusters
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished File System Check on /dev/disk/by-uuid/E3EA-284F.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Starting Virtual Console Setup...
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: RAPL PMU: API unit is 2^-32 Joules, 4 fixed counters, 655360 ms ovfl timer
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: RAPL PMU: hw unit of domain pp0-core 2^-14 Joules
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: RAPL PMU: hw unit of domain package 2^-14 Joules
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: RAPL PMU: hw unit of domain dram 2^-14 Joules
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: RAPL PMU: hw unit of domain pp1-gpu 2^-14 Joules
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: iTCO_vendor_support: vendor-support=0
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: ee1004 5-0051: 512 byte EE1004-compliant SPD EEPROM, read-only
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: ee1004 5-0053: 512 byte EE1004-compliant SPD EEPROM, read-only
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: iTCO_wdt iTCO_wdt: Found a Intel PCH TCO device (Version=4, TCOBASE=0x0400)
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: r8169 0000:03:00.0: can't disable ASPM; OS doesn't have ASPM control
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: iTCO_wdt iTCO_wdt: initialized. heartbeat=30 sec (nowayout=0)
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: r8169 0000:03:00.0 eth0: RTL8168h/8111h, 30:9c:23:aa:51:df, XID 541, IRQ 132
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: r8169 0000:03:00.0 eth0: jumbo features [frames: 9194 bytes, tx checksumming: ko]
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: r8169 0000:03:00.0 enp3s0: renamed from eth0
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Finished Virtual Console Setup.
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: intel_tcc_cooling: Programmable TCC Offset detected
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: intel_rapl_common: Found RAPL domain package
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: intel_rapl_common: Found RAPL domain core
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: intel_rapl_common: Found RAPL domain uncore
+Sun 2025-05-25 00:16:29 PDT squishlab kernel: intel_rapl_common: Found RAPL domain dram
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Mounting /boot...
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Virtual Machine and Container Storage (Compatibility) was skipped because of an unmet condition check (ConditionPathExists=/var/lib/machines.raw).
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Listening on Disk Image Download Service Socket.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd-timesyncd[1020]: Network configuration changed, trying to establish connection.
+Sun 2025-05-25 00:16:29 PDT squishlab systemd[1]: Mounted /boot.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Found device /dev/disk/by-uuid/f4110af7-de95-4125-92b2-ff92a041d045.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Starting File System Check on /dev/disk/by-uuid/f4110af7-de95-4125-92b2-ff92a041d045...
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Finished Cryptography Setup for home.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Reached target Block Device Preparation for /dev/mapper/home.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Reached target Local Encrypted Volumes.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd-fsck[2037]: /dev/mapper/home: clean, 126064/12492800 files, 14831971/49952512 blocks
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Finished File System Check on /dev/disk/by-uuid/f4110af7-de95-4125-92b2-ff92a041d045.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Mounting /home...
+Sun 2025-05-25 00:16:43 PDT squishlab kernel: EXT4-fs (dm-1): mounted filesystem f4110af7-de95-4125-92b2-ff92a041d045 r/w with ordered data mode. Quota mode: none.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Mounted /home.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Reached target Local File Systems.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Listening on Boot Entries Service Socket.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd-timesyncd[1020]: Network configuration changed, trying to establish connection.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Listening on System Extension Image Management.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Set Up Additional Binary Formats was skipped because no trigger condition checks were met.
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Starting Update Boot Loader Random Seed...
+Sun 2025-05-25 00:16:43 PDT squishlab systemd[1]: Starting Create System Files and Directories...
+Sun 2025-05-25 00:16:43 PDT squishlab bootctl[2046]: ! Mount point '/boot' which backs the random seed file is world accessible, which is a security hole! !
+Sun 2025-05-25 00:16:43 PDT squishlab bootctl[2046]: ! Random seed file '/boot/loader/random-seed' is world accessible, which is a security hole! !
+Sun 2025-05-25 00:16:44 PDT squishlab bootctl[2046]: Random seed file /boot/loader/random-seed successfully refreshed (32 bytes).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Finished Update Boot Loader Random Seed.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-timesyncd[1020]: Network configuration changed, trying to establish connection.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-timesyncd[1020]: Network configuration changed, trying to establish connection.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-timesyncd[1020]: Network configuration changed, trying to establish connection.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Finished Create System Files and Directories.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Rebuild Dynamic Linker Cache was skipped because no trigger condition checks were met.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: First Boot Wizard was skipped because of an unmet condition check (ConditionFirstBoot=yes).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: First Boot Complete was skipped because of an unmet condition check (ConditionFirstBoot=yes).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Rebuild Journal Catalog was skipped because of an unmet condition check (ConditionNeedsUpdate=/var).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Save Transient machine-id to Disk was skipped because of an unmet condition check (ConditionPathIsMountPoint=/etc/machine-id).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Update is Completed was skipped because no trigger condition checks were met.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting Record System Boot/Shutdown in UTMP...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Finished Record System Boot/Shutdown in UTMP.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Reached target System Initialization.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Refresh existing PGP keys of archlinux-keyring regularly.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Discard unused filesystem blocks once a week.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Daily verification of password and group files.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Daily Cleanup of Temporary Directories.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Reached target Timer Units.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on D-Bus System Message Bus Socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on GnuPG network certificate management daemon for /etc/pacman.d/gnupg.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on GnuPG cryptographic agent and passphrase cache (access for web browsers) for /etc/pacman.d/gnupg.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on GnuPG cryptographic agent and passphrase cache (restricted) for /etc/pacman.d/gnupg.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on GnuPG cryptographic agent (ssh-agent emulation) for /etc/pacman.d/gnupg.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on GnuPG cryptographic agent and passphrase cache for /etc/pacman.d/gnupg.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on GnuPG public key management service for /etc/pacman.d/gnupg.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on OpenSSH Server Socket (systemd-ssh-generator, AF_UNIX Local).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on Hostname Service Socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt locking daemon socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt logging daemon socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt network daemon socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt network daemon admin socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt network daemon read-only socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt QEMU daemon socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt QEMU daemon admin socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt QEMU daemon read-only socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt storage daemon socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt storage daemon admin socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on libvirt storage daemon read-only socket.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Reached target Socket Units.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting D-Bus System Message Bus...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting TPM PCR Barrier (Initialization)...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started D-Bus System Message Bus.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-pcrextend[2057]: Extended PCR index 11 with 'sysinit' (banks sha1, sha256).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Finished TPM PCR Barrier (Initialization).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Reached target Basic System.
+Sun 2025-05-25 00:16:44 PDT squishlab dbus-broker-launch[2056]: Ready
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting firewalld - dynamic firewall daemon...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: SSH Key Generation was skipped because no trigger condition checks were met.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting User Login Management...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting Virtual Machine and Container Registration Service...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting TPM PCR Barrier (User)...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Virtual Machine and Container Registration Service.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: New seat seat0.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event2 (Power Button)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event1 (Power Button)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event0 (Sleep Button)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event4 (Corsair CORSAIR IRONCLAW RGB Gaming Mouse Consumer Control)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event7 (Corsair CORSAIR IRONCLAW RGB Gaming Mouse Keyboard)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event8 (SteelSeries SteelSeries Apex 3)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event9 (SteelSeries SteelSeries Apex 3)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-logind[2061]: Watching system buttons on /dev/input/event10 (SteelSeries SteelSeries Apex 3 Consumer Control)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started User Login Management.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd-pcrextend[2066]: Extended PCR index 11 with 'ready' (banks sha1, sha256).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Finished TPM PCR Barrier (User).
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started firewalld - dynamic firewall daemon.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Reached target Preparation for Network.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting Network Manager...
+Sun 2025-05-25 00:16:44 PDT squishlab firewalld[2060]: ERROR: Invalid option: 'AllowPrelockIPv4=no'
+Sun 2025-05-25 00:16:44 PDT squishlab firewalld[2060]: ERROR: Invalid option: 'AllowPrelockIPv6=no'
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.8269] NetworkManager (version 1.52.0-1) is starting... (boot:ee18b986-8a28-42d9-98b7-f48d78b94f3b)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.8270] Read config: /etc/NetworkManager/NetworkManager.conf, /usr/lib/NetworkManager/conf.d/20-connectivity.conf
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.8429] manager[0x94dd3cfeaa0]: monitoring kernel firmware directory '/lib/firmware'.
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting Hostname Service...
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Hostname Service.
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.8999] hostname: hostname: using hostnamed
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.8999] hostname: static hostname changed from (none) to "squishlab"
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9006] dns-mgr: init: dns=systemd-resolved rc-manager=symlink, plugin=systemd-resolved
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9077] manager[0x94dd3cfeaa0]: rfkill: Wi-Fi hardware radio set disabled
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9077] manager[0x94dd3cfeaa0]: rfkill: WWAN hardware radio set disabled
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Listening on Load/Save RF Kill Switch Status /dev/rfkill Watch.
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9124] Loaded device plugin: NMOvsFactory (/usr/lib/NetworkManager/1.52.0-1/libnm-device-plugin-ovs.so)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9133] Loaded device plugin: NMAtmManager (/usr/lib/NetworkManager/1.52.0-1/libnm-device-plugin-adsl.so)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9567] Loaded device plugin: NMTeamFactory (/usr/lib/NetworkManager/1.52.0-1/libnm-device-plugin-team.so)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9636] Loaded device plugin: NMWwanFactory (/usr/lib/NetworkManager/1.52.0-1/libnm-device-plugin-wwan.so)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9660] Loaded device plugin: NMWifiFactory (/usr/lib/NetworkManager/1.52.0-1/libnm-device-plugin-wifi.so)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9669] Loaded device plugin: NMBluezManager (/usr/lib/NetworkManager/1.52.0-1/libnm-device-plugin-bluetooth.so)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9671] manager: rfkill: Wi-Fi enabled by radio killswitch; disabled by state file
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9671] manager: rfkill: WWAN enabled by radio killswitch; disabled by state file
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9671] manager: Networking is enabled by state file
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9679] settings: Loaded settings plugin: keyfile (internal)
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Starting Network Manager Script Dispatcher Service...
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9710] dhcp: init: Using DHCP client 'internal'
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9711] manager: (lo): new Loopback device (/org/freedesktop/NetworkManager/Devices/1)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9717] device (lo): state change: unmanaged -> unavailable (reason 'connection-assumed', managed-type: 'external')
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9725] device (lo): state change: unavailable -> disconnected (reason 'connection-assumed', managed-type: 'external')
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9728] device (lo): Activation: starting connection 'lo' (14ec2ce1-d88b-4ea2-accb-9dd64561cfa1)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9733] manager: (enp3s0): new Ethernet device (/org/freedesktop/NetworkManager/Devices/2)
+Sun 2025-05-25 00:16:44 PDT squishlab NetworkManager[2077]: <info>  [1748157404.9734] device (enp3s0): state change: unmanaged -> unavailable (reason 'managed', managed-type: 'external')
+Sun 2025-05-25 00:16:44 PDT squishlab systemd[1]: Started Network Manager Script Dispatcher Service.
+Sun 2025-05-25 00:16:44 PDT squishlab kernel: Generic FE-GE Realtek PHY r8169-0-300:00: attached PHY driver (mii_bus:phy_addr=r8169-0-300:00, irq=MAC)
+Sun 2025-05-25 00:16:45 PDT squishlab kernel: r8169 0000:03:00.0 enp3s0: Link is Down
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Started Network Manager.
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1655] bus-manager: acquired D-Bus service "org.freedesktop.NetworkManager"
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Reached target Network.
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1678] ovsdb: disconnected from ovsdb
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1679] device (lo): state change: disconnected -> prepare (reason 'none', managed-type: 'external')
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Starting Fail2Ban Service...
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1680] device (lo): state change: prepare -> config (reason 'none', managed-type: 'external')
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1681] device (lo): state change: config -> ip-config (reason 'none', managed-type: 'external')
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1684] device (lo): state change: ip-config -> ip-check (reason 'none', managed-type: 'external')
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1695] device (lo): state change: ip-check -> secondaries (reason 'none', managed-type: 'external')
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1695] device (lo): state change: secondaries -> activated (reason 'none', managed-type: 'external')
+Sun 2025-05-25 00:16:45 PDT squishlab NetworkManager[2077]: <info>  [1748157405.1698] device (lo): Activation: successful, device activated.
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Starting Home assistant...
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Starting OpenSSH Daemon...
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Starting Permit User Sessions...
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Starting libvirt QEMU daemon...
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Started Fail2Ban Service.
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Finished Permit User Sessions.
+Sun 2025-05-25 00:16:45 PDT squishlab sshd[2144]: Server listening on 0.0.0.0 port 7717.
+Sun 2025-05-25 00:16:45 PDT squishlab sshd[2144]: Server listening on :: port 7717.
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Started Getty on tty1.
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Reached target Login Prompts.
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Started OpenSSH Daemon.
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Starting Authorization Manager...
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Started libvirt QEMU daemon.
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Started polkitd version 126
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Loading rules from directory /etc/polkit-1/rules.d
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Loading rules from directory /run/polkit-1/rules.d
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Error opening rules directory: Error opening directory “/run/polkit-1/rules.d”: No such file or directory (g-file-error-quark, 4)
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Loading rules from directory /usr/local/share/polkit-1/rules.d
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Error opening rules directory: Error opening directory “/usr/local/share/polkit-1/rules.d”: No such file or directory (g-file-error-quark, 4)
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Loading rules from directory /usr/share/polkit-1/rules.d
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Finished loading, compiling and executing 4 rules
+Sun 2025-05-25 00:16:45 PDT squishlab systemd[1]: Started Authorization Manager.
+Sun 2025-05-25 00:16:45 PDT squishlab polkitd[2169]: Acquired the name org.freedesktop.PolicyKit1 on the system bus
+Sun 2025-05-25 00:16:45 PDT squishlab fail2ban-server[2148]: Server ready
+Sun 2025-05-25 00:16:47 PDT squishlab python[2198]: Requirement already satisfied: wheel in ./.venv/lib/python3.13/site-packages (0.45.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2198]: [notice] A new release of pip is available: 25.0.1 -> 25.1.1
+Sun 2025-05-25 00:16:47 PDT squishlab python[2198]: [notice] To update, run: pip3.13 install --upgrade pip
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Processing /usr/share/home-assistant/homeassistant-2025.5.1-py3-none-any.whl
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiodns==3.4.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.4.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiohasupervisor==0.3.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.3.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiohttp==3.11.18 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.11.18)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiohttp_cors==0.7.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.7.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiohttp-fast-zlib==0.2.3 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.2.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiohttp-asyncmdnsresolver==0.1.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.1.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiozoneinfo==0.2.3 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.2.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: annotatedyaml==0.4.5 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.4.5)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: astral==2.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: async-interrupt==1.2.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.2.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: attrs==25.1.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (25.1.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: atomicwrites-homeassistant==1.4.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.4.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: audioop-lts==0.2.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.2.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: awesomeversion==24.6.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (24.6.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: bcrypt==4.2.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (4.2.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: certifi>=2021.5.30 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2025.4.26)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: ciso8601==2.3.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.3.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: cronsim==2.6 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.6)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: fnv-hash-fast==1.5.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.5.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: ha-ffmpeg==3.2.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.2.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: hass-nabucasa==0.96.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.96.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: hassil==2.2.3 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.2.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: httpx==0.28.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.28.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: home-assistant-bluetooth==1.13.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.13.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: home-assistant-intents==2025.5.7 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2025.5.7)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: ifaddr==0.2.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.2.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: Jinja2==3.1.6 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.1.6)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: lru-dict==1.3.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.3.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: mutagen==1.47.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.47.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: numpy==2.2.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.2.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: PyJWT==2.10.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.10.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: cryptography==44.0.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (44.0.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: Pillow==11.2.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (11.2.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: propcache==0.3.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.3.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pyOpenSSL==25.0.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (25.0.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: orjson==3.10.18 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.10.18)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: packaging>=23.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (25.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: psutil-home-assistant==0.0.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.0.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pymicro-vad==1.0.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.0.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pyspeex-noise==1.0.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.0.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: python-slugify==8.0.4 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (8.0.4)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: PyTurboJPEG==1.7.5 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.7.5)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: PyYAML==6.0.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (6.0.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: requests==2.32.3 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.32.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: securetar==2025.2.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2025.2.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: SQLAlchemy==2.0.40 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.0.40)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: standard-aifc==3.13.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.13.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: standard-telnetlib==3.13.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (3.13.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: typing-extensions<5.0,>=4.13.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (4.13.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: ulid-transform==1.4.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.4.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: urllib3<2,>=1.26.5 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.26.20)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: uv==0.7.1 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.7.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: voluptuous==0.15.2 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.15.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: voluptuous-serialize==2.6.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (2.6.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: voluptuous-openapi==0.0.7 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.0.7)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: yarl==1.20.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (1.20.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: webrtc-models==0.3.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.3.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: zeroconf==0.147.0 in ./.venv/lib/python3.13/site-packages (from homeassistant==2025.5.1) (0.147.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pycares>=4.0.0 in ./.venv/lib/python3.13/site-packages (from aiodns==3.4.0->homeassistant==2025.5.1) (4.8.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: mashumaro<4.0,>=3.11 in ./.venv/lib/python3.13/site-packages (from aiohasupervisor==0.3.1->homeassistant==2025.5.1) (3.15)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiohappyeyeballs>=2.3.0 in ./.venv/lib/python3.13/site-packages (from aiohttp==3.11.18->homeassistant==2025.5.1) (2.6.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiosignal>=1.1.2 in ./.venv/lib/python3.13/site-packages (from aiohttp==3.11.18->homeassistant==2025.5.1) (1.3.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: frozenlist>=1.1.1 in ./.venv/lib/python3.13/site-packages (from aiohttp==3.11.18->homeassistant==2025.5.1) (1.6.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: multidict<7.0,>=4.5 in ./.venv/lib/python3.13/site-packages (from aiohttp==3.11.18->homeassistant==2025.5.1) (6.4.4)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: tzdata>=2024.1 in ./.venv/lib/python3.13/site-packages (from aiozoneinfo==0.2.3->homeassistant==2025.5.1) (2025.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pytz in ./.venv/lib/python3.13/site-packages (from astral==2.2->homeassistant==2025.5.1) (2025.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: cffi>=1.12 in ./.venv/lib/python3.13/site-packages (from cryptography==44.0.1->homeassistant==2025.5.1) (1.17.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: fnvhash<0.2.0,>=0.1.0 in ./.venv/lib/python3.13/site-packages (from fnv-hash-fast==1.5.0->homeassistant==2025.5.1) (0.1.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: async-timeout in ./.venv/lib/python3.13/site-packages (from ha-ffmpeg==3.2.2->homeassistant==2025.5.1) (4.0.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: acme==3.3.0 in ./.venv/lib/python3.13/site-packages (from hass-nabucasa==0.96.0->homeassistant==2025.5.1) (3.3.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pycognito==2024.5.1 in ./.venv/lib/python3.13/site-packages (from hass-nabucasa==0.96.0->homeassistant==2025.5.1) (2024.5.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: snitun==0.40.0 in ./.venv/lib/python3.13/site-packages (from hass-nabucasa==0.96.0->homeassistant==2025.5.1) (0.40.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: unicode-rbnf<3,>=2.2 in ./.venv/lib/python3.13/site-packages (from hassil==2.2.3->homeassistant==2025.5.1) (2.3.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: habluetooth>=3.0 in ./.venv/lib/python3.13/site-packages (from home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (3.48.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: anyio in ./.venv/lib/python3.13/site-packages (from httpx==0.28.1->homeassistant==2025.5.1) (4.9.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: httpcore==1.* in ./.venv/lib/python3.13/site-packages (from httpx==0.28.1->homeassistant==2025.5.1) (1.0.9)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: idna in ./.venv/lib/python3.13/site-packages (from httpx==0.28.1->homeassistant==2025.5.1) (3.10)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: MarkupSafe>=2.0 in ./.venv/lib/python3.13/site-packages (from Jinja2==3.1.6->homeassistant==2025.5.1) (3.0.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: psutil in ./.venv/lib/python3.13/site-packages (from psutil-home-assistant==0.0.1->homeassistant==2025.5.1) (7.0.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: text-unidecode>=1.3 in ./.venv/lib/python3.13/site-packages (from python-slugify==8.0.4->homeassistant==2025.5.1) (1.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: charset-normalizer<4,>=2 in ./.venv/lib/python3.13/site-packages (from requests==2.32.3->homeassistant==2025.5.1) (3.4.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: greenlet>=1 in ./.venv/lib/python3.13/site-packages (from SQLAlchemy==2.0.40->homeassistant==2025.5.1) (3.2.2)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: standard-chunk in ./.venv/lib/python3.13/site-packages (from standard-aifc==3.13.0->homeassistant==2025.5.1) (3.13.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: josepy<2,>=1.13.0 in ./.venv/lib/python3.13/site-packages (from acme==3.3.0->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (1.15.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pyrfc3339 in ./.venv/lib/python3.13/site-packages (from acme==3.3.0->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (2.0.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: h11>=0.16 in ./.venv/lib/python3.13/site-packages (from httpcore==1.*->httpx==0.28.1->homeassistant==2025.5.1) (0.16.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: boto3>=1.10.49 in ./.venv/lib/python3.13/site-packages (from pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (1.38.18)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: envs>=1.3 in ./.venv/lib/python3.13/site-packages (from pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (1.4)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: pycparser in ./.venv/lib/python3.13/site-packages (from cffi>=1.12->cryptography==44.0.1->homeassistant==2025.5.1) (2.22)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: bleak>=0.21.1 in ./.venv/lib/python3.13/site-packages (from habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.22.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: bleak-retry-connector>=3.9.0 in ./.venv/lib/python3.13/site-packages (from habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (3.9.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: bluetooth-adapters>=0.16.1 in ./.venv/lib/python3.13/site-packages (from habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.21.4)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: bluetooth-auto-recovery>=1.5.1 in ./.venv/lib/python3.13/site-packages (from habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (1.5.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: bluetooth-data-tools>=1.28.0 in ./.venv/lib/python3.13/site-packages (from habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (1.28.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: dbus-fast>=2.30.2 in ./.venv/lib/python3.13/site-packages (from habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (2.43.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: sniffio>=1.1 in ./.venv/lib/python3.13/site-packages (from anyio->httpx==0.28.1->homeassistant==2025.5.1) (1.3.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: aiooui>=0.1.1 in ./.venv/lib/python3.13/site-packages (from bluetooth-adapters>=0.16.1->habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.1.9)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: uart-devices>=0.1.0 in ./.venv/lib/python3.13/site-packages (from bluetooth-adapters>=0.16.1->habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.1.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: usb-devices>=0.4.5 in ./.venv/lib/python3.13/site-packages (from bluetooth-adapters>=0.16.1->habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.4.5)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: PyRIC>=0.1.6.3 in ./.venv/lib/python3.13/site-packages (from bluetooth-auto-recovery>=1.5.1->habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.1.6.3)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: btsocket>=0.2.0 in ./.venv/lib/python3.13/site-packages (from bluetooth-auto-recovery>=1.5.1->habluetooth>=3.0->home-assistant-bluetooth==1.13.1->homeassistant==2025.5.1) (0.3.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: botocore<1.39.0,>=1.38.18 in ./.venv/lib/python3.13/site-packages (from boto3>=1.10.49->pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (1.38.18)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: jmespath<2.0.0,>=0.7.1 in ./.venv/lib/python3.13/site-packages (from boto3>=1.10.49->pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (1.0.1)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: s3transfer<0.13.0,>=0.12.0 in ./.venv/lib/python3.13/site-packages (from boto3>=1.10.49->pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (0.12.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: python-dateutil<3.0.0,>=2.1 in ./.venv/lib/python3.13/site-packages (from botocore<1.39.0,>=1.38.18->boto3>=1.10.49->pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (2.9.0.post0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: Requirement already satisfied: six>=1.5 in ./.venv/lib/python3.13/site-packages (from python-dateutil<3.0.0,>=2.1->botocore<1.39.0,>=1.38.18->boto3>=1.10.49->pycognito==2024.5.1->hass-nabucasa==0.96.0->homeassistant==2025.5.1) (1.17.0)
+Sun 2025-05-25 00:16:47 PDT squishlab python[2205]: homeassistant is already installed with the same version as the provided wheel. Use --force-reinstall to force an installation of the wheel.
+Sun 2025-05-25 00:16:48 PDT squishlab python[2205]: [notice] A new release of pip is available: 25.0.1 -> 25.1.1
+Sun 2025-05-25 00:16:48 PDT squishlab python[2205]: [notice] To update, run: pip3.13 install --upgrade pip
+Sun 2025-05-25 00:16:48 PDT squishlab systemd[1]: Started Home assistant.
+Sun 2025-05-25 00:16:48 PDT squishlab systemd[1]: Reached target Multi-User System.
+Sun 2025-05-25 00:16:48 PDT squishlab systemd[1]: Reached target Graphical Interface.
+Sun 2025-05-25 00:16:48 PDT squishlab systemd[1]: Startup finished in 14.488s (firmware) + 1min 40.882s (loader) + 3.893s (kernel) + 20.437s (initrd) + 19.867s (userspace) = 2min 39.568s.
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: 2025-05-25 00:16:50.486 WARNING (MainThread) [aiohttp_fast_zlib] zlib_ng and isal are not available, falling back to zlib, performance will be degraded.
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: 2025-05-25 00:16:50.489 WARNING (MainThread) [homeassistant.components.network] Because the system does not have any enabled IPv4 addresses, source address detection may be inaccurate
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: 2025-05-25 00:16:50.596 ERROR (MainThread) [homeassistant.setup] Error during setup of component zeroconf: [Errno 19] No such device
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: Traceback (most recent call last):
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/setup.py", line 426, in _async_setup_component
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     result = await task
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:              ^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 186, in async_setup
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     aio_zc = _async_get_instance(hass)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 121, in _async_get_instance
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     zeroconf = HaZeroconf(**_async_get_zc_args(hass))
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_core.py", line 181, in __init__
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     listen_socket, respond_sockets = create_sockets(interfaces, unicast, ip_version, apple_p2p=apple_p2p)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:                                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 459, in create_sockets
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     add_multicast_member(cast(socket.socket, listen_socket), interface)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 350, in add_multicast_member
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     listen_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, _value)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: OSError: [Errno 19] No such device
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: 2025-05-25 00:16:50.680 ERROR (MainThread) [homeassistant.setup] Error during setup of component ssdp: [Errno 19] No such device
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: Traceback (most recent call last):
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/setup.py", line 426, in _async_setup_component
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     result = await task
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:              ^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/ssdp/__init__.py", line 215, in async_setup
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     await scanner.async_start()
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/ssdp/scanner.py", line 237, in async_start
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     session = async_get_clientsession(self.hass, verify_ssl=False)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 144, in async_get_clientsession
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     session = _async_create_clientsession(
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:         hass,
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     ...<3 lines>...
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:         ssl_cipher=ssl_cipher,
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     )
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 203, in _async_create_clientsession
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     connector=_async_get_connector(hass, verify_ssl, family, ssl_cipher),
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 383, in _async_get_connector
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     resolver=_async_get_or_create_resolver(hass),
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/singleton.py", line 57, in wrapped
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     hass.data[data_key] = func(hass)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:                           ~~~~^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 400, in _async_get_or_create_resolver
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     resolver = _async_make_resolver(hass)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 411, in _async_make_resolver
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     return HassAsyncDNSResolver(async_zeroconf=zeroconf.async_get_async_zeroconf(hass))
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 114, in async_get_async_zeroconf
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     return _async_get_instance(hass)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 121, in _async_get_instance
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     zeroconf = HaZeroconf(**_async_get_zc_args(hass))
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_core.py", line 181, in __init__
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     listen_socket, respond_sockets = create_sockets(interfaces, unicast, ip_version, apple_p2p=apple_p2p)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:                                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 459, in create_sockets
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     add_multicast_member(cast(socket.socket, listen_socket), interface)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 350, in add_multicast_member
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     listen_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, _value)
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:50 PDT squishlab hass[2211]: OSError: [Errno 19] No such device
+Sun 2025-05-25 00:16:51 PDT squishlab dbus-broker-launch[2056]: Activation request for 'org.bluez' failed: The systemd unit 'dbus-org.bluez.service' could not be found.
+Sun 2025-05-25 00:16:51 PDT squishlab NetworkManager[2077]: <info>  [1748157411.1673] manager: startup complete
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: 2025-05-25 00:16:51.230 ERROR (MainThread) [homeassistant.setup] Error during setup of component cloud: [Errno 19] No such device
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: Traceback (most recent call last):
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/setup.py", line 426, in _async_setup_component
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     result = await task
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:              ^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/cloud/__init__.py", line 269, in async_setup
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     websession = async_get_clientsession(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 144, in async_get_clientsession
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     session = _async_create_clientsession(
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:         hass,
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     ...<3 lines>...
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:         ssl_cipher=ssl_cipher,
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     )
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 203, in _async_create_clientsession
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     connector=_async_get_connector(hass, verify_ssl, family, ssl_cipher),
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 383, in _async_get_connector
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     resolver=_async_get_or_create_resolver(hass),
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/singleton.py", line 57, in wrapped
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     hass.data[data_key] = func(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                           ~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 400, in _async_get_or_create_resolver
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     resolver = _async_make_resolver(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 411, in _async_make_resolver
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     return HassAsyncDNSResolver(async_zeroconf=zeroconf.async_get_async_zeroconf(hass))
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 114, in async_get_async_zeroconf
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     return _async_get_instance(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 121, in _async_get_instance
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     zeroconf = HaZeroconf(**_async_get_zc_args(hass))
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_core.py", line 181, in __init__
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     listen_socket, respond_sockets = create_sockets(interfaces, unicast, ip_version, apple_p2p=apple_p2p)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 459, in create_sockets
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     add_multicast_member(cast(socket.socket, listen_socket), interface)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 350, in add_multicast_member
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     listen_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, _value)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: OSError: [Errno 19] No such device
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: 2025-05-25 00:16:51.795 ERROR (MainThread) [homeassistant.setup] Error during setup of component analytics: [Errno 19] No such device
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: Traceback (most recent call last):
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/setup.py", line 426, in _async_setup_component
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     result = await task
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:              ^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/analytics/__init__.py", line 25, in async_setup
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     analytics = Analytics(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/analytics/analytics.py", line 104, in __init__
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     self.session = async_get_clientsession(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 144, in async_get_clientsession
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     session = _async_create_clientsession(
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:         hass,
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     ...<3 lines>...
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:         ssl_cipher=ssl_cipher,
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     )
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 203, in _async_create_clientsession
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     connector=_async_get_connector(hass, verify_ssl, family, ssl_cipher),
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 383, in _async_get_connector
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     resolver=_async_get_or_create_resolver(hass),
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/singleton.py", line 57, in wrapped
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     hass.data[data_key] = func(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                           ~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 400, in _async_get_or_create_resolver
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     resolver = _async_make_resolver(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 411, in _async_make_resolver
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     return HassAsyncDNSResolver(async_zeroconf=zeroconf.async_get_async_zeroconf(hass))
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 114, in async_get_async_zeroconf
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     return _async_get_instance(hass)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 121, in _async_get_instance
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     zeroconf = HaZeroconf(**_async_get_zc_args(hass))
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_core.py", line 181, in __init__
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     listen_socket, respond_sockets = create_sockets(interfaces, unicast, ip_version, apple_p2p=apple_p2p)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:                                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 459, in create_sockets
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     add_multicast_member(cast(socket.socket, listen_socket), interface)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 350, in add_multicast_member
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     listen_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, _value)
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: OSError: [Errno 19] No such device
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: 2025-05-25 00:16:51.824 ERROR (MainThread) [homeassistant.setup] Unable to set up dependencies of 'default_config'. Setup failed for dependencies: ['cloud', 'ssdp', 'zeroconf']
+Sun 2025-05-25 00:16:51 PDT squishlab hass[2211]: 2025-05-25 00:16:51.824 ERROR (MainThread) [homeassistant.setup] Setup failed for 'default_config': Could not setup dependencies: cloud, ssdp, zeroconf
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]: 2025-05-25 00:16:52.136 ERROR (MainThread) [homeassistant.config_entries] Error setting up entry M for nest
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]: Traceback (most recent call last):
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/config_entries.py", line 749, in __async_setup_with_context
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     result = await component.async_setup_entry(hass, self)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/nest/__init__.py", line 201, in async_setup_entry
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     auth = await api.new_auth(hass, entry)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/nest/api.py", line 117, in new_auth
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     aiohttp_client.async_get_clientsession(hass),
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 144, in async_get_clientsession
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     session = _async_create_clientsession(
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:         hass,
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ...<3 lines>...
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:         ssl_cipher=ssl_cipher,
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     )
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 203, in _async_create_clientsession
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     connector=_async_get_connector(hass, verify_ssl, family, ssl_cipher),
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 383, in _async_get_connector
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     resolver=_async_get_or_create_resolver(hass),
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/singleton.py", line 57, in wrapped
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     hass.data[data_key] = func(hass)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                           ~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 400, in _async_get_or_create_resolver
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     resolver = _async_make_resolver(hass)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 411, in _async_make_resolver
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     return HassAsyncDNSResolver(async_zeroconf=zeroconf.async_get_async_zeroconf(hass))
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 114, in async_get_async_zeroconf
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     return _async_get_instance(hass)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 121, in _async_get_instance
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     zeroconf = HaZeroconf(**_async_get_zc_args(hass))
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_core.py", line 181, in __init__
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     listen_socket, respond_sockets = create_sockets(interfaces, unicast, ip_version, apple_p2p=apple_p2p)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 459, in create_sockets
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     add_multicast_member(cast(socket.socket, listen_socket), interface)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 350, in add_multicast_member
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     listen_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, _value)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]: OSError: [Errno 19] No such device
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]: 2025-05-25 00:16:52.142 ERROR (MainThread) [homeassistant.components.homeassistant_alerts.coordinator] Unexpected error fetching homeassistant_alerts data
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]: Traceback (most recent call last):
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/update_coordinator.py", line 380, in _async_refresh
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     self.data = await self._async_update_data()
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/homeassistant_alerts/coordinator.py", line 54, in _async_update_data
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     response = await async_get_clientsession(self.hass).get(
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                      ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 144, in async_get_clientsession
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     session = _async_create_clientsession(
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:         hass,
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ...<3 lines>...
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:         ssl_cipher=ssl_cipher,
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     )
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 203, in _async_create_clientsession
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     connector=_async_get_connector(hass, verify_ssl, family, ssl_cipher),
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:               ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 383, in _async_get_connector
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     resolver=_async_get_or_create_resolver(hass),
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/singleton.py", line 57, in wrapped
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     hass.data[data_key] = func(hass)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                           ~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 400, in _async_get_or_create_resolver
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     resolver = _async_make_resolver(hass)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/helpers/aiohttp_client.py", line 411, in _async_make_resolver
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     return HassAsyncDNSResolver(async_zeroconf=zeroconf.async_get_async_zeroconf(hass))
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 114, in async_get_async_zeroconf
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     return _async_get_instance(hass)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/homeassistant/components/zeroconf/__init__.py", line 121, in _async_get_instance
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     zeroconf = HaZeroconf(**_async_get_zc_args(hass))
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_core.py", line 181, in __init__
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     listen_socket, respond_sockets = create_sockets(interfaces, unicast, ip_version, apple_p2p=apple_p2p)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:                                      ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 459, in create_sockets
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     add_multicast_member(cast(socket.socket, listen_socket), interface)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:   File "/var/lib/hass/.venv/lib/python3.13/site-packages/zeroconf/_utils/net.py", line 350, in add_multicast_member
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     listen_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, _value)
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]:     ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Sun 2025-05-25 00:16:52 PDT squishlab hass[2211]: OSError: [Errno 19] No such device
+Sun 2025-05-25 00:16:53 PDT squishlab dbus-broker-launch[2056]: Activation request for 'org.freedesktop.home1' failed: The systemd unit 'dbus-org.freedesktop.home1.service' could not be found.
+Sun 2025-05-25 00:16:55 PDT squishlab systemd[1]: NetworkManager-dispatcher.service: Deactivated successfully.
+Sun 2025-05-25 00:16:56 PDT squishlab login[2153]: pam_unix(login:session): session opened for user evm(uid=1000) by evm(uid=0)
+Sun 2025-05-25 00:16:56 PDT squishlab systemd-logind[2061]: New session 1 of user evm.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[1]: Created slice User Slice of UID 1000.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[1]: Starting User Runtime Directory /run/user/1000...
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[1]: Finished User Runtime Directory /run/user/1000.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[1]: Starting User Manager for UID 1000...
+Sun 2025-05-25 00:16:56 PDT squishlab (systemd)[2247]: pam_warn(systemd-user:setcred): function=[pam_sm_setcred] flags=0x8002 service=[systemd-user] terminal=[] user=[evm] ruser=[<unknown>] rhost=[<unknown>]
+Sun 2025-05-25 00:16:56 PDT squishlab (systemd)[2247]: pam_unix(systemd-user:session): session opened for user evm(uid=1000) by evm(uid=0)
+Sun 2025-05-25 00:16:56 PDT squishlab systemd-logind[2061]: New session 2 of user evm.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Queued start job for default target Main User Target.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Created slice User Application Slice.
+Sun 2025-05-25 00:16:56 PDT squishlab login[2153]: LOGIN ON tty1 BY evm
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Reached target Paths.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Reached target Timers.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Starting D-Bus User Message Bus Socket...
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on GnuPG network certificate management daemon.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on GnuPG cryptographic agent and passphrase cache (access for web browsers).
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on GnuPG cryptographic agent and passphrase cache (restricted).
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on GnuPG cryptographic agent (ssh-agent emulation).
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on GnuPG cryptographic agent and passphrase cache.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on GnuPG public key management service.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on p11-kit server.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on PipeWire Multimedia System Sockets.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Listening on D-Bus User Message Bus Socket.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Reached target Sockets.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Reached target Basic System.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Reached target Main User Target.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[2247]: Startup finished in 121ms.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[1]: Started User Manager for UID 1000.
+Sun 2025-05-25 00:16:56 PDT squishlab systemd[1]: Started Session 1 of User evm.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Created slice User Core Session Slice.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Starting D-Bus User Message Bus...
+Sun 2025-05-25 00:17:10 PDT squishlab dbus-broker-launch[2294]: Invalid D-Bus name 'hyprpolkitagent' in service file '/usr/share/dbus-1/services/hyprpolkitagent.service'
+Sun 2025-05-25 00:17:10 PDT squishlab dbus-broker-launch[2294]: Service file '/usr/share/dbus-1/services/org.xfce.Thunar.FileManager1.service' is not named after the D-Bus name 'org.freedesktop.FileManager1'.
+Sun 2025-05-25 00:17:10 PDT squishlab dbus-broker-launch[2294]: Policy to allow eavesdropping in /usr/share/dbus-1/session.conf +31: Eavesdropping is deprecated and ignored
+Sun 2025-05-25 00:17:10 PDT squishlab dbus-broker-launch[2294]: Policy to allow eavesdropping in /usr/share/dbus-1/session.conf +33: Eavesdropping is deprecated and ignored
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Started D-Bus User Message Bus.
+Sun 2025-05-25 00:17:10 PDT squishlab dbus-broker-launch[2294]: Ready
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Starting User preferences database...
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Started User preferences database.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Starting Portal service...
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Starting sandboxed app permission store...
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Started sandboxed app permission store.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Starting flatpak document portal service...
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Started flatpak document portal service.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[1]: Starting RealtimeKit Scheduling Policy Service...
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[1]: Started RealtimeKit Scheduling Policy Service.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Successfully called chroot.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Successfully dropped privileges.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Successfully limited resources.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Canary thread running.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Watchdog thread running.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Running.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Supervising 0 threads of 0 processes of 0 users.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Supervising 0 threads of 0 processes of 0 users.
+Sun 2025-05-25 00:17:10 PDT squishlab rtkit-daemon[2343]: Supervising 0 threads of 0 processes of 0 users.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Started Portal service.
+Sun 2025-05-25 00:17:10 PDT squishlab systemd[2247]: Started kitty child process: 2348 launched by: 2305.
+Sun 2025-05-25 00:17:14 PDT squishlab systemd[1]: systemd-hostnamed.service: Deactivated successfully.
+Sun 2025-05-25 00:17:42 PDT squishlab sudo[2379]:      evm : TTY=pts/0 ; PWD=/home/evm/tooling ; USER=root ; COMMAND=./log.mscr --full --all -xb
+Sun 2025-05-25 00:17:42 PDT squishlab sudo[2379]: pam_unix(sudo:session): session opened for user root(uid=0) by evm(uid=1000)
+Sun 2025-05-25 00:17:43 PDT squishlab sudo[2379]: pam_unix(sudo:session): session closed for user root
+Sun 2025-05-25 00:18:28 PDT squishlab sudo[2390]:      evm : TTY=pts/0 ; PWD=/home/evm/tooling ; USER=root ; COMMAND=./log.mscr --full --all -xb -n 200
+Sun 2025-05-25 00:18:28 PDT squishlab sudo[2390]: pam_unix(sudo:session): session opened for user root(uid=0) by evm(uid=1000)
+Sun 2025-05-25 00:18:29 PDT squishlab sudo[2390]: pam_unix(sudo:session): session closed for user root
+Sun 2025-05-25 00:18:34 PDT squishlab sudo[2399]:      evm : TTY=pts/0 ; PWD=/home/evm/tooling ; USER=root ; COMMAND=./log.mscr --full --all -xb -n 5
+Sun 2025-05-25 00:18:34 PDT squishlab sudo[2399]: pam_unix(sudo:session): session opened for user root(uid=0) by evm(uid=1000)
+Sun 2025-05-25 00:18:36 PDT squishlab sudo[2399]: pam_unix(sudo:session): session closed for user root
+Sun 2025-05-25 00:18:45 PDT squishlab systemd[1]: virtqemud.service: Deactivated successfully.
+Sun 2025-05-25 00:18:48 PDT squishlab sudo[2410]:      evm : TTY=pts/0 ; PWD=/home/evm/tooling ; USER=root ; COMMAND=./log.mscr --full --all -xb -100
+Sun 2025-05-25 00:18:48 PDT squishlab sudo[2410]: pam_unix(sudo:session): session opened for user root(uid=0) by evm(uid=1000)
+Sun 2025-05-25 00:18:49 PDT squishlab sudo[2410]: pam_unix(sudo:session): session closed for user root
+Sun 2025-05-25 00:19:20 PDT squishlab sudo[2444]:      evm : TTY=pts/0 ; PWD=/home/evm/tooling ; USER=root ; COMMAND=./log.mscr --full --all -xb
+Sun 2025-05-25 00:19:20 PDT squishlab sudo[2444]: pam_unix(sudo:session): session opened for user root(uid=0) by evm(uid=1000)
+Sun 2025-05-25 00:19:20 PDT squishlab sudo[2444]: pam_unix(sudo:session): session closed for user root
+Sun 2025-05-25 00:19:27 PDT squishlab sudo[2453]:      evm : TTY=pts/0 ; PWD=/home/evm/tooling ; USER=root ; COMMAND=./log.mscr --full --all -xb
+Sun 2025-05-25 00:19:27 PDT squishlab sudo[2453]: pam_unix(sudo:session): session opened for user root(uid=0) by evm(uid=1000)
+Sun 2025-05-25 00:19:27 PDT squishlab sudo[2453]: pam_unix(sudo:session): session closed for user root
+Sun 2025-05-25 00:19:41 PDT squishlab systemd[2247]: Started kitty child process: 2468 launched by: 2461.
+Sun 2025-05-25 00:19:52 PDT squishlab systemd[2247]: Starting Accessibility services bus...
+Sun 2025-05-25 00:19:52 PDT squishlab systemd[2247]: Started Accessibility services bus.
+Sun 2025-05-25 00:20:42 PDT squishlab kernel: r8169 0000:03:00.0 enp3s0: Link is Up - 1Gbps/Full - flow control rx/tx
+Sun 2025-05-25 00:20:42 PDT squishlab NetworkManager[2077]: <info>  [1748157642.1594] device (enp3s0): carrier: link connected
+Sun 2025-05-25 00:20:42 PDT squishlab NetworkManager[2077]: <info>  [1748157642.1596] device (enp3s0): state change: unavailable -> disconnected (reason 'carrier-changed', managed-type: 'full')

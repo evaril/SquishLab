@@ -1,0 +1,104 @@
+#!/bin/bash
+
+
+# Create or edit kitty configuration
+mkdir -p ~/.config/kitty
+
+# Backup existing config if it exists
+if [ -f ~/.config/kitty/kitty.conf ]; then
+    cp ~/.config/kitty/kitty.conf ~/.config/kitty/kitty.conf.bak
+fi
+
+# Create new kitty configuration with normal copy/paste shortcuts
+cat > ~/.config/kitty/kitty.conf << 'EOF'
+# Kitty Configuration for Normal Copy/Paste Operations
+
+# Font configuration
+font_family      FiraCode Nerd Font
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+font_size 11.0
+
+# Copy/Paste with normal shortcuts
+map ctrl+c copy_to_clipboard
+map ctrl+v paste_from_clipboard
+map ctrl+shift+c copy_to_clipboard
+map ctrl+shift+v paste_from_clipboard
+
+# Alternative: You can also map to primary selection (middle-click paste)
+map ctrl+shift+s paste_from_selection
+map shift+insert paste_from_selection
+
+# Window management
+map ctrl+shift+enter new_window
+map ctrl+shift+w close_window
+map ctrl+shift+] next_window
+map ctrl+shift+[ previous_window
+
+# Tab management  
+map ctrl+shift+t new_tab
+map ctrl+shift+q close_tab
+map ctrl+shift+right next_tab
+map ctrl+shift+left previous_tab
+
+# Scrolling
+map ctrl+shift+up scroll_line_up
+map ctrl+shift+down scroll_line_down
+map ctrl+shift+page_up scroll_page_up
+map ctrl+shift+page_down scroll_page_down
+map ctrl+shift+home scroll_home
+map ctrl+shift+end scroll_end
+
+# Font size adjustment
+map ctrl+plus change_font_size all +2.0
+map ctrl+minus change_font_size all -2.0
+map ctrl+0 change_font_size all 0
+
+# Performance and rendering
+repaint_delay 10
+input_delay 3
+sync_to_monitor yes
+
+# Wayland-specific optimizations
+wayland_titlebar_color system
+linux_display_server wayland
+
+# Color scheme (adjust to your preference)
+foreground #dddddd
+background #000000
+cursor #dddddd
+
+# Selection colors
+selection_foreground #000000
+selection_background #fffacd
+
+# URL handling
+url_color #0087bd
+url_style curly
+
+# Window settings
+window_padding_width 2
+confirm_os_window_close 0
+
+# Bell settings
+enable_audio_bell no
+visual_bell_duration 0.0
+
+# Clipboard settings
+clipboard_control write-clipboard write-primary
+
+# Terminal features
+shell_integration enabled
+allow_remote_control no
+EOF
+
+echo "Kitty configuration updated!"
+echo ""
+echo "Key changes made:"
+echo "- Ctrl+C now copies to clipboard"
+echo "- Ctrl+V now pastes from clipboard" 
+echo "- Ctrl+Shift+C/V still work as backup"
+echo "- Optimized for Wayland/Hyperland"
+echo ""
+echo "Restart kitty to apply changes: killall kitty && kitty &"

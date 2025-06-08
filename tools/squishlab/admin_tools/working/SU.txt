@@ -1,0 +1,467 @@
+#!/bin/bash
+# squishUtils.mclib - Combined System Management Library (Beta)
+# Author: evm
+# Version: 1.0-beta
+# Combines: squishTools + squishBootReset functionality
+
+set -euo pipefail
+
+# ============================================================================
+# COMMON FUNCTIONS
+# ============================================================================
+
+# Color functions
+red() { printf '\033[0;31m%s\033[0m\n' "$*"; }
+green() { printf '\033[0;32m%s\033[0m\n' "$*"; }
+yellow() { printf '\033[1;33m%s\033[0m\n' "$*"; }
+blue() { printf '\033[0;34m%s\033[0m\n' "$*"; }
+cyan() { printf '\033[0;36m%s\033[0m\n' "$*"; }
+magenta() { printf '\033[0;35m%s\033[0m\n' "$*"; }
+bold() { printf '\033[1m%s\033[0m\n' "$*"; }
+
+# Global configuration
+readonly SQUISH_VERSION="1.0-beta"
+readonly LOG_FILE="${SQUISH_LOG:-$HOME/.squish/squish.log}"
+readonly CONFIG_DIR="${SQUISH_CONFIG:-$HOME/.squish}"
+
+# Initialize
+init_squish() {
+    mkdir -p "$(dirname "$LOG_FILE")"
+    mkdir -p "$CONFIG_DIR"
+}
+
+# Logging
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') [$1] $2" | tee -a "$LOG_FILE"
+}
+
+log_info() { log "INFO" "$1"; }
+log_warn() { log "WARN" "$1"; }
+log_error() { log "ERROR" "$1"; }
+
+# Check if running as root/sudo
+is_privileged() {
+    [[ $EUID -eq 0 ]] || [[ -n "${SUDO_USER:-}" ]]
+}
+
+# Unified privilege escalation
+escalate_privilege() {
+    local cmd="$1"
+    local purpose="$2"
+    local fallback="${3:-none}"
+    
+    if is_privileged; then
+        eval "$cmd"
+        return $?
+    fi
+    
+    echo
+    yellow "[PRIVILEGE] $purpose"
+    echo "- Command: $cmd"
+    echo "- Purpose: $purpose"
+    [[ "$fallback" != "none" ]] && echo "- Fallback: $fallback"
+    echo -n "Escalate? (y/N/fallback): "
+    read -r response
+    
+    case "$response" in
+        y|Y)
+            log_info "Privilege escalation approved: $purpose"
+            sudo bash -c "$cmd"
+            ;;
+        f|F|fallback)
+            if [[ "$fallback" != "none" ]]; then
+                log_info "Using fallback: $purpose"
+                eval "$fallback"
+            else
+                return 1
+            fi
+            ;;
+        *)
+            log_info "Privilege escalation denied: $purpose"
+            return 1
+            ;;
+    esac
+}
+
+# ============================================================================
+# SYSTEM INSPECTION MODULE (from squishTools)
+# ============================================================================
+
+# Build tree structure with timestamps
+build_tree() {
+    local dir="${1}"
+    local prefix="${2:-}"
+    local max_depth="${3:-3}"
+    local current_depth="${4:-0}"
+    
+    [[ $current_depth -ge $max_depth ]] && return
+    
+    local entries=()
+    while IFS= read -r -d '' entry; do
+        entries+=("$entry")
+    done < <(find "$dir" -maxdepth 1 -mindepth 1 -print0 2>/dev/null | \
+              xargs -0 ls -dt --time-style='+%m-%d %H:%M' 2>/dev/null)
+    
+    local count=${#entries[@]}
+    local i=0
+    
+    for entry in "${entries[@]}"; do
+        ((i++))
+        local basename=$(basename "$entry")
+        local timestamp=$(stat -c '%y' "$entry" 2>/dev/null | cut -d' ' -f1 | sed 's/^.*-//')
+        timestamp+=" $(stat -c '%y' "$entry" 2>/dev/null | cut -d' ' -f2 | cut -d: -f1-2)"
+        
+        local is_last=$([[ $i -eq $count ]] && echo true || echo false)
+        local tree_char=$([[ "$is_last" == "true" ]] && echo "└── " || echo "├── ")
+        local next_prefix=$([[ "$is_last" == "true" ]] && echo "$prefix    " || echo "$prefix│   ")
+        
+        if [[ -d "$entry" ]]; then
+            echo "$prefix$tree_char$timestamp $basename/"
+            build_tree "$entry" "$next_prefix" "$max_depth" $((current_depth + 1))
+        else
+            echo "$prefix$tree_char$timestamp $basename"
+        fi
+    done
+}
+
+# File inspection
+inspect_files() {
+    local path="${1:-.}"
+    local show_tree="${2:-false}"
+    local show_extended="${3:-false}"
+    
+    blue "[INFO] File listing for: $path"
+    echo "----------------------------------------"
+    
+    if [[ "$show_tree" == "true" ]]; then
+        green "Directory tree (sorted by time):"
+        echo "$path/"
+        build_tree "$path" "" $([ "$show_extended" == "true" ] && echo 5 || echo 3)
+    else
+        green "Files (newest first):"
+        ls -lat --time-style='+%m-%d %H:%M' "$path" 2>/dev/null | head -$([ "$show_extended" == "true" ] && echo 25 || echo 15)
+    fi
+    
+    if [[ "$show_extended" == "true" ]]; then
+        echo
+        green "Directory analysis:"
+        echo "Top directories by size:"
+        du -sh "$path"/*/ 2>/dev/null | sort -hr | head -10 || echo "  No subdirectories"
+        
+        echo
+        local total_files=$(find "$path" -type f 2>/dev/null | wc -l)
+        local total_dirs=$(find "$path" -type d 2>/dev/null | wc -l)
+        local total_size=$(du -sh "$path" 2>/dev/null | cut -f1)
+        echo "Statistics:"
+        echo "  Files: $total_files | Directories: $total_dirs | Size: $total_size"
+        
+        if git -C "$path" rev-parse --git-dir >/dev/null 2>&1; then
+            echo
+            cyan "Git status:"
+            git -C "$path" status -s 2>/dev/null | head -10
+        fi
+    fi
+    
+    green "[OK] File listing completed"
+}
+
+# Network inspection
+inspect_network() {
+    local show_extended="${1:-false}"
+    
+    blue "[INFO] Network connection analysis"
+    echo "----------------------------------------"
+    
+    green "Active connections:"
+    if command -v ss >/dev/null 2>&1; then
+        ss -tun 2>/dev/null | head -$([ "$show_extended" == "true" ] && echo 20 || echo 10)
+        
+        if [[ "$show_extended" == "true" ]]; then
+            echo
+            green "Listening services:"
+            escalate_privilege "ss -tlnp 2>/dev/null | grep LISTEN" \
+                "Show listening services with process names" \
+                "ss -tln 2>/dev/null | grep LISTEN"
+        fi
+    else
+        netstat -tun 2>/dev/null | head -$([ "$show_extended" == "true" ] && echo 20 || echo 10)
+    fi
+    
+    if [[ "$show_extended" == "true" ]]; then
+        echo
+        green "Network statistics:"
+        echo "Connection states:"
+        ss -tan 2>/dev/null | awk '{print $1}' | sort | uniq -c | sort -nr || true
+    fi
+    
+    green "[OK] Network analysis completed"
+}
+
+# ============================================================================
+# BOOT MANAGEMENT MODULE (from squishBootReset)
+# ============================================================================
+
+# Boot configuration
+readonly ESP_MOUNT="/boot"
+readonly UKI_NAME="direct-boot"
+readonly KERNEL_PKG="linux-hardened"
+readonly BACKUP_DIR="$CONFIG_DIR/boot-backups"
+
+# LUKS detection
+detect_luks() {
+    local luks_found=false
+    
+    blue "=== LUKS Configuration Analysis ==="
+    
+    # Check mapped devices
+    for mapper in cryptroot root crypthome home; do
+        if [[ -e "/dev/mapper/$mapper" ]]; then
+            green "Found mapped device: /dev/mapper/$mapper"
+            luks_found=true
+        fi
+    done
+    
+    # Check crypttab
+    if [[ -f /etc/crypttab ]]; then
+        echo "Crypttab entries:"
+        grep -v '^#' /etc/crypttab | grep -v '^$' || echo "  (empty)"
+    fi
+    
+    # Scan for LUKS devices
+    echo "Scanning for LUKS devices:"
+    for device in $(lsblk -rno NAME,TYPE | grep -E 'part|disk' | cut -d' ' -f1); do
+        if escalate_privilege "cryptsetup isLuks /dev/$device 2>/dev/null" \
+           "Check if /dev/$device is LUKS" \
+           "true"; then
+            green "  LUKS device: /dev/$device"
+            luks_found=true
+        fi
+    done 2>/dev/null
+    
+    return $([ "$luks_found" = true ] && echo 0 || echo 1)
+}
+
+# Check ESP filesystem
+check_esp() {
+    local esp_device
+    esp_device=$(findmnt -n -o SOURCE "$ESP_MOUNT" 2>/dev/null)
+    
+    if [[ -z "$esp_device" ]]; then
+        red "ESP not mounted at $ESP_MOUNT"
+        return 1
+    fi
+    
+    local esp_fstype
+    esp_fstype=$(findmnt -n -o FSTYPE "$ESP_MOUNT")
+    
+    if [[ "$esp_fstype" != "vfat" ]]; then
+        yellow "ESP filesystem is not FAT32: $esp_fstype"
+        echo -n "Reformat ESP to FAT32? (type 'REFORMAT'): "
+        read -r response
+        
+        if [[ "$response" == "REFORMAT" ]]; then
+            local backup="$BACKUP_DIR/esp-reformat-$(date +%Y%m%d-%H%M%S)"
+            escalate_privilege "mkdir -p '$backup' && cp -r '$ESP_MOUNT'/* '$backup/'" "Backup ESP"
+            escalate_privilege "umount '$ESP_MOUNT' && mkfs.fat -F32 '$esp_device' && mount '$esp_device' '$ESP_MOUNT'" "Reformat ESP"
+        else
+            return 1
+        fi
+    fi
+    
+    return 0
+}
+
+# Check mkinitcpio hooks
+check_initcpio_hooks() {
+    local config="/etc/mkinitcpio.conf"
+    local needs_update=false
+    
+    blue "=== Checking mkinitcpio hooks ==="
+    
+    local current_hooks=$(grep '^HOOKS=' "$config" | sed 's/HOOKS=//')
+    echo "Current: $current_hooks"
+    
+    if echo "$current_hooks" | grep -q -E '(systemd|sd-vconsole|sd-encrypt)'; then
+        needs_update=true
+        local new_hooks=$(echo "$current_hooks" | sed 's/systemd/udev/g' | sed 's/sd-vconsole/keymap consolefont/g' | sed 's/sd-encrypt/encrypt/g')
+        
+        echo
+        cyan "Suggested changes:"
+        echo "- $current_hooks"
+        echo "+ $new_hooks"
+        echo
+        echo -n "Apply changes? (y/N): "
+        read -r response
+        
+        if [[ "$response" =~ ^[Yy]$ ]]; then
+            escalate_privilege "cp '$config' '$config.bak' && sed -i 's|^HOOKS=.*|HOOKS=$new_hooks|' '$config' && mkinitcpio -P" \
+                "Update mkinitcpio hooks and regenerate"
+        fi
+    else
+        green "Hooks are correct (no systemd)"
+    fi
+}
+
+# Boot verification
+verify_boot() {
+    blue "=== Boot Configuration Status ==="
+    
+    local status=0
+    
+    # ESP
+    if mountpoint -q "$ESP_MOUNT"; then
+        green "[PASS] ESP mounted at $ESP_MOUNT"
+    else
+        red "[FAIL] ESP not mounted"
+        ((status++))
+    fi
+    
+    # rEFInd
+    if [[ -f "$ESP_MOUNT/EFI/refind/refind_x64.efi" ]]; then
+        green "[PASS] rEFInd installed"
+    else
+        red "[FAIL] rEFInd not found"
+        ((status++))
+    fi
+    
+    # UKI
+    if [[ -f "$ESP_MOUNT/EFI/Linux/$UKI_NAME.efi" ]]; then
+        green "[PASS] UKI present: $UKI_NAME.efi"
+    else
+        red "[FAIL] UKI missing"
+        ((status++))
+    fi
+    
+    # Hooks
+    if grep '^HOOKS=' /etc/mkinitcpio.conf | grep -q -E '(systemd|sd-encrypt)'; then
+        yellow "[WARN] systemd hooks present"
+    else
+        green "[PASS] No systemd hooks"
+    fi
+    
+    echo
+    echo "UEFI entries:"
+    efibootmgr | grep -E '^Boot[0-9]{4}' || echo "  No entries found"
+    
+    return $status
+}
+
+# ============================================================================
+# MAIN INTERFACE
+# ============================================================================
+
+show_help() {
+    green "squishUtils v$SQUISH_VERSION - Combined System Management"
+    echo
+    bold "SYSTEM INSPECTION:"
+    yellow "  ls [path] [-t] [-e]    - File listing (time-sorted)"
+    echo "    -t                    Tree view"
+    echo "    -e                    Extended info"
+    yellow "  net [-e]               - Network connections"
+    yellow "  all [path] [-e]        - Combined overview"
+    echo
+    bold "BOOT MANAGEMENT:"
+    yellow "  boot status            - Check boot configuration"
+    yellow "  boot verify            - Detailed verification"
+    yellow "  boot hooks             - Check/fix mkinitcpio"
+    yellow "  boot luks              - LUKS configuration"
+    echo
+    bold "GLOBAL OPTIONS:"
+    yellow "  -h, --help             - Show this help"
+    yellow "  -v, --version          - Show version"
+    echo
+    cyan "Examples:"
+    echo "  $0 ls -te              # Tree view with extended info"
+    echo "  $0 net -e              # Extended network analysis"
+    echo "  $0 boot verify         # Check boot system"
+}
+
+# Main entry point
+main() {
+    init_squish
+    
+    # Parse global options
+    case "${1:-}" in
+        -h|--help|help)
+            show_help
+            exit 0
+            ;;
+        -v|--version)
+            echo "squishUtils v$SQUISH_VERSION"
+            exit 0
+            ;;
+    esac
+    
+    # Route to appropriate module
+    case "${1:-}" in
+        ls)
+            shift
+            local path="."
+            local show_tree=false
+            local show_extended=false
+            
+            while [[ $# -gt 0 ]]; do
+                case $1 in
+                    -t*) show_tree=true; [[ "$1" == *e* ]] && show_extended=true ;;
+                    -e*) show_extended=true; [[ "$1" == *t* ]] && show_tree=true ;;
+                    *) [[ -e "$1" ]] && path="$1" ;;
+                esac
+                shift
+            done
+            
+            inspect_files "$path" "$show_tree" "$show_extended"
+            ;;
+            
+        net)
+            shift
+            local show_extended=false
+            [[ "${1:-}" == "-e" ]] && show_extended=true
+            inspect_network "$show_extended"
+            ;;
+            
+        all)
+            shift
+            local path="."
+            local show_extended=false
+            
+            while [[ $# -gt 0 ]]; do
+                case $1 in
+                    -e) show_extended=true ;;
+                    *) [[ -e "$1" ]] && path="$1" ;;
+                esac
+                shift
+            done
+            
+            blue "[INFO] System Overview"
+            echo "========================================"
+            echo "Time: $(date '+%Y-%m-%d %H:%M:%S')"
+            echo "Uptime: $(uptime -p 2>/dev/null | sed 's/up //')"
+            echo "Load: $(cat /proc/loadavg | cut -d' ' -f1-3)"
+            echo
+            inspect_files "$path" false "$show_extended"
+            echo
+            inspect_network "$show_extended"
+            ;;
+            
+        boot)
+            shift
+            case "${1:-status}" in
+                status) verify_boot ;;
+                verify) check_esp && detect_luks && check_initcpio_hooks && verify_boot ;;
+                hooks) check_initcpio_hooks ;;
+                luks) detect_luks ;;
+                *) red "Unknown boot command: $1" ;;
+            esac
+            ;;
+            
+        *)
+            red "Unknown command: ${1:-}"
+            show_help
+            exit 1
+            ;;
+    esac
+}
+
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

@@ -1,0 +1,11 @@
+00:1f.0 0601: 8086:a2c9
+	DeviceName: Onboard - Other
+	Subsystem: 1462:7b48
+00:1f.2 0580: 8086:a2a1
+	DeviceName: Onboard - Other
+	Subsystem: 1462:7b48
+00:1f.4 0c05: 8086:a2a3
+	DeviceName: Onboard - Other
+	Subsystem: 1462:7b48
+	Kernel driver in use: i801_smbus
+	Kernel modules: i2c_i801

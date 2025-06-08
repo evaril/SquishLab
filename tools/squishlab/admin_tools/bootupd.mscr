@@ -1,0 +1,176 @@
+#!/bin/bash
+# update-bootimages.sh — Build initramfs, create UKI, sign binaries, and update boot entries
+set -euo pipefail
+
+# Allow specifying kernel name as argument (e.g. "linux-surface"). If none, auto-detect.
+if [[ $# -gt 0 ]]; then 
+    KERNEL_NAME="$1"
+    KERNEL_IMG="/boot/vmlinuz-$KERNEL_NAME"
+else
+    # Auto-pick the first vmlinuz-* in /boot (excluding possible rescue images)
+    KERNEL_IMG="$(find /boot -maxdepth 1 -name 'vmlinuz-*' ! -name '*rescue*' | head -n 1)"
+    KERNEL_NAME="${KERNEL_IMG#/boot/vmlinuz-}"
+fi
+
+if [[ ! -e "$KERNEL_IMG" ]]; then
+    echo "Error: Kernel image not found: $KERNEL_IMG" >&2
+    exit 1
+fi
+
+echo "Using kernel: $KERNEL_IMG (KERNEL_NAME='$KERNEL_NAME')"
+
+# Determine kernel version for mkinitcpio (optional: extract from /lib/modules)
+# If mkinitcpio is given the image path, it will infer version; otherwise, get version string:
+KERNEL_VERSION="$KERNEL_NAME"
+# If the kernel name is not the version, try to get the actual version from modules directory:
+if [[ ! -d "/lib/modules/$KERNEL_VERSION" ]]; then
+    # Look for a modules dir matching the kernel name as part of version
+    mod_dir=$(find /lib/modules -maxdepth 1 -type d -name "*${KERNEL_NAME}*")
+    if [[ -n "$mod_dir" ]]; then 
+        KERNEL_VERSION="$(basename "$mod_dir")"
+    fi
+fi
+
+# 1. Build initramfs images (normal and fallback) for the kernel
+echo "Building initramfs for kernel version: $KERNEL_VERSION ..."
+# Normal initramfs (with autodetect)
+mkinitcpio -k "$KERNEL_IMG" -g "/boot/initramfs-${KERNEL_NAME}.img"
+# Fallback initramfs (no autodetect, includes all modules)
+mkinitcpio -k "$KERNEL_IMG" -g "/boot/initramfs-${KERNEL_NAME}-fallback.img" -S autodetect
+
+# Ensure microcode images are present (from intel-ucode or amd-ucode packages)
+INTEL_UCODE=/boot/intel-ucode.img
+AMD_UCODE=/boot/amd-ucode.img
+[[ -f "$INTEL_UCODE" ]] && echo "Intel CPU microcode found."
+[[ -f "$AMD_UCODE" ]] && echo "AMD CPU microcode found."
+
+# 2. Create unified kernel image (UKI) combining kernel + microcode + initramfs
+EFI_DIR=/efi/EFI/Linux
+mkdir -p "$EFI_DIR"
+UKI_NAME="${KERNEL_NAME}.efi"
+UKI_PATH="${EFI_DIR}/${UKI_NAME}"
+
+# Prepare kernel command line for embedding
+CMDLINE_FILE=/etc/kernel/cmdline
+if [[ -f "$CMDLINE_FILE" ]]; then
+    echo "Using kernel cmdline from $CMDLINE_FILE"
+else
+    echo "No $CMDLINE_FILE, using current /proc/cmdline as template."
+    # Exclude any initrd= references from current cmdline before writing
+    grep -ao '^[^#]*' /proc/cmdline | sed -e 's/initrd=[^ ]*//g' > "$CMDLINE_FILE"
+    echo "# Created by update-bootimages.sh" >> "$CMDLINE_FILE"
+fi
+
+# Include OS release info (for boot menu integration, optional)
+OS_RELEASE=/etc/os-release
+[[ -f "$OS_RELEASE" ]] || OS_RELEASE=/usr/lib/os-release  # fallback
+
+# Optional splash image (BMP) for systemd-boot graphical splash
+SPLASH_IMG=/usr/share/systemd/bootctl/splash-arch.bmp   # Arch logo (adjustable)
+if [[ -f "$SPLASH_IMG" ]]; then
+    echo "Including boot splash: $SPLASH_IMG"
+    SPLASH_OPT=(--add-section .splash="$SPLASH_IMG" --change-section-vma .splash=0x40000)
+else
+    SPLASH_OPT=()
+fi
+
+echo "Creating unified EFI binary at ${UKI_PATH} ..."
+objcopy \
+    --add-section .osrel="$OS_RELEASE" --change-section-vma .osrel=0x20000 \
+    --add-section .cmdline="$CMDLINE_FILE" --change-section-vma .cmdline=0x30000 \
+    "${SPLASH_OPT[@]}" \
+    --add-section .linux="$KERNEL_IMG" --change-section-vma .linux=0x2000000 \
+    --add-section .initrd=/dev/fd/0 --change-section-vma .initrd=0x3000000 \
+    "$(pacman -Ql systemd | grep -m1 'linuxx64\\.efi.stub' | awk '{print $2}')" "$UKI_PATH" \
+    < <(cat $( [[ -f "$INTEL_UCODE" ]] && echo "$INTEL_UCODE") $( [[ -f "$AMD_UCODE" ]] && echo "$AMD_UCODE") "/boot/initramfs-${KERNEL_NAME}.img" )
+
+# Note: We feed objcopy via process substitution: microcode(s) + initramfs form the .initrd section:contentReference[oaicite:19]{index=19}.
+# The systemd stub (linuxx64.efi.stub) is provided by systemd (we locate it via pacman), and contains the EFI header.
+
+# 3. Copy kernel and initramfs (and microcode) to ESP for traditional boot
+echo "Copying kernel and initramfs to ESP ($EFI_DIR)..."
+cp "$KERNEL_IMG" "${EFI_DIR}/vmlinuz-${KERNEL_NAME}"
+cp "/boot/initramfs-${KERNEL_NAME}.img" "${EFI_DIR}/initramfs-${KERNEL_NAME}.img"
+cp "/boot/initramfs-${KERNEL_NAME}-fallback.img" "${EFI_DIR}/initramfs-${KERNEL_NAME}-fallback.img"
+[[ -f "$INTEL_UCODE" ]] && cp "$INTEL_UCODE" "${EFI_DIR}/"
+[[ -f "$AMD_UCODE" ]] && cp "$AMD_UCODE" "${EFI_DIR}/"
+
+# 4. Sign the unified kernel image, kernel, and bootloader using DB key
+echo "Signing EFI binaries with DB key..."
+DB_KEY=./DB.key
+DB_CRT=./DB.crt
+# (Adjust above paths if keys are stored elsewhere. Keys must be accessible to sign.)
+
+# Sign unified kernel image (.efi)
+sbsign --key "$DB_KEY" --cert "$DB_CRT" --output "${UKI_PATH}.signed" "$UKI_PATH"
+mv "${UKI_PATH}.signed" "$UKI_PATH"
+echo "Signed unified kernel: $UKI_PATH"
+
+# Sign standalone kernel image
+KERNEL_ESPF="${EFI_DIR}/vmlinuz-${KERNEL_NAME}"
+sbsign --key "$DB_KEY" --cert "$DB_CRT" --output "${KERNEL_ESPF}.signed" "$KERNEL_ESPF"
+mv "${KERNEL_ESPF}.signed" "$KERNEL_ESPF"
+echo "Signed kernel image: $KERNEL_ESPF"
+
+# Sign systemd-boot bootloader (if not already signed)
+BOOTLOADER="/efi/EFI/systemd/systemd-bootx64.efi"
+if [[ -f "$BOOTLOADER" ]]; then
+    sbsign --key "$DB_KEY" --cert "$DB_CRT" --output "${BOOTLOADER}.signed" "$BOOTLOADER"
+    mv "${BOOTLOADER}.signed" "$BOOTLOADER"
+    echo "Signed bootloader: $BOOTLOADER"
+fi
+# Also sign the fallback copy of bootloader if present
+BOOT_FALLBACK="/efi/EFI/BOOT/BOOTX64.EFI"
+if [[ -f "$BOOT_FALLBACK" ]]; then
+    sbsign --key "$DB_KEY" --cert "$DB_CRT" --output "${BOOT_FALLBACK}.signed" "$BOOT_FALLBACK"
+    mv "${BOOT_FALLBACK}.signed" "$BOOT_FALLBACK"
+    echo "Signed fallback bootloader: $BOOT_FALLBACK"
+fi
+
+# 5. Update systemd-boot loader entry files
+echo "Updating systemd-boot loader entries..."
+ENTRIES_DIR=/efi/loader/entries
+mkdir -p "$ENTRIES_DIR"
+# Define titles for menu
+TITLE="Arch Linux ($KERNEL_NAME)"
+TITLE_FALLBACK="Arch Linux ($KERNEL_NAME Fallback)"
+TITLE_UNIFIED="Arch Linux ($KERNEL_NAME Unified)"
+
+# Traditional entry (normal)
+cat > "${ENTRIES_DIR}/${KERNEL_NAME}.conf" <<EOF
+title   ${TITLE}
+linux   /EFI/Linux/vmlinuz-${KERNEL_NAME}
+initrd  /EFI/Linux/$(basename "$INTEL_UCODE")
+initrd  /EFI/Linux/$(basename "$AMD_UCODE")
+initrd  /EFI/Linux/initramfs-${KERNEL_NAME}.img
+options $(grep -Ev '^\s*$|^#' "$CMDLINE_FILE")
+EOF
+
+# Traditional entry (fallback)
+cat > "${ENTRIES_DIR}/${KERNEL_NAME}-fallback.conf" <<EOF
+title   ${TITLE_FALLBACK}
+linux   /EFI/Linux/vmlinuz-${KERNEL_NAME}
+initrd  /EFI/Linux/$(basename "$INTEL_UCODE")
+initrd  /EFI/Linux/$(basename "$AMD_UCODE")
+initrd  /EFI/Linux/initramfs-${KERNEL_NAME}-fallback.img
+options $(grep -Ev '^\s*$|^#' "$CMDLINE_FILE")
+EOF
+
+# Unified entry
+cat > "${ENTRIES_DIR}/${KERNEL_NAME}-UKI.conf" <<EOF
+title   ${TITLE_UNIFIED}
+efi     /EFI/Linux/${UKI_NAME}
+EOF
+
+echo "Boot entries created for '${TITLE}', '${TITLE_FALLBACK}', and unified image."
+echo "You can remove or comment out microcode lines in entries if not applicable."
+
+# 6. Verify signatures on the signed binaries (integrity check)
+echo "Verifying signatures with sbverify..."
+sbverify --cert "$DB_CRT" "$UKI_PATH"   || { echo "ERROR: Unified kernel not correctly signed!"; exit 1; }
+sbverify --cert "$DB_CRT" "$KERNEL_ESPF" || { echo "ERROR: Kernel image not correctly signed!"; exit 1; }
+if [[ -f "$BOOTLOADER" ]]; then
+    sbverify --cert "$DB_CRT" "$BOOTLOADER" || echo "Warning: Bootloader signature verification failed."
+fi
+
+echo "All done. Secure Boot images are updated and signed."

@@ -1,0 +1,6 @@
+# First clear everything
+sudo systemctl stop homeassistant && \
+sudo -u homeassistant rm -f /opt/homeassistant/config/.storage/*nest* && \
+sudo -u homeassistant rm -f /opt/homeassistant/config/.storage/*google* && \
+sudo -u homeassistant rm -f /opt/homeassistant/config/.storage/config_flow && \
+sudo systemctl start homeassistant

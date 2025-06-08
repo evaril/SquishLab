@@ -1,0 +1,844 @@
+#!/bin/bash
+
+# VM Tunnel Manager - Production-ready SSH tunnel automation (Interactive Sudo Version)
+# Handles common SSH/VM configuration issues with interactive sudo prompts
+# Usage: ./vm-tunnel-manager.sh <vm-index>
+
+set -euo pipefail
+
+# ========== CONFIGURATION ==========
+readonly SCRIPT_NAME="$(basename "$0")"
+readonly VERSION="2.1"
+readonly SERVICE_NAME="windows.service"
+readonly SERVICE_FILE="$HOME/.config/systemd/user/$SERVICE_NAME"
+readonly CONFIG_DIR="$HOME/.config/systemd/user"
+
+# VM Configuration
+readonly MAX_VM_INDEX=9
+readonly MIN_VM_INDEX=0
+readonly VNC_BASE_PORT=11001
+readonly SPICE_BASE_PORT=11010
+
+# Remote server configuration
+readonly REMOTE_HOST="192.168.72.54"
+readonly REMOTE_PORT="7717"
+readonly REMOTE_USER="evm"
+readonly SSH_OPTS="-o ConnectTimeout=15 -o BatchMode=no -o PasswordAuthentication=yes -o StrictHostKeyChecking=accept-new"
+
+# Global state
+BACKUP_FILE=""
+VM_INDEX=""
+VNC_PORT=""
+SPICE_PORT=""
+CHANGES_MADE=false
+VALIDATION_ERRORS=()
+VALIDATION_WARNINGS=()
+
+# ========== LOGGING FUNCTIONS ==========
+log_info() { echo "[INFO] $*"; }
+log_warn() { echo "[WARN] $*" >&2; }
+log_error() { echo "[ERROR] $*" >&2; }
+log_success() { echo "[OK] $*"; }
+log_fail() { echo "[FAIL] $*"; }
+log_check() { echo "[CHECK] $*"; }
+
+log_debug() {
+    if [[ "${DEBUG:-}" == "1" ]]; then
+        echo "[DEBUG] $*" >&2
+    fi
+}
+
+# ========== UTILITY FUNCTIONS ==========
+show_usage() {
+    cat << EOF
+VM Tunnel Manager v$VERSION - Complete SSH tunnel automation (Interactive Sudo)
+
+Usage: $SCRIPT_NAME <vm-index>
+
+Arguments:
+    vm-index    VM index number ($MIN_VM_INDEX-$MAX_VM_INDEX)
+
+Examples:
+    $SCRIPT_NAME 0    # VM0 (VNC: 11000, SPICE: 11010)
+    $SCRIPT_NAME 2    # VM2 (VNC: 11002, SPICE: 11012)
+
+Features:
+- Comprehensive pre-validation of all requirements
+- SSH server configuration verification and guidance
+- Interactive sudo prompts for remote operations
+- Automatic VM management on remote server
+- Robust error handling with specific resolution steps
+- Idempotent operation (safe to run multiple times)
+
+Environment Variables:
+    DEBUG=1           Verbose debug output
+    SKIP_REMOTE=1     Local tunnel setup only
+    
+Configuration:
+    Remote: $REMOTE_USER@$REMOTE_HOST:$REMOTE_PORT
+    Local Service: $SERVICE_FILE
+    Port Range: VNC $VNC_BASE_PORT-$((VNC_BASE_PORT + MAX_VM_INDEX)), SPICE $SPICE_BASE_PORT-$((SPICE_BASE_PORT + MAX_VM_INDEX))
+
+Note: This version prompts for sudo password when needed instead of requiring passwordless sudo.
+EOF
+}
+
+get_vm_name() {
+    case "$1" in
+        0) echo "windows10-clean" ;;
+        1) echo "10-R2D2" ;;
+        *) echo "vm$1" ;;
+    esac
+}
+
+# ========== VALIDATION FRAMEWORK ==========
+add_error() {
+    VALIDATION_ERRORS+=("$1")
+    log_fail "$1"
+}
+
+add_warning() {
+    VALIDATION_WARNINGS+=("$1")
+    log_warn "$1"
+}
+
+add_success() {
+    log_success "$1"
+}
+
+# ========== INPUT VALIDATION ==========
+validate_input() {
+    local input="$1"
+    
+    if [[ -z "$input" ]]; then
+        add_error "No VM index provided"
+        return 1
+    fi
+    
+    if ! [[ "$input" =~ ^[0-9]+$ ]]; then
+        add_error "VM index must be numeric, got: '$input'"
+        return 1
+    fi
+    
+    if [[ "$input" -lt $MIN_VM_INDEX ]] || [[ "$input" -gt $MAX_VM_INDEX ]]; then
+        add_error "VM index must be $MIN_VM_INDEX-$MAX_VM_INDEX, got: $input"
+        return 1
+    fi
+    
+    add_success "VM index $input is valid"
+    return 0
+}
+
+# ========== LOCAL ENVIRONMENT VALIDATION ==========
+validate_local_environment() {
+    local errors=0
+    
+    # Check systemctl
+    if ! command -v systemctl >/dev/null 2>&1; then
+        add_error "systemctl not found - systemd required"
+        ((errors++))
+    else
+        add_success "systemctl available"
+    fi
+    
+    # Check user systemd
+    if ! systemctl --user status >/dev/null 2>&1; then
+        add_error "User systemd not running"
+        ((errors++))
+    else
+        add_success "User systemd running"
+    fi
+    
+    # Check/create config directory
+    if [[ ! -d "$CONFIG_DIR" ]]; then
+        if mkdir -p "$CONFIG_DIR" 2>/dev/null; then
+            add_success "Created systemd config directory"
+        else
+            add_error "Cannot create config directory: $CONFIG_DIR"
+            ((errors++))
+        fi
+    else
+        add_success "Systemd config directory exists"
+    fi
+    
+    # Validate service file if it exists
+    if [[ -f "$SERVICE_FILE" ]]; then
+        if [[ ! -r "$SERVICE_FILE" ]]; then
+            add_error "Service file not readable: $SERVICE_FILE"
+            ((errors++))
+        elif [[ ! -w "$SERVICE_FILE" ]]; then
+            add_error "Service file not writable (check ownership): $SERVICE_FILE"
+            ((errors++))
+        elif ! grep -q "^ExecStart=" "$SERVICE_FILE"; then
+            add_error "Service file malformed (no ExecStart line)"
+            ((errors++))
+        else
+            add_success "Service file valid"
+        fi
+    else
+        add_success "Service file will be created"
+    fi
+    
+    return $errors
+}
+
+# ========== NETWORK & SSH VALIDATION ==========
+validate_network_connectivity() {
+    log_check "Testing network connectivity to $REMOTE_HOST"
+    
+    # Test basic network connectivity
+    if ! timeout 10 ping -c 2 "$REMOTE_HOST" >/dev/null 2>&1; then
+        add_error "Cannot reach remote host $REMOTE_HOST (network/firewall issue)"
+        return 1
+    fi
+    
+    add_success "Network connectivity verified"
+    return 0
+}
+
+validate_ssh_connectivity() {
+    log_check "Testing SSH connectivity"
+    
+    if ! ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "echo 'SSH test successful'" >/dev/null 2>&1; then
+        add_error "SSH connection failed"
+        return 1
+    fi
+    
+    add_success "SSH connectivity verified"
+    return 0
+}
+
+# ========== SSH SERVER CONFIGURATION VALIDATION ==========
+validate_ssh_server_config() {
+    log_check "Analyzing SSH server configuration"
+    
+    local config_issues=0
+    
+    # Check AllowTcpForwarding (critical) - using interactive sudo
+    local tcp_forwarding
+    if tcp_forwarding=$(ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo grep -E '^AllowTcpForwarding|^#AllowTcpForwarding' /etc/ssh/sshd_config 2>/dev/null || echo 'not_found'" 2>/dev/null); then
+        
+        if [[ "$tcp_forwarding" == "not_found" ]]; then
+            add_success "AllowTcpForwarding (default: yes)"
+        elif echo "$tcp_forwarding" | grep -qi "AllowTcpForwarding.*no"; then
+            add_error "SSH server blocks port forwarding (AllowTcpForwarding no)"
+            ((config_issues++))
+        else
+            add_success "AllowTcpForwarding enabled"
+        fi
+    else
+        add_warning "Could not check SSH server configuration (sudo access needed)"
+    fi
+    
+    # Check PermitOpen restrictions - using interactive sudo
+    local permit_open
+    if permit_open=$(ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo grep '^PermitOpen' /etc/ssh/sshd_config 2>/dev/null || echo 'not_set'" 2>/dev/null); then
+        
+        if [[ "$permit_open" == "not_set" ]]; then
+            add_success "PermitOpen (unrestricted)"
+        else
+            add_warning "PermitOpen restrictions detected: $permit_open"
+            # Check if our ports are specifically allowed
+            if ! echo "$permit_open" | grep -q "any\|$VNC_PORT\|$SPICE_PORT"; then
+                add_error "Required ports may be blocked by PermitOpen"
+                ((config_issues++))
+            fi
+        fi
+    else
+        add_warning "Could not check PermitOpen configuration"
+    fi
+    
+    # Check MaxSessions - using interactive sudo
+    local max_sessions
+    if max_sessions=$(ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo grep '^MaxSessions' /etc/ssh/sshd_config 2>/dev/null | awk '{print \$2}' || echo '10'" 2>/dev/null); then
+        
+        if [[ "$max_sessions" -lt 5 ]]; then
+            add_warning "MaxSessions is low ($max_sessions) - may limit concurrent tunnels"
+        else
+            add_success "MaxSessions adequate ($max_sessions)"
+        fi
+    else
+        add_warning "Could not check MaxSessions configuration"
+    fi
+    
+    return $config_issues
+}
+
+# ========== REMOTE ACCESS VALIDATION ==========
+validate_remote_access() {
+    log_check "Validating remote server access capabilities"
+    
+    local errors=0
+    
+    # Test basic command execution
+    if ! ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "whoami" >/dev/null 2>&1; then
+        add_error "Basic remote command execution failed"
+        ((errors++))
+        return $errors
+    fi
+    
+    add_success "Remote command execution works"
+    
+    # Test sudo access (will prompt for password if needed)
+    echo "Testing sudo access (you may be prompted for password)..."
+    if ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "sudo whoami" >/dev/null 2>&1; then
+        add_success "Sudo access confirmed"
+    else
+        add_error "Sudo access failed or not configured"
+        ((errors++))
+    fi
+    
+    # Test virsh access specifically (will prompt for password if needed)
+    if ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "sudo virsh version" >/dev/null 2>&1; then
+        add_success "Virsh access confirmed"
+    else
+        add_error "Virsh/libvirt not accessible"
+        ((errors++))
+    fi
+    
+    return $errors
+}
+
+# ========== VM VALIDATION ==========
+validate_vm_configuration() {
+    local vm_name="$1"
+    log_check "Validating VM '$vm_name'"
+    
+    # Check if VM exists (will prompt for password if needed)
+    if ! ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo virsh dominfo '$vm_name'" >/dev/null 2>&1; then
+        add_error "VM '$vm_name' not found"
+        
+        # List available VMs for guidance
+        local available_vms
+        if available_vms=$(ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+            "sudo virsh list --all 2>/dev/null | tail -n +3 | awk '{print \$2}' | grep -v '^$'" 2>/dev/null); then
+            
+            echo "Available VMs:"
+            echo "$available_vms" | while read -r vm; do
+                echo "  - $vm"
+            done
+        fi
+        return 1
+    fi
+    
+    add_success "VM '$vm_name' found"
+    
+    # Check VM state
+    local vm_state
+    if vm_state=$(ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo virsh domstate '$vm_name'" 2>/dev/null); then
+        
+        case "$vm_state" in
+            "running")
+                add_success "VM '$vm_name' is running"
+                ;;
+            "shut off")
+                add_warning "VM '$vm_name' is stopped (will be started automatically)"
+                ;;
+            *)
+                add_warning "VM '$vm_name' state: $vm_state"
+                ;;
+        esac
+    else
+        add_warning "Could not determine VM state"
+    fi
+    
+    return 0
+}
+
+# ========== COMPREHENSIVE VALIDATION RUNNER ==========
+run_comprehensive_validation() {
+    local total_errors=0
+    
+    echo "VM TUNNEL MANAGER v$VERSION (Interactive Sudo)"
+    echo "=============================================="
+    echo "Target: VM$VM_INDEX ($(get_vm_name "$VM_INDEX")) - VNC:$VNC_PORT, SPICE:$SPICE_PORT"
+    echo ""
+    
+    echo "COMPREHENSIVE VALIDATION"
+    echo "========================"
+    
+    # Input validation
+    log_check "Input parameters"
+    validate_input "$VM_INDEX" || ((total_errors++))
+    
+    # Local environment
+    log_check "Local environment"
+    local local_errors=0
+    validate_local_environment || local_errors=$?
+    total_errors=$((total_errors + local_errors))
+    
+    # Skip remote validation if requested
+    if [[ "${SKIP_REMOTE:-}" == "1" ]]; then
+        add_success "Remote validation skipped (SKIP_REMOTE=1)"
+    else
+        # Network connectivity
+        validate_network_connectivity || ((total_errors++))
+        
+        # SSH connectivity (only if network works)
+        if [[ ${#VALIDATION_ERRORS[@]} -eq $local_errors ]]; then
+            validate_ssh_connectivity || ((total_errors++))
+            
+            # SSH server configuration (only if SSH works)
+            if [[ ${#VALIDATION_ERRORS[@]} -eq $local_errors ]]; then
+                local ssh_config_errors=0
+                validate_ssh_server_config || ssh_config_errors=$?
+                total_errors=$((total_errors + ssh_config_errors))
+                
+                # Remote access (only if SSH config is OK)
+                if [[ $ssh_config_errors -eq 0 ]]; then
+                    local remote_errors=0
+                    validate_remote_access || remote_errors=$?
+                    total_errors=$((total_errors + remote_errors))
+                    
+                    # VM validation (only if remote access works)
+                    if [[ $remote_errors -eq 0 ]]; then
+                        validate_vm_configuration "$(get_vm_name "$VM_INDEX")" || ((total_errors++))
+                    fi
+                fi
+            fi
+        fi
+    fi
+    
+    # Show validation summary
+    echo ""
+    echo "VALIDATION SUMMARY"
+    echo "=================="
+    echo "Total errors: $total_errors"
+    echo "Warnings: ${#VALIDATION_WARNINGS[@]}"
+    
+    if [[ $total_errors -eq 0 ]]; then
+        if [[ ${#VALIDATION_WARNINGS[@]} -gt 0 ]]; then
+            echo ""
+            echo "WARNINGS (non-blocking):"
+            for warning in "${VALIDATION_WARNINGS[@]}"; do
+                echo "  - $warning"
+            done
+        fi
+        
+        echo ""
+        log_success "All critical validations passed - proceeding with setup"
+        return 0
+    else
+        echo ""
+        echo "ERRORS (must be fixed):"
+        for error in "${VALIDATION_ERRORS[@]}"; do
+            echo "  - $error"
+        done
+        
+        show_resolution_guidance
+        return 1
+    fi
+}
+
+# ========== VM MANAGEMENT FUNCTIONS ==========
+ensure_vm_running() {
+    local vm_name="$1"
+    
+    log_info "Checking VM status and starting if needed..."
+    
+    # Get current VM state
+    local vm_state
+    if ! vm_state=$(ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        "sudo virsh domstate '$vm_name'" 2>/dev/null); then
+        log_error "Failed to get VM state"
+        return 1
+    fi
+    
+    case "$vm_state" in
+        "running")
+            log_info "VM '$vm_name' is already running"
+            return 0
+            ;;
+        "shut off")
+            log_info "Starting VM '$vm_name'..."
+            if ssh $SSH_OPTS -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+                "sudo virsh start '$vm_name'" >/dev/null 2>&1; then
+                log_success "VM '$vm_name' started successfully"
+                sleep 5  # Give VM time to initialize
+                return 0
+            else
+                log_error "Failed to start VM '$vm_name'"
+                return 1
+            fi
+            ;;
+        *)
+            log_warn "VM '$vm_name' is in unexpected state: $vm_state"
+            return 1
+            ;;
+    esac
+}
+
+# ========== ERROR RESOLUTION GUIDANCE ==========
+show_resolution_guidance() {
+    echo ""
+    echo "RESOLUTION GUIDANCE"
+    echo "==================="
+    
+    local has_ssh_errors=false
+    local has_sudo_errors=false
+    local has_config_errors=false
+    
+    # Categorize errors for targeted guidance
+    for error in "${VALIDATION_ERRORS[@]}"; do
+        case "$error" in
+            *"SSH connection failed"*|*"Cannot reach remote host"*)
+                has_ssh_errors=true
+                ;;
+            *"Sudo access"*|*"Virsh"*)
+                has_sudo_errors=true
+                ;;
+            *"AllowTcpForwarding"*|*"PermitOpen"*)
+                has_config_errors=true
+                ;;
+        esac
+    done
+    
+    # Provide specific guidance
+    if [[ "$has_ssh_errors" == true ]]; then
+        cat << EOF
+
+SSH CONNECTIVITY ISSUES:
+1. Verify network connection:
+   ping $REMOTE_HOST
+   
+2. Check SSH service on remote server:
+   # On remote server: sudo systemctl status sshd
+   
+3. Configure SSH key authentication:
+   ssh-copy-id -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST
+   
+4. Test manual connection:
+   ssh -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST
+
+EOF
+    fi
+    
+    if [[ "$has_sudo_errors" == true ]]; then
+        cat << EOF
+
+SUDO ACCESS ISSUES:
+1. Ensure user is in sudo group on remote server:
+   ssh -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST
+   sudo usermod -aG sudo $REMOTE_USER
+   
+2. Or configure specific commands (optional):
+   echo '$REMOTE_USER ALL=(ALL) /usr/bin/virsh' | sudo tee /etc/sudoers.d/$REMOTE_USER-virsh
+   
+3. Test sudo access:
+   ssh -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST "sudo whoami"
+
+EOF
+    fi
+    
+    if [[ "$has_config_errors" == true ]]; then
+        cat << EOF
+
+SSH SERVER CONFIGURATION ISSUES:
+1. Enable port forwarding on remote server:
+   ssh -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST
+   sudo nano /etc/ssh/sshd_config
+   
+   # Change or add:
+   AllowTcpForwarding yes
+   
+   # Restart SSH daemon:
+   sudo systemctl restart sshd
+   
+2. Remove port restrictions (if any):
+   # Comment out or modify PermitOpen lines
+   
+3. Verify configuration:
+   sudo sshd -T | grep -i allowtcp
+
+EOF
+    fi
+    
+    echo "After fixing issues, run: $SCRIPT_NAME $VM_INDEX"
+}
+
+# ========== SERVICE MANAGEMENT ==========
+create_base_service() {
+    log_info "Creating base SSH tunnel service"
+    
+    cat > "$SERVICE_FILE" << EOF
+[Unit]
+Description=SSH Tunnel to Home Server for VMs
+Wants=ssh-agent.service
+After=ssh-agent.service
+
+[Service]
+Type=simple
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh -N -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -o ExitOnForwardFailure=yes -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+EOF
+    
+    systemctl --user daemon-reload
+    systemctl --user enable "$SERVICE_NAME"
+    log_info "Base service created and enabled"
+}
+
+create_backup() {
+    local timestamp
+    timestamp="$(date +%Y%m%d_%H%M%S)"
+    BACKUP_FILE="$SERVICE_FILE.backup.$timestamp"
+    
+    if ! cp "$SERVICE_FILE" "$BACKUP_FILE" 2>/dev/null; then
+        log_error "Failed to create backup"
+        return 1
+    fi
+    
+    log_info "Created backup: $(basename "$BACKUP_FILE")"
+    return 0
+}
+
+check_existing_ports() {
+    if [[ ! -f "$SERVICE_FILE" ]]; then
+        return 1
+    fi
+    
+    local current_exec
+    current_exec="$(grep "^ExecStart=" "$SERVICE_FILE")"
+    
+    if echo "$current_exec" | grep -q "\-L $VNC_PORT:localhost:$VNC_PORT" && \
+       echo "$current_exec" | grep -q "\-L $SPICE_PORT:localhost:$SPICE_PORT"; then
+        return 2  # Both ports already configured
+    fi
+    
+    return 0  # Needs updates
+}
+
+update_service_file() {
+    local current_exec new_ports updated_exec
+    
+    current_exec="$(grep "^ExecStart=" "$SERVICE_FILE")"
+    new_ports=""
+    
+    if ! echo "$current_exec" | grep -q "\-L $VNC_PORT:localhost:$VNC_PORT"; then
+        new_ports="$new_ports -L $VNC_PORT:localhost:$VNC_PORT"
+        log_info "Adding VNC port forwarding: $VNC_PORT"
+        CHANGES_MADE=true
+    fi
+    
+    if ! echo "$current_exec" | grep -q "\-L $SPICE_PORT:localhost:$SPICE_PORT"; then
+        new_ports="$new_ports -L $SPICE_PORT:localhost:$SPICE_PORT"
+        log_info "Adding SPICE port forwarding: $SPICE_PORT"
+        CHANGES_MADE=true
+    fi
+    
+    if [[ -z "$new_ports" ]]; then
+        log_info "Port configuration already up to date"
+        return 0
+    fi
+    
+    updated_exec="$(echo "$current_exec" | sed "s/ -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST/$new_ports -p $REMOTE_PORT $REMOTE_USER@$REMOTE_HOST/")"
+    
+    if ! sed -i "s|^ExecStart=.*|$updated_exec|" "$SERVICE_FILE"; then
+        log_error "Failed to update service file"
+        return 1
+    fi
+    
+    log_info "Service configuration updated"
+    return 0
+}
+
+restart_service() {
+    log_info "Reloading systemd configuration"
+    systemctl --user daemon-reload
+    
+    log_info "Restarting tunnel service"
+    if ! systemctl --user restart "$SERVICE_NAME"; then
+        log_error "Failed to restart service"
+        systemctl --user status "$SERVICE_NAME" --no-pager -l || true
+        return 1
+    fi
+    
+    sleep 3
+    return 0
+}
+
+verify_service_health() {
+    local status
+    status="$(systemctl --user is-active "$SERVICE_NAME" 2>/dev/null || echo "inactive")"
+    
+    case "$status" in
+        "active")
+            log_success "Service is running normally"
+            return 0
+            ;;
+        "failed")
+            log_error "Service failed to start"
+            echo "Recent logs:"
+            systemctl --user status "$SERVICE_NAME" --no-pager -l || true
+            return 1
+            ;;
+        *)
+            log_warn "Service status: $status"
+            systemctl --user status "$SERVICE_NAME" --no-pager -l || true
+            return 1
+            ;;
+    esac
+}
+
+# ========== RESULTS DISPLAY ==========
+show_final_status() {
+    echo ""
+    echo "TUNNEL STATUS"
+    echo "============="
+    
+    local found_tunnels=false
+    while IFS= read -r line; do
+        if [[ -n "$line" ]]; then
+            local port proto vm_num
+            port="$(echo "$line" | awk '{print $5}' | cut -d: -f2)"
+            
+            if [[ "$port" -ge $VNC_BASE_PORT && "$port" -le $(($VNC_BASE_PORT + $MAX_VM_INDEX)) ]]; then
+                vm_num=$((port - VNC_BASE_PORT))
+                proto="VNC"
+                found_tunnels=true
+            elif [[ "$port" -ge $SPICE_BASE_PORT && "$port" -le $(($SPICE_BASE_PORT + $MAX_VM_INDEX)) ]]; then
+                vm_num=$((port - SPICE_BASE_PORT))
+                proto="SPICE"
+                found_tunnels=true
+            else
+                continue
+            fi
+            
+            echo "$proto VM$vm_num: localhost:$port"
+        fi
+    done < <(ss -tuln 2>/dev/null | grep ":110[0-9][0-9] " | sort || true)
+    
+    if [[ "$found_tunnels" == false ]]; then
+        echo "No active tunnels detected"
+    fi
+    
+    echo ""
+    echo "CONNECTION COMMANDS"
+    echo "==================="
+    echo "VNC:   vncviewer localhost:$VNC_PORT"
+    echo "SPICE: remote-viewer spice://localhost:$SPICE_PORT"
+    echo ""
+    echo "Alternative clients:"
+    echo "  remmina vnc://localhost:$VNC_PORT"
+    echo "  vinagre localhost:$VNC_PORT"
+    
+    echo ""
+    echo "FINAL SUMMARY"
+    echo "============="
+    echo "VM: $VM_INDEX ($(get_vm_name "$VM_INDEX"))"
+    echo "Ports: VNC=$VNC_PORT, SPICE=$SPICE_PORT"
+    echo "Changes: $CHANGES_MADE"
+    echo "Status: $(systemctl --user is-active "$SERVICE_NAME" 2>/dev/null || echo "unknown")"
+    if [[ -n "$BACKUP_FILE" ]]; then
+        echo "Backup: $(basename "$BACKUP_FILE")"
+    fi
+}
+
+# ========== CLEANUP & ERROR HANDLING ==========
+cleanup() {
+    local exit_code=$?
+    
+    if [[ $exit_code -ne 0 && "$CHANGES_MADE" == true && -n "$BACKUP_FILE" ]]; then
+        echo ""
+        log_warn "Setup failed after making changes"
+        log_info "To restore: cp '$BACKUP_FILE' '$SERVICE_FILE'"
+        log_info "Then: systemctl --user daemon-reload && systemctl --user restart $SERVICE_NAME"
+    fi
+    
+    exit $exit_code
+}
+
+# ========== MAIN EXECUTION ==========
+main() {
+    trap cleanup EXIT
+    
+    local vm_index_input="$1"
+    
+    # Initialize global variables
+    VM_INDEX="$vm_index_input"
+    VNC_PORT=$((VNC_BASE_PORT + VM_INDEX))
+    SPICE_PORT=$((SPICE_BASE_PORT + VM_INDEX))
+    
+    # Run comprehensive validation
+    if ! run_comprehensive_validation; then
+        exit 1
+    fi
+    
+    echo ""
+    echo "IMPLEMENTATION"
+    echo "=============="
+    
+    # Ensure VM is running (will prompt for password if needed)
+    if [[ "${SKIP_REMOTE:-}" != "1" ]]; then
+        ensure_vm_running "$(get_vm_name "$VM_INDEX")"
+    fi
+    
+    # Service file management
+    if [[ ! -f "$SERVICE_FILE" ]]; then
+        create_base_service
+    fi
+    
+    # Check if updates are needed
+    local port_check_result=0
+    check_existing_ports || port_check_result=$?
+    
+    if [[ $port_check_result -eq 2 ]]; then
+        log_info "Port configuration already complete"
+    else
+        create_backup
+        update_service_file
+    fi
+    
+    # Restart service if changes were made
+    if [[ "$CHANGES_MADE" == true ]] || [[ $port_check_result -ne 2 ]]; then
+        restart_service
+    fi
+    
+    # Verify everything is working
+    if ! verify_service_health; then
+        exit 1
+    fi
+    
+    # Show final status
+    show_final_status
+    log_success "VM tunnel setup completed successfully"
+}
+
+# ========== SCRIPT ENTRY POINT ==========
+if [[ $# -eq 0 ]]; then
+    echo "VM Tunnel Manager v$VERSION (Interactive Sudo)"
+    echo "No arguments provided"
+    echo ""
+    show_usage
+    exit 1
+fi
+
+if [[ "$1" =~ ^(-h|--help)$ ]]; then
+    show_usage
+    exit 0
+fi
+
+if [[ "$1" =~ ^(-v|--version)$ ]]; then
+    echo "VM Tunnel Manager v$VERSION (Interactive Sudo)"
+    exit 0
+fi
+
+# Validate input before starting
+if ! [[ "$1" =~ ^[0-9]+$ ]] || [[ "$1" -lt $MIN_VM_INDEX ]] || [[ "$1" -gt $MAX_VM_INDEX ]]; then
+    echo "Invalid VM index: $1"
+    echo "Must be between $MIN_VM_INDEX and $MAX_VM_INDEX"
+    echo ""
+    show_usage
+    exit 1
+fi
+
+main "$1"

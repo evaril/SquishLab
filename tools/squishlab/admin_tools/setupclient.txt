@@ -1,0 +1,18 @@
+~/.config/systemd/user/inputleap-client.service
+systemctl --user enable --now inputleap-client.service
+
+[Unit]
+Description=Input Leap Client (SSH-tunnel) on SquishAgent
+After=network.target graphical-session.target
+Wants=network.target
+
+[Service]
+Type=simple
+ExecStart=%h/inputleap-ssh-client.sh
+# Ensure display environment is available (Wayland/X11):
+Environment=WAYLAND_DISPLAY=%E{WAYLAND_DISPLAY}
+Environment=DISPLAY=%E{DISPLAY}
+Restart=no
+
+[Install]
+WantedBy=default.target

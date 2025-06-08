@@ -1,0 +1,7 @@
+sudo ukify build \
+    --linux=/boot/vmlinuz-linux-hardened \
+    --initrd=/boot/initramfs-linux-hardened.img \
+    --cmdline="cryptdevice=/dev/sda3:home cryptdevice=UUID=5046cd3a-0df3-4b10-aef0-84e1fa432d69:root root=UUID=52067193-03d1-4958-88b4-f88f2a33b28f rw quiet intel_iommu=on iommu=pt lockdown=confidentiality module.sig_enforce=1 security=apparmor apparmor=1 enforcing=1 audit=1 slub_debug=FZP page_poison=1 vsyscall=none pti=on page_alloc.shuffle=1 spectre_v2=on spec_store_bypass_disable=on l1tf=full,force mds=full,nosmt tsx=off kvm.nx_huge_pages=force ipv6.disable=1 modprobe.blacklist=mei,mei_me,nvidia,nouveau i915.modeset=1 vfio-pci.ids=10de:1b81,10de:10f0" \
+    --output=/boot/EFI/Linux/arch-hardened-SQ.efi
+
+sudo sbctl sign -s /boot/EFI/Linux/arch-hardened-SQ.efi

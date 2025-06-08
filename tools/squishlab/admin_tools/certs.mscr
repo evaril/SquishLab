@@ -1,0 +1,63 @@
+#!/bin/bash
+# generate-sbkeys.sh — Generate and enroll Secure Boot keys (PK, KEK, DB, DBX)
+set -euo pipefail
+
+# Set umask to protect private keys (files will be 600)
+umask 0077
+
+echo "Generating 4096-bit RSA keys for PK, KEK, DB, DBX..."
+# 1. Generate X.509 certificates and keys
+openssl req -new -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
+    -subj "/CN=Custom Secure Boot Platform Key/" \
+    -keyout PK.key -out PK.crt
+openssl req -new -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
+    -subj "/CN=Custom Secure Boot KEK/" \
+    -keyout KEK.key -out KEK.crt
+openssl req -new -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
+    -subj "/CN=Custom Secure Boot DB/" \
+    -keyout DB.key -out DB.crt
+openssl req -new -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
+    -subj "/CN=Custom Secure Boot DBX/" \
+    -keyout DBX.key -out DBX.crt
+
+# Convert PEM certificates to DER (.cer) for firmware that requires them
+openssl x509 -in PK.crt -outform DER -out PK.cer
+openssl x509 -in KEK.crt -outform DER -out KEK.cer
+openssl x509 -in DB.crt -outform DER -out DB.cer
+openssl x509 -in DBX.crt -outform DER -out DBX.cer
+
+# 2. Create EFI Signature Lists (ESL files) from each certificate
+echo "Creating signature lists (ESL files)..."
+cert-to-efi-sig-list -g "$(uuidgen)" PK.crt PK.esl
+cert-to-efi-sig-list -g "$(uuidgen)" KEK.crt KEK.esl
+cert-to-efi-sig-list -g "$(uuidgen)" DB.crt DB.esl
+> DBX.esl   # empty DBX list (no initial blacklisted signatures)
+
+# 3. Sign the signature lists to generate .auth files for UEFI
+# Use self-sign for PK (initial enrollment in Setup Mode), then chain PK->KEK and KEK->DB/DBX
+echo "Signing ESL lists to produce .auth files..."
+# Platform Key (PK.auth) signed with its own key (self, allowed in Setup Mode):contentReference[oaicite:9]{index=9}
+sign-efi-sig-list -k PK.key -c PK.crt PK PK.esl PK.auth
+# An empty "noPK.auth" to allow removing PK (not enrolled now, just saved for future use)
+sign-efi-sig-list -k PK.key -c PK.crt PK DBX.esl noPK.auth
+
+# Key Exchange Key (KEK.auth), sign KEK.esl with *PK* (to be valid after PK is enrolled)
+sign-efi-sig-list -k PK.key -c PK.crt KEK KEK.esl KEK.auth
+# Signature Database (db.auth), sign db.esl with *KEK* (to be valid after KEK is enrolled)
+sign-efi-sig-list -k KEK.key -c KEK.crt db DB.esl DB.auth
+# Revocation Database (dbx.auth), sign empty DBX.esl with *KEK* (to enroll an empty dbx)
+sign-efi-sig-list -k KEK.key -c KEK.crt dbx DBX.esl DBX.auth
+
+echo "Secure Boot keys generated. Private keys: *.key, Certs: *.crt (PEM) and *.cer (DER)."
+echo "ESL lists: PK.esl, KEK.esl, DB.esl, DBX.esl; Signed updates: PK.auth, KEK.auth, DB.auth, DBX.auth."
+
+# 4. Enroll keys into UEFI (requires firmware in Setup Mode, no existing PK).
+# Each efi-updatevar writes a UEFI variable with the signed data.
+echo "Enrolling keys into UEFI variables (PK, KEK, db, dbx)..."
+efi-updatevar -f KEK.auth KEK   # Add KEK (requires no PK or PK that signed KEK.auth)
+efi-updatevar -f DB.auth db     # Add db (requires KEK present that signed DB.auth)
+efi-updatevar -f DBX.auth dbx   # Add dbx (requires KEK present that signed DBX.auth)
+efi-updatevar -f PK.auth PK     # Finally, set the Platform Key (locks down Secure Boot):contentReference[oaicite:10]{index=10}
+
+echo "All keys enrolled. Secure Boot is now configured with your custom keys."
+echo "IMPORTANT: Keep the *.key and *.crt files secure and backed up (ideally offline)!"

@@ -1,0 +1,116 @@
+2025-05-24 17:53:40 - Starting cleanup:  (DRY_RUN=false)
+2025-05-24 17:53:40 - Cleanup completed: 
+2025-05-24 17:53:52 - Starting cleanup: quick (DRY_RUN=false)
+2025-05-24 17:53:52 - Executing: sudo pacman -Sc --noconfirm
+2025-05-24 17:54:32 - Executing: sudo pacman -Rns cantarell-fonts
+kguiaddons5 --noconfirm
+2025-05-24 17:56:04 - Starting cleanup:  (DRY_RUN=false)
+2025-05-24 17:56:04 - Cleanup completed: 
+2025-05-24 17:56:17 - Starting cleanup: full (DRY_RUN=false)
+2025-05-24 17:56:17 - Executing: sudo paccache -r -k 3
+2025-05-24 17:56:17 - Executing: sudo paccache -r -u -k 0
+2025-05-24 17:56:18 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-05-24 17:56:18 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-05-24 17:56:19 - Executing: sudo journalctl --vacuum-time=7d
+2025-05-24 17:56:19 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-05-24 17:56:19 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-05-24 17:56:19 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-24 17:56:19 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-24 17:56:19 - Executing: sudo pacman -Sy
+2025-05-24 17:56:20 - Cleanup completed: full
+2025-05-27 00:50:42 - Starting cleanup: --help (DRY_RUN=false)
+2025-05-27 00:50:42 - Cleanup completed: --help
+2025-05-27 00:51:36 - Starting cleanup: orphans (DRY_RUN=false)
+2025-05-27 00:51:36 - Cleanup completed: orphans
+2025-05-27 00:51:51 - Starting cleanup: user (DRY_RUN=false)
+2025-05-27 00:51:51 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-05-27 00:51:52 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-05-27 00:51:52 - Cleanup completed: user
+2025-05-27 00:52:05 - Starting cleanup: build (DRY_RUN=false)
+2025-05-27 00:52:05 - Cleanup completed: build
+2025-05-27 00:52:11 - Starting cleanup: cache (DRY_RUN=false)
+2025-05-27 00:52:11 - Executing: sudo paccache -r -k 3
+2025-05-27 00:52:11 - Executing: sudo paccache -r -u -k 0
+2025-05-27 00:52:11 - Cleanup completed: cache
+2025-05-27 00:52:28 - Starting cleanup: full (DRY_RUN=false)
+2025-05-27 00:52:28 - Executing: sudo paccache -r -k 3
+2025-05-27 00:52:28 - Executing: sudo paccache -r -u -k 0
+2025-05-27 00:52:29 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-05-27 00:52:29 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-05-27 00:52:29 - Executing: sudo journalctl --vacuum-time=7d
+2025-05-27 00:52:29 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-05-27 00:52:29 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-05-27 00:52:29 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-27 00:52:29 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-27 00:52:29 - Executing: sudo pacman -Sy
+2025-05-27 00:52:31 - Cleanup completed: full
+2025-05-27 00:52:37 - Starting cleanup: report (DRY_RUN=false)
+2025-05-27 00:52:37 - Cleanup completed: report
+2025-05-27 00:52:50 - Starting cleanup: --help (DRY_RUN=false)
+2025-05-27 00:52:50 - Cleanup completed: --help
+2025-05-27 09:19:42 - Starting cleanup:  (DRY_RUN=false)
+2025-05-27 09:19:42 - Cleanup completed: 
+2025-05-27 09:19:45 - Starting cleanup: full (DRY_RUN=false)
+2025-05-27 09:19:45 - Executing: sudo paccache -r -k 3
+2025-05-27 09:19:45 - Executing: sudo paccache -r -u -k 0
+2025-05-27 09:19:45 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-05-27 09:19:46 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-05-27 09:19:46 - Executing: sudo journalctl --vacuum-time=7d
+2025-05-27 09:19:46 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-05-27 09:19:46 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-05-27 09:19:46 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-27 09:19:46 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-27 09:19:46 - Executing: sudo pacman -Sy
+2025-05-27 09:20:06 - Starting cleanup: full (DRY_RUN=false)
+2025-05-27 09:20:06 - Executing: sudo paccache -r -k 3
+2025-05-27 09:20:06 - Executing: sudo paccache -r -u -k 0
+2025-05-27 09:20:06 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-05-27 09:20:06 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-05-27 09:20:06 - Executing: sudo journalctl --vacuum-time=7d
+2025-05-27 09:20:06 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-05-27 09:20:06 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-05-27 09:20:06 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-27 09:20:06 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-27 09:20:06 - Executing: sudo pacman -Sy
+2025-05-27 09:20:08 - Cleanup completed: full
+2025-05-30 02:04:27 - Starting cleanup: full (DRY_RUN=false)
+2025-05-30 02:04:27 - Executing: sudo paccache -r -k 3
+2025-05-30 02:04:27 - Executing: sudo paccache -r -u -k 0
+2025-05-30 02:04:27 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-05-30 02:04:28 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-05-30 02:04:28 - Executing: sudo journalctl --vacuum-time=7d
+2025-05-30 02:04:28 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-05-30 02:04:28 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-05-30 02:04:28 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-30 02:04:28 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-05-30 02:04:28 - Executing: sudo pacman -Sy
+2025-05-30 02:04:31 - Cleanup completed: full
+2025-06-01 05:38:42 - Starting cleanup:  (DRY_RUN=false)
+2025-06-01 05:38:42 - Cleanup completed: 
+2025-06-01 05:38:47 - Starting cleanup: full (DRY_RUN=false)
+2025-06-01 05:38:47 - Executing: sudo paccache -r -k 3
+2025-06-01 05:38:51 - Executing: sudo paccache -r -u -k 0
+2025-06-01 05:38:56 - Executing: sudo pacman -Rns go --noconfirm
+2025-06-01 05:38:58 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-06-01 05:38:58 - Executing: rm -rf '/home/evm/.local/share/Trash'/* 2>/dev/null
+2025-06-01 05:38:59 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-06-01 05:38:59 - Executing: sudo journalctl --vacuum-time=7d
+2025-06-01 05:38:59 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-06-01 05:38:59 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-06-01 05:38:59 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-06-01 05:38:59 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-06-01 05:38:59 - Executing: sudo pacman -Sy
+2025-06-01 05:39:00 - Cleanup completed: full
+2025-06-01 17:57:31 - Starting cleanup: full (DRY_RUN=false)
+2025-06-01 17:57:31 - Executing: sudo paccache -r -k 3
+2025-06-01 17:57:31 - Executing: sudo paccache -r -u -k 0
+2025-06-01 17:57:32 - Executing: find '/home/evm/.cache' -type f -atime +7 -delete 2>/dev/null
+2025-06-01 17:57:33 - Executing: rm -rf '/home/evm/.local/share/Trash'/* 2>/dev/null
+2025-06-01 17:57:33 - Executing: find '/home/evm/.mozilla/firefox/uvz9b7he.default-release/storage/default' -type f -atime +14 -delete 2>/dev/null
+2025-06-01 17:57:33 - Executing: sudo journalctl --vacuum-time=7d
+2025-06-01 17:57:33 - Executing: sudo find '/var/log' -name '*.gz' -mtime +30 -delete 2>/dev/null
+2025-06-01 17:57:33 - Executing: sudo find '/var/log' -name '*.old' -mtime +7 -delete 2>/dev/null
+2025-06-01 17:57:33 - Executing: sudo find '/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-06-01 17:57:33 - Executing: sudo find '/var/tmp' -type f -atime +3 -delete 2>/dev/null
+2025-06-01 17:57:33 - Executing: sudo pacman -Sy
+2025-06-01 17:57:35 - Cleanup completed: full

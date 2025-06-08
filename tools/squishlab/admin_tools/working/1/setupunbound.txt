@@ -1,0 +1,9 @@
+pacman -S unbound
+unbound-anchor -a /etc/unbound/root.key
+
+---
+
+systemctl disable --now systemd-resolved
+ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
+systemctl enable --now unbound

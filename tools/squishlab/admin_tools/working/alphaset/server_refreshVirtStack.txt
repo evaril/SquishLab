@@ -1,0 +1,278 @@
+#!/bin/bash
+# vm_reloadstack.sh - Refresh virtualization stack
+# Security first, reusable, functional
+
+set -euo pipefail
+
+VM_NAME="windows10-minimal"
+LOG_FILE="/tmp/vm_reloadstack.log"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+error_exit() {
+    log "ERROR: $1"
+    exit 1
+}
+
+check_root() {
+    if [[ $EUID -ne 0 ]]; then
+        error_exit "This script must be run as root"
+    fi
+}
+
+stop_vm_safely() {
+    log "Checking VM state..."
+    if virsh domstate "$VM_NAME" 2>/dev/null | grep -q "running"; then
+        log "Gracefully shutting down VM..."
+        virsh shutdown "$VM_NAME"
+        
+        # Wait up to 30 seconds for graceful shutdown
+        for i in {1..30}; do
+            if ! virsh domstate "$VM_NAME" 2>/dev/null | grep -q "running"; then
+                log "VM shut down gracefully"
+                break
+            fi
+            sleep 1
+        done
+        
+        # Force destroy if still running
+        if virsh domstate "$VM_NAME" 2>/dev/null | grep -q "running"; then
+            log "Force destroying VM..."
+            virsh destroy "$VM_NAME"
+        fi
+    fi
+}
+
+restart_libvirt() {
+    log "Restarting libvirt services..."
+    
+    systemctl stop libvirtd || true
+    systemctl stop virtlogd || true
+    systemctl stop virtlockd || true
+    
+    sleep 3
+    
+    systemctl start virtlockd
+    systemctl start virtlogd  
+    systemctl start libvirtd
+    
+    sleep 2
+    
+    # Verify services
+    if ! systemctl is-active --quiet libvirtd; then
+        error_exit "Failed to start libvirtd"
+    fi
+    
+    log "✓ Libvirt services restarted successfully"
+}
+
+setup_network() {
+    log "Configuring virtualization network..."
+    
+    # Remove existing virbr1 if present
+    if ip link show virbr1 &>/dev/null; then
+        log "Removing existing virbr1..."
+        ip link set virbr1 down || true
+        brctl delbr virbr1 || true
+    fi
+    
+    # Create systemd-networkd configs
+    cat > /etc/systemd/network/10-virbr1.netdev << 'EOF'
+[NetDev]
+Name=virbr1
+Kind=bridge
+EOF
+
+    cat > /etc/systemd/network/20-virbr1.network << 'EOF'
+[Match]
+Name=virbr1
+
+[Network]
+IPForward=yes
+IPMasquerade=both
+LLDP=yes
+EmitLLDP=customer-bridge
+Address=192.168.100.1/24
+Gateway=192.168.72.1
+DHCPServer=yes
+
+[DHCPServer]
+PoolOffset=10
+PoolSize=100
+DefaultLeaseTimeSec=3600
+DNS=149.112.112.11,9.9.9.11
+EOF
+    
+    # Restart networkd
+    systemctl restart systemd-networkd
+    sleep 2
+    
+    # Verify bridge exists
+    if ! ip link show virbr1 &>/dev/null; then
+        error_exit "Failed to create virbr1 bridge"
+    fi
+    
+    log "✓ Network bridge virbr1 configured"
+}
+
+redefine_vm() {
+    log "Redefining VM from existing configuration..."
+    
+    # Check if VM exists and undefine it
+    if virsh dominfo "$VM_NAME" &>/dev/null; then
+        log "Undefining existing VM..."
+        virsh undefine "$VM_NAME" --nvram || true
+    fi
+    
+    # Clean up any leftover NVRAM
+    rm -f "/var/lib/libvirt/qemu/nvram/${VM_NAME}"*
+    
+    # Look for XML file in common locations
+    XML_LOCATIONS=(
+        "/home/evm/vm-configs/${VM_NAME}.xml"
+        "/home/evm/${VM_NAME}.xml"
+        "/tmp/${VM_NAME}.xml"
+        "./win10.xml"
+    )
+    
+    XML_FILE=""
+    for location in "${XML_LOCATIONS[@]}"; do
+        if [[ -f "$location" ]]; then
+            XML_FILE="$location"
+            break
+        fi
+    done
+    
+    if [[ -z "$XML_FILE" ]]; then
+        log "No XML file found. Please ensure win10.xml exists in current directory or provide path:"
+        read -p "Enter XML file path: " XML_FILE
+        if [[ ! -f "$XML_FILE" ]]; then
+            error_exit "XML file not found: $XML_FILE"
+        fi
+    fi
+    
+    log "Using XML file: $XML_FILE"
+    
+    # Validate XML before defining
+    if ! xmllint --noout "$XML_FILE" 2>/dev/null; then
+        error_exit "Invalid XML file: $XML_FILE"
+    fi
+    
+    # Define VM
+    if virsh define "$XML_FILE"; then
+        log "✓ VM redefined successfully"
+    else
+        error_exit "Failed to define VM from $XML_FILE"
+    fi
+}
+
+generate_summary() {
+    log "=== VIRTUALIZATION STACK SUMMARY ==="
+    
+    # System services
+    echo "=== Services Status ===" | tee -a "$LOG_FILE"
+    for service in libvirtd virtlogd virtlockd systemd-networkd; do
+        if systemctl is-active --quiet "$service"; then
+            echo "✓ $service: ACTIVE" | tee -a "$LOG_FILE"
+        else
+            echo "✗ $service: INACTIVE" | tee -a "$LOG_FILE"
+        fi
+    done
+    
+    # Network status
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Network Status ===" | tee -a "$LOG_FILE"
+    if ip link show virbr1 &>/dev/null; then
+        echo "✓ virbr1 bridge: UP" | tee -a "$LOG_FILE"
+        echo "  Address: $(ip addr show virbr1 | grep 'inet ' | awk '{print $2}')" | tee -a "$LOG_FILE"
+    else
+        echo "✗ virbr1 bridge: DOWN" | tee -a "$LOG_FILE"
+    fi
+    
+    # VM status
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== VM Status ===" | tee -a "$LOG_FILE"
+    if virsh dominfo "$VM_NAME" &>/dev/null; then
+        echo "✓ VM Defined: YES" | tee -a "$LOG_FILE"
+        echo "  State: $(virsh domstate "$VM_NAME")" | tee -a "$LOG_FILE"
+        echo "  Memory: $(virsh dominfo "$VM_NAME" | grep 'Max memory' | awk '{print $3, $4}')" | tee -a "$LOG_FILE"
+        echo "  CPUs: $(virsh dominfo "$VM_NAME" | grep 'CPU(s)' | awk '{print $2}')" | tee -a "$LOG_FILE"
+    else
+        echo "✗ VM Defined: NO" | tee -a "$LOG_FILE"
+    fi
+    
+    # Display ports
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Display Ports ===" | tee -a "$LOG_FILE"
+    echo "  VNC: localhost:11010" | tee -a "$LOG_FILE"
+    echo "  SPICE: localhost:11011" | tee -a "$LOG_FILE"
+    echo "  RDP: localhost:11111 (via tunnel)" | tee -a "$LOG_FILE"
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Log Location ===" | tee -a "$LOG_FILE"
+    echo "  Full log: $LOG_FILE" | tee -a "$LOG_FILE"
+    
+    # Check for common issues
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Health Checks ===" | tee -a "$LOG_FILE"
+    
+    # Check IOMMU
+    if [[ -d /sys/kernel/iommu_groups ]]; then
+        echo "✓ IOMMU: Available" | tee -a "$LOG_FILE"
+    else
+        echo "⚠ IOMMU: Not available (needed for GPU passthrough)" | tee -a "$LOG_FILE"
+    fi
+    
+    # Check KVM modules
+    if lsmod | grep -q kvm; then
+        echo "✓ KVM modules: Loaded" | tee -a "$LOG_FILE"
+    else
+        echo "✗ KVM modules: Not loaded" | tee -a "$LOG_FILE"
+    fi
+    
+    # Check disk images
+    DISK_PATHS=(
+        "/home/evm/windows/winhome"
+        "/home/evm/windows/win10-data.qcow2"
+        "/home/evm/iso/virtio-win.iso"
+    )
+    
+    echo "  Disk Images:" | tee -a "$LOG_FILE"
+    for disk in "${DISK_PATHS[@]}"; do
+        if [[ -f "$disk" ]]; then
+            echo "    ✓ $disk" | tee -a "$LOG_FILE"
+        else
+            echo "    ✗ $disk (missing)" | tee -a "$LOG_FILE"
+        fi
+    done
+}
+
+main() {
+    log "Starting virtualization stack reload..."
+    
+    check_root
+    
+    # Clear previous log
+    > "$LOG_FILE"
+    
+    log "Phase 1: Stopping VM safely..."
+    stop_vm_safely
+    
+    log "Phase 2: Restarting libvirt services..."
+    restart_libvirt
+    
+    log "Phase 3: Setting up network..."
+    setup_network
+    
+    log "Phase 4: Redefining VM..."
+    redefine_vm
+    
+    log "Phase 5: Generating summary..."
+    generate_summary
+    
+    log "✓ Virtualization stack reload completed successfully"
+}
+
+main "$@"

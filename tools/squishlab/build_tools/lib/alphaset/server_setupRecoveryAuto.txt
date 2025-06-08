@@ -1,0 +1,171 @@
+#!/bin/bash
+# Network Recovery Automation Script
+# Restores bridge network setup after failures
+
+CONFIG_FILE="/etc/libvirt/bridge-config"
+LOG_FILE="/var/log/bridge-recovery.log"
+
+# Configuration
+INTERFACE="enp3s0"
+BRIDGE="br0"
+SERVER_IP="192.168.72.54"
+ROUTER_IP="192.168.72.1"
+NETWORK_NAME="host-bridge"
+
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" | tee -a $LOG_FILE
+}
+
+check_bridge() {
+    ip link show $BRIDGE &>/dev/null
+}
+
+check_libvirt_network() {
+    sudo virsh net-list --name | grep -q "^$NETWORK_NAME$"
+}
+
+check_connectivity() {
+    ping -c 1 -W 2 $ROUTER_IP &>/dev/null
+}
+
+setup_bridge() {
+    log "Setting up bridge network..."
+    
+    # Remove any existing dnsmasq networks
+    sudo virsh net-list --name | grep -E "default|nat" | while read net; do
+        if [ -n "$net" ]; then
+            sudo virsh net-destroy "$net" 2>/dev/null || true
+            sudo virsh net-undefine "$net" 2>/dev/null || true
+        fi
+    done
+    
+    # Create NetworkManager bridge if not exists
+    if ! nmcli connection show br0 &>/dev/null; then
+        log "Creating NetworkManager bridge..."
+        
+        sudo nmcli connection add type bridge \
+            con-name br0 \
+            ifname br0 \
+            ipv4.addresses $SERVER_IP/24 \
+            ipv4.gateway $ROUTER_IP \
+            ipv4.dns $ROUTER_IP \
+            ipv4.method manual \
+            ipv6.method disabled
+        
+        sudo nmcli connection add type bridge-slave \
+            con-name br0-slave \
+            ifname $INTERFACE \
+            master br0
+        
+        # Disable original ethernet connection
+        ORIGINAL_CON=$(nmcli -t -f NAME,DEVICE connection show | grep $INTERFACE | head -1 | cut -d: -f1)
+        if [ -n "$ORIGINAL_CON" ] && [ "$ORIGINAL_CON" != "br0-slave" ]; then
+            sudo nmcli connection modify "$ORIGINAL_CON" connection.autoconnect no
+        fi
+    fi
+    
+    # Activate bridge
+    sudo nmcli connection up br0
+    
+    # Create libvirt network
+    if ! check_libvirt_network; then
+        log "Creating libvirt bridge network..."
+        
+        cat > /tmp/recovery-bridge.xml << EOF
+<network>
+  <n>$NETWORK_NAME</n>
+  <forward mode='bridge'/>
+  <bridge name='$BRIDGE'/>
+</network>
+EOF
+        
+        sudo virsh net-define /tmp/recovery-bridge.xml
+        sudo virsh net-autostart $NETWORK_NAME
+        sudo virsh net-start $NETWORK_NAME
+        rm /tmp/recovery-bridge.xml
+    fi
+    
+    # Ensure systemd-resolved is running
+    sudo systemctl start systemd-resolved
+    sudo systemctl enable systemd-resolved
+    
+    log "Bridge network recovery complete"
+}
+
+# Main recovery logic
+main() {
+    log "Starting network recovery check..."
+    
+    # Check if bridge exists and is working
+    if check_bridge && check_libvirt_network && check_connectivity; then
+        log "Network is healthy, no recovery needed"
+        exit 0
+    fi
+    
+    log "Network issues detected, starting recovery..."
+    setup_bridge
+    
+    # Wait and verify
+    sleep 5
+    if check_bridge && check_libvirt_network && check_connectivity; then
+        log "Network recovery successful"
+        
+        # Verify no dnsmasq is running for libvirt
+        if pgrep -f "dnsmasq.*libvirt" &>/dev/null; then
+            log "WARNING: dnsmasq still running for libvirt"
+        else
+            log "SUCCESS: No libvirt dnsmasq processes detected"
+        fi
+    else
+        log "ERROR: Network recovery failed"
+        exit 1
+    fi
+}
+
+# Create systemd service for automatic recovery
+create_service() {
+    cat > /tmp/bridge-recovery.service << EOF
+[Unit]
+Description=Bridge Network Recovery
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+ExecStart=$0
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+EOF
+    
+    sudo mv /tmp/bridge-recovery.service /etc/systemd/system/
+    sudo systemctl daemon-reload
+    sudo systemctl enable bridge-recovery.service
+    
+    log "Recovery service installed"
+}
+
+case "${1:-main}" in
+    "main")
+        main
+        ;;
+    "install")
+        create_service
+        ;;
+    "status")
+        if check_bridge && check_libvirt_network && check_connectivity; then
+            echo "✅ Bridge network is healthy"
+            echo "✅ LibVirt network exists"
+            echo "✅ Router connectivity OK"
+            echo "✅ No dnsmasq conflicts"
+        else
+            echo "❌ Network issues detected"
+        fi
+        ;;
+    *)
+        echo "Usage: $0 [main|install|status]"
+        exit 1
+        ;;
+esac

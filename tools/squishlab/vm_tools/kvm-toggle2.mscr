@@ -1,0 +1,491 @@
+#!/bin/bash
+
+# KVM USB Toggle - All Devices View
+set -u
+
+# Config
+CONFIG_FILE="${HOME}/.config/kvm-toggle.conf"
+LOG_FILE="${HOME}/.cache/kvm-toggle.log"
+
+# Colors
+RED=$'\033[0;31m'
+GREEN=$'\033[0;32m'
+YELLOW=$'\033[1;33m'
+BLUE=$'\033[0;34m'
+CYAN=$'\033[0;36m'
+DIM=$'\033[2m'
+NC=$'\033[0m'
+CLEAR=$'\033[2J\033[H'
+
+# State
+LAST_ACTION=""
+SELECTED_VM=""
+CONFIGURED_DEVICES=()
+
+# Initialize
+mkdir -p "$(dirname "$LOG_FILE")"
+touch "$LOG_FILE"
+
+# Logging
+log() {
+    local level="$1"
+    local msg="$2"
+    local timestamp=$(date '+%H:%M:%S')
+    
+    echo "[$timestamp] $level: $msg" >> "$LOG_FILE"
+    
+    case "$level" in
+        ERROR)   LAST_ACTION="${RED}✗ $msg${NC}" ;;
+        SUCCESS) LAST_ACTION="${GREEN}✓ $msg${NC}" ;;
+        INFO)    LAST_ACTION="${BLUE}→ $msg${NC}" ;;
+        WARN)    LAST_ACTION="${YELLOW}! $msg${NC}" ;;
+    esac
+}
+
+# Load config
+load_config() {
+    CONFIGURED_DEVICES=()
+    if [[ -f "$CONFIG_FILE" ]]; then
+        source "$CONFIG_FILE" 2>/dev/null || true
+        
+        # Load configured devices into array
+        if [[ ${DEVICE_COUNT:-0} -gt 0 ]]; then
+            for i in $(seq 0 $((DEVICE_COUNT - 1))); do
+                eval "local id=\$DEVICE_${i}_ID"
+                [[ -n "$id" ]] && CONFIGURED_DEVICES+=("$id")
+            done
+        fi
+        
+        SELECTED_VM="${VM_NAME:-}"
+        return 0
+    fi
+    return 1
+}
+
+# Save config
+save_config() {
+    mkdir -p "$(dirname "$CONFIG_FILE")"
+    {
+        echo "# KVM USB Toggle Configuration"
+        echo "# Last modified: $(date)"
+        echo
+        echo "VM_NAME=\"$SELECTED_VM\""
+        echo "DEVICE_COUNT=${#CONFIGURED_DEVICES[@]}"
+        echo
+        
+        local i=0
+        for device_id in "${CONFIGURED_DEVICES[@]}"; do
+            # Get device name from lsusb
+            local name=$(lsusb -d "$device_id" 2>/dev/null | sed 's/.*ID [0-9a-f:]* //' || echo "Unknown Device")
+            echo "DEVICE_${i}_ID=\"$device_id\""
+            echo "DEVICE_${i}_NAME=\"$name\""
+            ((i++))
+        done
+    } > "$CONFIG_FILE"
+}
+
+# Check if VM is running
+vm_running() {
+    local vm="$1"
+    virsh list --state-running --name 2>/dev/null | grep -q "^${vm}$"
+}
+
+# Get all VMs
+get_all_vms() {
+    virsh list --all --name 2>/dev/null | grep -v "^$" || true
+}
+
+# Get all USB devices
+get_all_usb_devices() {
+    lsusb | grep -v "hub\|Hub" | while read line; do
+        local id=$(echo "$line" | grep -oE 'ID [0-9a-f:]+' | cut -d' ' -f2)
+        local name=$(echo "$line" | sed 's/.*ID [0-9a-f:]* //')
+        [[ -n "$id" ]] && echo "$id|$name"
+    done
+}
+
+# Get device status for a VM
+device_status() {
+    local vm="$1"
+    local device_id="$2"
+    
+    [[ -z "$vm" ]] || [[ -z "$device_id" ]] && echo "none" && return
+    
+    local vendor="${device_id%:*}"
+    local product="${device_id#*:}"
+    
+    if virsh dumpxml "$vm" 2>/dev/null | grep -q "vendor.*0x${vendor}.*product.*0x${product}"; then
+        echo "attached"
+    else
+        echo "detached"
+    fi
+}
+
+# Is device configured?
+is_configured() {
+    local device_id="$1"
+    for id in "${CONFIGURED_DEVICES[@]}"; do
+        [[ "$id" == "$device_id" ]] && return 0
+    done
+    return 1
+}
+
+# Toggle device
+toggle_device() {
+    local device_id="$1"
+    local device_name="$2"
+    
+    if [[ -z "$SELECTED_VM" ]]; then
+        log ERROR "No VM selected"
+        return 1
+    fi
+    
+    if ! vm_running "$SELECTED_VM"; then
+        log ERROR "VM '$SELECTED_VM' not running"
+        return 1
+    fi
+    
+    local status=$(device_status "$SELECTED_VM" "$device_id")
+    
+    if [[ "$status" == "attached" ]]; then
+        # Detach
+        local xml="<hostdev mode='subsystem' type='usb' managed='no'>
+  <source>
+    <vendor id='0x${device_id%:*}'/>
+    <product id='0x${device_id#*:}'/>
+  </source>
+</hostdev>"
+        
+        if echo "$xml" | virsh detach-device "$SELECTED_VM" /dev/stdin --persistent &>/dev/null; then
+            log SUCCESS "Detached: ${device_name:0:30}"
+        else
+            log ERROR "Failed to detach: ${device_name:0:30}"
+        fi
+    else
+        # Attach
+        if ! lsusb -d "$device_id" &>/dev/null; then
+            log ERROR "Device not connected: ${device_name:0:30}"
+            return 1
+        fi
+        
+        local xml="<hostdev mode='subsystem' type='usb' managed='no'>
+  <source>
+    <vendor id='0x${device_id%:*}'/>
+    <product id='0x${device_id#*:}'/>
+  </source>
+</hostdev>"
+        
+        if echo "$xml" | virsh attach-device "$SELECTED_VM" /dev/stdin --persistent &>/dev/null; then
+            log SUCCESS "Attached: ${device_name:0:30}"
+        else
+            log ERROR "Failed to attach: ${device_name:0:30}"
+        fi
+    fi
+}
+
+# Select VM
+select_vm() {
+    clear
+    echo "Select VM"
+    echo "═══════════════════════════════════════"
+    echo
+    
+    local vms=($(get_all_vms))
+    if [[ ${#vms[@]} -eq 0 ]]; then
+        log ERROR "No VMs found"
+        read -p "Press Enter..."
+        return 1
+    fi
+    
+    local i=1
+    for vm in "${vms[@]}"; do
+        local marker=" "
+        [[ "$vm" == "$SELECTED_VM" ]] && marker="*"
+        
+        if vm_running "$vm"; then
+            printf " %s %2d) ${GREEN}%-30s [Running]${NC}\n" "$marker" "$i" "$vm"
+        else
+            printf " %s %2d) ${DIM}%-30s [Stopped]${NC}\n" "$marker" "$i" "$vm"
+        fi
+        ((i++))
+    done
+    
+    echo
+    echo "Current: ${BLUE}${SELECTED_VM:-none}${NC}"
+    echo
+    read -p "Select VM number (Enter to cancel): " num
+    
+    if [[ -n "$num" ]] && [[ "$num" =~ ^[0-9]+$ ]] && [[ $num -ge 1 ]] && [[ $num -le ${#vms[@]} ]]; then
+        SELECTED_VM="${vms[$((num-1))]}"
+        save_config
+        log SUCCESS "Selected VM: $SELECTED_VM"
+    fi
+}
+
+# Toggle configured devices
+toggle_configured() {
+    local device_id="$1"
+    
+    if is_configured "$device_id"; then
+        # Remove from configured
+        local new_array=()
+        for id in "${CONFIGURED_DEVICES[@]}"; do
+            [[ "$id" != "$device_id" ]] && new_array+=("$id")
+        done
+        CONFIGURED_DEVICES=("${new_array[@]}")
+        log INFO "Removed from quick toggle list"
+    else
+        # Add to configured
+        CONFIGURED_DEVICES+=("$device_id")
+        log SUCCESS "Added to quick toggle list"
+    fi
+    
+    save_config
+}
+
+# Cleanup stale
+cleanup_stale() {
+    [[ -z "$SELECTED_VM" ]] && log ERROR "No VM selected" && return
+    
+    echo "Cleaning stale devices from $SELECTED_VM..."
+    local cleaned=0
+    
+    local devices=$(virsh dumpxml "$SELECTED_VM" 2>/dev/null | \
+                    grep -A2 "hostdev.*usb" | \
+                    grep -E "vendor|product" | paste - - | \
+                    sed 's/.*vendor.*0x\([0-9a-f]*\).*product.*0x\([0-9a-f]*\).*/\1:\2/')
+    
+    while read -r device_id; do
+        [[ -z "$device_id" ]] && continue
+        
+        if ! lsusb -d "$device_id" &>/dev/null; then
+            printf "  ${YELLOW}!${NC} Removing stale: %s\n" "$device_id"
+            
+            local xml="<hostdev mode='subsystem' type='usb' managed='no'>
+  <source>
+    <vendor id='0x${device_id%:*}'/>
+    <product id='0x${device_id#*:}'/>
+  </source>
+</hostdev>"
+            echo "$xml" | virsh detach-device "$SELECTED_VM" /dev/stdin --persistent &>/dev/null && ((cleaned++))
+        fi
+    done <<< "$devices"
+    
+    log SUCCESS "Removed $cleaned stale devices"
+    read -p "Press Enter..."
+}
+
+# Main TUI
+tui_main() {
+    load_config
+    
+    while true; do
+        # Get current state
+        local all_devices=($(get_all_usb_devices))
+        local all_vms=($(get_all_vms))
+        
+        # Clear and header
+        printf "%s" "$CLEAR"
+        echo "KVM USB Toggle"
+        echo "═══════════════════════════════════════"
+        
+        # Status bar
+        printf "Selected VM: "
+        if [[ -n "$SELECTED_VM" ]]; then
+            if vm_running "$SELECTED_VM"; then
+                printf "${GREEN}%s${NC}\n" "$SELECTED_VM"
+            else
+                printf "${RED}%s (not running)${NC}\n" "$SELECTED_VM"
+            fi
+        else
+            printf "${YELLOW}None selected${NC}\n"
+        fi
+        
+        [[ -n "$LAST_ACTION" ]] && printf "Last Action: %s\n" "$LAST_ACTION"
+        
+        # VMs section
+        echo
+        echo "Virtual Machines:"
+        echo "─────────────────"
+        local vm_count=0
+        for vm in "${all_vms[@]}"; do
+            ((vm_count++))
+            local marker=" "
+            [[ "$vm" == "$SELECTED_VM" ]] && marker="▸"
+            
+            if vm_running "$vm"; then
+                printf " %s ${GREEN}%-30s${NC}" "$marker" "$vm"
+            else
+                printf " %s ${DIM}%-30s${NC}" "$marker" "$vm"
+            fi
+            
+            # Show attached device count
+            local attached_count=0
+            if vm_running "$vm"; then
+                for device_info in "${all_devices[@]}"; do
+                    IFS='|' read -r id name <<< "$device_info"
+                    [[ "$(device_status "$vm" "$id")" == "attached" ]] && ((attached_count++))
+                done
+                [[ $attached_count -gt 0 ]] && printf " ${CYAN}[%d devices]${NC}" "$attached_count"
+            fi
+            echo
+        done
+        
+        # USB Devices section
+        echo
+        echo "USB Devices:"
+        printf "%-3s %-50s %-12s %s\n" "#" "Name" "Status" "Config"
+        echo "─── ────────────────────────────────────────────────── ──────────── ──────"
+        
+        local i=1
+        for device_info in "${all_devices[@]}"; do
+            IFS='|' read -r id name <<< "$device_info"
+            
+            # Truncate name
+            [[ ${#name} -gt 48 ]] && name="${name:0:45}..."
+            
+            # Status
+            local status="Detached"
+            local status_color="$BLUE"
+            
+            if [[ -n "$SELECTED_VM" ]]; then
+                case "$(device_status "$SELECTED_VM" "$id")" in
+                    attached) status="Attached"; status_color="$GREEN" ;;
+                esac
+            fi
+            
+            # Config status
+            local config=""
+            if is_configured "$id"; then
+                config="${CYAN}★${NC}"
+            fi
+            
+            printf "%2d) %-50s ${status_color}%-12s${NC} %s\n" "$i" "$name" "$status" "$config"
+            ((i++))
+        done
+        
+        # Legend
+        echo
+        echo "${CYAN}★${NC} = In quick toggle list"
+        
+        # Menu
+        echo
+        echo "═══════════════════════════════════════"
+        echo "Actions:"
+        echo "  [1-9] Toggle USB device      [v] Select VM"
+        echo "  [*]   Quick toggle starred   [c] Cleanup stale"
+        echo "  [s]   Star/unstar device     [r] Refresh"
+        echo "  [q]   Quit"
+        echo
+        read -n1 -p "Choice: " choice
+        echo
+        
+        case "$choice" in
+            [0-9])
+                # Toggle specific device
+                if [[ $choice -ge 1 ]] && [[ $choice -le ${#all_devices[@]} ]]; then
+                    local device_info="${all_devices[$((choice-1))]}"
+                    IFS='|' read -r id name <<< "$device_info"
+                    toggle_device "$id" "$name"
+                fi
+                ;;
+            v) select_vm ;;
+            \*)
+                # Quick toggle all starred devices
+                if [[ ${#CONFIGURED_DEVICES[@]} -gt 0 ]]; then
+                    echo
+                    echo "Toggling starred devices..."
+                    for device_id in "${CONFIGURED_DEVICES[@]}"; do
+                        local name=$(lsusb -d "$device_id" 2>/dev/null | sed 's/.*ID [0-9a-f:]* //' || echo "Unknown")
+                        toggle_device "$device_id" "$name"
+                    done
+                    read -p "Press Enter..."
+                else
+                    log WARN "No starred devices"
+                fi
+                ;;
+            s)
+                # Star/unstar device
+                echo
+                read -p "Device number to star/unstar: " num
+                if [[ "$num" =~ ^[0-9]+$ ]] && [[ $num -ge 1 ]] && [[ $num -le ${#all_devices[@]} ]]; then
+                    local device_info="${all_devices[$((num-1))]}"
+                    IFS='|' read -r id name <<< "$device_info"
+                    toggle_configured "$id"
+                fi
+                ;;
+            c) [[ -n "$SELECTED_VM" ]] && cleanup_stale ;;
+            r) log INFO "Refreshed" ;;
+            q) break ;;
+        esac
+    done
+    
+    # Exit cleanup
+    clear
+    echo "KVM USB Toggle - Exit"
+    echo "═══════════════════════════════════════"
+    
+    if [[ -n "$SELECTED_VM" ]] && vm_running "$SELECTED_VM"; then
+        local attached_count=0
+        local attached_list=""
+        
+        for device_info in "${all_devices[@]}"; do
+            IFS='|' read -r id name <<< "$device_info"
+            if [[ "$(device_status "$SELECTED_VM" "$id")" == "attached" ]]; then
+                ((attached_count++))
+                attached_list="${attached_list}  • ${name}\n"
+            fi
+        done
+        
+        if [[ $attached_count -gt 0 ]]; then
+            printf "${YELLOW}%d device(s) still attached to %s:${NC}\n\n" "$attached_count" "$SELECTED_VM"
+            printf "%b" "$attached_list"
+            echo
+            read -p "Detach all before exit? [Y/n] " response
+            
+            if [[ "${response,,}" != "n" ]]; then
+                for device_info in "${all_devices[@]}"; do
+                    IFS='|' read -r id name <<< "$device_info"
+                    if [[ "$(device_status "$SELECTED_VM" "$id")" == "attached" ]]; then
+                        toggle_device "$id" "$name"
+                    fi
+                done
+            fi
+        fi
+    fi
+    
+    echo
+    echo "Goodbye!"
+}
+
+# Help
+if [[ "${1:-}" == "help" ]] || [[ "${1:-}" == "--help" ]]; then
+    cat <<EOF
+KVM USB Toggle - All Devices View
+
+This tool shows all available USB devices and VMs, allowing you to:
+- Toggle any USB device to/from any running VM
+- Star devices for quick toggle (toggle all with *)
+- See at a glance what's attached where
+
+Usage: ${0##*/}
+
+No command line options - everything is in the TUI.
+EOF
+    exit 0
+fi
+
+# Check requirements
+if ! command -v virsh &>/dev/null; then
+    echo "Error: virsh not found" >&2
+    exit 1
+fi
+
+# Need root
+if [[ $EUID -ne 0 ]]; then
+    echo "Elevating privileges..."
+    exec sudo "$0" "$@"
+fi
+
+# Start TUI
+tui_main

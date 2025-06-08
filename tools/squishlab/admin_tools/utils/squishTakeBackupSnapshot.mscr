@@ -1,0 +1,28 @@
+#!/bin/bash
+# Create ad-hoc snapshot script
+cat > ~/.local/bin/quick-snap << 'EOF'
+#!/bin/bash
+# Quick snapshot script - call with optional description
+
+DESC="${1:-adhoc-$(date +%H%M)}"
+BACKUP_DIR="${HOME}/Backups/restic-repo"
+
+if [[ ! -d "$BACKUP_DIR" ]]; then
+    echo "No backup repo found. Run 'backup-system' first."
+    exit 1
+fi
+
+echo "Creating quick snapshot: $DESC"
+export RESTIC_REPOSITORY="$BACKUP_DIR"
+
+restic backup /home/$USER \
+    --exclude='/home/*/.cache' \
+    --exclude='*.tmp' \
+    --tag "quick-$DESC" \
+    --tag "$(date +%Y-%m-%d)"
+
+echo "Snapshot complete: $DESC"
+restic snapshots --tag "quick-$DESC"
+EOF
+
+chmod +x ~/.local/bin/quick-snap

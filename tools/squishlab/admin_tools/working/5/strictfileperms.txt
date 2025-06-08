@@ -1,0 +1,10 @@
+# Set secure permissions
+sudo chmod 750 /opt/homeassistant
+sudo chmod 755 /opt/homeassistant/config
+sudo chmod 750 /opt/homeassistant/venv
+sudo chmod 640 /opt/homeassistant/config/secrets.yaml
+sudo chmod 644 /opt/homeassistant/config/configuration.yaml
+sudo chmod 644 /opt/homeassistant/config/*.yaml
+
+# Ensure homeassistant user owns everything
+sudo chown -R homeassistant:homeassistant /opt/homeassistant

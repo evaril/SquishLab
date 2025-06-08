@@ -1,0 +1,9 @@
+# Install with no binary builds (compile everything locally)
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install --no-binary=:all: homeassistant
+
+# Or install with pre-compiled wheels only (faster, but may not have all packages)
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install --only-binary=:all: homeassistant
+
+# Or a hybrid approach (recommended)
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install \
+    --prefer-binary homeassistant

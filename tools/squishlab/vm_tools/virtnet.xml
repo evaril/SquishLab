@@ -1,0 +1,5 @@
+<network>
+  <name>borq</name>
+  <forward mode='bridge'/>
+  <bridge name='br000'/>
+</network>

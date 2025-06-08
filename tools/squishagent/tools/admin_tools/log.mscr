@@ -1,0 +1,4 @@
+#!/bin/bash
+
+SYSTEMD_COLORS=1 journalctl --output=cat --follow ${1:+--grep="$1"} 
+ 

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo mkinitcpio -P --cmdline /etc/kernel/cmdline
+
+sh /home/evm/tooling/boot/boot_makeukify.mscr

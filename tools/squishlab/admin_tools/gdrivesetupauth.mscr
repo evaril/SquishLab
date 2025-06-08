@@ -1,0 +1,24 @@
+# Install gcloud CLI
+curl https://sdk.cloud.google.com | bash
+gcloud init
+
+# Create project and enable APIs
+gcloud projects create yea-byoi-$(date +%s)
+export PROJECT_ID=yea-byoi
+gcloud config set project $PROJECT_ID
+
+# Enable required APIs
+gcloud services enable drive.googleapis.com
+gcloud services enable storage-api.googleapis.com
+
+# Create service account
+gcloud iam service-accounts create SquishArchives \
+    --display-name="Squish Chronicles"
+
+# Generate key file
+gcloud iam service-accounts keys create ~/squish-archive-key.json \
+    --iam-account=SquishArchives@$PROJECT_ID.iam.gserviceaccount.com
+
+# Grant Drive access (you'll need to share folders with this service account email)
+SERVICE_ACCOUNT_EMAIL="SquishArchives@$PROJECT_ID.iam.gserviceaccount.com"
+echo "Share your Drive folders with: $SERVICE_ACCOUNT_EMAIL"

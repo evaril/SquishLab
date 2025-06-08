@@ -1,0 +1,55 @@
+[Unit]
+Description=Home Assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=homeassistant
+Group=homeassistant
+ExecStart=/opt/homeassistant/venv/bin/hass --config /opt/homeassistant/config
+
+# Maximum security restrictions
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectKernelLogs=yes
+ProtectHostname=yes
+ProtectClock=yes
+ProtectProc=invisible
+ProcSubset=pid
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RemoveIPC=yes
+RestrictNamespaces=yes
+
+# Resource limits
+LimitNOFILE=4096
+LimitNPROC=512
+
+# Filesystem restrictions
+ReadWritePaths=/opt/homeassistant/config
+PrivateTmp=yes
+PrivateDevices=yes
+DevicePolicy=closed
+
+# Network restrictions
+PrivateNetwork=no
+IPAddressDeny=any
+IPAddressAllow=localhost
+IPAddressAllow=192.168.0.0/16
+IPAddressAllow=10.0.0.0/8
+
+# Capabilities
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+[Install]
+WantedBy=multi-user.target

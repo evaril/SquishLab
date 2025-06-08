@@ -1,0 +1,841 @@
+#!/bin/bash
+#
+# GTX 1070 VFIO Passthrough Configuration Script
+# For rEFInd + ukify + UKI workflow
+#
+# This script configures PCI passthrough for:
+# - GTX 1070 VGA: 10de:1b81
+# - GTX 1070 Audio: 10de:10f0
+#
+# Usage: ./vfio-setup.sh [--dry-run]
+#
+
+# 01:00.0 VGA compatible controller [0300]: NVIDIA Corporation GP104 [GeForce GTX 1070] [10de:1b81] (rev a1)
+#	Subsystem: ASUSTeK Computer Inc. Device [1043:85a0]
+#	Kernel modules: nouveau
+	
+# 01:00.1 Audio device [0403]: NVIDIA Corporation GP104 High Definition Audio Controller [10de:10f0] (rev a1)
+#	Subsystem: ASUSTeK Computer Inc. Device [1043:85a0]
+#	Kernel modules: snd_hda_intel
+
+# set -euo pipefail
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+# GTX 1070 PCI IDs (verified from your lspci output)
+GTX_VGA_ID="10de:1b81"
+GTX_AUDIO_ID="10de:10f0"
+VFIO_IDS="${GTX_VGA_ID},${GTX_AUDIO_ID}"
+
+# Paths for your setup (auto-detect if needed)
+UKIFY_SCRIPT=""
+
+# Function to find ukify script
+find_ukify_script() {
+    local possible_paths=(
+        "/home/evm/tooling/boot/boot_makeukify.mscr"
+        "./boot/boot_makeukify.mscr"
+        "./boot_makeukify.mscr"
+        "/home/$(whoami)/tooling/boot/boot_makeukify.mscr"
+    )
+    
+    for path in "${possible_paths[@]}"; do
+        if [[ -f "$path" ]]; then
+            UKIFY_SCRIPT="$path"
+            return 0
+        fi
+    done
+    
+    return 1
+}
+
+# Check for dry-run mode
+DRY_RUN=false
+if [[ "${1:-}" == "--dry-run" ]]; then
+    DRY_RUN=true
+    echo -e "${YELLOW}=== DRY RUN MODE - NO CHANGES WILL BE MADE ===${NC}"
+fi
+
+echo -e "${BLUE}==== GTX 1070 VFIO Passthrough Setup (rEFInd + ukify) ====${NC}"
+echo -e "Configuring PCI passthrough for:"
+echo -e "  - GTX 1070 VGA: ${GTX_VGA_ID}"
+echo -e "  - GTX 1070 Audio: ${GTX_AUDIO_ID}"
+echo ""
+
+# Function to check if running as root
+check_root() {
+    if [[ $EUID -eq 0 ]]; then
+        echo -e "${RED}ERROR: Do not run this script as root!${NC}"
+        echo "Run as regular user - script will use sudo when needed"
+        exit 1
+    fi
+}
+
+# Function to backup files
+backup_file() {
+    local file="$1"
+    if [[ -f "$file" ]]; then
+        echo -e "${YELLOW}Backing up $file to ${file}.backup.$(date +%Y%m%d-%H%M%S)${NC}"
+        if [[ "$DRY_RUN" == "false" ]]; then
+            cp "$file" "${file}.backup.$(date +%Y%m%d-%H%M%S)"
+        fi
+    fi
+}
+
+# Function to check IOMMU is enabled
+# Fixed and improved IOMMU groups check function
+check_iommu_groups() {
+    # Define colors with fallbacks (in case not defined globally)
+    local GREEN="${GREEN:-\033[0;32m}"
+    local RED="${RED:-\033[0;31m}"
+    local YELLOW="${YELLOW:-\033[1;33m}"
+    local NC="${NC:-\033[0m}"
+    
+    local iommu_dir="/sys/kernel/iommu_groups"
+    
+    # Check if directory exists
+    if [[ ! -d "$iommu_dir" ]]; then
+        echo -e "${RED}✗ IOMMU not available (no groups directory)${NC}"
+        return 1
+    fi
+    
+    # Check if directory is readable
+    if [[ ! -r "$iommu_dir" ]]; then
+        echo -e "${RED}✗ IOMMU groups directory not readable (permission denied)${NC}"
+        return 1
+    fi
+    
+    # Count groups using a more robust method
+    local group_count=0
+    if command -v find >/dev/null 2>&1; then
+        # Use find (more reliable)
+        group_count=$(find "$iommu_dir" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | wc -l)
+    else
+        # Fallback to ls if find not available
+        group_count=$(ls -1 "$iommu_dir" 2>/dev/null | wc -l)
+    fi
+    
+    # Remove any whitespace from wc output
+    group_count=$(echo "$group_count" | tr -d ' \t\n\r')
+    
+    # Check if any groups found
+    if [[ "$group_count" -eq 0 ]]; then
+        echo -e "${YELLOW}⚠ IOMMU groups directory exists but is empty${NC}"
+        echo "  This usually means IOMMU is not enabled in BIOS/UEFI or kernel parameters"
+        return 2
+    fi
+    
+    # Success - IOMMU is active
+    echo -e "${GREEN}✓ IOMMU active with $group_count groups${NC}"
+    
+    # Optional: Show sample groups for verification
+    if [[ "$group_count" -le 10 ]]; then
+        local groups=($(ls "$iommu_dir" 2>/dev/null | sort -n))
+        echo "  Groups: ${groups[*]}"
+    else
+        local sample_groups=($(ls "$iommu_dir" 2>/dev/null | sort -n | head -5))
+        echo "  Sample groups: ${sample_groups[*]} ... (+$((group_count - 5)) more)"
+    fi
+    
+    return 0
+}
+
+# Function to verify prerequisites
+check_prerequisites() {
+    echo -e "${BLUE}[1/5] Checking prerequisites...${NC}"
+    
+    # Check required commands
+    local required_commands=("lspci" "dmesg" "grep" "sed" "ukify" "mkinitcpio")
+    for cmd in "${required_commands[@]}"; do
+        if ! command -v "$cmd" &> /dev/null; then
+            echo -e "${RED}ERROR: Required command '$cmd' not found${NC}"
+            exit 1
+        fi
+    done
+    
+    # Check Intel CPU (since using intel_iommu)
+    if ! grep -q "Intel" /proc/cpuinfo; then
+        echo -e "${YELLOW}Warning: Non-Intel CPU detected, but intel_iommu=on in cmdline${NC}"
+    fi
+    
+    # Find ukify script first (needed for IOMMU check)
+    if ! find_ukify_script; then
+        echo -e "${RED}ERROR: ukify build script not found${NC}"
+        echo "Searched in:"
+        echo "  - /home/evm/tooling/boot/boot_makeukify.mscr"
+        echo "  - ./boot/boot_makeukify.mscr"
+        echo "  - ./boot_makeukify.mscr"
+        echo "  - /home/$(whoami)/tooling/boot/boot_makeukify.mscr"
+        echo ""
+        echo "Please ensure the script exists or update the path in this script"
+        exit 1
+    fi
+    
+    echo -e "${GREEN}✓ Found ukify script: $UKIFY_SCRIPT${NC}"
+    
+    # Check IOMMU support (handle multiple scenarios)
+    local iommu_check_passed=false
+    local current_has_iommu=false
+    local script_has_iommu=false
+    
+    # Check current running kernel
+    if grep -q "intel_iommu=on\|amd_iommu=on" /proc/cmdline; then
+        current_has_iommu=true
+    fi
+    
+    # Check ukify script (if found) - check what it currently uses
+    if [[ -n "$UKIFY_SCRIPT" ]] && [[ -f "$UKIFY_SCRIPT" ]]; then
+        # Better parsing for quoted cmdline parameters
+        local script_cmdline_param=""
+        if grep -q '\--cmdline="[^"]*"' "$UKIFY_SCRIPT" 2>/dev/null; then
+            script_cmdline_param=$(grep -o '\--cmdline="[^"]*"' "$UKIFY_SCRIPT" 2>/dev/null)
+        elif grep -q "\--cmdline='[^']*'" "$UKIFY_SCRIPT" 2>/dev/null; then
+            script_cmdline_param=$(grep -o "\--cmdline='[^']*'" "$UKIFY_SCRIPT" 2>/dev/null)
+        else
+            script_cmdline_param=$(grep -o '\--cmdline=[^ ]*' "$UKIFY_SCRIPT" 2>/dev/null || echo "")
+        fi
+        
+        if echo "$script_cmdline_param" | grep -q "/etc/kernel/cmdline"; then
+            script_has_iommu=true  # Will use /etc/kernel/cmdline which we'll update
+            echo -e "${GREEN}✓ ukify script reads from /etc/kernel/cmdline${NC}"
+        else
+            # Check if embedded cmdline has IOMMU
+            local script_cmdline=$(grep -oP '(?<=--cmdline=")[^"]*' "$UKIFY_SCRIPT" 2>/dev/null || echo "")
+            if echo "$script_cmdline" | grep -q "intel_iommu=on\|amd_iommu=on"; then
+                script_has_iommu=true
+            fi
+            echo -e "${YELLOW}⚠ ukify script has embedded cmdline - will be updated to read /etc/kernel/cmdline${NC}"
+            echo "  Current: $script_cmdline_param"
+            # We'll fix this, so assume it will work
+            script_has_iommu=true
+        fi
+    fi
+    
+    echo -e "${BLUE}IOMMU Status Check:${NC}"
+    if [[ "$current_has_iommu" == "true" ]]; then
+        echo -e "${GREEN}✓ Current kernel: IOMMU enabled in cmdline${NC}"
+        
+        # Use the improved IOMMU groups check
+        if check_iommu_groups; then
+            echo -e "${GREEN}✓ IOMMU confirmed active${NC}"
+            iommu_check_passed=true
+        else
+            local iommu_exit_code=$?
+            if [[ $iommu_exit_code -eq 2 ]]; then
+                # Directory exists but empty
+                echo -e "${YELLOW}⚠ IOMMU enabled but no groups found${NC}"
+                echo "  This may work after adding vfio-pci.ids and rebooting"
+                iommu_check_passed=true
+            else
+                # Directory doesn't exist - IOMMU not working
+                echo -e "${RED}✗ IOMMU in cmdline but not functional${NC}"
+                # Try alternative checks
+                echo -e "${YELLOW}⚠ Trying alternative checks...${NC}"
+                
+                # Try journalctl as alternative
+                if systemctl is-active systemd-journald >/dev/null 2>&1; then
+                    if journalctl -k --no-pager -q | grep -qi "DMAR.*IOMMU\|iommu.*enabled" 2>/dev/null; then
+                        echo -e "${GREEN}✓ IOMMU detected in journal${NC}"
+                        iommu_check_passed=true
+                    fi
+                fi
+                
+                if [[ "$iommu_check_passed" == "false" ]]; then
+                    echo -e "${YELLOW}⚠ IOMMU in cmdline but cannot verify - assuming enabled${NC}"
+                    iommu_check_passed=true
+                fi
+            fi
+        fi
+    else
+        echo -e "${YELLOW}⚠ Current kernel: IOMMU NOT enabled in cmdline${NC}"
+        
+        if [[ "$script_has_iommu" == "true" ]]; then
+            echo -e "${BLUE}ℹ ukify script: IOMMU will be enabled after rebuild${NC}"
+            echo -e "${YELLOW}ℹ This setup will enable IOMMU when the new UKI is booted${NC}"
+            iommu_check_passed=true
+        else
+            echo -e "${RED}✗ ukify script: IOMMU also not configured${NC}"
+            echo -e "${RED}ERROR: IOMMU needs to be enabled in ukify script${NC}"
+            echo "Your ukify script cmdline needs: intel_iommu=on iommu=pt"
+        fi
+    fi
+    
+    if [[ "$iommu_check_passed" == "false" ]]; then
+        echo ""
+        echo "Your current cmdline: $(cat /proc/cmdline)"
+        if [[ -n "$UKIFY_SCRIPT" ]]; then
+            local script_cmdline=$(grep -oP '(?<=--cmdline=")[^"]*' "$UKIFY_SCRIPT" 2>/dev/null || echo "Could not parse")
+            echo "Your ukify script cmdline: $script_cmdline"
+        fi
+        exit 1
+    fi
+    
+    # Check if GTX 1070 is present with exact IDs
+    echo -e "${BLUE}GPU Detection:${NC}"
+    if ! lspci -nn | grep -q "$GTX_VGA_ID"; then
+        echo -e "${RED}✗ GTX 1070 VGA ($GTX_VGA_ID) not found${NC}"
+        echo "Expected device ID: $GTX_VGA_ID"
+        echo "Current NVIDIA devices:"
+        lspci -nn | grep -i nvidia || echo "None found"
+        exit 1
+    fi
+    echo -e "${GREEN}✓ GTX 1070 VGA found${NC}"
+    
+    if ! lspci -nn | grep -q "$GTX_AUDIO_ID"; then
+        echo -e "${YELLOW}⚠ GTX 1070 Audio ($GTX_AUDIO_ID) not found${NC}"
+        echo "  Will configure VGA only"
+        # Update VFIO_IDS to only include VGA if audio not found
+        VFIO_IDS="$GTX_VGA_ID"
+    else
+        echo -e "${GREEN}✓ GTX 1070 Audio found${NC}"
+    fi
+    
+    # Check if already bound to VFIO
+    echo ""
+    echo -e "${BLUE}Current Driver Status:${NC}"
+    local current_driver=$(lspci -k | grep -A 3 "01:00.0" | grep "Kernel driver in use" | cut -d: -f2 | xargs || echo "none")
+    if [[ "$current_driver" == "vfio-pci" ]]; then
+        echo -e "${GREEN}✓ GTX 1070 already bound to vfio-pci${NC}"
+        echo "System appears to be already configured. Continue anyway? (y/N)"
+        read -r response
+        if [[ ! "$response" =~ ^[Yy]$ ]]; then
+            echo "Aborting..."
+            exit 0
+        fi
+    elif [[ "$current_driver" != "none" ]]; then
+        echo -e "${YELLOW}ℹ GTX 1070 currently using driver: $current_driver${NC}"
+        echo "  Will be changed to vfio-pci after reboot"
+    else
+        echo -e "${YELLOW}ℹ GTX 1070 has no driver loaded${NC}"
+        echo "  Will be bound to vfio-pci after reboot"
+    fi
+    
+    # Show current vs. script cmdline for comparison
+    echo -e "${BLUE}Kernel Parameter Status:${NC}"
+    local current_cmdline=$(cat /proc/cmdline)
+    
+    echo -e "${BLUE}Current running kernel:${NC}"
+    echo "$current_cmdline"
+    echo ""
+    
+    if [[ -f "/etc/kernel/cmdline" ]]; then
+        local file_cmdline=$(sudo cat /etc/kernel/cmdline 2>/dev/null || cat /etc/kernel/cmdline)
+        echo -e "${BLUE}/etc/kernel/cmdline (source of truth):${NC}" 
+        echo "$file_cmdline"
+        echo ""
+        
+        if [[ "$current_cmdline" != "$file_cmdline" ]]; then
+            echo -e "${YELLOW}ℹ Current kernel differs from /etc/kernel/cmdline${NC}"
+            echo "  This is normal - changes take effect after UKI rebuild and reboot"
+        fi
+    else
+        echo -e "${YELLOW}ℹ /etc/kernel/cmdline does not exist - will be created${NC}"
+    fi
+    
+    echo -e "${BLUE}Available UKIs:${NC}"
+    sudo ls -la /boot/EFI/Linux/ 2>/dev/null | grep "\.efi$" || echo "No UKIs found"
+    echo ""
+    
+    echo -e "${GREEN}✓ Prerequisites check passed${NC}"
+    echo ""
+    echo -e "${BLUE}Files that will be modified:${NC}"
+    echo "  - /etc/kernel/cmdline (add vfio-pci.ids parameter - SOURCE OF TRUTH)"
+    echo "  - $UKIFY_SCRIPT (update to read from /etc/kernel/cmdline)"
+    echo "  - /boot/refind_linux.conf (add vfio-pci.ids parameter for fallback)"
+    echo "  - /etc/modules-load.d/vfio.conf (create if needed)"
+    echo "  - /etc/modprobe.d/blacklist-nvidia.conf (create if needed)"
+    echo "  - /boot/EFI/Linux/arch-hardened.efi (rebuild with new parameters)"
+    echo "  - /boot/EFI/Linux/arch-hardened-SQ.efi (rebuild with new parameters)"
+}
+
+# Function to update kernel cmdlines
+update_cmdlines() {
+    echo -e "${BLUE}[2/6] Updating kernel cmdlines...${NC}"
+    
+    local vfio_param="vfio-pci.ids=${VFIO_IDS}"
+    
+    # Update /etc/kernel/cmdline
+    local kernel_cmdline="/etc/kernel/cmdline"
+    echo "Updating $kernel_cmdline..."
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo "Would update $kernel_cmdline with: $vfio_param"
+    else
+        # Create directory if needed
+        sudo mkdir -p /etc/kernel
+        
+        # Read current cmdline or use running kernel as base
+        local current_cmdline=""
+        if [[ -f "$kernel_cmdline" ]]; then
+            current_cmdline=$(sudo cat "$kernel_cmdline")
+            backup_file "$kernel_cmdline"
+        else
+            current_cmdline=$(cat /proc/cmdline)
+            echo "Creating $kernel_cmdline from current running kernel"
+        fi
+        
+        # Add/update vfio-pci.ids parameter
+        local new_cmdline
+        if echo "$current_cmdline" | grep -q "vfio-pci.ids"; then
+            # Remove existing and add new
+            new_cmdline=$(echo "$current_cmdline" | sed 's/vfio-pci\.ids=[^ ]*//g' | sed 's/  */ /g' | sed 's/^ *//' | sed 's/ *$//')
+            new_cmdline="${new_cmdline} ${vfio_param}"
+        else
+            # Add new parameter
+            new_cmdline="${current_cmdline} ${vfio_param}"
+        fi
+        
+        # Write updated cmdline
+        echo "$new_cmdline" | sudo tee "$kernel_cmdline" > /dev/null
+        echo -e "${GREEN}✓ Updated $kernel_cmdline${NC}"
+    fi
+    
+    # Update /boot/refind_linux.conf
+    local refind_conf="/boot/refind_linux.conf"
+    echo "Updating $refind_conf..."
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo "Would update $refind_conf with: $vfio_param"
+    else
+        if [[ -f "$refind_conf" ]]; then
+            backup_file "$refind_conf"
+            
+            # Create temporary file for updates
+            local temp_conf=$(mktemp)
+            
+            # Process each line in refind_linux.conf
+            while IFS= read -r line; do
+                if [[ "$line" =~ ^\".*\"[[:space:]]+\".*\" ]]; then
+                    # This is a boot option line
+                    local option_name=$(echo "$line" | cut -d'"' -f2)
+                    local option_params=$(echo "$line" | cut -d'"' -f4)
+                    
+                    # Add/update vfio parameter
+                    if echo "$option_params" | grep -q "vfio-pci.ids"; then
+                        # Remove existing and add new
+                        option_params=$(echo "$option_params" | sed 's/vfio-pci\.ids=[^ ]*//g' | sed 's/  */ /g' | sed 's/^ *//' | sed 's/ *$//')
+                        option_params="${option_params} ${vfio_param}"
+                    else
+                        # Add new parameter
+                        option_params="${option_params} ${vfio_param}"
+                    fi
+                    
+                    echo "\"$option_name\" \"$option_params\"" >> "$temp_conf"
+                else
+                    # Copy other lines as-is
+                    echo "$line" >> "$temp_conf"
+                fi
+            done < "$refind_conf"
+            
+            # Replace original file
+            sudo cp "$temp_conf" "$refind_conf"
+            rm "$temp_conf"
+            echo -e "${GREEN}✓ Updated $refind_conf${NC}"
+        else
+            echo -e "${YELLOW}⚠ $refind_conf not found, skipping${NC}"
+        fi
+    fi
+}
+update_ukify_script() {
+    echo -e "${BLUE}[2/5] Updating ukify build script...${NC}"
+    
+    backup_file "$UKIFY_SCRIPT"
+    
+    # Read current ukify script cmdline
+    local ukify_cmdline=$(grep -oP '(?<=--cmdline=")[^"]*' "$UKIFY_SCRIPT")
+    echo -e "${BLUE}Updating ukify script cmdline...${NC}"
+    echo "Current: $ukify_cmdline"
+    
+    # Check if vfio-pci.ids already present
+    local new_cmdline
+    if echo "$ukify_cmdline" | grep -q "vfio-pci.ids"; then
+        echo -e "${YELLOW}vfio-pci.ids already present, updating...${NC}"
+        # Remove any existing vfio-pci.ids parameter
+        new_cmdline=$(echo "$ukify_cmdline" | sed 's/vfio-pci\.ids=[^ ]*//g' | sed 's/  */ /g' | sed 's/^ *//' | sed 's/ *$//')
+        new_cmdline="${new_cmdline} vfio-pci.ids=${VFIO_IDS}"
+    else
+        # Add vfio-pci.ids parameter
+        new_cmdline="${ukify_cmdline} vfio-pci.ids=${VFIO_IDS}"
+    fi
+    
+    echo "Updated: $new_cmdline"
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo -e "${YELLOW}DRY RUN: Would update $UKIFY_SCRIPT${NC}"
+        return 0
+    fi
+    
+    # Create a temporary file for safe updates
+    local temp_script=$(mktemp)
+    cp "$UKIFY_SCRIPT" "$temp_script"
+    
+    # Update the cmdline in the ukify script
+    sed -i "s|--cmdline=\"[^\"]*\"|--cmdline=\"${new_cmdline}\"|" "$temp_script"
+    
+    # Verify the update worked
+    local verify_cmdline=$(grep -oP '(?<=--cmdline=")[^"]*' "$temp_script")
+    if echo "$verify_cmdline" | grep -q "$VFIO_IDS"; then
+        # Copy temp file over original
+        cp "$temp_script" "$UKIFY_SCRIPT"
+        rm "$temp_script"
+        echo -e "${GREEN}✓ ukify script updated and verified${NC}"
+    else
+        rm "$temp_script"
+        echo -e "${RED}ERROR: ukify script update failed - verification failed${NC}"
+        echo "Expected to find: $VFIO_IDS"
+        echo "Actually found: $verify_cmdline"
+        exit 1
+    fi
+}
+
+# Function to configure VFIO modules - FIXED VERSION
+configure_vfio_modules() {
+    echo -e "${BLUE}[4/6] Configuring VFIO modules...${NC}"
+    
+    local vfio_conf="/etc/modules-load.d/vfio.conf"
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo "Would create $vfio_conf with:"
+        cat <<EOF
+# VFIO modules for PCI passthrough
+vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd
+EOF
+        return 0
+    fi
+    
+    # CREATE DIRECTORY FIRST - THIS WAS MISSING
+    echo "Creating modules-load.d directory..."
+    if ! sudo mkdir -p /etc/modules-load.d; then
+        echo -e "${RED}ERROR: Failed to create /etc/modules-load.d directory${NC}"
+        return 1
+    fi
+    
+    # Create VFIO modules configuration with verification
+    echo "Creating VFIO configuration..."
+    if sudo tee "$vfio_conf" > /dev/null <<EOF; then
+# VFIO modules for PCI passthrough
+vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd
+EOF
+        echo -e "${GREEN}✓ VFIO modules configured in $vfio_conf${NC}"
+        # VERIFY THE FILE WAS CREATED
+        if [[ -f "$vfio_conf" ]]; then
+            echo "File created successfully. Contents:"
+            cat "$vfio_conf"
+        else
+            echo -e "${RED}ERROR: File was not created despite success!${NC}"
+            return 1
+        fi
+    else
+        echo -e "${RED}ERROR: Failed to create $vfio_conf${NC}"
+        return 1
+    fi
+}
+
+# Function to blacklist NVIDIA drivers - FIXED VERSION
+blacklist_nvidia() {
+    echo -e "${BLUE}[5/6] Blacklisting NVIDIA drivers...${NC}"
+    
+    local blacklist_conf="/etc/modprobe.d/blacklist-nvidia.conf"
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo "Would create $blacklist_conf with:"
+        cat <<EOF
+# Blacklist NVIDIA drivers for PCI passthrough
+blacklist nvidia
+blacklist nvidia_drm
+blacklist nvidia_modeset
+blacklist nouveau
+EOF
+        return 0
+    fi
+    
+    # CREATE DIRECTORY FIRST - THIS WAS MISSING
+    echo "Creating modprobe.d directory..."
+    if ! sudo mkdir -p /etc/modprobe.d; then
+        echo -e "${RED}ERROR: Failed to create /etc/modprobe.d directory${NC}"
+        return 1
+    fi
+    
+    # Create blacklist configuration with verification
+    echo "Creating blacklist configuration..."
+    if sudo tee "$blacklist_conf" > /dev/null <<EOF; then
+# Blacklist NVIDIA drivers for PCI passthrough
+blacklist nvidia
+blacklist nvidia_drm
+blacklist nvidia_modeset
+blacklist nouveau
+EOF
+        echo -e "${GREEN}✓ NVIDIA drivers blacklisted in $blacklist_conf${NC}"
+        # VERIFY THE FILE WAS CREATED
+        if [[ -f "$blacklist_conf" ]]; then
+            echo "File created successfully. Contents:"
+            cat "$blacklist_conf"
+        else
+            echo -e "${RED}ERROR: File was not created despite success!${NC}"
+            return 1
+        fi
+    else
+        echo -e "${RED}ERROR: Failed to create $blacklist_conf${NC}"
+        return 1
+    fi
+}
+
+# Function to rebuild UKI - FIXED VERSION
+rebuild_uki() {
+    echo -e "${BLUE}[6/6] Rebuilding UKI with new parameters...${NC}"
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo "Would execute ukify build script: $UKIFY_SCRIPT"
+        echo "Would update initramfs with: mkinitcpio -P"
+        echo "Expected UKI outputs:"
+        echo "  - /boot/EFI/Linux/arch-hardened.efi (from linux-hardened.preset)"
+        echo "  - /boot/EFI/Linux/arch-hardened-SQ.efi (from linux.preset)"
+        return 0
+    fi
+    
+    # First update initramfs to include VFIO modules
+    echo "Updating initramfs..."
+    if ! sudo mkinitcpio -P; then
+        echo -e "${RED}ERROR: Failed to update initramfs${NC}"
+        exit 1
+    fi
+    
+    # Execute the ukify build script
+    echo "Executing ukify build script..."
+    if ! bash "$UKIFY_SCRIPT"; then
+        echo -e "${RED}ERROR: Failed to build UKI${NC}"
+        exit 1
+    fi
+    
+    # Verify the UKI was created - check both possible outputs (need sudo for permissions)
+    local uki1="/boot/EFI/Linux/arch-hardened.efi"
+    local uki2="/boot/EFI/Linux/arch-hardened-SQ.efi"
+    local current_timestamp=$(date +%s)
+    local created_count=0
+    
+    echo "Checking created UKI files..."
+    
+    # Check first UKI (linux-hardened.preset) - use sudo for permissions
+    if sudo test -f "$uki1"; then
+        local uki1_timestamp=$(sudo stat -c %Y "$uki1")
+        if (( current_timestamp - uki1_timestamp < 300 )); then
+            echo -e "${GREEN}✓ arch-hardened.efi created successfully${NC}"
+            created_count=$((created_count + 1))
+        else
+            echo -e "${YELLOW}⚠ arch-hardened.efi exists but not recently updated${NC}"
+        fi
+    else
+        echo -e "${YELLOW}ℹ arch-hardened.efi not found (linux-hardened.preset not processed)${NC}"
+    fi
+    
+    # Check second UKI (linux.preset) - use sudo for permissions
+    if sudo test -f "$uki2"; then
+        local uki2_timestamp=$(sudo stat -c %Y "$uki2")
+        if (( current_timestamp - uki2_timestamp < 300 )); then
+            echo -e "${GREEN}✓ arch-hardened-SQ.efi created successfully${NC}"
+            created_count=$((created_count + 1))
+        else
+            echo -e "${YELLOW}⚠ arch-hardened-SQ.efi exists but not recently updated${NC}"
+        fi
+    else
+        echo -e "${YELLOW}ℹ arch-hardened-SQ.efi not found (linux.preset not processed)${NC}"
+    fi
+    
+    # Summary
+    if [[ $created_count -gt 0 ]]; then
+        echo -e "${GREEN}✓ UKI rebuild successful - $created_count UKI(s) updated${NC}"
+        echo "Available UKIs:"
+        sudo ls -la /boot/EFI/Linux/ 2>/dev/null | grep "\.efi" || echo "Directory accessible but no .efi files found"
+    else
+        echo -e "${RED}ERROR: No UKIs were created or updated${NC}"
+        echo "Available UKIs:"
+        sudo ls -la /boot/EFI/Linux/ 2>/dev/null || echo "Directory not accessible"
+        exit 1
+    fi
+}
+
+# Function to show configuration summary
+show_configuration_summary() {
+    echo -e "${BLUE}=== Configuration Summary ===${NC}"
+    echo ""
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo -e "${YELLOW}DRY RUN MODE - Changes shown below would be made:${NC}"
+    else
+        echo -e "${GREEN}The following changes were made:${NC}"
+    fi
+    echo ""
+    
+    local vfio_param="vfio-pci.ids=${VFIO_IDS}"
+    
+    # Show /etc/kernel/cmdline changes (SOURCE OF TRUTH)
+    local kernel_cmdline="/etc/kernel/cmdline"
+    echo -e "${BLUE}/etc/kernel/cmdline: ${GREEN}(SOURCE OF TRUTH)${NC}"
+    if [[ "$DRY_RUN" == "false" ]] && [[ -f "$kernel_cmdline" ]]; then
+        local current_content=$(sudo cat "$kernel_cmdline" 2>/dev/null || cat "$kernel_cmdline" 2>/dev/null || echo "Could not read file")
+        echo "Current: $current_content"
+    else
+        echo "Current: $(cat /proc/cmdline)"
+    fi
+    echo -e "${GREEN}Added: $vfio_param${NC}"
+    echo ""
+    
+    # Show ukify script configuration
+    if [[ -n "$UKIFY_SCRIPT" ]]; then
+        echo -e "${BLUE}$UKIFY_SCRIPT:${NC}"
+        
+        # Better parsing for quoted cmdline parameters
+        local script_cmdline_param=""
+        if grep -q '\--cmdline="[^"]*"' "$UKIFY_SCRIPT" 2>/dev/null; then
+            script_cmdline_param=$(grep -o '\--cmdline="[^"]*"' "$UKIFY_SCRIPT" 2>/dev/null)
+        elif grep -q "\--cmdline='[^']*'" "$UKIFY_SCRIPT" 2>/dev/null; then
+            script_cmdline_param=$(grep -o "\--cmdline='[^']*'" "$UKIFY_SCRIPT" 2>/dev/null)
+        else
+            script_cmdline_param=$(grep -o '\--cmdline=[^ ]*' "$UKIFY_SCRIPT" 2>/dev/null || echo "")
+        fi
+        
+        if echo "$script_cmdline_param" | grep -q "/etc/kernel/cmdline"; then
+            echo "Configuration: $script_cmdline_param (✓ reads from source of truth)"
+        else
+            echo "Configuration: $script_cmdline_param"
+            if [[ "$DRY_RUN" == "true" ]]; then
+                echo -e "${YELLOW}Will be updated to: --cmdline=/etc/kernel/cmdline${NC}"
+            else
+                echo -e "${GREEN}Updated to: --cmdline=/etc/kernel/cmdline${NC}"
+            fi
+        fi
+        echo ""
+    fi
+    
+    # Show refind_linux.conf changes
+    local refind_conf="/boot/refind_linux.conf"
+    if [[ -f "$refind_conf" ]] || [[ "$DRY_RUN" == "true" ]]; then
+        echo -e "${BLUE}/boot/refind_linux.conf:${NC}"
+        if [[ "$DRY_RUN" == "false" ]] && [[ -f "$refind_conf" ]]; then
+            echo "Boot options updated with:"
+        else
+            echo "Would update boot options with:"
+        fi
+        echo -e "${GREEN}Added: $vfio_param${NC}"
+        echo ""
+    fi
+    
+    # Show module configuration
+    echo -e "${BLUE}Module Configuration:${NC}"
+    if [[ "$DRY_RUN" == "false" ]]; then
+        echo "Created: /etc/modules-load.d/vfio.conf"
+        echo "Created: /etc/modprobe.d/blacklist-nvidia.conf"
+    else
+        echo "Would create: /etc/modules-load.d/vfio.conf"
+        echo "Would create: /etc/modprobe.d/blacklist-nvidia.conf"
+    fi
+    echo "  - VFIO modules: vfio, vfio_iommu_type1, vfio_pci, vfio_virqfd"
+    echo "  - Blacklisted: nvidia, nvidia_drm, nvidia_modeset, nouveau"
+    echo ""
+    
+    # Show UKI files
+    echo -e "${BLUE}UKI Files:${NC}"
+    if [[ "$DRY_RUN" == "false" ]]; then
+        echo "Updated: /boot/EFI/Linux/arch-hardened.efi (if linux-hardened.preset exists)"
+        echo "Updated: /boot/EFI/Linux/arch-hardened-SQ.efi (if linux.preset exists)"
+    else
+        echo "Would update: /boot/EFI/Linux/arch-hardened.efi (if linux-hardened.preset exists)"
+        echo "Would update: /boot/EFI/Linux/arch-hardened-SQ.efi (if linux.preset exists)"
+    fi
+    echo ""
+    
+    # Show what to expect after reboot
+    echo -e "${BLUE}Expected After Reboot:${NC}"
+    echo "1. /etc/kernel/cmdline contains VFIO parameters (source of truth)"
+    echo "2. ukify script reads from /etc/kernel/cmdline when building UKIs"
+    echo "3. Kernel cmdline should contain: $vfio_param"
+    echo "4. GTX 1070 should show: Kernel driver in use: vfio-pci"
+    echo "5. VFIO modules should be loaded"
+    echo ""
+    echo -e "${BLUE}Workflow:${NC}"
+    echo "1. Make changes to /etc/kernel/cmdline"
+    echo "2. Run ukify script to rebuild UKIs with updated parameters"
+    echo "3. rEFInd boots UKI with correct VFIO configuration"
+    echo ""
+}
+
+# Function to show verification commands
+show_verification() {
+    echo -e "${BLUE}Setup complete!${NC}"
+    echo ""
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        echo -e "${YELLOW}DRY RUN COMPLETE - No changes were made${NC}"
+        echo "To apply changes, run: $0"
+        echo ""
+        return 0
+    fi
+    
+    echo -e "${YELLOW}REBOOT REQUIRED${NC}"
+    echo ""
+    echo "Your UKIs have been rebuilt with VFIO support."
+    echo "rEFInd will automatically detect and boot the updated UKIs."
+    echo ""
+    echo "After reboot, verify the configuration with these commands:"
+    echo ""
+    echo -e "${BLUE}1. Check VFIO modules loaded:${NC}"
+    echo "   lsmod | grep vfio"
+    echo ""
+    echo -e "${BLUE}2. Verify GTX 1070 bound to vfio-pci:${NC}"
+    echo "   lspci -k | grep -A 3 '01:00.0'"
+    echo "   # Should show: Kernel driver in use: vfio-pci"
+    echo "   # Should NOT show: Kernel modules: nouveau"
+    echo ""
+    echo -e "${BLUE}3. Check kernel cmdline includes VFIO:${NC}"
+    echo "   cat /proc/cmdline | grep vfio-pci.ids"
+    echo "   # Should show: vfio-pci.ids=${VFIO_IDS}"
+    echo ""
+    echo -e "${BLUE}4. Verify UKI timestamps:${NC}"
+    echo "   sudo ls -la /boot/EFI/Linux/arch-hardened*.efi"
+    echo ""
+    echo -e "${GREEN}If all checks pass, your VM should start successfully!${NC}"
+}
+
+# Main execution
+main() {
+    check_root
+    check_prerequisites
+    update_cmdlines
+    update_ukify_script
+    configure_vfio_modules
+    blacklist_nvidia
+    rebuild_uki
+    show_configuration_summary
+    show_verification
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        return 0
+    fi
+    
+    echo ""
+    echo -e "${YELLOW}Ready to reboot? (y/N)${NC}"
+    read -r response
+    if [[ "$response" =~ ^[Yy]$ ]]; then
+        echo "Rebooting in 5 seconds... (Ctrl+C to cancel)"
+        sleep 5
+        sudo systemctl reboot
+    else
+        echo "Please reboot manually when ready: sudo systemctl reboot"
+        echo ""
+        echo "After reboot, rEFInd will automatically boot your updated UKIs with VFIO support."
+    fi
+}
+
+# Run main function
+main "$@"

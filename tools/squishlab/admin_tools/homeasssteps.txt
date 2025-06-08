@@ -1,0 +1,110 @@
+Here's a **formatted checklist** of each required component to integrate your Google DoorCam (Nest Hello, model e5mvrm) with **Home Assistant**, with **direct links**, **purpose**, and **short instructions** per step:
+
+---
+
+### ✅ GOOGLE CLOUD SETUP (ARTIFACTS + LINKS)
+
+1. **Google Cloud Project**
+
+   * **URL**: [https://console.cloud.google.com/](https://console.cloud.google.com/)
+   * **Purpose**: Core container for APIs, credentials, and services.
+   * **Instruction**: Click “Create Project,” name it, and note the **Project ID**.
+
+2. **Enable APIs**
+
+   * **Smart Device Management API**
+
+     * 🔗 [Enable SDM API](https://console.cloud.google.com/apis/library/smartdevicemanagement.googleapis.com)
+     * **Instruction**: Click “Enable” after selecting your project.
+   * **Cloud Pub/Sub API**
+
+     * 🔗 [Enable Pub/Sub API](https://console.cloud.google.com/apis/library/pubsub.googleapis.com)
+     * **Instruction**: Same — make sure you enable this **for the same project**.
+
+3. **OAuth Consent Screen**
+
+   * **URL**: [https://console.cloud.google.com/apis/credentials/consent](https://console.cloud.google.com/apis/credentials/consent)
+   * **Purpose**: Required for using OAuth.
+   * **Instruction**: Choose “External,” fill in required app details, and save.
+
+4. **Create OAuth 2.0 Client ID**
+
+   * **URL**: [https://console.cloud.google.com/apis/credentials](https://console.cloud.google.com/apis/credentials)
+   * **Purpose**: Used by Home Assistant for authorization.
+   * **Instruction**:
+
+     * Click **“Create Credentials” → “OAuth client ID”**
+     * App type: **Web application**
+     * **Authorized redirect URI**: `https://my.home-assistant.io/redirect/oauth`
+
+---
+
+### ✅ DEVICE ACCESS CONSOLE
+
+5. **Create Device Access Project**
+
+   * **URL**: [https://console.nest.google.com/device-access](https://console.nest.google.com/device-access)
+   * **Purpose**: Registers your project with Nest ecosystem.
+   * **Instruction**: Accept terms, pay \$5 fee, and link it to your Google Cloud project.
+
+6. **Enable Events (Requires Pub/Sub Topic)**
+
+   * **URL**: [Device Access Console](https://console.nest.google.com/device-access)
+   * **Purpose**: Enables your device to send motion/ring events.
+   * **Instruction**:
+
+     * First create a Pub/Sub topic (below), then paste its **full name** here.
+     * Format: `projects/YOUR_PROJECT_ID/topics/home-assistant-events`
+
+---
+
+### ✅ PUB/SUB CONFIGURATION
+
+7. **Create Pub/Sub Topic**
+
+   * **URL**: [https://console.cloud.google.com/cloudpubsub/topic](https://console.cloud.google.com/cloudpubsub/topic)
+   * **Purpose**: Destination for Nest events.
+   * **Instruction**:
+
+     * Click **"Create Topic"**, name it (e.g., `home-assistant-events`)
+     * Copy full topic name (e.g., `projects/my-ha-project/topics/home-assistant-events`)
+
+8. **Create Subscription (Pull)**
+
+   * **URL**: [https://console.cloud.google.com/cloudpubsub/subscription](https://console.cloud.google.com/cloudpubsub/subscription)
+   * **Purpose**: Home Assistant pulls events from here.
+   * **Instruction**:
+
+     * Link to your above topic
+     * Set **delivery type = Pull**
+     * Example name: `home-assistant-sub`
+
+9. **Assign IAM Permissions**
+
+   * **URL**: [https://console.cloud.google.com/iam-admin/iam](https://console.cloud.google.com/iam-admin/iam)
+   * **Purpose**: Grant Pub/Sub roles to your service account.
+   * **Instruction**:
+
+     * Add role **Pub/Sub Publisher** and **Subscriber** to the service account used by Home Assistant.
+
+---
+
+### ✅ HOME ASSISTANT CONFIGURATION
+
+10. **Configure Nest Integration in Home Assistant**
+
+    * **URL**: Home Assistant UI → `Settings → Devices & Services → Add Integration → Nest`
+    * **Purpose**: Brings the camera into your smart home setup.
+    * **Instruction**:
+
+      * Provide:
+
+        * **Project ID**
+        * **Device Access Project ID**
+        * **OAuth Client ID**
+        * **OAuth Client Secret**
+      * Follow OAuth flow and grant access
+
+---
+
+Let me know if you want a bash-based `gcloud` script to automate topic + subscription + permission setup.

@@ -1,0 +1,23 @@
+# Set up Duck DNS with HTTPS
+sudo systemctl stop homeassistant && \
+sudo -u homeassistant tee /opt/homeassistant/config/configuration.yaml << 'EOF'
+homeassistant:
+  name: SecureHome
+  latitude: 49.8951
+  longitude: -119.5103
+  unit_system: metric
+  time_zone: America/Vancouver
+  external_url: https://iSquish.duckdns.org:8170
+
+frontend:
+http:
+  server_port: 8170
+
+automation: []
+script: []
+scene: []
+EOF
+sudo -u homeassistant tee /opt/homeassistant/config/secrets.yaml << 'EOF'
+duckdns_token: 118acfc4-7dff-4597-bcee-9d96f11ed444
+EOF
+sudo systemctl start homeassistant

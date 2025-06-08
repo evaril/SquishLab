@@ -1,0 +1,45 @@
+# Fix Google Nest integration OAuth configuration
+sudo systemctl stop homeassistant && \
+curl -o /tmp/nest_setup.py https://raw.githubusercontent.com/home-assistant/core/dev/script/setup && \
+sudo -u homeassistant /opt/homeassistant/venv/bin/python -c "
+import os
+import json
+config_dir = '/opt/homeassistant/config'
+# Create proper OAuth configuration
+oauth_config = {
+    'nest': {
+        'client_id': '1043201811320-vn421cqgrn6o7puj374id2lg2d8euji8.apps.googleusercontent.com',
+        'client_secret': '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',
+        'subscriber_id': '54f748b4-08e8-46be-bd2a-ad6b7679d988'
+    }
+}
+# Ensure .storage directory exists
+storage_dir = os.path.join(config_dir, '.storage')
+os.makedirs(storage_dir, exist_ok=True)
+print('Google Nest integration needs manual OAuth setup.')
+print('1. Go to https://console.nest.google.com/')
+print('2. Create a new project')
+print('3. Enable Device Access API')
+print('4. Create OAuth credentials')
+print('5. Add this as redirect URI: http://localhost:8170/auth/external/callback')
+print('6. Note down Client ID, Client Secret, and Project ID')
+" && \
+sudo -u homeassistant tee -a /opt/homeassistant/config/configuration.yaml << 'EOF'
+
+# Google Nest integration (add your credentials)
+nest:
+  client_id: !secret nest_client_id
+  client_secret: !secret nest_client_secret
+  subscriber_id: !secret nest_subscriber_id
+  
+# Add these to secrets.yaml after getting them from Google
+EOF
+sudo -u homeassistant tee -a /opt/homeassistant/config/secrets.yaml << 'EOF'
+
+# Add your Google Nest credentials here
+# nest_client_id: your_client_id_here
+# nest_client_secret: your_client_secret_here  
+# nest_subscriber_id: your_project_id_here
+EOF
+sudo systemctl start homeassistant && \
+echo "You need to set up Google Device Access first at https://console.nest.google.com/"

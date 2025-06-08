@@ -1,0 +1,3 @@
+input-leaps: no configuration available
+[2025-05-18T01:49:21] ERROR: cannot read configuration "/home/evm/.config/InputLeap/InputLeap.conf": read error: line 1: found data outside section
+input-leaps: no configuration available

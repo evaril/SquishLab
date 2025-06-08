@@ -1,0 +1,26 @@
+
+
+Wireless 5 GHz
+SSID: TELUS5S55	BSSID: E8:9C:25:C9:43:D4	Mode: AP
+Channel: 52/160	 	Noise: -88 dBm	Utilization: 46%
+DFS State: In-Service Monitoring (ISM)	Time elapsed: 0h 5m 54s	Channel cleared for radar: 52/160
+Device	IP Address	Rx/Tx & RSSI	Connected	Streams	Flags
+76:FB:BA:3C:F9:8F
+android-dhcp-15	192.168.72.201
+	6 / 907 Mbps
+-31 dBm	1:04:38	2 (ax)
+160MHz	PS_MAU
+02:E0:6B:F9:BB:E2
+iPhone	192.168.72.45
+	24 / 340 Mbps
+-60 dBm	2:53:49	2 (ax)
+80MHz	PS_MAU
+1C:91:80:CF:F1:4F
+WKMZTBF72C9A	192.168.72.48
+	24 / 1134 Mbps
+-56 dBm	23:22:12	2 (ax)
+80MHz	PS_MAU
+
+
+Flags: P=Powersave Mode, S=Short GI, T=STBC, M=MU Beamforming, A=Associated, U=Authenticated
+

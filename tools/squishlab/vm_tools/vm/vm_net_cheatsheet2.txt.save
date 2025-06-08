@@ -1,0 +1,370 @@
+# SquishLab Bridged VM Networking Configuration
+
+## 🔒 Security Note: No dnsmasq Required
+
+**Your security concern about dnsmasq is valid** - it has serious vulnerabilities (DNSpooq CVE-2020-25681-7, 2024 DNSSEC issues). 
+
+**Good news: Bridged networks eliminate dnsmasq entirely:**
+- ❌ NAT networks: Use libvirt's dnsmasq (security risk)
+- ✅ Bridged networks: VMs connect directly to physical network
+- ✅ DHCP from squishhq (192.168.72.1), not dnsmasq  
+- ✅ DNS from squishhq, systemd-resolved handles host resolution
+
+## Current vs Target Architecture
+
+**Current State (Isolated):**
+```
+VM (192.168.100.10) → virbr1 → squishlab NAT → squishhq → Internet
+```
+
+**Target State (Bridged):**
+```
+VM (192.168.72.x via DHCP) → br0 → squishlab → squishhq → ISP Router → Internet
+```
+
+## Prerequisites Check & dnsmasq Security Note
+
+⚠️ **SECURITY NOTE**: dnsmasq has serious vulnerabilities (DNSpooq, recent 2024 CVEs). **Good news**: bridged networks do NOT require dnsmasq service running.
+
+```bash
+# Verify required packages (dnsmasq package may be needed as libvirt dependency)
+pacman -Q iptables-nft bridge-utils
+
+# Install if missing
+sudo pacman -S iptables-nft bridge-utils
+
+# dnsmasq package might be required for libvirt, but service should NOT run
+# We'll disable the service to prevent security exposure
+sudo systemctl disable dnsmasq
+sudo systemctl stop dnsmasq
+```
+
+**Why this works**: libvirt handles DHCP and DNS with dnsmasq, launching a separate instance for every virtual network - but **ONLY for NAT networks**. Bridged networks bypass dnsmasq entirely.
+
+## Phase 1: Host Bridge Configuration (NetworkManager)
+
+### 1.1: Identify Your Physical Interface
+```bash
+# Find your primary network interface
+ip link show
+nmcli device status
+
+# Expected output should show your main interface (e.g., eno1, enp3s0, etc.)
+```
+
+### 1.2: Create Bridge with NetworkManager
+
+$ sudo nmcli con add ifname br0 type bridge con-name br0
+
+```bash
+# Create the bridge
+sudo nmcli con add ifname br0 type bridge con-name br0
+
+# Add your physical interface as bridge slave (replace eno1 with your interface)
+sudo nmcli con add type bridge-slave ifname eno1 master br0
+
+# Disable STP (Spanning Tree Protocol) for better performance
+sudo nmcli con modify br0 bridge.stp no
+
+# Configure IPv4 DHCP (get IP from squishhq)
+sudo nmcli con modify br0 ipv4.method auto
+
+# Disable IPv6 as requested
+sudo nmcli con modify br0 ipv6.method disabled
+```
+
+### 1.3: Activate Bridge Configuration
+```bash
+# Bring down existing connection (replace "Wired connection 1" with actual name)
+sudo nmcli con down "Wired connection 1"
+
+# Bring up the bridge
+sudo nmcli con up br0
+
+# Verify bridge is active and has IP from squishhq
+nmcli
+
+nmcli con show br0
+```
+
+## Phase 2: System-Level Bridge Optimization
+
+### 2.1: Kernel Bridge Settings
+
+For performance and security reasons, disable netfilter for bridges.
+
+```bash
+# Create bridge optimization config
+sudo tee /etc/sysctl.d/99-bridge.conf << 'EOF'
+# Disable netfilter for bridges (performance)
+net.bridge.bridge-nf-call-ip6tables=0
+net.bridge.bridge-nf-call-iptables=0
+net.bridge.bridge-nf-call-arptables=0
+
+# IPv6 disabled globally (as requested)
+net.ipv6.conf.all.disable_ipv6=1
+net.ipv6.conf.default.disable_ipv6=1
+EOF
+
+# Apply immediately
+sudo sysctl -p /etc/sysctl.d/99-bridge.conf
+```
+
+### 2.2: udev Rules for Bridge Module
+```bash
+# Create udev rule to apply bridge settings when module loads
+sudo tee /etc/udev/rules.d/99-bridge.rules << 'EOF'
+ACTION=="add", SUBSYSTEM=="module", KERNEL=="br_netfilter", RUN+="/usr/bin/sysctl -p /etc/sysctl.d/99-bridge.conf"
+EOF
+```
+
+## Phase 3: systemd-resolved Configuration
+
+### 3.1: Configure systemd-resolved
+
+systemd-resolved will work out of the box with a network manager using /etc/resolv.conf.
+
+```bash
+# Create systemd-resolved configuration
+sudo tee /etc/systemd/resolved.conf.d/squishlab.conf << 'EOF'
+[Resolve]
+# Let squishhq handle DNS resolution
+DNS=192.168.72.1
+FallbackDNS=149.112.112.11 9.9.9.11
+Domains=~.
+DNSSEC=no
+DNSOverTLS=no
+# Disable IPv6 DNS
+EOF
+
+# Restart systemd-resolved
+sudo systemctl restart systemd-resolved
+
+# Verify configuration
+resolvectl status
+```
+
+### 3.2: NetworkManager Integration
+```bash
+# Ensure NetworkManager uses systemd-resolved
+sudo tee /etc/NetworkManager/conf.d/dns.conf << 'EOF'
+[main]
+dns=systemd-resolved
+EOF
+
+# Restart NetworkManager
+sudo systemctl restart NetworkManager
+```
+
+## Phase 4: libvirt Bridge Network
+
+### 4.1: Create Host Bridge Network Definition
+
+Create a bridge network device inside KVM.
+
+```bash
+# Create libvirt bridge network XML
+cat > ~/host-bridge.xml << 'EOF'
+<network>
+  <name>host-bridge</name>
+  <forward mode="bridge"/>
+  <bridge name="br0"/>
+</network>
+EOF
+
+# Define and start the network
+virsh net-define ~/host-bridge.xml
+virsh net-start host-bridge
+virsh net-autostart host-bridge
+
+# Verify the network
+virsh net-list --all
+```
+
+### 4.2: Destroy/Replace Default Network
+```bash
+# Stop and remove default isolated network
+virsh net-destroy default
+virsh net-undefine defaultx
+
+# Verify only host-bridge remains
+virsh net-list --all
+```
+
+## Phase 5: VM Configuration Updates
+
+### 5.1: Update VM Network Interface (virt-manager)
+1. Open virt-manager
+2. Edit your VM (windows10-clean)
+3. Go to NIC device
+4. Change "Network source" to "Virtual network 'host-bridge'"
+5. Set "Device model" to "virtio"
+6. Apply changes
+
+### 5.2: Update VM Network Interface (XML/virsh)
+```bash
+# Get current VM configuration
+virsh dumpxml windows10-clean > ~/vm-backup.xml
+
+# Edit VM to use host-bridge
+virsh edit windows10-clean
+
+# Find the <interface> section and change to:
+# <interface type='network'>
+#   <source network='host-bridge'/>
+#   <model type='virtio'/>
+# </interface>
+```
+
+### 5.3: VM Guest Configuration
+**In Windows VM:**
+- Set network adapter to DHCP
+- Disable IPv6 in network adapter properties
+- DNS servers should be automatically assigned by squishhq
+
+## Phase 6: Verification & Testing
+
+### 6.1: Host Verification
+```bash
+# Verify bridge is working
+brctl show
+ip addr show br0
+
+# Check NetworkManager status
+nmcli con show br0
+
+# Verify systemd-resolved
+resolvectl status
+
+# Test DNS resolution
+nslookup google.com
+```
+
+### 6.2: VM Network Testing
+```bash
+# Start VM and verify network
+virsh start windows10-clean
+
+# Check VM gets IP in 192.168.72.x range (from squishhq DHCP)
+# In Windows VM:
+# - ipconfig /all
+# - Should show IP: 192.168.72.x
+# - Should show Gateway: 192.168.72.1 (squishhq)
+# - Should show DNS: assigned by squishhq
+```
+
+### 6.3: Security Verification (No dnsmasq)
+```bash
+# Verify no dnsmasq processes running
+ps aux | grep -v grep | grep dnsmasq
+# Should return empty (no dnsmasq processes)
+
+# Verify no dnsmasq listening on port 53
+ss -tulpn | grep :53
+# Should only show systemd-resolved on 127.0.0.53
+
+# Verify libvirt bridge network has no dnsmasq
+virsh net-info host-bridge
+# Should show no DHCP range (relies on squishhq for DHCP)
+```
+```bash
+# From squishlab host - test VM connectivity
+ping [VM_IP_from_squishhq]
+
+# From VM - test internet connectivity
+# ping 8.8.8.8 (should work)
+# nslookup google.com (should resolve via squishhq DNS)
+```
+
+## Troubleshooting Guide
+
+### Bridge Issues
+```bash
+# Check bridge status
+ip link show master br0
+brctl show
+
+# Restart networking if needed
+sudo systemctl restart NetworkManager
+sudo nmcli con up br0
+```
+
+### VM Not Getting DHCP
+```bash
+# Check libvirt network
+virsh net-info host-bridge
+virsh net-dhcp-leases host-bridge
+
+# Restart VM networking
+virsh destroy windows10-clean
+virsh start windows10-clean
+```
+
+### DNS Resolution Problems
+```bash
+# Check systemd-resolved status
+resolvectl status
+
+# Test DNS directly
+dig @192.168.72.1 google.com
+
+# Restart DNS services
+sudo systemctl restart systemd-resolved
+```
+
+### Rollback Procedure
+```bash
+# If issues occur, rollback to isolated network:
+virsh net-destroy host-bridge
+virsh net-undefine host-bridge
+
+# Recreate default network
+virsh net-start default
+virsh net-autostart default
+
+# Restore VM to use default network
+virsh edit windows10-clean
+# Change back to: <source network='default'/>
+```
+
+## Expected Final State
+
+**Network Topology:**
+```
+Internet
+   ↑
+ISP Router (10.0.0.1)
+   ↑
+squishhq (192.168.72.1) - DHCP Server, DNS, Security Gateway
+   ↑
+squishlab (192.168.72.54) - Bridge Host
+   ↑
+br0 bridge
+   ↑
+VM (192.168.72.x) - Gets DHCP from squishhq
+```
+
+**Security Benefits:**
+- Single point of control through squishhq
+- VMs appear as direct clients on secure network
+- No isolated subnet complexity
+- Centralized DNS and DHCP management
+- IPv6 disabled as requested
+- **No dnsmasq service running** (eliminates DNSpooq and related vulnerabilities)
+- **systemd-resolved handles host DNS** (more secure, actively maintained)
+
+**Performance Benefits:**
+- Direct bridge performance (no NAT overhead)
+- Bridging offers the best performance and the least headache out of the libvirt network types.
+- VMs get full bandwidth to secure network
+
+## Integration with Your Existing Setup
+
+This configuration preserves:
+- ✅ UKI boot with LUKS encryption
+- ✅ Hardened kernel parameters
+- ✅ VNC/SPICE/RDP display connectivity
+- ✅ SSH tunnel capability for remote access
+- ✅ Future GPU passthrough preparation
+
+The VMs will now appear as first-class citizens on your secure network (192.168.72.x) while maintaining all existing security and remote access capabilities.

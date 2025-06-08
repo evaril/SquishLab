@@ -1,0 +1,14 @@
+# Remove and recreate everything with correct permissions
+sudo rm -rf /opt/homeassistant/venv
+
+# Ensure the homeassistant user exists and has proper home directory
+sudo userdel homeassistant 2>/dev/null || true
+sudo useradd -r -d /opt/homeassistant -s /bin/false homeassistant
+
+# Set correct ownership and permissions for base directory
+sudo chown -R homeassistant:homeassistant /opt/homeassistant
+sudo chmod 755 /opt/homeassistant
+sudo chmod 755 /opt/homeassistant/config
+sudo chmod 755 /opt/homeassistant/logs
+sudo chmod 755 /opt/homeassistant/backups
+

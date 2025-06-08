@@ -1,0 +1,73 @@
+OAuth access is restricted to the test users
+listed on your OAuth consent screen
+backup
+GXZR-HG4C-CBM3-IVI3-KTQ4-6N1C-64SX
+
+Client ID
+    1043201811320-tbt4evsupkkfj84mv8phruf19bkou31g.apps.googleusercontent.com
+
+Starting in June 2025, you will no longer be able to view or download the client secret once you close this dialog. Make sure you have copied or downloaded the information below and securely stored it.
+
+Client secret
+    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
+
+Creation date
+    18 May 2025 at 23:01:35 GMT-7
+Status
+
+    Enabled
+
+
+
+1043201811320-dd8vhamr4o48mkfd453tl9lm4fclen5p.apps.googleusercontent.com
+
+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
+
+
+
+
+
+1043201811320-dd8vhamr4o48mkfd453tl9lm4fclen5p.apps.googleusercontent.com      
+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
+
+
+
+
+
+
+
+
+
+
+
+device proj
+
+
+ assingabout
+Project ID: 54f748b4-08e8-46be-bd2a-ad6b7679d988 
+
+oauthclientid
+
+1043201811320-tbt4evsupkkfj84mv8phruf19bkou31g.apps.googleusercontent.com
+
+
+webappprojclient
+
+assingaboutdev
+1043201811320-tbt4evsupkkfj84mv8phruf19bkou31g.apps.googleusercontent.com 
+
+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
+
+
+google proj
+
+
+Project info
+Project name
+Assingabout
+Project number
+1043201811320
+Project ID
+
+
+https://console.cloud.google.com/home/dashboard?pli=1&inv=1&invt=AbxyQw&allowsmanagementprojects=true&project=assingabout&supportedpurview=project

@@ -1,0 +1,19 @@
+# Create virtual environment as homeassistant user
+sudo -u homeassistant python -m venv /opt/homeassistant/venv
+
+# Activate and upgrade pip in the virtual environment
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install --upgrade pip setuptools wheel
+
+# Install Home Assistant (this will pull in all required dependencies)
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install homeassistant
+
+# Optional: Install specific integrations you plan to use
+sudo -u homeassistant /opt/homeassistant/venv/bin/pip install \
+    pynacl \
+    aiodiscover \
+    zeroconf \
+    netdisco \
+    pycryptodome
+
+
+

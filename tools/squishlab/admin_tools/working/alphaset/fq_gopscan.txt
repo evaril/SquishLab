@@ -1,0 +1,21 @@
+#!/bin/bash
+FIRMWARE="$1"
+
+if [ ! -f "$FIRMWARE" ]; then
+  echo "Usage: $0 <firmware.rom>"
+  exit 1
+fi
+
+echo "[*] Scanning firmware for GOP..."
+
+# Dump readable strings and search for GOP identifiers
+strings "$FIRMWARE" | grep -A5 -i "Intel(R) GOP Driver"
+
+echo
+echo "[*] Searching binary structure with binwalk..."
+binwalk -eM "$FIRMWARE" | grep -i "UEFI"
+
+echo
+echo "[*] Done. If you want to extract and inspect further:"
+echo "  Use UEFITool to open and explore the firmware directly."
+

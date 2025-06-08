@@ -1,0 +1,69 @@
+# Create systemd service file
+sudo tee /etc/systemd/system/homeassistant.service << 'EOF'
+[Unit]
+Description=Home Assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=exec
+User=homeassistant
+Group=homeassistant
+ExecStart=/opt/homeassistant/venv/bin/hass --config /opt/homeassistant/config
+ExecReload=/bin/kill -HUP $MAINPID
+Restart=on-failure
+RestartSec=5
+KillMode=mixed
+KillSignal=SIGINT
+TimeoutStopSec=30
+
+# Maximum security restrictions
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+ProtectKernelLogs=yes
+ProtectHostname=yes
+ProtectClock=yes
+ProtectProc=invisible
+ProcSubset=pid
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
+RestrictNamespaces=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RemoveIPC=yes
+
+# Resource limits
+LimitNOFILE=4096
+LimitNPROC=512
+PrivateTmp=yes
+
+# Filesystem access
+ReadWritePaths=/opt/homeassistant/config
+ReadWritePaths=/opt/homeassistant/logs
+ReadOnlyPaths=/opt/homeassistant/venv
+
+# Networking (restrictive)
+PrivateNetwork=no
+IPAddressDeny=any
+IPAddressAllow=localhost
+IPAddressAllow=192.168.0.0/16
+IPAddressAllow=10.0.0.0/8
+IPAddressAllow=172.16.0.0/12
+
+# Drop all capabilities
+CapabilityBoundingSet=
+AmbientCapabilities=
+
+# Additional security
+PrivateUsers=yes
+ProtectHostname=yes
+SystemCallArchitectures=native
+
+[Install]
+WantedBy=multi-user.target
+EOF

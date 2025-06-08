@@ -1,0 +1,99 @@
+<domain type='kvm'>
+  <name>WindowsVM</name>
+  <memory unit='MiB'>8192</memory>
+  <currentMemory unit='MiB'>8192</currentMemory>
+  <vcpu placement='static'>4</vcpu>
+  <os>
+    <type arch='x86_64' machine='pc-q35-8.0'>hvm</type>
+    <loader readonly='yes' type='pflash'>/usr/share/edk2-ovmf/x64/OVMF_CODE.fd</loader>
+    <nvram template='/usr/share/edk2-ovmf/x64/OVMF_VARS.fd'>/var/lib/libvirt/qemu/nvram/WindowsVM_VARS.fd</nvram>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+    <hyperv>  <!-- Hyper-V enlightenments for Windows -->
+      <relaxed state='on'/>
+      <vapic state='on'/>
+      <spinlocks state='on' retries='8191'/>
+      <!-- (Optional: other features like <synic/>, <reset/> can be enabled if needed) -->
+    </hyperv>
+    <kvm>
+      <hidden state='off'/>  <!-- No GPU passthrough, so no need to hide KVM -->
+    </kvm>
+    <vmport state='off'/>    <!-- Disable legacy VMware VMport -->
+  </features>
+  <cpu mode='host-passthrough' check='none'/>
+  <clock offset='localtime'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+    <timer name='hypervclock' present='yes'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>destroy</on_crash>
+
+  <devices>
+    <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <!-- Primary VirtIO disk backing the Windows installation -->
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2' cache='writeback' io='threads' discard='unmap'/>
+      <source file='/home/evm/windows/winhome'/>
+      <target dev='vda' bus='virtio'/>
+      <alias name='virtio-disk0'/>
+    </disk>
+    <!-- (Optional: CD-ROM drive, e.g., for Windows ISO or virtio drivers ISO) -->
+    <disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file=''/>        <!-- path to ISO if needed -->
+      <target dev='sda' bus='sata'/>
+      <readonly/>
+      <alias name='sata0-0-0'/>
+    </disk>
+
+    <!-- Controllers -->
+    <controller type='pci' model='pcie-root'/>               <!-- Root PCIe for Q35 -->
+    <controller type='pci' model='pcie-root-port' index='1'/> <!-- Additional PCIe ports (auto-assigned) -->
+    <controller type='usb' model='qemu-xhci' index='0' ports='15'/>  <!-- USB3 controller for tablet/USB redir -->
+    <controller type='virtio-serial' index='0'/>
+
+    <!-- Network interface: VirtIO (paravirtualized) -->
+    <interface type='network'>
+      <source network='default'/>          <!-- using libvirt default NAT network -->
+      <model type='virtio'/>
+      <alias name='net0'/>
+    </interface>
+
+    <!-- Input devices for better remote usability -->
+    <input type='tablet' bus='usb'/>       <!-- USB tablet for absolute pointing (no mouse capture) -->
+    <input type='keyboard' bus='ps2'/>     <!-- PS2 keyboard (default) -->
+
+    <!-- Display: SPICE server with QXL video for dynamic resolution -->
+    <graphics type='spice' autoport='yes' listen='127.0.0.1'>
+      <listen type='address' address='127.0.0.1'/>
+      <image compression='off'/>
+    </graphics>
+    <video>
+      <model type='qxl' ram='65536' vram='65536' vgamem='32768' heads='1' primary='yes'/>
+      <!-- 64 MB video RAM, 32 MB VRAM for high resolution (e.g. up to 4K) -->
+    </video>
+
+    <!-- SPICE client integration channels -->
+    <channel type='spicevmc'>
+      <target type='virtio' name='com.redhat.spice.0'/>
+    </channel>
+    <redirdev bus='usb' type='spicevmc'/>   <!-- USB redirection support (2 channels) -->
+    <redirdev bus='usb' type='spicevmc'/>
+
+    <!-- Audio output via SPICE -->
+    <sound model='ich9'/>
+    <audio id='1' type='spice'/>   <!-- Send VM audio to SPICE client -->
+
+    <!-- Misc devices -->
+    <memballoon model='virtio'/>   <!-- VirtIO balloon for memory management -->
+    <rng model='virtio'>          <!-- VirtIO RNG for improved entropy -->
+      <backend model='random'>/dev/urandom</backend>
+    </rng>
+  </devices>
+</domain>

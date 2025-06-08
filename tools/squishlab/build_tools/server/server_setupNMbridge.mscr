@@ -1,0 +1,53 @@
+#!/bin/bash
+# NetworkManager Bridge Configuration
+# Creates bridge through NetworkManager for persistence
+
+INTERFACE="enp3s0"
+BRIDGE="br0"
+SERVER_IP="192.168.72.54"
+ROUTER_IP="192.168.72.1"
+
+echo "Configuring bridge through NetworkManager..."
+
+# 1. Create bridge connection
+sudo nmcli connection add type bridge \
+    con-name br0 \
+    ifname br0 \
+    ipv4.addresses $SERVER_IP/24 \
+    ipv4.gateway $ROUTER_IP \
+    ipv4.dns $ROUTER_IP \
+    ipv4.method manual \
+    ipv6.method disabled
+
+# 2. Create bridge slave (add ethernet to bridge)
+sudo nmcli connection add type bridge-slave \
+    con-name br0-slave \
+    ifname $INTERFACE \
+    master br0
+
+# 3. Disable the original ethernet connection
+ORIGINAL_CON=$(nmcli -t -f NAME,DEVICE connection show | grep $INTERFACE | head -1 | cut -d: -f1)
+if [ -n "$ORIGINAL_CON" ]; then
+    sudo nmcli connection down "$ORIGINAL_CON"
+    sudo nmcli connection modify "$ORIGINAL_CON" connection.autoconnect no
+fi
+
+# 4. Activate bridge
+sudo nmcli connection up br0
+
+# 5. Create libvirt network using this bridge
+cat > /tmp/nm-bridge.xml << EOF
+<network>
+  <name>host-bridge</name>
+  <forward mode='bridge'/>
+  <bridge name='br0'/>
+</network>
+EOF
+
+sudo virsh net-define /tmp/nm-bridge.xml
+sudo virsh net-autostart host-bridge
+sudo virsh net-start host-bridge
+
+echo "NetworkManager bridge configured!"
+echo "Bridge: br0"
+echo "VMs will use router DHCP and systemd-resolved DNS"

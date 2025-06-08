@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+### CONFIGURATION ###
+ETH_IFACE="enp3s0"
+WIFI_IFACE="wlp4s0"
+WIFI_SSID="WIFI-122C"
+WIFI_PASS="comedy4957award"
+
+STATIC_IP="192.168.72.54/24"
+GATEWAY_IP="192.168.72.1"
+DNS_SERVERS="9.9.9.9,1.1.1.1"
+DNS_SEARCH="SquishHQ SquishLab"
+HOSTNAME="squishlab.local"
+
+### DELETE EXISTING CONNECTIONS ###
+nmcli connection delete "${ETH_IFACE}" 2>/dev/null || true
+nmcli connection delete "${WIFI_IFACE}" 2>/dev/null || true
+
+### CREATE ETHERNET CONNECTION ###
+nmcli con add type ethernet ifname "${ETH_IFACE}" con-name "${ETH_IFACE}"
+nmcli con modify "${ETH_IFACE}" \
+  ipv4.addresses "${STATIC_IP}" \
+  ipv4.gateway "${GATEWAY_IP}" \
+  ipv4.dns "${DNS_SERVERS}" \
+  ipv4.dns-search "${DNS_SEARCH}" \
+  ipv4.method manual \
+  ipv6.method ignore \
+  connection.autoconnect yes \
+  802-3-ethernet.cloned-mac-address "preserve" \
+  connection.metered no \
+  connection.permissions ""
+
+### SET HOSTNAME ###
+hostnamectl set-hostname "${HOSTNAME}"
+nmcli general hostname "${HOSTNAME}"
+
+### CREATE WIFI CONNECTION ###
+nmcli dev wifi rescan
+nmcli dev wifi list
+
+nmcli dev wifi connect "${WIFI_SSID}" password "${WIFI_PASS}" ifname "${WIFI_IFACE}" name "${WIFI_IFACE}"
+nmcli con modify "${WIFI_IFACE}" \
+  ipv4.method auto \
+  ipv6.method ignore \
+  connection.autoconnect no \
+  connection.metered yes \
+  802-11-wireless.cloned-mac-address "preserve"
+
+### DISABLE IPV6 SYSTEM-WIDE ###
+SYSCTL_CONF="/etc/sysctl.d/99-disable-ipv6.conf"
+echo "net.ipv6.conf.all.disable_ipv6 = 1" > "$SYSCTL_CONF"
+echo "net.ipv6.conf.default.disable_ipv6 = 1" >> "$SYSCTL_CONF"
+
+sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sysctl -w net.ipv6.conf.default.disable_ipv6=1
+
+### RESTART NETWORKMANAGER ###
+systemctl restart NetworkManager
+
+echo "Network setup complete for ${ETH_IFACE} and ${WIFI_IFACE}."

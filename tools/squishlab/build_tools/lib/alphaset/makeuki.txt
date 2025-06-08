@@ -1,0 +1,5 @@
+ukify build \
+    --linux=/boot/vmlinuz-linux-hardened \
+    --initrd=/boot/initramfs-linux-hardened.img \
+    --cmdline="cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot rw slub_debug=0 intel_iommu=on iommu=pt  lockdown=confidentiality kptr_restrict=2 module.sig_enforce=1 modprobe.blacklist=me,mei,mei_me,mei_hda,mei_wdt,wmi,nouveau,nvidia,nvidia_drm,nvidia_uvm,nvidia_modeset i915_modeset=1 init_on_alloc=1 ipv6.disable=1 security=apparmor apparmor=1 enforcing=1   " \
+    --output=/boot/EFI/Linux/arch-hardened-SQ.efi

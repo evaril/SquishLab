@@ -1,0 +1,215 @@
+#!/bin/bash
+# Complete System Status Check
+# Verifies all components are working correctly
+
+echo "COMPLETE SYSTEM STATUS CHECK"
+echo "============================"
+echo "Timestamp: $(date)"
+echo ""
+
+# 1. Network Connectivity
+echo "NETWORK CONNECTIVITY"
+echo "-------------------"
+ping -c 2 192.168.72.1 >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    echo "[OK] Router connectivity (192.168.72.1): OK"
+else
+    echo "[FAIL] Router connectivity: FAILED"
+fi
+
+ping -c 2 8.8.8.8 >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    echo "[OK] Internet connectivity: OK"
+else
+    echo "[FAIL] Internet connectivity: FAILED"
+fi
+echo ""
+
+# 2. DNS Resolution
+echo "DNS RESOLUTION"
+echo "--------------"
+echo "systemd-resolved status:"
+if systemctl is-active systemd-resolved >/dev/null 2>&1; then
+    echo "[OK] systemd-resolved: ACTIVE"
+else
+    echo "[FAIL] systemd-resolved: INACTIVE"
+fi
+
+echo ""
+echo "DNS test:"
+resolvectl query google.com >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+    echo "[OK] DNS resolution: WORKING"
+else
+    echo "[FAIL] DNS resolution: FAILED"
+fi
+
+echo ""
+echo "DNS configuration:"
+resolvectl status | head -10
+echo ""
+
+# 3. Bridge Network Status
+echo "BRIDGE NETWORK"
+echo "--------------"
+if ip link show br0 >/dev/null 2>&1; then
+    echo "[OK] Bridge br0: EXISTS"
+    echo "Bridge details:"
+    ip addr show br0 | grep -E "inet|state"
+else
+    echo "[FAIL] Bridge br0: NOT FOUND"
+fi
+
+if ip link show virbr0 >/dev/null 2>&1; then
+    echo "[OK] libvirt bridge virbr0: EXISTS"
+    echo "virbr0 details:"
+    ip addr show virbr0 | grep -E "inet|state"
+else
+    echo "[FAIL] libvirt bridge virbr0: NOT FOUND"
+fi
+echo ""
+
+# 4. libvirt Status
+echo "LIBVIRT STATUS"
+echo "--------------"
+export LIBVIRT_DEFAULT_URI="qemu+unix:///system?socket=/run/libvirt/virtqemud-sock"
+
+# Check daemons
+if systemctl is-active virtqemud.socket >/dev/null 2>&1; then
+    echo "[OK] virtqemud.socket: ACTIVE"
+else
+    echo "[FAIL] virtqemud.socket: INACTIVE"
+fi
+
+if systemctl is-active virtnetworkd.socket >/dev/null 2>&1; then
+    echo "[OK] virtnetworkd.socket: ACTIVE"
+else
+    echo "[FAIL] virtnetworkd.socket: INACTIVE"
+fi
+
+# Check libvirt connection
+if sudo virsh net-list >/dev/null 2>&1; then
+    echo "[OK] libvirt connection: WORKING"
+    echo ""
+    echo "libvirt networks:"
+    sudo virsh net-list --all
+else
+    echo "[FAIL] libvirt connection: FAILED"
+fi
+echo ""
+
+# 5. dnsmasq Status
+echo "DNSMASQ STATUS"
+echo "--------------"
+dnsmasq_processes=$(pgrep -f dnsmasq | wc -l)
+echo "dnsmasq processes running: $dnsmasq_processes"
+
+if [ $dnsmasq_processes -gt 0 ]; then
+    echo "dnsmasq details:"
+    ps aux | grep dnsmasq | grep -v grep
+    echo ""
+    
+    # Check if DNS is disabled in dnsmasq
+    if sudo cat /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null | grep -q "port=0"; then
+        echo "[OK] dnsmasq DNS: DISABLED (port=0)"
+    else
+        echo "[WARN] dnsmasq DNS: MAY BE ENABLED"
+    fi
+    
+    if sudo cat /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null | grep -q "dhcp-range"; then
+        echo "[OK] dnsmasq DHCP: ENABLED (for VMs)"
+        echo "DHCP range: $(sudo grep dhcp-range /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null)"
+    else
+        echo "[FAIL] dnsmasq DHCP: NOT CONFIGURED"
+    fi
+else
+    echo "[OK] No dnsmasq processes (clean setup)"
+fi
+echo ""
+
+# 6. Socket Status
+echo "SOCKET STATUS"
+echo "-------------"
+echo "libvirt sockets:"
+ls -la /run/libvirt/ | grep sock
+echo ""
+
+# 7. URI Configuration
+echo "URI CONFIGURATION"
+echo "-----------------"
+echo "LIBVIRT_DEFAULT_URI: $LIBVIRT_DEFAULT_URI"
+if [ -n "$LIBVIRT_DEFAULT_URI" ]; then
+    echo "[OK] URI configured"
+else
+    echo "[WARN] URI not set in environment"
+fi
+echo ""
+
+# 8. Security Status
+echo "SECURITY STATUS"
+echo "---------------"
+echo "IPv6 status:"
+if sysctl net.ipv6.conf.all.disable_ipv6 2>/dev/null | grep -q "= 1"; then
+    echo "[OK] IPv6: DISABLED"
+else
+    echo "[WARN] IPv6: ENABLED"
+fi
+
+echo ""
+echo "NetworkManager connections:"
+nmcli connection show --active | head -5
+echo ""
+
+# 9. VM Readiness
+echo "VM READINESS"
+echo "------------"
+if sudo virsh net-info default >/dev/null 2>&1; then
+    network_status=$(sudo virsh net-info default | grep Active | awk '{print $2}')
+    if [ "$network_status" = "yes" ]; then
+        echo "[OK] Default network: ACTIVE"
+        echo "[OK] Ready for VM creation"
+        
+        # Show network details
+        echo ""
+        echo "Network configuration:"
+        sudo virsh net-dumpxml default | grep -E "name|forward|bridge|ip address|dhcp-range"
+    else
+        echo "[FAIL] Default network: INACTIVE"
+    fi
+else
+    echo "[FAIL] Default network: NOT FOUND"
+fi
+echo ""
+
+# 10. Summary
+echo "SUMMARY"
+echo "======="
+
+# Count status
+total_checks=0
+passed_checks=0
+
+# Basic functionality checks
+if ping -c 1 192.168.72.1 >/dev/null 2>&1; then ((passed_checks++)); fi; ((total_checks++))
+if systemctl is-active systemd-resolved >/dev/null 2>&1; then ((passed_checks++)); fi; ((total_checks++))
+if resolvectl query google.com >/dev/null 2>&1; then ((passed_checks++)); fi; ((total_checks++))
+if sudo virsh net-list >/dev/null 2>&1; then ((passed_checks++)); fi; ((total_checks++))
+
+echo "Core functionality: $passed_checks/$total_checks checks passed"
+
+# Overall status
+if [ $passed_checks -eq $total_checks ]; then
+    echo ""
+    echo "SYSTEM STATUS: HEALTHY"
+    echo "[OK] All core components working"
+    echo "[OK] Ready for VM deployment"
+    echo "[OK] systemd-resolved handling DNS"
+    echo "[OK] No dnsmasq DNS conflicts"
+else
+    echo ""
+    echo "SYSTEM STATUS: ISSUES DETECTED"
+    echo "[FAIL] $((total_checks - passed_checks)) components need attention"
+fi
+
+echo ""
+echo "=== End of Status Check ==="

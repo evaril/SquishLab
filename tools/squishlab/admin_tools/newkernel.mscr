@@ -1,0 +1,114 @@
+#!/usr/bin/env bash
+
+# Comprehensive script to:
+# 1. Download latest Arch ISO
+# 2. Mount it and extract base
+# 3. Build a hardened custom kernel
+# 4. Configure systemd-boot if applicable
+
+set -euo pipefail
+
+# ----------------------------
+# CONFIGURATION VARIABLES
+# ----------------------------
+ARCH_URL="https://geo.mirror.pkgbuild.com/iso/latest/archlinux-x86_64.iso"
+KERNEL_NAME="linux-hardened"
+KERNEL_BUILD_DIR="$HOME/kernel-build"
+KERNEL_CONFIG="/usr/lib/modules/$(uname -r)/build/.config"
+INSTALL_ROOT="/mnt/arch-hardened"
+
+# Kernel hardening config overlay (you can add more later)
+EXTRA_HARDEN_FLAGS=(
+  CONFIG_SECURITY_LOCKDOWN_LSM=y
+  CONFIG_LOCK_DOWN_KERNEL_FORCE_NONE=y
+  CONFIG_MODULE_SIG_FORCE=y
+  CONFIG_MODULE_SIG_ALL=y
+  CONFIG_MODULE_SIG_SHA512=y
+  CONFIG_DEBUG_RODATA=y
+  CONFIG_DEBUG_WX=y
+  CONFIG_STACKPROTECTOR_STRONG=y
+  CONFIG_RANDOMIZE_BASE=y
+  CONFIG_KEXEC=n
+  CONFIG_STRICT_KERNEL_RWX=y
+  CONFIG_STATIC_USERMODEHELPER=y
+  CONFIG_SECURITY=y
+  CONFIG_SECURITY_YAMA=y
+  CONFIG_SECURITY_DMESG_RESTRICT=y
+  CONFIG_PAGE_TABLE_ISOLATION=y
+  CONFIG_SLUB_DEBUG_ON=y
+  CONFIG_PAGE_POISONING=y
+)
+
+# ----------------------------
+# STEP 1: Download latest Arch ISO
+# ----------------------------
+echo "[+] Downloading latest Arch ISO..."
+mkdir -p ~/iso && cd ~/iso
+curl -LO "$ARCH_URL"
+
+# ----------------------------
+# STEP 2: Mount ISO and extract root image
+# ----------------------------
+echo "[+] Mounting ISO and extracting base system..."
+sudo mkdir -p /mnt/archiso /mnt/arch-hardened
+sudo mount -o loop archlinux-x86_64.iso /mnt/archiso
+sudo bsdtar -xpf /mnt/archiso/arch/x86_64/airootfs.sfs -C "$INSTALL_ROOT"
+sudo mount --bind /dev "$INSTALL_ROOT/dev"
+sudo mount --bind /proc "$INSTALL_ROOT/proc"
+sudo mount --bind /sys "$INSTALL_ROOT/sys"
+
+# ----------------------------
+# STEP 3: Build a hardened kernel
+# ----------------------------
+echo "[+] Installing required build tools..."
+sudo pacstrap "$INSTALL_ROOT" base base-devel linux-firmware git bc bison flex elfutils openssl zstd
+
+mkdir -p "$KERNEL_BUILD_DIR"
+cd "$KERNEL_BUILD_DIR"
+echo "[+] Cloning kernel source..."
+git clone https://git.archlinux.org/linux.git .
+
+echo "[+] Copying existing config and applying hardening..."
+zcat /proc/config.gz > .config || cp "$KERNEL_CONFIG" .config
+
+for FLAG in "${EXTRA_HARDEN_FLAGS[@]}"; do
+  sed -i "s/^#\?\s*${FLAG%%=*}.*/${FLAG}/" .config || echo "$FLAG" >> .config
+done
+
+make olddefconfig
+make -j"$(nproc)" bindeb-pkg LOCALVERSION=-hardened
+
+# ----------------------------
+# STEP 4: Install kernel to Arch chroot
+# ----------------------------
+echo "[+] Installing custom kernel into chroot..."
+sudo cp ../linux-image-*-hardened.deb "$INSTALL_ROOT/root/"
+
+arch-chroot "$INSTALL_ROOT" /bin/bash <<'EOF'
+cd /root
+bsdtar -xvf linux-image-*-hardened.deb --strip-components=1 -C /
+rm -f linux-image-*-hardened.deb
+EOF
+
+# ----------------------------
+# STEP 5: Configure systemd-boot (if UEFI)
+# ----------------------------
+if [ -d /sys/firmware/efi ]; then
+  echo "[+] Installing systemd-boot..."
+  bootctl --path="$INSTALL_ROOT/boot" install
+
+  cat <<EOL | sudo tee "$INSTALL_ROOT/boot/loader/entries/arch-hardened.conf"
+title   Arch Linux Hardened
+linux   /vmlinuz-linux-hardened
+initrd  /initramfs-linux-hardened.img
+options root=LABEL=ROOT rw lsm=lockdown,yama,apparmor
+EOL
+
+  echo "default arch-hardened" | sudo tee "$INSTALL_ROOT/boot/loader/loader.conf"
+fi
+
+# ----------------------------
+# DONE
+# ----------------------------
+echo "[✔] Kernel build and configuration complete. You can now chroot into $INSTALL_ROOT and finish setup."
+echo "Recommended: set up mkinitcpio, regenerate initramfs, and install necessary userland packages."

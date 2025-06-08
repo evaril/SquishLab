@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cmdline=$(cat /etc/kernel/cmdline)
+standard="Boot with standard options" 
+single="Boot to single-user mode"
+minimal="Boot with minimal options"
+
+echo "\"$standard \" \"$cmdline\"" | sudo tee /boot/refind_linux.conf
+echo "\"$single \" \"$cmdline\"" | sudo tee -a /boot/refind_linux.conf
+echo "\"$minimal \" \"$cmdline\"" | sudo tee -a /boot/refind_linux.conf
+
+
+
+
+sudo ukify build \
+    --linux=/boot/vmlinuz-linux-hardened \
+    --initrd=/boot/initramfs-linux-hardened.img \
+    --cmdline="\"$cmdline\"" \
+    --output=/boot/EFI/Linux/arch-hardened-SQ.efi
+
+
+sudo sbctl sign -s /boot/EFI/Linux/arch-hardened-SQ.efi
+
+sudo refind-install

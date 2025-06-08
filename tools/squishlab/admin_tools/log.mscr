@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# test HA:
+# curl http://localhost:8170
+
+# firewall
+# firewall-cmd --list-all-zones
+
+# Run /root/generate_ssh_keys.sh to create RSA 4096-bit keys for your devices
+# See /root/ssh_tunneling_guide.txt for SSH tunneling instructions
+
+
+journalctl --full --all -o short-full $1

@@ -1,0 +1,42 @@
+#!/bin/bash
+set -euo pipefail
+
+echo "[*] Stopping display manager (if running)..."
+sudo systemctl stop display-manager || true
+
+echo "[*] Unloading NVIDIA kernel modules..."
+for mod in nvidia_drm nvidia_modeset nvidia_uvm nvidia; do
+  sudo modprobe -r $mod || true
+done
+
+echo "[*] Removing NVIDIA packages..."
+sudo pacman --noconfirm -Rns nvidia nvidia-utils nvidia-settings nvidia-dkms nvidia-lts nvidia-open-dkms nvidia-open nvidia-prime opencl-nvidia lib32-nvidia-utils || true
+
+echo "[*] Removing NVIDIA hooks and configs..."
+sudo rm -f /etc/modprobe.d/nvidia.conf /etc/modprobe.d/nvidia-drm.conf
+sudo rm -f /etc/X11/xorg.conf.d/20-nvidia.conf /etc/X11/xorg.conf /usr/share/X11/xorg.conf.d/10-nvidia-drm-outputclass.conf
+sudo rm -f /usr/lib/modprobe.d/nvidia.conf
+sudo rm -f /etc/mkinitcpio.d/linux.preset
+sudo sed -i '/nvidia/d' /etc/mkinitcpio.conf || true
+sudo sed -i '/nvidia/d' /etc/mkinitcpio.d/* || true
+
+echo "[*] Cleaning systemd NVIDIA services..."
+sudo rm -f /usr/lib/systemd/system/nvidia* /etc/systemd/system/nvidia*
+
+echo "[*] Removing user NVIDIA config dirs..."
+rm -rf ~/.nvidia ~/.nv ~/.cache/nvidia ~/.config/nvidia ~/.local/share/nvidia
+
+echo "[*] Updating mkinitcpio and initramfs..."
+sudo mkinitcpio -P
+
+echo "[*] Updating initramfs for all kernels..."
+for img in /boot/initramfs-linux*; do
+  sudo mkinitcpio -g $img || true
+done
+
+echo "[*] Cleaning pacman cache and orphans..."
+sudo pacman -Rns $(pacman -Qdtq) --noconfirm || true
+sudo pacman -Sc --noconfirm
+
+echo "[*] NVIDIA proprietary driver purge complete."
+echo "[*] Reboot recommended before installing nouveau or other open-source GPU drivers."

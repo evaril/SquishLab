@@ -1,0 +1,602 @@
+#!/bin/bash
+# Comprehensive System Status Check
+# Full stack verification for Arch-Wayland-Hyprland-systemd-resolved-KVM-QEMU-libvirt-HomeAssistant
+
+echo "COMPREHENSIVE SYSTEM STATUS CHECK"
+echo "================================="
+echo "Timestamp: $(date)"
+echo "Hostname: $(hostname)"
+echo "Kernel: $(uname -r)"
+echo "Uptime: $(uptime -p)"
+echo ""
+
+# Global counters
+total_checks=0
+passed_checks=0
+failed_checks=0
+warning_checks=0
+
+# Helper functions
+check_pass() {
+    echo "[OK] $1"
+    ((passed_checks++))
+    ((total_checks++))
+}
+
+check_fail() {
+    echo "[FAIL] $1"
+    ((failed_checks++))
+    ((total_checks++))
+}
+
+check_warn() {
+    echo "[WARN] $1"
+    ((warning_checks++))
+    ((total_checks++))
+}
+
+check_info() {
+    echo "[INFO] $1"
+}
+
+# 1. BASIC SYSTEM HEALTH
+echo "1. BASIC SYSTEM HEALTH"
+echo "======================"
+
+# CPU and Memory
+cpu_usage=$(top -bn1 | grep "Cpu(s)" | awk '{print $2}' | sed 's/%us,//')
+memory_usage=$(free | grep Mem | awk '{printf("%.1f", $3/$2 * 100.0)}')
+disk_usage=$(df / | tail -1 | awk '{print $5}' | sed 's/%//')
+
+check_info "CPU Usage: ${cpu_usage}%"
+check_info "Memory Usage: ${memory_usage}%"
+check_info "Disk Usage: ${disk_usage}%"
+
+if [ "${disk_usage}" -lt 80 ]; then
+    check_pass "Disk space: Available"
+else
+    check_warn "Disk space: High usage (${disk_usage}%)"
+fi
+
+# Load average
+load_avg=$(uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | sed 's/,//')
+if (( $(echo "$load_avg < 2.0" | bc -l) )); then
+    check_pass "System load: Normal ($load_avg)"
+else
+    check_warn "System load: High ($load_avg)"
+fi
+echo ""
+
+# 2. NETWORK CONNECTIVITY
+echo "2. NETWORK CONNECTIVITY"
+echo "======================"
+
+# Router connectivity
+if ping -c 2 192.168.72.1 >/dev/null 2>&1; then
+    check_pass "Router connectivity (192.168.72.1)"
+else
+    check_fail "Router connectivity (192.168.72.1)"
+fi
+
+# Internet connectivity
+if ping -c 2 8.8.8.8 >/dev/null 2>&1; then
+    check_pass "Internet connectivity (8.8.8.8)"
+else
+    check_fail "Internet connectivity (8.8.8.8)"
+fi
+
+# External DNS
+if ping -c 2 1.1.1.1 >/dev/null 2>&1; then
+    check_pass "External DNS connectivity (1.1.1.1)"
+else
+    check_fail "External DNS connectivity (1.1.1.1)"
+fi
+
+# Network interface status
+if ip link show enp3s0 | grep -q "state UP"; then
+    check_pass "Primary interface (enp3s0): UP"
+else
+    check_fail "Primary interface (enp3s0): DOWN"
+fi
+
+check_info "IP Address: $(ip addr show enp3s0 | grep 'inet ' | awk '{print $2}')"
+echo ""
+
+# 3. DNS RESOLUTION
+echo "3. DNS RESOLUTION"
+echo "================"
+
+# systemd-resolved status
+if systemctl is-active systemd-resolved >/dev/null 2>&1; then
+    check_pass "systemd-resolved: ACTIVE"
+else
+    check_fail "systemd-resolved: INACTIVE"
+fi
+
+# DNS resolution test
+if resolvectl query google.com >/dev/null 2>&1; then
+    check_pass "DNS resolution: WORKING"
+else
+    check_fail "DNS resolution: FAILED"
+fi
+
+# DNS over TLS check
+if resolvectl status | grep -q "DNS over TLS: yes"; then
+    check_pass "DNS over TLS: ENABLED"
+else
+    check_warn "DNS over TLS: DISABLED"
+fi
+
+# DNSSEC check
+if resolvectl status | grep -q "DNSSEC: yes"; then
+    check_pass "DNSSEC: ENABLED"
+else
+    check_warn "DNSSEC: DISABLED"
+fi
+
+check_info "DNS Servers: $(resolvectl status | grep 'DNS Servers:' | head -1 | cut -d: -f2)"
+echo ""
+
+# 4. BRIDGE NETWORK
+echo "4. BRIDGE NETWORK"
+echo "================"
+
+# Check bridges
+if ip link show virbr0 >/dev/null 2>&1; then
+    check_pass "libvirt bridge virbr0: EXISTS"
+    virbr0_status=$(ip link show virbr0 | grep -o "state [A-Z]*" | awk '{print $2}')
+    check_info "virbr0 state: $virbr0_status"
+    check_info "virbr0 IP: $(ip addr show virbr0 | grep 'inet ' | awk '{print $2}')"
+else
+    check_fail "libvirt bridge virbr0: NOT FOUND"
+fi
+
+if ip link show br0 >/dev/null 2>&1; then
+    check_pass "Custom bridge br0: EXISTS"
+else
+    check_info "Custom bridge br0: NOT CONFIGURED"
+fi
+
+# Bridge forwarding
+if [ "$(cat /proc/sys/net/ipv4/ip_forward)" = "1" ]; then
+    check_pass "IPv4 forwarding: ENABLED"
+else
+    check_warn "IPv4 forwarding: DISABLED"
+fi
+echo ""
+
+# 5. LIBVIRT STATUS
+echo "5. LIBVIRT STATUS"
+echo "================"
+
+export LIBVIRT_DEFAULT_URI="qemu+unix:///system?socket=/run/libvirt/virtqemud-sock"
+
+# Check libvirt daemons
+services=("virtqemud.socket" "virtnetworkd.socket" "virtlogd.socket")
+for service in "${services[@]}"; do
+    if systemctl is-active "$service" >/dev/null 2>&1; then
+        check_pass "$service: ACTIVE"
+    else
+        check_fail "$service: INACTIVE"
+    fi
+done
+
+# Check libvirt connection
+if sudo virsh version >/dev/null 2>&1; then
+    check_pass "libvirt connection: WORKING"
+    libvirt_version=$(sudo virsh version --short)
+    check_info "libvirt version: $libvirt_version"
+else
+    check_fail "libvirt connection: FAILED"
+fi
+
+# Check networks
+if sudo virsh net-list >/dev/null 2>&1; then
+    active_networks=$(sudo virsh net-list | grep active | wc -l)
+    total_networks=$(sudo virsh net-list --all | grep -v "Name" | grep -v "^$" | wc -l)
+    check_pass "libvirt networks: $active_networks active, $total_networks total"
+    
+    # Show network details
+    check_info "Active networks:"
+    sudo virsh net-list | grep active | while read line; do
+        check_info "  $line"
+    done
+else
+    check_fail "libvirt networks: FAILED TO LIST"
+fi
+
+# Check VMs
+if sudo virsh list --all >/dev/null 2>&1; then
+    running_vms=$(sudo virsh list | grep running | wc -l)
+    total_vms=$(sudo virsh list --all | grep -v "Name" | grep -v "^$" | wc -l)
+    check_pass "VMs: $running_vms running, $total_vms total"
+    
+    if [ $running_vms -gt 0 ]; then
+        check_info "Running VMs:"
+        sudo virsh list | grep running | while read line; do
+            check_info "  $line"
+        done
+    fi
+else
+    check_fail "VMs: FAILED TO LIST"
+fi
+echo ""
+
+# 6. DNSMASQ STATUS
+echo "6. DNSMASQ STATUS"
+echo "================"
+
+dnsmasq_processes=$(pgrep -f dnsmasq | wc -l)
+check_info "dnsmasq processes: $dnsmasq_processes"
+
+if [ $dnsmasq_processes -gt 0 ]; then
+    # Check if DNS is disabled
+    if sudo cat /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null | grep -q "port=0"; then
+        check_pass "dnsmasq DNS: DISABLED (port=0)"
+    else
+        check_warn "dnsmasq DNS: MAY BE ENABLED"
+    fi
+    
+    # Check DHCP configuration
+    if sudo cat /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null | grep -q "dhcp-range"; then
+        check_pass "dnsmasq DHCP: ENABLED"
+        dhcp_range=$(sudo grep dhcp-range /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null)
+        check_info "DHCP range: $dhcp_range"
+    else
+        check_warn "dnsmasq DHCP: NOT CONFIGURED"
+    fi
+else
+    check_info "dnsmasq: NOT RUNNING (pure systemd-resolved setup)"
+fi
+echo ""
+
+# 7. WAYLAND/HYPRLAND STATUS
+echo "7. WAYLAND/HYPRLAND STATUS"
+echo "========================="
+
+# Check if Wayland is running
+if [ -n "$WAYLAND_DISPLAY" ]; then
+    check_pass "Wayland: RUNNING"
+    check_info "Wayland display: $WAYLAND_DISPLAY"
+else
+    check_info "Wayland: NOT DETECTED (possibly running headless)"
+fi
+
+# Check Hyprland
+if pgrep -x Hyprland >/dev/null; then
+    check_pass "Hyprland: RUNNING"
+    hyprland_pid=$(pgrep -x Hyprland)
+    check_info "Hyprland PID: $hyprland_pid"
+else
+    check_info "Hyprland: NOT RUNNING (possibly headless server)"
+fi
+
+# Check graphics drivers
+if lsmod | grep -q "amdgpu\|nvidia\|i915"; then
+    gpu_driver=$(lsmod | grep -E "amdgpu|nvidia|i915" | head -1 | awk '{print $1}')
+    check_pass "GPU driver: $gpu_driver loaded"
+else
+    check_warn "GPU driver: NOT DETECTED"
+fi
+echo ""
+
+# 8. HOME ASSISTANT STATUS
+echo "8. HOME ASSISTANT STATUS"
+echo "======================="
+
+# Check if Home Assistant is running (common installations)
+ha_running=false
+
+# Check systemd service
+if systemctl is-active homeassistant >/dev/null 2>&1; then
+    check_pass "Home Assistant systemd: ACTIVE"
+    ha_running=true
+elif systemctl is-active home-assistant >/dev/null 2>&1; then
+    check_pass "Home Assistant systemd: ACTIVE"
+    ha_running=true
+fi
+
+# Check Docker container
+if command -v docker >/dev/null 2>&1; then
+    if docker ps | grep -q homeassistant; then
+        check_pass "Home Assistant Docker: RUNNING"
+        ha_running=true
+        container_id=$(docker ps | grep homeassistant | awk '{print $1}')
+        check_info "Container ID: $container_id"
+    fi
+fi
+
+# Check process
+if pgrep -f "home.assistant\|hass" >/dev/null; then
+    check_pass "Home Assistant process: RUNNING"
+    ha_running=true
+    ha_pid=$(pgrep -f "home.assistant\|hass")
+    check_info "Process PID: $ha_pid"
+fi
+
+if ! $ha_running; then
+    check_info "Home Assistant: NOT DETECTED"
+fi
+
+# Check Home Assistant port
+if ss -tuln | grep -q ":8123\b"; then
+    check_pass "Home Assistant port 8123: LISTENING"
+else
+    check_warn "Home Assistant port 8123: NOT LISTENING"
+fi
+echo ""
+
+# 9. FIREWALLD STATUS
+echo "9. FIREWALLD STATUS"
+echo "=================="
+
+# Check firewalld service
+if systemctl is-active firewalld >/dev/null 2>&1; then
+    check_pass "firewalld: ACTIVE"
+    
+    # Get default zone
+    if command -v firewall-cmd >/dev/null 2>&1; then
+        default_zone=$(sudo firewall-cmd --get-default-zone 2>/dev/null)
+        check_info "Default zone: $default_zone"
+        
+        # Check active zones
+        active_zones=$(sudo firewall-cmd --get-active-zones 2>/dev/null | grep -v "interfaces" | wc -l)
+        check_info "Active zones: $active_zones"
+        
+        # Check if SSH is allowed
+        if sudo firewall-cmd --list-services | grep -q ssh; then
+            check_pass "SSH service: ALLOWED"
+        else
+            check_warn "SSH service: NOT EXPLICITLY ALLOWED"
+        fi
+        
+        # Check custom ports
+        custom_ports=$(sudo firewall-cmd --list-ports 2>/dev/null)
+        if [ -n "$custom_ports" ]; then
+            check_info "Custom ports: $custom_ports"
+        fi
+    fi
+else
+    check_info "firewalld: NOT ACTIVE"
+    
+    # Check iptables instead
+    if command -v iptables >/dev/null 2>&1; then
+        iptables_rules=$(sudo iptables -L | wc -l)
+        if [ $iptables_rules -gt 10 ]; then
+            check_pass "iptables: ACTIVE ($iptables_rules rules)"
+        else
+            check_warn "iptables: MINIMAL RULES"
+        fi
+    fi
+fi
+echo ""
+
+# 10. FIREJAIL STATUS
+echo "10. FIREJAIL STATUS"
+echo "=================="
+
+# Check if firejail is installed
+if command -v firejail >/dev/null 2>&1; then
+    check_pass "firejail: INSTALLED"
+    firejail_version=$(firejail --version | head -1)
+    check_info "Version: $firejail_version"
+    
+    # Check active firejail processes
+    firejail_procs=$(pgrep -f firejail | wc -l)
+    if [ $firejail_procs -gt 0 ]; then
+        check_pass "firejail processes: $firejail_procs active"
+        check_info "Sandboxed processes:"
+        ps aux | grep firejail | grep -v grep | while read line; do
+            proc_name=$(echo "$line" | awk '{for(i=11;i<=NF;i++) printf "%s ", $i; print ""}')
+            check_info "  $proc_name"
+        done
+    else
+        check_info "firejail processes: NONE ACTIVE"
+    fi
+    
+    # Check default profiles
+    if [ -d "/etc/firejail" ]; then
+        profile_count=$(ls /etc/firejail/*.profile 2>/dev/null | wc -l)
+        check_info "Available profiles: $profile_count"
+    fi
+else
+    check_info "firejail: NOT INSTALLED"
+fi
+echo ""
+
+# 11. APPARMOR STATUS
+echo "11. APPARMOR STATUS"
+echo "=================="
+
+# Check AppArmor service
+if systemctl is-active apparmor >/dev/null 2>&1; then
+    check_pass "AppArmor: ACTIVE"
+    
+    if command -v aa-status >/dev/null 2>&1; then
+        # Get profile statistics
+        enforce_profiles=$(sudo aa-status | grep "profiles are in enforce mode" | awk '{print $1}')
+        complain_profiles=$(sudo aa-status | grep "profiles are in complain mode" | awk '{print $1}')
+        
+        if [ -n "$enforce_profiles" ]; then
+            check_pass "AppArmor enforce profiles: $enforce_profiles"
+        fi
+        
+        if [ -n "$complain_profiles" ] && [ "$complain_profiles" != "0" ]; then
+            check_warn "AppArmor complain profiles: $complain_profiles"
+        fi
+        
+        # Check for libvirt profiles
+        if sudo aa-status | grep -q libvirt; then
+            check_pass "libvirt AppArmor profiles: LOADED"
+        else
+            check_info "libvirt AppArmor profiles: NOT DETECTED"
+        fi
+    fi
+else
+    check_info "AppArmor: NOT ACTIVE"
+fi
+echo ""
+
+# 12. SECURITY STATUS
+echo "12. SECURITY STATUS"
+echo "=================="
+
+# IPv6 status
+if sysctl net.ipv6.conf.all.disable_ipv6 2>/dev/null | grep -q "= 1"; then
+    check_pass "IPv6: DISABLED"
+else
+    check_warn "IPv6: ENABLED"
+fi
+
+# SSH status
+if systemctl is-active sshd >/dev/null 2>&1; then
+    check_pass "SSH daemon: ACTIVE"
+    ssh_port=$(ss -tuln | grep :22 | head -1 | awk '{print $5}' | cut -d: -f2)
+    check_info "SSH port: $ssh_port"
+else
+    check_info "SSH daemon: NOT ACTIVE"
+fi
+
+# Check for unnecessary services
+unnecessary_services=("bluetooth" "cups" "avahi-daemon")
+for service in "${unnecessary_services[@]}"; do
+    if systemctl is-active "$service" >/dev/null 2>&1; then
+        check_warn "$service: ACTIVE (consider disabling)"
+    else
+        check_pass "$service: DISABLED"
+    fi
+done
+
+# Check kernel parameters
+if grep -q "mitigations=on" /proc/cmdline; then
+    check_pass "CPU mitigations: ENABLED"
+else
+    check_warn "CPU mitigations: NOT EXPLICITLY ENABLED"
+fi
+echo ""
+
+# 13. PERFORMANCE STATUS
+echo "13. PERFORMANCE STATUS"
+echo "====================="
+
+# CPU frequency
+if [ -f /proc/cpuinfo ]; then
+    cpu_model=$(grep "model name" /proc/cpuinfo | head -1 | cut -d: -f2 | xargs)
+    cpu_cores=$(nproc)
+    check_info "CPU: $cpu_model ($cpu_cores cores)"
+fi
+
+# Memory information
+if command -v free >/dev/null 2>&1; then
+    total_mem=$(free -h | grep Mem | awk '{print $2}')
+    available_mem=$(free -h | grep Mem | awk '{print $7}')
+    check_info "Memory: $available_mem available of $total_mem total"
+fi
+
+# Storage information
+check_info "Storage usage:"
+df -h | grep -E "^/dev" | while read line; do
+    check_info "  $line"
+done
+
+# Check for SSD optimization
+if command -v lsblk >/dev/null 2>&1; then
+    ssd_count=$(lsblk -d -o name,rota | grep "0$" | wc -l)
+    if [ $ssd_count -gt 0 ]; then
+        check_pass "SSD detected: $ssd_count drives"
+        # Check TRIM support
+        if systemctl is-active fstrim.timer >/dev/null 2>&1; then
+            check_pass "SSD TRIM: SCHEDULED"
+        else
+            check_warn "SSD TRIM: NOT SCHEDULED"
+        fi
+    fi
+fi
+echo ""
+
+# 14. PACKAGE SYSTEM STATUS
+echo "14. PACKAGE SYSTEM STATUS"
+echo "========================"
+
+# Check package manager
+if command -v pacman >/dev/null 2>&1; then
+    check_pass "Package manager: pacman (Arch Linux)"
+    
+    # Check for updates
+    updates=$(pacman -Qu 2>/dev/null | wc -l)
+    if [ $updates -eq 0 ]; then
+        check_pass "System updates: UP TO DATE"
+    else
+        check_warn "System updates: $updates packages can be updated"
+    fi
+    
+    # Check AUR helper
+    if command -v yay >/dev/null 2>&1; then
+        check_pass "AUR helper: yay available"
+    elif command -v paru >/dev/null 2>&1; then
+        check_pass "AUR helper: paru available"
+    else
+        check_info "AUR helper: NOT DETECTED"
+    fi
+    
+    # Check orphaned packages
+    orphans=$(pacman -Qtdq 2>/dev/null | wc -l)
+    if [ $orphans -eq 0 ]; then
+        check_pass "Orphaned packages: NONE"
+    else
+        check_warn "Orphaned packages: $orphans found"
+    fi
+fi
+echo ""
+
+# 15. FINAL SUMMARY
+echo "15. FINAL SUMMARY"
+echo "================="
+
+echo "Total checks performed: $total_checks"
+echo "Passed: $passed_checks"
+echo "Failed: $failed_checks"
+echo "Warnings: $warning_checks"
+echo ""
+
+# Calculate percentage
+if [ $total_checks -gt 0 ]; then
+    pass_percentage=$(( (passed_checks * 100) / total_checks ))
+    echo "Success rate: $pass_percentage%"
+    echo ""
+fi
+
+# Overall system status
+if [ $failed_checks -eq 0 ]; then
+    if [ $warning_checks -eq 0 ]; then
+        echo "SYSTEM STATUS: EXCELLENT"
+        echo "[OK] All systems operational"
+    else
+        echo "SYSTEM STATUS: GOOD"
+        echo "[WARN] $warning_checks warnings detected - review recommended"
+    fi
+else
+    echo "SYSTEM STATUS: ISSUES DETECTED"
+    echo "[FAIL] $failed_checks critical issues require attention"
+    echo "[WARN] $warning_checks warnings detected"
+fi
+
+echo ""
+echo "Key achievements verified:"
+if sudo cat /var/lib/libvirt/dnsmasq/default.conf 2>/dev/null | grep -q "port=0"; then
+    echo "[OK] systemd-resolved handling DNS (dnsmasq DNS disabled)"
+else
+    echo "[CHECK] Verify DNS configuration"
+fi
+
+if systemctl is-active systemd-resolved >/dev/null 2>&1; then
+    echo "[OK] systemd-resolved active and secure"
+fi
+
+if sudo virsh net-list 2>/dev/null | grep -q active; then
+    echo "[OK] VM infrastructure ready"
+fi
+
+echo ""
+echo "=== End of Comprehensive Status Check ==="
+echo "Report generated: $(date)"

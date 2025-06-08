@@ -1,0 +1,24 @@
+[evm@squishlab ~]$ sudo cryptsetup open /dev/nvme0n1 GoldNugget
+[sudo] password for evm: 
+Sorry, try again.
+[sudo] password for evm: 
+Sorry, try again.
+[sudo] password for evm: 
+Enter passphrase for /dev/nvme0n1: 
+[evm@squishlab ~]$ sudo vgchange -ay
+  5 logical volume(s) in volume group "s01" now active
+[evm@squishlab ~]$ sudo mount /dev/s01/e01 /mnt/one
+mount: /mnt/one: wrong fs type, bad option, bad superblock on /dev/mapper/s01-e01, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+[evm@squishlab ~]$ sudo mount /dev/s01/e02 /mnt/two
+mount: /mnt/two: wrong fs type, bad option, bad superblock on /dev/mapper/s01-e02, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+[evm@squishlab ~]$ sudo mount /dev/s01/e03 /mnt/three
+mount: /mnt/three: wrong fs type, bad option, bad superblock on /dev/mapper/s01-e03, missing codepage or helper program, or other error.
+       dmesg(1) may have more information after failed mount system call.
+[evm@squishlab ~]$ sudo mount /dev/s01/e04 /mnt/four/
+[evm@squishlab ~]$ sudo mount /dev/s01/e05 /mnt/five/
+[evm@squishlab ~]$ ^C
+[evm@squishlab ~]$ cd tooling/
+[evm@squishlab tooling]$ nano mount.txt
+[evm@squishlab tooling]$ 

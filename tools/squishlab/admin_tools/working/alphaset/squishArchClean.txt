@@ -1,0 +1,26 @@
+#!/bin/bash
+# SAFE Arch cleanup - copy this exactly
+sudo bash -c '
+echo "=== ARCH CLEANUP REPORT ==="
+echo "Checking orphaned packages..."
+orphans=$(pacman -Qtdq)
+if [[ -n "$orphans" ]]; then
+    echo "Found orphaned packages:"
+    pacman -Qtd
+    echo -e "\nRemoving orphans..."
+    pacman -Rns $orphans
+else
+    echo "No orphans found"
+fi
+
+echo -e "\nCleaning package cache (keeping last 3 versions)..."
+paccache -r
+
+echo -e "\nCleaning user cache..."
+du -sh ~/.cache/* 2>/dev/null | head -10
+read -p "Clean ~/.cache? [y/N]: " response
+[[ "$response" =~ ^[Yy]$ ]] && find ~/.cache -type f -atime +7 -delete
+
+echo -e "\nCleanup complete!"
+df -h / /home
+'

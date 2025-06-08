@@ -1,0 +1,78 @@
+#!/bin/bash
+# Module: admin_tools/history.mscr
+# Purpose: Forensic command history viewer using auditd and journald with TUI
+# Usage: ./history.mscr
+
+SINCE="30m"
+LOGFILE="$HOME/.squishlogs/history-$(date +%Y%m%d-%H%M%S).log"
+mkdir -p "$HOME/.squishlogs"
+
+show_menu() {
+  clear
+  echo "=== Squishboard: HISTORY.MSCR ==="
+  echo "[1] View recent command history (last 30 minutes)"
+  echo "[2] View recent command history (last 2 hours)"
+  echo "[3] View recent command history (last 1 day)"
+  echo "[4] Follow live command execution (journalctl + auditd)"
+  echo "[5] Trace execution path of process (by PID or binary)"
+  echo "[6] Exit"
+  echo
+  read -rp "Select an option: " choice
+  case $choice in
+    1) SINCE="30m" ; run_report ;;
+    2) SINCE="2h" ; run_report ;;
+    3) SINCE="1d" ; run_report ;;
+    4) follow_live ;;
+    5) trace_exec_path ;;
+    6) exit 0 ;;
+    *) echo "Invalid option"; sleep 1; show_menu ;;
+  esac
+}
+
+run_report() {
+  {
+    echo "[history.mscr] Command and journal activity for: $SINCE"
+
+    echo -e "\n> Recent commands via auditd (execve):"
+    sudo ausearch --start now-"$SINCE" --key exec_log \
+      | grep -E 'exe=|cwd=|comm=|uid=' \
+      | sed 's/^/  /'
+
+    echo -e "\n> High-risk command indicators (auditd):"
+    sudo ausearch --start now-"$SINCE" --key exec_log \
+      | grep -E 'exe=.*(curl|dd|nmap|scp|mount|chattr|python)' \
+      | sed 's/^/  ⚠ /'
+
+    echo -e "\n> Journal entries in time window (suspicious patterns):"
+    sudo journalctl --since "now - $SINCE" \
+      | grep -Ei 'ssh|sudo|audit|chattr|user|fail|denied' \
+      | sed 's/^/  📓 /'
+
+  } | tee "$LOGFILE"
+  echo -e "\n[✓] Log saved to $LOGFILE"
+  read -rp "Press Enter to return to menu..." _
+  show_menu
+}
+
+follow_live() {
+  echo -e "[Follow Mode] Showing live audit + journal activity (Ctrl+C to stop)"
+  echo -e "---\n"
+  sudo journalctl -f -o short-precise | grep --line-buffered -Ei 'execve|ssh|sudo|fail|denied|chattr'
+}
+
+trace_exec_path() {
+  read -rp "Enter PID or binary name to trace: " QUERY
+  echo -e "\n[Trace Path] Correlating audit and journal entries for: $QUERY\n"
+
+  echo "> Matching audit events:"
+  sudo ausearch -k exec_log | grep -E "$QUERY" | sed 's/^/  /'
+
+  echo "> Matching journal entries:"
+  sudo journalctl | grep -Ei "$QUERY" | sed 's/^/  📓 /'
+
+  read -rp "\nPress Enter to return to menu..." _
+  show_menu
+}
+
+show_menu
+

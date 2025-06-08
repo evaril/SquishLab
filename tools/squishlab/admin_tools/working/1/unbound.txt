@@ -1,0 +1,26 @@
+server:
+  interface: 127.0.0.1
+  access-control: 127.0.0.0/8 allow
+  cache-min-ttl: 60
+  cache-max-ttl: 300
+  hide-identity: yes
+  hide-version: yes
+  use-caps-for-id: yes
+  harden-glue: yes
+  harden-dnssec-stripped: yes
+  qname-minimisation: yes
+  prefetch: yes
+  aggressive-nsec: yes
+
+  do-ip4: yes
+  do-ip6: no
+  do-udp: yes
+  do-tcp: yes
+
+  auto-trust-anchor-file: "/etc/unbound/root.key"
+
+forward-zone:
+  name: "."
+  forward-tls-upstream: yes
+  forward-addr: 1.1.1.1@853      # Cloudflare DNS-over-TLS
+  forward-addr: 9.9.9.9@853      # Quad9 DNS-over-TLS

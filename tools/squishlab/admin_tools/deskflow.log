@@ -1,0 +1,1175 @@
+[2025-06-01T04:02:11] INFO: using ei screen for wayland
+[2025-06-01T04:02:11] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:11] NOTE: started server, waiting for clients
+[2025-06-01T04:02:11] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:11] NOTE: stopped server
+[2025-06-01T04:02:12] INFO: using ei screen for wayland
+[2025-06-01T04:02:12] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:12] NOTE: started server, waiting for clients
+[2025-06-01T04:02:12] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:12] NOTE: stopped server
+[2025-06-01T04:02:13] INFO: using ei screen for wayland
+[2025-06-01T04:02:13] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:13] NOTE: started server, waiting for clients
+[2025-06-01T04:02:13] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:13] NOTE: stopped server
+[2025-06-01T04:02:14] INFO: using ei screen for wayland
+[2025-06-01T04:02:14] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:14] NOTE: started server, waiting for clients
+[2025-06-01T04:02:14] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:14] NOTE: stopped server
+[2025-06-01T04:02:16] INFO: using ei screen for wayland
+[2025-06-01T04:02:16] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:16] NOTE: started server, waiting for clients
+[2025-06-01T04:02:16] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:16] NOTE: stopped server
+[2025-06-01T04:02:17] INFO: using ei screen for wayland
+[2025-06-01T04:02:17] NOTE: started server, waiting for clients
+[2025-06-01T04:02:17] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:17] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:17] NOTE: stopped server
+[2025-06-01T04:02:18] INFO: using ei screen for wayland
+[2025-06-01T04:02:18] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:18] NOTE: started server, waiting for clients
+[2025-06-01T04:02:18] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:18] NOTE: stopped server
+[2025-06-01T04:02:19] INFO: using ei screen for wayland
+[2025-06-01T04:02:19] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:19] NOTE: started server, waiting for clients
+[2025-06-01T04:02:19] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:19] NOTE: stopped server
+[2025-06-01T04:02:20] INFO: using ei screen for wayland
+[2025-06-01T04:02:20] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:20] NOTE: started server, waiting for clients
+[2025-06-01T04:02:20] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:20] NOTE: stopped server
+[2025-06-01T04:02:21] INFO: using ei screen for wayland
+[2025-06-01T04:02:21] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:21] NOTE: started server, waiting for clients
+[2025-06-01T04:02:21] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:21] NOTE: stopped server
+[2025-06-01T04:02:22] INFO: using ei screen for wayland
+[2025-06-01T04:02:22] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:22] NOTE: started server, waiting for clients
+[2025-06-01T04:02:22] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:22] NOTE: stopped server
+[2025-06-01T04:02:24] INFO: using ei screen for wayland
+[2025-06-01T04:02:24] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:24] NOTE: started server, waiting for clients
+[2025-06-01T04:02:24] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:24] NOTE: stopped server
+[2025-06-01T04:02:25] INFO: using ei screen for wayland
+[2025-06-01T04:02:25] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:25] NOTE: started server, waiting for clients
+[2025-06-01T04:02:25] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:25] NOTE: stopped server
+[2025-06-01T04:02:26] INFO: using ei screen for wayland
+[2025-06-01T04:02:26] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:26] NOTE: started server, waiting for clients
+[2025-06-01T04:02:26] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:26] NOTE: stopped server
+[2025-06-01T04:02:27] INFO: using ei screen for wayland
+[2025-06-01T04:02:27] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:27] NOTE: started server, waiting for clients
+[2025-06-01T04:02:27] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:27] NOTE: stopped server
+[2025-06-01T04:02:28] INFO: using ei screen for wayland
+[2025-06-01T04:02:28] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:28] NOTE: started server, waiting for clients
+[2025-06-01T04:02:28] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:28] NOTE: stopped server
+[2025-06-01T04:02:29] INFO: using ei screen for wayland
+[2025-06-01T04:02:29] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:29] NOTE: started server, waiting for clients
+[2025-06-01T04:02:29] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:29] NOTE: stopped server
+[2025-06-01T04:02:30] INFO: using ei screen for wayland
+[2025-06-01T04:02:30] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:30] NOTE: started server, waiting for clients
+[2025-06-01T04:02:30] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:30] NOTE: stopped server
+[2025-06-01T04:02:31] INFO: using ei screen for wayland
+[2025-06-01T04:02:32] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:32] NOTE: started server, waiting for clients
+[2025-06-01T04:02:32] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:32] NOTE: stopped server
+[2025-06-01T04:02:33] INFO: using ei screen for wayland
+[2025-06-01T04:02:33] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:33] NOTE: started server, waiting for clients
+[2025-06-01T04:02:33] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:33] NOTE: stopped server
+[2025-06-01T04:02:34] INFO: using ei screen for wayland
+[2025-06-01T04:02:34] NOTE: started server, waiting for clients
+[2025-06-01T04:02:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:34] NOTE: stopped server
+[2025-06-01T04:02:35] INFO: using ei screen for wayland
+[2025-06-01T04:02:35] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:35] NOTE: started server, waiting for clients
+[2025-06-01T04:02:35] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:35] NOTE: stopped server
+[2025-06-01T04:02:36] INFO: using ei screen for wayland
+[2025-06-01T04:02:36] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:36] NOTE: started server, waiting for clients
+[2025-06-01T04:02:36] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:36] NOTE: stopped server
+[2025-06-01T04:02:37] INFO: using ei screen for wayland
+[2025-06-01T04:02:37] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:37] NOTE: started server, waiting for clients
+[2025-06-01T04:02:37] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:37] NOTE: stopped server
+[2025-06-01T04:02:38] INFO: using ei screen for wayland
+[2025-06-01T04:02:38] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:38] NOTE: started server, waiting for clients
+[2025-06-01T04:02:38] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:38] NOTE: stopped server
+[2025-06-01T04:02:39] INFO: using ei screen for wayland
+[2025-06-01T04:02:39] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:39] NOTE: started server, waiting for clients
+[2025-06-01T04:02:39] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:39] NOTE: stopped server
+[2025-06-01T04:02:40] INFO: using ei screen for wayland
+[2025-06-01T04:02:41] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:41] NOTE: started server, waiting for clients
+[2025-06-01T04:02:41] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:41] NOTE: stopped server
+[2025-06-01T04:02:42] INFO: using ei screen for wayland
+[2025-06-01T04:02:42] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:42] NOTE: started server, waiting for clients
+[2025-06-01T04:02:42] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:42] NOTE: stopped server
+[2025-06-01T04:02:43] INFO: using ei screen for wayland
+[2025-06-01T04:02:43] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:43] NOTE: started server, waiting for clients
+[2025-06-01T04:02:43] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:43] NOTE: stopped server
+[2025-06-01T04:02:44] INFO: using ei screen for wayland
+[2025-06-01T04:02:44] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:44] NOTE: started server, waiting for clients
+[2025-06-01T04:02:44] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:44] NOTE: stopped server
+[2025-06-01T04:02:45] INFO: using ei screen for wayland
+[2025-06-01T04:02:45] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:45] NOTE: started server, waiting for clients
+[2025-06-01T04:02:45] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:45] NOTE: stopped server
+[2025-06-01T04:02:46] INFO: using ei screen for wayland
+[2025-06-01T04:02:46] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:46] NOTE: started server, waiting for clients
+[2025-06-01T04:02:46] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:46] NOTE: stopped server
+[2025-06-01T04:02:47] INFO: using ei screen for wayland
+[2025-06-01T04:02:47] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:47] NOTE: started server, waiting for clients
+[2025-06-01T04:02:47] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:47] NOTE: stopped server
+[2025-06-01T04:02:48] INFO: using ei screen for wayland
+[2025-06-01T04:02:48] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:48] NOTE: started server, waiting for clients
+[2025-06-01T04:02:48] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:48] NOTE: stopped server
+[2025-06-01T04:02:49] INFO: using ei screen for wayland
+[2025-06-01T04:02:49] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:49] NOTE: started server, waiting for clients
+[2025-06-01T04:02:49] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:49] NOTE: stopped server
+[2025-06-01T04:02:51] INFO: using ei screen for wayland
+[2025-06-01T04:02:51] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:51] NOTE: started server, waiting for clients
+[2025-06-01T04:02:51] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:51] NOTE: stopped server
+[2025-06-01T04:02:52] INFO: using ei screen for wayland
+[2025-06-01T04:02:52] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:52] NOTE: started server, waiting for clients
+[2025-06-01T04:02:52] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:52] NOTE: stopped server
+[2025-06-01T04:02:53] INFO: using ei screen for wayland
+[2025-06-01T04:02:53] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:53] NOTE: started server, waiting for clients
+[2025-06-01T04:02:53] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:53] NOTE: stopped server
+[2025-06-01T04:02:54] INFO: using ei screen for wayland
+[2025-06-01T04:02:54] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:54] NOTE: started server, waiting for clients
+[2025-06-01T04:02:54] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:54] NOTE: stopped server
+[2025-06-01T04:02:55] INFO: using ei screen for wayland
+[2025-06-01T04:02:55] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:55] NOTE: started server, waiting for clients
+[2025-06-01T04:02:55] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:55] NOTE: stopped server
+[2025-06-01T04:02:56] INFO: using ei screen for wayland
+[2025-06-01T04:02:56] NOTE: started server, waiting for clients
+[2025-06-01T04:02:56] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:56] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:56] NOTE: stopped server
+[2025-06-01T04:02:57] INFO: using ei screen for wayland
+[2025-06-01T04:02:57] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:57] NOTE: started server, waiting for clients
+[2025-06-01T04:02:57] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:57] NOTE: stopped server
+[2025-06-01T04:02:59] INFO: using ei screen for wayland
+[2025-06-01T04:02:59] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:02:59] NOTE: started server, waiting for clients
+[2025-06-01T04:02:59] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:02:59] NOTE: stopped server
+[2025-06-01T04:03:00] INFO: using ei screen for wayland
+[2025-06-01T04:03:00] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:00] NOTE: started server, waiting for clients
+[2025-06-01T04:03:00] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:00] NOTE: stopped server
+[2025-06-01T04:03:01] INFO: using ei screen for wayland
+[2025-06-01T04:03:01] NOTE: started server, waiting for clients
+[2025-06-01T04:03:01] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:01] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:01] NOTE: stopped server
+[2025-06-01T04:03:02] INFO: using ei screen for wayland
+[2025-06-01T04:03:02] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:02] NOTE: started server, waiting for clients
+[2025-06-01T04:03:02] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:02] NOTE: stopped server
+[2025-06-01T04:03:03] INFO: using ei screen for wayland
+[2025-06-01T04:03:03] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:03] NOTE: started server, waiting for clients
+[2025-06-01T04:03:03] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:03] NOTE: stopped server
+[2025-06-01T04:03:04] INFO: using ei screen for wayland
+[2025-06-01T04:03:04] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:04] NOTE: started server, waiting for clients
+[2025-06-01T04:03:04] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:04] NOTE: stopped server
+[2025-06-01T04:03:05] INFO: using ei screen for wayland
+[2025-06-01T04:03:05] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:05] NOTE: started server, waiting for clients
+[2025-06-01T04:03:05] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:05] NOTE: stopped server
+[2025-06-01T04:03:06] INFO: using ei screen for wayland
+[2025-06-01T04:03:06] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:06] NOTE: started server, waiting for clients
+[2025-06-01T04:03:06] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:06] NOTE: stopped server
+[2025-06-01T04:03:08] INFO: using ei screen for wayland
+[2025-06-01T04:03:08] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:08] NOTE: started server, waiting for clients
+[2025-06-01T04:03:08] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:08] NOTE: stopped server
+[2025-06-01T04:03:09] INFO: using ei screen for wayland
+[2025-06-01T04:03:09] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:09] NOTE: started server, waiting for clients
+[2025-06-01T04:03:09] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:09] NOTE: stopped server
+[2025-06-01T04:03:10] INFO: using ei screen for wayland
+[2025-06-01T04:03:10] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:10] NOTE: started server, waiting for clients
+[2025-06-01T04:03:10] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:10] NOTE: stopped server
+[2025-06-01T04:03:11] INFO: using ei screen for wayland
+[2025-06-01T04:03:11] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:11] NOTE: started server, waiting for clients
+[2025-06-01T04:03:11] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:11] NOTE: stopped server
+[2025-06-01T04:03:12] INFO: using ei screen for wayland
+[2025-06-01T04:03:12] NOTE: started server, waiting for clients
+[2025-06-01T04:03:12] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:12] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:12] NOTE: stopped server
+[2025-06-01T04:03:13] INFO: using ei screen for wayland
+[2025-06-01T04:03:13] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:13] NOTE: started server, waiting for clients
+[2025-06-01T04:03:13] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:13] NOTE: stopped server
+[2025-06-01T04:03:14] INFO: using ei screen for wayland
+[2025-06-01T04:03:14] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:14] NOTE: started server, waiting for clients
+[2025-06-01T04:03:14] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:14] NOTE: stopped server
+[2025-06-01T04:03:15] INFO: using ei screen for wayland
+[2025-06-01T04:03:15] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:15] NOTE: started server, waiting for clients
+[2025-06-01T04:03:15] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:15] NOTE: stopped server
+[2025-06-01T04:03:17] INFO: using ei screen for wayland
+[2025-06-01T04:03:17] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:17] NOTE: started server, waiting for clients
+[2025-06-01T04:03:17] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:17] NOTE: stopped server
+[2025-06-01T04:03:18] INFO: using ei screen for wayland
+[2025-06-01T04:03:18] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:18] NOTE: started server, waiting for clients
+[2025-06-01T04:03:18] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:18] NOTE: stopped server
+[2025-06-01T04:03:19] INFO: using ei screen for wayland
+[2025-06-01T04:03:19] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:19] NOTE: started server, waiting for clients
+[2025-06-01T04:03:19] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:19] NOTE: stopped server
+[2025-06-01T04:03:20] INFO: using ei screen for wayland
+[2025-06-01T04:03:20] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:20] NOTE: started server, waiting for clients
+[2025-06-01T04:03:20] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:20] NOTE: stopped server
+[2025-06-01T04:03:21] INFO: using ei screen for wayland
+[2025-06-01T04:03:21] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:21] NOTE: started server, waiting for clients
+[2025-06-01T04:03:21] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:21] NOTE: stopped server
+[2025-06-01T04:03:22] INFO: using ei screen for wayland
+[2025-06-01T04:03:22] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:22] NOTE: started server, waiting for clients
+[2025-06-01T04:03:22] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:22] NOTE: stopped server
+[2025-06-01T04:03:24] INFO: using ei screen for wayland
+[2025-06-01T04:03:24] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:24] NOTE: started server, waiting for clients
+[2025-06-01T04:03:24] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:24] NOTE: stopped server
+[2025-06-01T04:03:25] INFO: using ei screen for wayland
+[2025-06-01T04:03:25] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:25] NOTE: started server, waiting for clients
+[2025-06-01T04:03:25] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:25] NOTE: stopped server
+[2025-06-01T04:03:26] INFO: using ei screen for wayland
+[2025-06-01T04:03:26] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:26] NOTE: started server, waiting for clients
+[2025-06-01T04:03:26] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:26] NOTE: stopped server
+[2025-06-01T04:03:27] INFO: using ei screen for wayland
+[2025-06-01T04:03:27] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:27] NOTE: started server, waiting for clients
+[2025-06-01T04:03:27] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:27] NOTE: stopped server
+[2025-06-01T04:03:28] INFO: using ei screen for wayland
+[2025-06-01T04:03:28] NOTE: started server, waiting for clients
+[2025-06-01T04:03:28] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:28] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:28] NOTE: stopped server
+[2025-06-01T04:03:29] INFO: using ei screen for wayland
+[2025-06-01T04:03:29] NOTE: started server, waiting for clients
+[2025-06-01T04:03:29] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:29] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:29] NOTE: stopped server
+[2025-06-01T04:03:30] INFO: using ei screen for wayland
+[2025-06-01T04:03:30] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:30] NOTE: started server, waiting for clients
+[2025-06-01T04:03:30] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:30] NOTE: stopped server
+[2025-06-01T04:03:31] INFO: using ei screen for wayland
+[2025-06-01T04:03:31] NOTE: started server, waiting for clients
+[2025-06-01T04:03:31] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:31] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:31] NOTE: stopped server
+[2025-06-01T04:03:33] INFO: using ei screen for wayland
+[2025-06-01T04:03:33] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:33] NOTE: started server, waiting for clients
+[2025-06-01T04:03:33] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:33] NOTE: stopped server
+[2025-06-01T04:03:34] INFO: using ei screen for wayland
+[2025-06-01T04:03:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:34] NOTE: started server, waiting for clients
+[2025-06-01T04:03:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:34] NOTE: stopped server
+[2025-06-01T04:03:35] INFO: using ei screen for wayland
+[2025-06-01T04:03:35] NOTE: started server, waiting for clients
+[2025-06-01T04:03:35] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:35] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:35] NOTE: stopped server
+[2025-06-01T04:03:36] INFO: using ei screen for wayland
+[2025-06-01T04:03:36] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:36] NOTE: started server, waiting for clients
+[2025-06-01T04:03:36] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:36] NOTE: stopped server
+[2025-06-01T04:03:37] INFO: using ei screen for wayland
+[2025-06-01T04:03:37] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:37] NOTE: started server, waiting for clients
+[2025-06-01T04:03:37] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:37] NOTE: stopped server
+[2025-06-01T04:03:38] INFO: using ei screen for wayland
+[2025-06-01T04:03:38] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:38] NOTE: started server, waiting for clients
+[2025-06-01T04:03:38] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:38] NOTE: stopped server
+[2025-06-01T04:03:39] INFO: using ei screen for wayland
+[2025-06-01T04:03:39] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:39] NOTE: started server, waiting for clients
+[2025-06-01T04:03:39] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:39] NOTE: stopped server
+[2025-06-01T04:03:41] INFO: using ei screen for wayland
+[2025-06-01T04:03:41] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:41] NOTE: started server, waiting for clients
+[2025-06-01T04:03:41] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:41] NOTE: stopped server
+[2025-06-01T04:03:42] INFO: using ei screen for wayland
+[2025-06-01T04:03:42] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:42] NOTE: started server, waiting for clients
+[2025-06-01T04:03:42] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:42] NOTE: stopped server
+[2025-06-01T04:03:43] INFO: using ei screen for wayland
+[2025-06-01T04:03:43] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:43] NOTE: started server, waiting for clients
+[2025-06-01T04:03:43] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:43] NOTE: stopped server
+[2025-06-01T04:03:44] INFO: using ei screen for wayland
+[2025-06-01T04:03:44] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:44] NOTE: started server, waiting for clients
+[2025-06-01T04:03:44] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:44] NOTE: stopped server
+[2025-06-01T04:03:45] INFO: using ei screen for wayland
+[2025-06-01T04:03:45] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:45] NOTE: started server, waiting for clients
+[2025-06-01T04:03:45] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:45] NOTE: stopped server
+[2025-06-01T04:03:46] INFO: using ei screen for wayland
+[2025-06-01T04:03:46] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:46] NOTE: started server, waiting for clients
+[2025-06-01T04:03:46] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:46] NOTE: stopped server
+[2025-06-01T04:03:47] INFO: using ei screen for wayland
+[2025-06-01T04:03:47] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:47] NOTE: started server, waiting for clients
+[2025-06-01T04:03:47] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:47] NOTE: stopped server
+[2025-06-01T04:03:49] INFO: using ei screen for wayland
+[2025-06-01T04:03:49] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:49] NOTE: started server, waiting for clients
+[2025-06-01T04:03:49] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:49] NOTE: stopped server
+[2025-06-01T04:03:50] INFO: using ei screen for wayland
+[2025-06-01T04:03:50] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:50] NOTE: started server, waiting for clients
+[2025-06-01T04:03:50] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:50] NOTE: stopped server
+[2025-06-01T04:03:51] INFO: using ei screen for wayland
+[2025-06-01T04:03:51] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:51] NOTE: started server, waiting for clients
+[2025-06-01T04:03:51] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:51] NOTE: stopped server
+[2025-06-01T04:03:52] INFO: using ei screen for wayland
+[2025-06-01T04:03:52] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:52] NOTE: started server, waiting for clients
+[2025-06-01T04:03:52] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:52] NOTE: stopped server
+[2025-06-01T04:03:53] INFO: using ei screen for wayland
+[2025-06-01T04:03:53] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:53] NOTE: started server, waiting for clients
+[2025-06-01T04:03:53] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:53] NOTE: stopped server
+[2025-06-01T04:03:54] INFO: using ei screen for wayland
+[2025-06-01T04:03:54] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:54] NOTE: started server, waiting for clients
+[2025-06-01T04:03:54] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:54] NOTE: stopped server
+[2025-06-01T04:03:55] INFO: using ei screen for wayland
+[2025-06-01T04:03:56] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:56] NOTE: started server, waiting for clients
+[2025-06-01T04:03:56] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:56] NOTE: stopped server
+[2025-06-01T04:03:57] INFO: using ei screen for wayland
+[2025-06-01T04:03:57] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:57] NOTE: started server, waiting for clients
+[2025-06-01T04:03:57] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:57] NOTE: stopped server
+[2025-06-01T04:03:58] INFO: using ei screen for wayland
+[2025-06-01T04:03:58] NOTE: started server, waiting for clients
+[2025-06-01T04:03:58] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:58] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:58] NOTE: stopped server
+[2025-06-01T04:03:59] INFO: using ei screen for wayland
+[2025-06-01T04:03:59] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:03:59] NOTE: started server, waiting for clients
+[2025-06-01T04:03:59] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:03:59] NOTE: stopped server
+[2025-06-01T04:04:00] INFO: using ei screen for wayland
+[2025-06-01T04:04:00] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:00] NOTE: started server, waiting for clients
+[2025-06-01T04:04:00] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:00] NOTE: stopped server
+[2025-06-01T04:04:01] INFO: using ei screen for wayland
+[2025-06-01T04:04:01] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:01] NOTE: started server, waiting for clients
+[2025-06-01T04:04:01] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:01] NOTE: stopped server
+[2025-06-01T04:04:02] INFO: using ei screen for wayland
+[2025-06-01T04:04:02] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:02] NOTE: started server, waiting for clients
+[2025-06-01T04:04:02] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:02] NOTE: stopped server
+[2025-06-01T04:04:03] INFO: using ei screen for wayland
+[2025-06-01T04:04:03] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:03] NOTE: started server, waiting for clients
+[2025-06-01T04:04:03] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:03] NOTE: stopped server
+[2025-06-01T04:04:05] INFO: using ei screen for wayland
+[2025-06-01T04:04:05] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:05] NOTE: started server, waiting for clients
+[2025-06-01T04:04:05] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:05] NOTE: stopped server
+[2025-06-01T04:04:06] INFO: using ei screen for wayland
+[2025-06-01T04:04:06] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:06] NOTE: started server, waiting for clients
+[2025-06-01T04:04:06] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:06] NOTE: stopped server
+[2025-06-01T04:04:07] INFO: using ei screen for wayland
+[2025-06-01T04:04:07] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:07] NOTE: started server, waiting for clients
+[2025-06-01T04:04:07] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:07] NOTE: stopped server
+[2025-06-01T04:04:08] INFO: using ei screen for wayland
+[2025-06-01T04:04:08] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:08] NOTE: started server, waiting for clients
+[2025-06-01T04:04:08] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:08] NOTE: stopped server
+[2025-06-01T04:04:09] INFO: using ei screen for wayland
+[2025-06-01T04:04:09] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:09] NOTE: started server, waiting for clients
+[2025-06-01T04:04:09] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:09] NOTE: stopped server
+[2025-06-01T04:04:10] INFO: using ei screen for wayland
+[2025-06-01T04:04:10] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:10] NOTE: started server, waiting for clients
+[2025-06-01T04:04:10] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:10] NOTE: stopped server
+[2025-06-01T04:04:11] INFO: using ei screen for wayland
+[2025-06-01T04:04:11] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:11] NOTE: started server, waiting for clients
+[2025-06-01T04:04:11] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:11] NOTE: stopped server
+[2025-06-01T04:04:13] INFO: using ei screen for wayland
+[2025-06-01T04:04:13] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:13] NOTE: started server, waiting for clients
+[2025-06-01T04:04:13] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:13] NOTE: stopped server
+[2025-06-01T04:04:14] INFO: using ei screen for wayland
+[2025-06-01T04:04:14] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:14] NOTE: started server, waiting for clients
+[2025-06-01T04:04:14] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:14] NOTE: stopped server
+[2025-06-01T04:04:15] INFO: using ei screen for wayland
+[2025-06-01T04:04:15] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:15] NOTE: started server, waiting for clients
+[2025-06-01T04:04:15] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:15] NOTE: stopped server
+[2025-06-01T04:04:16] INFO: using ei screen for wayland
+[2025-06-01T04:04:16] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:16] NOTE: started server, waiting for clients
+[2025-06-01T04:04:16] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:16] NOTE: stopped server
+[2025-06-01T04:04:17] INFO: using ei screen for wayland
+[2025-06-01T04:04:17] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:17] NOTE: started server, waiting for clients
+[2025-06-01T04:04:17] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:17] NOTE: stopped server
+[2025-06-01T04:04:18] INFO: using ei screen for wayland
+[2025-06-01T04:04:18] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:18] NOTE: started server, waiting for clients
+[2025-06-01T04:04:18] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:18] NOTE: stopped server
+[2025-06-01T04:04:19] INFO: using ei screen for wayland
+[2025-06-01T04:04:19] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:19] NOTE: started server, waiting for clients
+[2025-06-01T04:04:19] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:19] NOTE: stopped server
+[2025-06-01T04:04:20] INFO: using ei screen for wayland
+[2025-06-01T04:04:20] NOTE: started server, waiting for clients
+[2025-06-01T04:04:20] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:20] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:20] NOTE: stopped server
+[2025-06-01T04:04:22] INFO: using ei screen for wayland
+[2025-06-01T04:04:22] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:22] NOTE: started server, waiting for clients
+[2025-06-01T04:04:22] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:22] NOTE: stopped server
+[2025-06-01T04:04:23] INFO: using ei screen for wayland
+[2025-06-01T04:04:23] NOTE: started server, waiting for clients
+[2025-06-01T04:04:23] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:23] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:23] NOTE: stopped server
+[2025-06-01T04:04:24] INFO: using ei screen for wayland
+[2025-06-01T04:04:24] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:24] NOTE: started server, waiting for clients
+[2025-06-01T04:04:24] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:24] NOTE: stopped server
+[2025-06-01T04:04:25] INFO: using ei screen for wayland
+[2025-06-01T04:04:25] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:25] NOTE: started server, waiting for clients
+[2025-06-01T04:04:25] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:25] NOTE: stopped server
+[2025-06-01T04:04:26] INFO: using ei screen for wayland
+[2025-06-01T04:04:26] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:26] NOTE: started server, waiting for clients
+[2025-06-01T04:04:26] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:26] NOTE: stopped server
+[2025-06-01T04:04:27] INFO: using ei screen for wayland
+[2025-06-01T04:04:27] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:27] NOTE: started server, waiting for clients
+[2025-06-01T04:04:27] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:27] NOTE: stopped server
+[2025-06-01T04:04:28] INFO: using ei screen for wayland
+[2025-06-01T04:04:28] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:28] NOTE: started server, waiting for clients
+[2025-06-01T04:04:28] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:28] NOTE: stopped server
+[2025-06-01T04:04:29] INFO: using ei screen for wayland
+[2025-06-01T04:04:29] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:29] NOTE: started server, waiting for clients
+[2025-06-01T04:04:29] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:29] NOTE: stopped server
+[2025-06-01T04:04:31] INFO: using ei screen for wayland
+[2025-06-01T04:04:31] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:31] NOTE: started server, waiting for clients
+[2025-06-01T04:04:31] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:31] NOTE: stopped server
+[2025-06-01T04:04:32] INFO: using ei screen for wayland
+[2025-06-01T04:04:32] NOTE: started server, waiting for clients
+[2025-06-01T04:04:32] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:32] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:32] NOTE: stopped server
+[2025-06-01T04:04:33] INFO: using ei screen for wayland
+[2025-06-01T04:04:33] NOTE: started server, waiting for clients
+[2025-06-01T04:04:33] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:33] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:33] NOTE: stopped server
+[2025-06-01T04:04:34] INFO: using ei screen for wayland
+[2025-06-01T04:04:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:34] NOTE: started server, waiting for clients
+[2025-06-01T04:04:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:34] NOTE: stopped server
+[2025-06-01T04:04:35] INFO: using ei screen for wayland
+[2025-06-01T04:04:35] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:35] NOTE: started server, waiting for clients
+[2025-06-01T04:04:35] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:35] NOTE: stopped server
+[2025-06-01T04:04:36] INFO: using ei screen for wayland
+[2025-06-01T04:04:36] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:36] NOTE: started server, waiting for clients
+[2025-06-01T04:04:36] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:36] NOTE: stopped server
+[2025-06-01T04:04:37] INFO: using ei screen for wayland
+[2025-06-01T04:04:37] NOTE: started server, waiting for clients
+[2025-06-01T04:04:37] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:37] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:37] NOTE: stopped server
+[2025-06-01T04:04:39] INFO: using ei screen for wayland
+[2025-06-01T04:04:39] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:39] NOTE: started server, waiting for clients
+[2025-06-01T04:04:39] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:39] NOTE: stopped server
+[2025-06-01T04:04:40] INFO: using ei screen for wayland
+[2025-06-01T04:04:40] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:40] NOTE: started server, waiting for clients
+[2025-06-01T04:04:40] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:40] NOTE: stopped server
+[2025-06-01T04:04:41] INFO: using ei screen for wayland
+[2025-06-01T04:04:41] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:41] NOTE: started server, waiting for clients
+[2025-06-01T04:04:41] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:41] NOTE: stopped server
+[2025-06-01T04:04:42] INFO: using ei screen for wayland
+[2025-06-01T04:04:42] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:42] NOTE: started server, waiting for clients
+[2025-06-01T04:04:42] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:42] NOTE: stopped server
+[2025-06-01T04:04:43] INFO: using ei screen for wayland
+[2025-06-01T04:04:43] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:43] NOTE: started server, waiting for clients
+[2025-06-01T04:04:43] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:43] NOTE: stopped server
+[2025-06-01T04:04:44] INFO: using ei screen for wayland
+[2025-06-01T04:04:44] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:44] NOTE: started server, waiting for clients
+[2025-06-01T04:04:44] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:44] NOTE: stopped server
+[2025-06-01T04:04:46] INFO: using ei screen for wayland
+[2025-06-01T04:04:46] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:46] NOTE: started server, waiting for clients
+[2025-06-01T04:04:46] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:46] NOTE: stopped server
+[2025-06-01T04:04:47] INFO: using ei screen for wayland
+[2025-06-01T04:04:47] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:47] NOTE: started server, waiting for clients
+[2025-06-01T04:04:47] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:47] NOTE: stopped server
+[2025-06-01T04:04:48] INFO: using ei screen for wayland
+[2025-06-01T04:04:48] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:48] NOTE: started server, waiting for clients
+[2025-06-01T04:04:48] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:48] NOTE: stopped server
+[2025-06-01T04:04:49] INFO: using ei screen for wayland
+[2025-06-01T04:04:49] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:49] NOTE: started server, waiting for clients
+[2025-06-01T04:04:49] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:49] NOTE: stopped server
+[2025-06-01T04:04:50] INFO: using ei screen for wayland
+[2025-06-01T04:04:50] NOTE: started server, waiting for clients
+[2025-06-01T04:04:50] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:50] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:50] NOTE: stopped server
+[2025-06-01T04:04:52] INFO: using ei screen for wayland
+[2025-06-01T04:04:52] NOTE: started server, waiting for clients
+[2025-06-01T04:04:52] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:52] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:52] NOTE: stopped server
+[2025-06-01T04:04:53] INFO: using ei screen for wayland
+[2025-06-01T04:04:53] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:53] NOTE: started server, waiting for clients
+[2025-06-01T04:04:53] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:53] NOTE: stopped server
+[2025-06-01T04:04:54] INFO: using ei screen for wayland
+[2025-06-01T04:04:54] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:54] NOTE: started server, waiting for clients
+[2025-06-01T04:04:54] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:54] NOTE: stopped server
+[2025-06-01T04:04:55] INFO: using ei screen for wayland
+[2025-06-01T04:04:55] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:55] NOTE: started server, waiting for clients
+[2025-06-01T04:04:55] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:55] NOTE: stopped server
+[2025-06-01T04:04:56] INFO: using ei screen for wayland
+[2025-06-01T04:04:56] NOTE: started server, waiting for clients
+[2025-06-01T04:04:56] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:56] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:56] NOTE: stopped server
+[2025-06-01T04:04:57] INFO: using ei screen for wayland
+[2025-06-01T04:04:57] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:57] NOTE: started server, waiting for clients
+[2025-06-01T04:04:57] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:57] NOTE: stopped server
+[2025-06-01T04:04:58] INFO: using ei screen for wayland
+[2025-06-01T04:04:59] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:04:59] NOTE: started server, waiting for clients
+[2025-06-01T04:04:59] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:04:59] NOTE: stopped server
+[2025-06-01T04:05:00] INFO: using ei screen for wayland
+[2025-06-01T04:05:00] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:00] NOTE: started server, waiting for clients
+[2025-06-01T04:05:00] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:00] NOTE: stopped server
+[2025-06-01T04:05:01] INFO: using ei screen for wayland
+[2025-06-01T04:05:01] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:01] NOTE: started server, waiting for clients
+[2025-06-01T04:05:01] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:01] NOTE: stopped server
+[2025-06-01T04:05:02] INFO: using ei screen for wayland
+[2025-06-01T04:05:02] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:02] NOTE: started server, waiting for clients
+[2025-06-01T04:05:02] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:02] NOTE: stopped server
+[2025-06-01T04:05:03] INFO: using ei screen for wayland
+[2025-06-01T04:05:03] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:03] NOTE: started server, waiting for clients
+[2025-06-01T04:05:03] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:03] NOTE: stopped server
+[2025-06-01T04:05:04] INFO: using ei screen for wayland
+[2025-06-01T04:05:04] NOTE: started server, waiting for clients
+[2025-06-01T04:05:04] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:04] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:04] NOTE: stopped server
+[2025-06-01T04:05:05] INFO: using ei screen for wayland
+[2025-06-01T04:05:05] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:05] NOTE: started server, waiting for clients
+[2025-06-01T04:05:05] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:05] NOTE: stopped server
+[2025-06-01T04:05:07] INFO: using ei screen for wayland
+[2025-06-01T04:05:07] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:07] NOTE: started server, waiting for clients
+[2025-06-01T04:05:07] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:07] NOTE: stopped server
+[2025-06-01T04:05:08] INFO: using ei screen for wayland
+[2025-06-01T04:05:08] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:08] NOTE: started server, waiting for clients
+[2025-06-01T04:05:08] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:08] NOTE: stopped server
+[2025-06-01T04:05:09] INFO: using ei screen for wayland
+[2025-06-01T04:05:09] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:09] NOTE: started server, waiting for clients
+[2025-06-01T04:05:09] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:09] NOTE: stopped server
+[2025-06-01T04:05:10] INFO: using ei screen for wayland
+[2025-06-01T04:05:10] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:10] NOTE: started server, waiting for clients
+[2025-06-01T04:05:10] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:10] NOTE: stopped server
+[2025-06-01T04:05:11] INFO: using ei screen for wayland
+[2025-06-01T04:05:11] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:11] NOTE: started server, waiting for clients
+[2025-06-01T04:05:11] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:11] NOTE: stopped server
+[2025-06-01T04:05:12] INFO: using ei screen for wayland
+[2025-06-01T04:05:12] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:12] NOTE: started server, waiting for clients
+[2025-06-01T04:05:12] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:12] NOTE: stopped server
+[2025-06-01T04:05:13] INFO: using ei screen for wayland
+[2025-06-01T04:05:14] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:14] NOTE: started server, waiting for clients
+[2025-06-01T04:05:14] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:14] NOTE: stopped server
+[2025-06-01T04:05:15] INFO: using ei screen for wayland
+[2025-06-01T04:05:15] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:15] NOTE: started server, waiting for clients
+[2025-06-01T04:05:15] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:15] NOTE: stopped server
+[2025-06-01T04:05:16] INFO: using ei screen for wayland
+[2025-06-01T04:05:16] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:16] NOTE: started server, waiting for clients
+[2025-06-01T04:05:16] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:16] NOTE: stopped server
+[2025-06-01T04:05:17] INFO: using ei screen for wayland
+[2025-06-01T04:05:17] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:17] NOTE: started server, waiting for clients
+[2025-06-01T04:05:17] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:17] NOTE: stopped server
+[2025-06-01T04:05:18] INFO: using ei screen for wayland
+[2025-06-01T04:05:18] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:18] NOTE: started server, waiting for clients
+[2025-06-01T04:05:18] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:18] NOTE: stopped server
+[2025-06-01T04:05:19] INFO: using ei screen for wayland
+[2025-06-01T04:05:19] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:19] NOTE: started server, waiting for clients
+[2025-06-01T04:05:19] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:19] NOTE: stopped server
+[2025-06-01T04:05:20] INFO: using ei screen for wayland
+[2025-06-01T04:05:20] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:20] NOTE: started server, waiting for clients
+[2025-06-01T04:05:20] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:20] NOTE: stopped server
+[2025-06-01T04:05:22] INFO: using ei screen for wayland
+[2025-06-01T04:05:22] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:22] NOTE: started server, waiting for clients
+[2025-06-01T04:05:22] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:22] NOTE: stopped server
+[2025-06-01T04:05:23] INFO: using ei screen for wayland
+[2025-06-01T04:05:23] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:23] NOTE: started server, waiting for clients
+[2025-06-01T04:05:23] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:23] NOTE: stopped server
+[2025-06-01T04:05:24] INFO: using ei screen for wayland
+[2025-06-01T04:05:24] NOTE: started server, waiting for clients
+[2025-06-01T04:05:24] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:24] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:24] NOTE: stopped server
+[2025-06-01T04:05:25] INFO: using ei screen for wayland
+[2025-06-01T04:05:25] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:25] NOTE: started server, waiting for clients
+[2025-06-01T04:05:25] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:25] NOTE: stopped server
+[2025-06-01T04:05:26] INFO: using ei screen for wayland
+[2025-06-01T04:05:26] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:26] NOTE: started server, waiting for clients
+[2025-06-01T04:05:26] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:26] NOTE: stopped server
+[2025-06-01T04:05:27] INFO: using ei screen for wayland
+[2025-06-01T04:05:27] NOTE: started server, waiting for clients
+[2025-06-01T04:05:27] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:27] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:27] NOTE: stopped server
+[2025-06-01T04:05:28] INFO: using ei screen for wayland
+[2025-06-01T04:05:28] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:28] NOTE: started server, waiting for clients
+[2025-06-01T04:05:28] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:28] NOTE: stopped server
+[2025-06-01T04:05:30] INFO: using ei screen for wayland
+[2025-06-01T04:05:30] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:30] NOTE: started server, waiting for clients
+[2025-06-01T04:05:30] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:30] NOTE: stopped server
+[2025-06-01T04:05:31] INFO: using ei screen for wayland
+[2025-06-01T04:05:31] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:31] NOTE: started server, waiting for clients
+[2025-06-01T04:05:31] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:31] NOTE: stopped server
+[2025-06-01T04:05:32] INFO: using ei screen for wayland
+[2025-06-01T04:05:32] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:32] NOTE: started server, waiting for clients
+[2025-06-01T04:05:32] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:32] NOTE: stopped server
+[2025-06-01T04:05:33] INFO: using ei screen for wayland
+[2025-06-01T04:05:33] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:33] NOTE: started server, waiting for clients
+[2025-06-01T04:05:33] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:33] NOTE: stopped server
+[2025-06-01T04:05:34] INFO: using ei screen for wayland
+[2025-06-01T04:05:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:34] NOTE: started server, waiting for clients
+[2025-06-01T04:05:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:34] NOTE: stopped server
+[2025-06-01T04:05:35] INFO: using ei screen for wayland
+[2025-06-01T04:05:35] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:35] NOTE: started server, waiting for clients
+[2025-06-01T04:05:35] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:35] NOTE: stopped server
+[2025-06-01T04:05:36] INFO: using ei screen for wayland
+[2025-06-01T04:05:36] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:36] NOTE: started server, waiting for clients
+[2025-06-01T04:05:36] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:36] NOTE: stopped server
+[2025-06-01T04:05:38] INFO: using ei screen for wayland
+[2025-06-01T04:05:38] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:38] NOTE: started server, waiting for clients
+[2025-06-01T04:05:38] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:38] NOTE: stopped server
+[2025-06-01T04:05:39] INFO: using ei screen for wayland
+[2025-06-01T04:05:39] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:39] NOTE: started server, waiting for clients
+[2025-06-01T04:05:39] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:39] NOTE: stopped server
+[2025-06-01T04:05:40] INFO: using ei screen for wayland
+[2025-06-01T04:05:40] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:40] NOTE: started server, waiting for clients
+[2025-06-01T04:05:40] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:40] NOTE: stopped server
+[2025-06-01T04:05:41] INFO: using ei screen for wayland
+[2025-06-01T04:05:41] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:41] NOTE: started server, waiting for clients
+[2025-06-01T04:05:41] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:41] NOTE: stopped server
+[2025-06-01T04:05:42] INFO: using ei screen for wayland
+[2025-06-01T04:05:42] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:42] NOTE: started server, waiting for clients
+[2025-06-01T04:05:42] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:42] NOTE: stopped server
+[2025-06-01T04:05:43] INFO: using ei screen for wayland
+[2025-06-01T04:05:43] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:43] NOTE: started server, waiting for clients
+[2025-06-01T04:05:43] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:43] NOTE: stopped server
+[2025-06-01T04:05:44] INFO: using ei screen for wayland
+[2025-06-01T04:05:45] NOTE: started server, waiting for clients
+[2025-06-01T04:05:45] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:45] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:45] NOTE: stopped server
+[2025-06-01T04:05:46] INFO: using ei screen for wayland
+[2025-06-01T04:05:46] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:46] NOTE: started server, waiting for clients
+[2025-06-01T04:05:46] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:46] NOTE: stopped server
+[2025-06-01T04:05:47] INFO: using ei screen for wayland
+[2025-06-01T04:05:47] NOTE: started server, waiting for clients
+[2025-06-01T04:05:47] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:47] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:47] NOTE: stopped server
+[2025-06-01T04:05:48] INFO: using ei screen for wayland
+[2025-06-01T04:05:48] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:48] NOTE: started server, waiting for clients
+[2025-06-01T04:05:48] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:48] NOTE: stopped server
+[2025-06-01T04:05:49] INFO: using ei screen for wayland
+[2025-06-01T04:05:49] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:49] NOTE: started server, waiting for clients
+[2025-06-01T04:05:49] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:49] NOTE: stopped server
+[2025-06-01T04:05:50] INFO: using ei screen for wayland
+[2025-06-01T04:05:50] NOTE: started server, waiting for clients
+[2025-06-01T04:05:50] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:50] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:50] NOTE: stopped server
+[2025-06-01T04:05:51] INFO: using ei screen for wayland
+[2025-06-01T04:05:52] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:52] NOTE: started server, waiting for clients
+[2025-06-01T04:05:52] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:52] NOTE: stopped server
+[2025-06-01T04:05:53] INFO: using ei screen for wayland
+[2025-06-01T04:05:53] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:53] NOTE: started server, waiting for clients
+[2025-06-01T04:05:53] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:53] NOTE: stopped server
+[2025-06-01T04:05:54] INFO: using ei screen for wayland
+[2025-06-01T04:05:54] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:54] NOTE: started server, waiting for clients
+[2025-06-01T04:05:54] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:54] NOTE: stopped server
+[2025-06-01T04:05:55] INFO: using ei screen for wayland
+[2025-06-01T04:05:55] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:55] NOTE: started server, waiting for clients
+[2025-06-01T04:05:55] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:55] NOTE: stopped server
+[2025-06-01T04:05:56] INFO: using ei screen for wayland
+[2025-06-01T04:05:56] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:56] NOTE: started server, waiting for clients
+[2025-06-01T04:05:56] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:56] NOTE: stopped server
+[2025-06-01T04:05:57] INFO: using ei screen for wayland
+[2025-06-01T04:05:57] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:57] NOTE: started server, waiting for clients
+[2025-06-01T04:05:57] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:57] NOTE: stopped server
+[2025-06-01T04:05:58] INFO: using ei screen for wayland
+[2025-06-01T04:05:58] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:05:58] NOTE: started server, waiting for clients
+[2025-06-01T04:05:58] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:05:58] NOTE: stopped server
+[2025-06-01T04:06:00] INFO: using ei screen for wayland
+[2025-06-01T04:06:00] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:00] NOTE: started server, waiting for clients
+[2025-06-01T04:06:00] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:00] NOTE: stopped server
+[2025-06-01T04:06:01] INFO: using ei screen for wayland
+[2025-06-01T04:06:01] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:01] NOTE: started server, waiting for clients
+[2025-06-01T04:06:01] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:01] NOTE: stopped server
+[2025-06-01T04:06:02] INFO: using ei screen for wayland
+[2025-06-01T04:06:02] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:02] NOTE: started server, waiting for clients
+[2025-06-01T04:06:02] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:02] NOTE: stopped server
+[2025-06-01T04:06:03] INFO: using ei screen for wayland
+[2025-06-01T04:06:03] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:03] NOTE: started server, waiting for clients
+[2025-06-01T04:06:03] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:03] NOTE: stopped server
+[2025-06-01T04:06:04] INFO: using ei screen for wayland
+[2025-06-01T04:06:04] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:04] NOTE: started server, waiting for clients
+[2025-06-01T04:06:04] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:04] NOTE: stopped server
+[2025-06-01T04:06:05] INFO: using ei screen for wayland
+[2025-06-01T04:06:05] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:05] NOTE: started server, waiting for clients
+[2025-06-01T04:06:05] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:05] NOTE: stopped server
+[2025-06-01T04:06:06] INFO: using ei screen for wayland
+[2025-06-01T04:06:06] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:06] NOTE: started server, waiting for clients
+[2025-06-01T04:06:06] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:06] NOTE: stopped server
+[2025-06-01T04:06:32] INFO: using ei screen for wayland
+[2025-06-01T04:06:32] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:32] NOTE: started server, waiting for clients
+[2025-06-01T04:06:32] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:32] NOTE: stopped server
+[2025-06-01T04:06:33] INFO: using ei screen for wayland
+[2025-06-01T04:06:33] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:33] NOTE: started server, waiting for clients
+[2025-06-01T04:06:33] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:33] NOTE: stopped server
+[2025-06-01T04:06:34] INFO: using ei screen for wayland
+[2025-06-01T04:06:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:34] NOTE: started server, waiting for clients
+[2025-06-01T04:06:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:34] NOTE: stopped server
+[2025-06-01T04:06:34] INFO: using ei screen for wayland
+[2025-06-01T04:06:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:34] NOTE: started server, waiting for clients
+[2025-06-01T04:06:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:34] NOTE: stopped server
+[2025-06-01T04:06:34] INFO: using ei screen for wayland
+[2025-06-01T04:06:34] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:34] NOTE: started server, waiting for clients
+[2025-06-01T04:06:34] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:34] NOTE: stopped server
+[2025-06-01T04:06:35] INFO: using ei screen for wayland
+[2025-06-01T04:06:35] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:35] NOTE: started server, waiting for clients
+[2025-06-01T04:06:35] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:35] NOTE: stopped server
+[2025-06-01T04:06:36] INFO: using ei screen for wayland
+[2025-06-01T04:06:36] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:36] NOTE: started server, waiting for clients
+[2025-06-01T04:06:36] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:36] NOTE: stopped server
+[2025-06-01T04:06:38] INFO: using ei screen for wayland
+[2025-06-01T04:06:38] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:38] NOTE: started server, waiting for clients
+[2025-06-01T04:06:38] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:38] NOTE: stopped server
+[2025-06-01T04:06:39] INFO: using ei screen for wayland
+[2025-06-01T04:06:39] NOTE: started server, waiting for clients
+[2025-06-01T04:06:39] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:39] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:39] NOTE: stopped server
+[2025-06-01T04:06:40] INFO: using ei screen for wayland
+[2025-06-01T04:06:40] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:40] NOTE: started server, waiting for clients
+[2025-06-01T04:06:40] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:40] NOTE: stopped server
+[2025-06-01T04:06:41] INFO: using ei screen for wayland
+[2025-06-01T04:06:41] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:41] NOTE: started server, waiting for clients
+[2025-06-01T04:06:41] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:41] NOTE: stopped server
+[2025-06-01T04:06:42] INFO: using ei screen for wayland
+[2025-06-01T04:06:42] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:06:42] NOTE: started server, waiting for clients
+[2025-06-01T04:06:42] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:06:42] NOTE: stopped server
+[2025-06-01T04:13:35] INFO: using ei screen for wayland
+[2025-06-01T04:13:35] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:35] NOTE: started server, waiting for clients
+[2025-06-01T04:13:35] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:35] NOTE: stopped server
+[2025-06-01T04:13:36] INFO: using ei screen for wayland
+[2025-06-01T04:13:36] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:36] NOTE: started server, waiting for clients
+[2025-06-01T04:13:36] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:36] NOTE: stopped server
+[2025-06-01T04:13:37] INFO: using ei screen for wayland
+[2025-06-01T04:13:37] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:37] NOTE: started server, waiting for clients
+[2025-06-01T04:13:37] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:37] NOTE: stopped server
+[2025-06-01T04:13:38] INFO: using ei screen for wayland
+[2025-06-01T04:13:38] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:38] NOTE: started server, waiting for clients
+[2025-06-01T04:13:38] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:38] NOTE: stopped server
+[2025-06-01T04:13:39] INFO: using ei screen for wayland
+[2025-06-01T04:13:39] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:39] NOTE: started server, waiting for clients
+[2025-06-01T04:13:39] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:39] NOTE: stopped server
+[2025-06-01T04:13:40] INFO: using ei screen for wayland
+[2025-06-01T04:13:40] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:40] NOTE: started server, waiting for clients
+[2025-06-01T04:13:40] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:40] NOTE: stopped server
+[2025-06-01T04:13:42] INFO: using ei screen for wayland
+[2025-06-01T04:13:42] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:42] NOTE: started server, waiting for clients
+[2025-06-01T04:13:42] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:42] NOTE: stopped server
+[2025-06-01T04:13:43] INFO: using ei screen for wayland
+[2025-06-01T04:13:43] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:43] NOTE: started server, waiting for clients
+[2025-06-01T04:13:43] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:43] NOTE: stopped server
+[2025-06-01T04:13:44] INFO: using ei screen for wayland
+[2025-06-01T04:13:44] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:44] NOTE: started server, waiting for clients
+[2025-06-01T04:13:44] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:44] NOTE: stopped server
+[2025-06-01T04:13:45] INFO: using ei screen for wayland
+[2025-06-01T04:13:45] ERROR: failed to initialize input capture session, quitting: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.InputCapture” on object at path /org/freedesktop/portal/desktop
+[2025-06-01T04:13:45] NOTE: started server, waiting for clients
+[2025-06-01T04:13:45] WARNING: current primary screen is not entered on shutdown
+[2025-06-01T04:13:45] NOTE: stopped server
+[2025-06-01T04:42:29] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:29] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:30] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:30] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:31] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:31] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:32] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:32] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:33] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:33] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:34] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:34] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:35] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:35] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:36] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:36] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:37] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:37] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T04:42:38] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T04:42:38] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T05:05:19] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T05:05:19] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T05:05:20] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T05:05:20] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T05:05:21] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T05:05:21] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T05:05:22] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T05:05:22] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf
+[2025-06-01T05:05:23] ERROR: cannot read configuration "/home/evm/.config/Deskflow/deskflow-server.conf": read error: line 20: alias "SquishAgent" is already used
+[2025-06-01T05:05:23] FATAL: deskflow-server: failed to load config: /home/evm/.config/Deskflow/deskflow-server.conf

@@ -1,0 +1,260 @@
+#!/bin/bash
+# Script to fix libvirt network driver PID file issue
+# Comprehensive cleanup for stuck libvirt processes
+
+echo "Fixing libvirt network driver PID file issue..."
+
+# Stop all libvirt-related services
+echo "Stopping all libvirt services..."
+systemctl stop libvirtd 2>/dev/null
+systemctl stop libvirtd-guests 2>/dev/null
+systemctl stop libvirt-guests 2>/dev/null
+
+# Kill ALL libvirt-related processes
+echo "Killing all libvirt processes..."
+pkill -9 libvirtd
+pkill -9 virtlogd
+pkill -9 virtlockd
+pkill -9 dnsmasq
+
+# Wait for processes to die
+sleep 3
+
+# Clean up ALL PID files
+echo "Cleaning up all PID files..."
+rm -rf /run/libvirt/
+rm -rf /var/run/libvirt/
+rm -f /run/libvirtd.pid
+rm -f /var/run/libvirtd.pid
+
+# Recreate the libvirt run directories with proper permissions
+echo "Recreating libvirt directories..."
+mkdir -p /run/libvirt/network
+mkdir -p /run/libvirt/qemu
+mkdir -p /run/libvirt/storage
+chown -R root:libvirt /run/libvirt/
+chmod -R 755 /run/libvirt/
+
+# Clean up any leftover network bridges
+echo "Cleaning up network bridges..."
+ip link delete virbr0 2>/dev/null || true
+ip link delete virbr1 2>/dev/null || true
+
+# Remove any iptables rules left by libvirt
+echo "Cleaning iptables rules..."
+iptables -t nat -F LIBVIRT_PRT 2>/dev/null || true
+iptables -t nat -F LIBVIRT_INP 2>/dev/null || true
+iptables -t nat -F LIBVIRT_OUT 2>/dev/null || true
+iptables -t nat -X LIBVIRT_PRT 2>/dev/null || true
+iptables -t nat -X LIBVIRT_INP 2>/dev/null || true
+iptables -t nat -X LIBVIRT_OUT 2>/dev/null || true
+iptables -F LIBVIRT_INP 2>/dev/null || true
+iptables -F LIBVIRT_OUT 2>/dev/null || true
+iptables -F LIBVIRT_FWO 2>/dev/null || true
+iptables -F LIBVIRT_FWI 2>/dev/null || true
+iptables -F LIBVIRT_FWX 2>/dev/null || true
+iptables -X LIBVIRT_INP 2>/dev/null || true
+iptables -X LIBVIRT_OUT 2>/dev/null || true
+iptables -X LIBVIRT_FWO 2>/dev/null || true
+iptables -X LIBVIRT_FWI 2>/dev/null || true
+iptables -X LIBVIRT_FWX 2>/dev/null || true
+
+# Configure libvirtd to work properly with systemd-resolved
+echo "Configuring libvirt for systemd-resolved..."
+
+# Backup configurations
+cp /etc/libvirt/libvirtd.conf /etc/libvirt/libvirtd.conf.bak 2>/dev/null
+cp /etc/libvirt/qemu.conf /etc/libvirt/qemu.conf.bak 2>/dev/null
+
+# Create minimal libvirtd.conf
+cat > /etc/libvirt/libvirtd.conf << 'EOF'
+# Libvirtd main config
+listen_tls = 0
+listen_tcp = 0
+unix_sock_group = "libvirt"
+unix_sock_ro_perms = "0777"
+unix_sock_rw_perms = "0770"
+unix_sock_admin_perms = "0700"
+auth_unix_ro = "none"
+auth_unix_rw = "none"
+EOF
+
+# Configure qemu to use systemd-resolved
+cat > /etc/libvirt/qemu.conf << 'EOF'
+# QEMU/KVM configuration
+user = "root"
+group = "kvm"
+dynamic_ownership = 1
+remember_owner = 1
+
+# Network configuration - use systemd-resolved
+dns_forwarders = [ "127.0.0.53" ]
+
+# Security
+security_driver = "none"
+security_default_confined = 0
+security_require_confined = 0
+
+# Namespaces
+namespaces = []
+
+# Logging
+log_level = 2
+log_outputs = "2:file:/var/log/libvirt/qemu.log"
+
+# Process control
+max_processes = 0
+max_files = 0
+EOF
+
+# Disable the modular libvirt services (they conflict with monolithic libvirtd)
+echo "Disabling modular libvirt services..."
+systemctl disable virtnetworkd 2>/dev/null || true
+systemctl disable virtinterfaced 2>/dev/null || true
+systemctl disable virtnodedevd 2>/dev/null || true
+systemctl disable virtnwfilterd 2>/dev/null || true
+systemctl disable virtproxyd 2>/dev/null || true
+systemctl disable virtqemud 2>/dev/null || true
+systemctl disable virtsecretd 2>/dev/null || true
+systemctl disable virtstoraged 2>/dev/null || true
+
+systemctl stop virtnetworkd 2>/dev/null || true
+systemctl stop virtinterfaced 2>/dev/null || true
+systemctl stop virtnodedevd 2>/dev/null || true
+systemctl stop virtnwfilterd 2>/dev/null || true
+systemctl stop virtproxyd 2>/dev/null || true
+systemctl stop virtqemud 2>/dev/null || true
+systemctl stop virtsecretd 2>/dev/null || true
+systemctl stop virtstoraged 2>/dev/null || true
+
+# Create enhanced systemd override
+mkdir -p /etc/systemd/system/libvirtd.service.d
+cat > /etc/systemd/system/libvirtd.service.d/override.conf << 'EOF'
+[Unit]
+After=systemd-resolved.service network-online.target
+Wants=systemd-resolved.service
+Requires=systemd-resolved.service
+Conflicts=virtnetworkd.service virtinterfaced.service virtnodedevd.service virtnwfilterd.service virtproxyd.service virtqemud.service virtsecretd.service virtstoraged.service
+
+[Service]
+# Clean startup
+ExecStartPre=/bin/bash -c 'pkill -9 libvirtd || true'
+ExecStartPre=/bin/bash -c 'pkill -9 virtlogd || true'
+ExecStartPre=/bin/bash -c 'pkill -9 virtlockd || true'
+ExecStartPre=/bin/bash -c 'pkill -9 dnsmasq || true'
+ExecStartPre=/bin/bash -c 'rm -rf /run/libvirt/'
+ExecStartPre=/bin/bash -c 'rm -f /run/libvirtd.pid /var/run/libvirtd.pid'
+ExecStartPre=/bin/bash -c 'mkdir -p /run/libvirt/network /run/libvirt/qemu /run/libvirt/storage'
+ExecStartPre=/bin/bash -c 'chown -R root:libvirt /run/libvirt/'
+ExecStartPre=/bin/bash -c 'chmod -R 755 /run/libvirt/'
+ExecStartPre=/bin/bash -c 'until systemctl is-active systemd-resolved; do sleep 1; done'
+
+# Clean shutdown
+ExecStopPost=/bin/bash -c 'pkill -9 libvirtd || true'
+ExecStopPost=/bin/bash -c 'pkill -9 virtlogd || true'
+ExecStopPost=/bin/bash -c 'pkill -9 virtlockd || true'
+ExecStopPost=/bin/bash -c 'pkill -9 dnsmasq || true'
+ExecStopPost=/bin/bash -c 'rm -rf /run/libvirt/ || true'
+
+# Restart policy
+Restart=on-failure
+RestartSec=10
+
+# Force monolithic mode
+Environment=LIBVIRTD_ARGS="--verbose"
+EOF
+
+# Ensure systemd-resolved is running
+echo "Ensuring systemd-resolved is active..."
+systemctl enable systemd-resolved
+systemctl start systemd-resolved
+
+# Wait for systemd-resolved
+sleep 3
+
+# Reload systemd configuration
+systemctl daemon-reload
+
+# Start libvirtd
+echo "Starting libvirtd..."
+if systemctl start libvirtd; then
+    echo "✓ libvirtd started successfully!"
+else
+    echo "✗ libvirtd failed to start, checking logs..."
+    journalctl -u libvirtd --no-pager -n 20
+    echo ""
+    echo "Checking for stuck processes:"
+    pgrep -af libvirt
+    echo ""
+    echo "Checking PID files:"
+    find /run -name "*libvirt*" -type f 2>/dev/null || echo "No libvirt PID files found"
+    exit 1
+fi
+
+# Wait for libvirtd to fully initialize
+sleep 5
+
+# Create a simple default network
+echo "Creating default network..."
+cat > /tmp/default_network.xml << 'EOF'
+<network>
+  <n>default</n>
+  <bridge name="virbr0"/>
+  <forward mode="nat"/>
+  <ip address="192.168.122.1" netmask="255.255.255.0">
+    <dhcp>
+      <range start="192.168.122.2" end="192.168.122.254"/>
+    </dhcp>
+  </ip>
+</network>
+EOF
+
+# Remove existing default network if it exists
+virsh net-destroy default 2>/dev/null || true
+virsh net-undefine default 2>/dev/null || true
+
+# Define and start the new network
+if virsh net-define /tmp/default_network.xml; then
+    virsh net-autostart default
+    virsh net-start default
+    echo "✓ Default network created and started"
+else
+    echo "✗ Failed to create default network"
+fi
+
+# Clean up
+rm -f /tmp/default_network.xml
+
+# Enable libvirtd service
+systemctl enable libvirtd
+
+# Final verification
+echo ""
+echo "=== Final Verification ==="
+echo ""
+echo "libvirtd status:"
+systemctl status libvirtd --no-pager -l | head -10
+
+echo ""
+echo "libvirt networks:"
+virsh net-list --all
+
+echo ""
+echo "Bridge interfaces:"
+ip addr show virbr0 2>/dev/null || echo "virbr0 not found"
+
+echo ""
+echo "PID files check:"
+find /run -name "*libvirt*" -type f 2>/dev/null || echo "No libvirt PID files found"
+
+echo ""
+echo "Process check:"
+pgrep -af libvirtd || echo "No libvirtd processes found"
+
+echo ""
+echo "DNS test via systemd-resolved:"
+nslookup google.com 127.0.0.53 | head -5
+
+echo ""
+echo "✓ libvirtd should now be working properly!"
+echo "You can test by starting a VM or running: virsh list --all"

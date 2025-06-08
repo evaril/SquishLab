@@ -1,0 +1,140 @@
+#!/bin/bash
+
+# Function to safely handle special characters in output
+safe_echo() {
+    printf '%s\n' "$1"
+}
+
+# Check if correct number of arguments provided
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <directory> <output_file.txt>"
+    exit 1
+fi
+
+SOURCE_DIR="$1"
+OUTPUT_FILE="$2"
+
+# Check if source directory exists
+if [ ! -d "$SOURCE_DIR" ]; then
+    echo "Error: Directory '$SOURCE_DIR' does not exist"
+    exit 1
+fi
+
+# Create or clear the output file
+> "$OUTPUT_FILE"
+
+# Function to get file stats cross-platform
+get_file_stats() {
+    local file="$1"
+    local size perms modified
+    
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        # macOS
+        size=$(stat -f%z "$file" 2>/dev/null || echo "unknown")
+        perms=$(stat -f%Sp "$file" 2>/dev/null || echo "unknown")
+        modified=$(stat -f"%Sm" -t "%Y-%m-%d %H:%M:%S" "$file" 2>/dev/null || echo "unknown")
+    else
+        # Linux
+        size=$(stat -c%s "$file" 2>/dev/null || echo "unknown")
+        perms=$(stat -c%a "$file" 2>/dev/null || echo "unknown")
+        modified=$(stat -c"%y" "$file" 2>/dev/null | cut -d. -f1 || echo "unknown")
+    fi
+    
+    echo "$size|$perms|$modified"
+}
+
+# Add header with metadata
+{
+    safe_echo "=== ARCHIVE CREATED: $(date) ==="
+    safe_echo "=== SOURCE DIRECTORY: $SOURCE_DIR ==="
+    safe_echo "=== TOTAL FILES: $(find "$SOURCE_DIR" -type f 2>/dev/null | wc -l) ==="
+    safe_echo ""
+    
+    # Create directory structure overview
+    safe_echo "=== DIRECTORY STRUCTURE ==="
+    if command -v tree >/dev/null 2>&1; then
+        tree -a "$SOURCE_DIR" 2>/dev/null
+    else
+        find "$SOURCE_DIR" -print 2>/dev/null | sed -e 's;[^/]*/;|____;g;s;____|;  |;g'
+    fi
+    safe_echo ""
+} >> "$OUTPUT_FILE"
+
+# Process each file
+find "$SOURCE_DIR" -type f -print0 2>/dev/null | while IFS= read -r -d '' file; do
+    # Get relative path from source directory
+    rel_path="${file#$SOURCE_DIR/}"
+    
+    # Get file metadata
+    IFS='|' read -r file_size file_perms file_modified <<< "$(get_file_stats "$file")"
+    
+    # Determine file type
+    file_type="unknown"
+    if command -v file >/dev/null 2>&1; then
+        file_type=$(file -b "$file" 2>/dev/null | head -1 || echo "unknown")
+    fi
+    
+    {
+        safe_echo "==================================="
+        safe_echo "=== FILE: $rel_path ==="
+        safe_echo "=== SIZE: $file_size bytes ==="
+        safe_echo "=== PERMISSIONS: $file_perms ==="
+        safe_echo "=== MODIFIED: $file_modified ==="
+        safe_echo "=== TYPE: $file_type ==="
+        safe_echo "=== CONTENT START ==="
+    } >> "$OUTPUT_FILE"
+    
+    # Determine if file is text or binary
+    is_text=false
+    
+    # Check by extension first
+    if [[ "$file" =~ \.(txt|sh|bash|py|json|log|conf|cfg|ini|xml|yaml|yml|md|rst|csv|sql|js|css|html|c|cpp|h|java|rb|pl|php|go|rs|r|m|swift|kt)$ ]]; then
+        is_text=true
+    # Check by file command output
+    elif command -v file >/dev/null 2>&1 && file "$file" 2>/dev/null | grep -qE "text|ASCII|script|JSON|XML|source|empty"; then
+        is_text=true
+    # Final check: try to detect binary content
+    elif head -c 1000 "$file" 2>/dev/null | LC_ALL=C grep -qP '[^\x00-\x7F]'; then
+        is_text=false
+    else
+        is_text=true
+    fi
+    
+    if [ "$is_text" = true ]; then
+        # It's likely a text file - use cat with LC_ALL=C to handle any encoding
+        if ! LC_ALL=C cat "$file" >> "$OUTPUT_FILE" 2>/dev/null; then
+            safe_echo "[ERROR: Could not read file]" >> "$OUTPUT_FILE"
+        fi
+    else
+        # Binary file or unknown
+        {
+            safe_echo "[BINARY FILE - Content not included]"
+            safe_echo "First 512 bytes (hexdump):"
+            if command -v hexdump >/dev/null 2>&1; then
+                hexdump -C "$file" 2>/dev/null | head -20
+            elif command -v xxd >/dev/null 2>&1; then
+                xxd "$file" 2>/dev/null | head -20
+            else
+                safe_echo "[No hex viewer available]"
+            fi
+        } >> "$OUTPUT_FILE"
+    fi
+    
+    {
+        safe_echo "=== CONTENT END ==="
+        safe_echo ""
+    } >> "$OUTPUT_FILE"
+done
+
+# Add footer
+{
+    safe_echo "==================================="
+    safe_echo "=== ARCHIVE END: $(date) ==="
+} >> "$OUTPUT_FILE"
+
+echo "Archive created successfully: $OUTPUT_FILE"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo "Total size: $(ls -lh "$OUTPUT_FILE" 2>/dev/null | awk '{print $5}')"
+else
+    echo "Total size: $(ls -lh "$OUTPUT_FILE" 2>/dev/null | awk '{print $5}')"
+fi

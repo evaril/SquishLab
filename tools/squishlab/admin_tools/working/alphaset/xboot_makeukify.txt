@@ -1,0 +1,5 @@
+sudo ukify build \
+    --linux=/boot/vmlinuz-linux-hardened \
+    --initrd=/boot/initramfs-linux-hardened.img \
+    --cmdline="root=UUID=$(findmnt -no UUID /) rw quiet rd.luks.key=/etc/keys/root.key audit=1 slub_debug=FZP page_poison=1 vsyscall=none pti=on spectre_v2=on spec_store_bypass_disable=on l1tf=full,force mds=full,nosmt tsx=off kvm.nx_huge_pages=force intel_iommu=on iommu=pt vfio-pci.ids=10de:1b81,10de:10f0 lockdown=confidentiality module.sig_enforce=1 ipv6.disable=1 modprobe.blacklist=mei,mei_me,mei_snd,snd,wmi acpi=strict apic=strict kptr_restrict=2 debug=0 debugfs=0 loglevel=7 security=apparmor apparmor=1 enforcing=1 "  \
+    --output=/boot/EFI/Linux/arch-hardened.efi

@@ -1,0 +1,15 @@
+Import Fedora's GPG key(s)
+
+curl -O https://fedoraproject.org/fedora.gpg
+
+    You can verify the details of the GPG key(s) here.
+
+    Verify the checksum file is valid
+
+    gpgv --keyring ./fedora.gpg Fedora-IoT-42-x86_64-20250414.0-CHECKSUM
+
+    Verify the checksum matches
+
+    sha256sum --ignore-missing -c Fedora-IoT-42-x86_64-20250414.0-CHECKSUM
+
+If the output states that the file is valid, then it's ready to use!

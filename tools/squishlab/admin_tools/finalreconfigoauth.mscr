@@ -1,0 +1,25 @@
+sudo systemctl stop homeassistant && \
+sudo -u homeassistant rm -f /opt/homeassistant/config/.storage/*nest* && \
+sudo -u homeassistant rm -f /opt/homeassistant/config/.storage/*google* && \
+sudo -u homeassistant rm -f /opt/homeassistant/config/.storage/config_flow && \
+sudo -u homeassistant tee /opt/homeassistant/config/configuration.yaml << 'EOF'
+homeassistant:
+  name: SecureHome
+  latitude: 49.8951
+  longitude: -119.5103
+  unit_system: metric
+  time_zone: America/Vancouver
+
+frontend:
+
+http:
+  server_port: 8170
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+
+automation: []
+script: []
+scene: []
+EOF
+sudo systemctl start homeassistant && \
+echo "Now update your Google Cloud Console OAuth redirect URI to: https://my.home-assistant.io/redirect/oauth"

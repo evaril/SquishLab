@@ -1,0 +1,23 @@
+# Lynis Report
+report_version_major=1
+report_version_minor=0
+report_datetime_start=2025-05-16 01:24:20
+auditor=[Not Specified]
+lynis_version=3.1.4
+os=Linux
+os_name=Arch Linux
+os_fullname=Arch Linux
+os_version=Rolling release
+linux_version=Arch Linux
+os_kernel_version=6.14.6
+os_kernel_version_full=6.14.6-arch1-1
+hostname=no-hostname
+test_category=all
+test_group=all
+plugin_directory=/usr/share/lynis/plugins
+lynis_update_available=0
+vm=2
+container=0
+systemd=1
+hostid=1e930a6e99377e2d987397437ce74f5d64647a6f
+hostid2=005d0192b37d031eb0b51dfaa99bf7e87b9486d94e222d1730e224dd041d79b5

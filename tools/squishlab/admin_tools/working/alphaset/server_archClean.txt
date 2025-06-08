@@ -1,0 +1,457 @@
+#!/bin/bash
+# squishArchClean.mscr - Safe Arch Linux system cleanup
+# Author: evm
+# Version: 2.0-safe
+
+set -euo pipefail
+
+# Color functions
+red() { printf '\033[0;31m%s\033[0m\n' "$*"; }
+green() { printf '\033[0;32m%s\033[0m\n' "$*"; }
+yellow() { printf '\033[1;33m%s\033[0m\n' "$*"; }
+blue() { printf '\033[0;34m%s\033[0m\n' "$*"; }
+cyan() { printf '\033[0;36m%s\033[0m\n' "$*"; }
+
+# Safety checks
+readonly DRY_RUN="${DRY_RUN:-false}"
+readonly KEEP_CACHE_VERSIONS=3
+readonly MIN_DISK_SPACE_GB=5
+
+# Logging
+readonly LOG_FILE="$HOME/arch-cleanup.log"
+
+log() {
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - $1" >> "$LOG_FILE"
+}
+
+# Safety check - ensure we're on Arch Linux
+check_arch_system() {
+    if [[ ! -f /etc/arch-release ]]; then
+        red "This script is designed for Arch Linux only"
+        exit 1
+    fi
+    
+    if ! command -v pacman >/dev/null 2>&1; then
+        red "Pacman not found - not an Arch system?"
+        exit 1
+    fi
+}
+
+# Check available disk space
+check_disk_space() {
+    local available_gb
+    available_gb=$(df / | awk 'NR==2 {print int($4/1024/1024)}')
+    
+    if [[ $available_gb -lt $MIN_DISK_SPACE_GB ]]; then
+        yellow "Warning: Low disk space ($available_gb GB available)"
+        yellow "Cleanup is recommended but be cautious"
+    else
+        blue "Disk space: $available_gb GB available"
+    fi
+}
+
+# Execute command with dry-run support
+safe_execute() {
+    local cmd="$1"
+    local description="$2"
+    
+    if [[ "$DRY_RUN" == "true" ]]; then
+        cyan "[DRY RUN] $description"
+        cyan "[DRY RUN] Would execute: $cmd"
+        return 0
+    else
+        blue "$description"
+        log "Executing: $cmd"
+        eval "$cmd"
+        return $?
+    fi
+}
+
+# Clean package cache safely
+clean_package_cache() {
+    blue "=== Package Cache Cleanup ==="
+    
+    # Check current cache size
+    local cache_size
+    if [[ -d /var/cache/pacman/pkg ]]; then
+        cache_size=$(du -sh /var/cache/pacman/pkg | cut -f1)
+        echo "Current cache size: $cache_size"
+    fi
+    
+    # Remove all cached packages except installed versions
+    if command -v paccache >/dev/null 2>&1; then
+        safe_execute "sudo paccache -r -k $KEEP_CACHE_VERSIONS" \
+                    "Removing old package cache (keeping $KEEP_CACHE_VERSIONS versions)"
+        
+        # Remove uninstalled packages from cache
+        safe_execute "sudo paccache -r -u -k 0" \
+                    "Removing uninstalled packages from cache"
+    else
+        yellow "paccache not found - install pacman-contrib for better cache management"
+        safe_execute "sudo pacman -Sc --noconfirm" \
+                    "Cleaning package cache (keeping current versions only)"
+    fi
+    
+    # Show new cache size
+    if [[ "$DRY_RUN" == "false" ]] && [[ -d /var/cache/pacman/pkg ]]; then
+        local new_cache_size
+        new_cache_size=$(du -sh /var/cache/pacman/pkg | cut -f1)
+        green "New cache size: $new_cache_size"
+    fi
+}
+
+# Remove orphaned packages safely
+clean_orphaned_packages() {
+    blue "=== Orphaned Package Cleanup ==="
+    
+    # Find orphaned packages
+    local orphans
+    orphans=$(pacman -Qtdq 2>/dev/null || echo "")
+    
+    if [[ -z "$orphans" ]]; then
+        green "No orphaned packages found"
+        return 0
+    fi
+    
+    echo "Found orphaned packages:"
+    echo "$orphans" | while read -r pkg; do
+        echo "  - $pkg"
+    done
+    
+    # Safety check - never remove critical packages
+    local critical_packages=("base" "linux" "linux-hardened" "systemd" "glibc" "bash")
+    local safe_to_remove=true
+    
+    for critical in "${critical_packages[@]}"; do
+        if echo "$orphans" | grep -q "^$critical$"; then
+            red "CRITICAL: Found essential package in orphans: $critical"
+            red "Aborting orphan removal for safety"
+            safe_to_remove=false
+            break
+        fi
+    done
+    
+    if [[ "$safe_to_remove" == "true" ]]; then
+        if [[ "$DRY_RUN" == "false" ]]; then
+            echo "Remove these orphaned packages? (y/N)"
+            read -r response
+            if [[ "$response" =~ ^[Yy]$ ]]; then
+                safe_execute "sudo pacman -Rns $orphans --noconfirm" \
+                            "Removing orphaned packages"
+            else
+                yellow "Orphan removal cancelled by user"
+            fi
+        else
+            safe_execute "sudo pacman -Rns $orphans --noconfirm" \
+                        "Removing orphaned packages"
+        fi
+    fi
+}
+
+# Clean user cache directories
+clean_user_cache() {
+    blue "=== User Cache Cleanup ==="
+    
+    local cache_dirs=(
+        "$HOME/.cache"
+        "$HOME/.local/share/Trash"
+        "$HOME/.mozilla/firefox/*/storage/default"
+        "$HOME/.config/google-chrome/Default/Service Worker"
+    )
+    
+    for cache_dir in "${cache_dirs[@]}"; do
+        # Handle glob patterns
+        for dir in $cache_dir; do
+            if [[ -d "$dir" ]]; then
+                local dir_size
+                dir_size=$(du -sh "$dir" 2>/dev/null | cut -f1 || echo "unknown")
+                
+                case "$dir" in
+                    */.cache)
+                        # Clean files older than 7 days from .cache
+                        safe_execute "find '$dir' -type f -atime +7 -delete 2>/dev/null" \
+                                    "Cleaning old cache files from $dir ($dir_size)"
+                        ;;
+                    */Trash)
+                        # Empty trash
+                        safe_execute "rm -rf '$dir'/* 2>/dev/null" \
+                                    "Emptying trash: $dir ($dir_size)"
+                        ;;
+                    *)
+                        # Other caches - be more conservative
+                        safe_execute "find '$dir' -type f -atime +14 -delete 2>/dev/null" \
+                                    "Cleaning old files from $dir ($dir_size)"
+                        ;;
+                esac
+            fi
+        done
+    done
+}
+
+# Clean system logs
+clean_system_logs() {
+    blue "=== System Log Cleanup ==="
+    
+    # Clean journalctl logs (keep last 7 days)
+    safe_execute "sudo journalctl --vacuum-time=7d" \
+                "Cleaning systemd journal (keeping 7 days)"
+    
+    # Clean old log files
+    local log_dirs=("/var/log" "/tmp" "/var/tmp")
+    
+    for log_dir in "${log_dirs[@]}"; do
+        if [[ -d "$log_dir" ]]; then
+            local dir_size
+            dir_size=$(du -sh "$log_dir" 2>/dev/null | cut -f1 || echo "unknown")
+            
+            case "$log_dir" in
+                "/var/log")
+                    # Remove rotated logs older than 30 days
+                    safe_execute "sudo find '$log_dir' -name '*.gz' -mtime +30 -delete 2>/dev/null" \
+                                "Cleaning old compressed logs from $log_dir ($dir_size)"
+                    
+                    # Remove old log files (be careful with active logs)
+                    safe_execute "sudo find '$log_dir' -name '*.old' -mtime +7 -delete 2>/dev/null" \
+                                "Cleaning old log files from $log_dir"
+                    ;;
+                "/tmp"|"/var/tmp")
+                    # Clean temporary files older than 3 days
+                    safe_execute "sudo find '$log_dir' -type f -atime +3 -delete 2>/dev/null" \
+                                "Cleaning old temporary files from $log_dir ($dir_size)"
+                    ;;
+            esac
+        fi
+    done
+}
+
+# Clean development/build artifacts
+clean_build_artifacts() {
+    blue "=== Build Artifacts Cleanup ==="
+    
+    # Find and clean common build directories
+    local build_patterns=(
+        "$HOME/*/target"      # Rust
+        "$HOME/*/node_modules" # Node.js
+        "$HOME/*/.git/objects" # Git objects
+        "$HOME/*/build"       # Generic build dirs
+        "$HOME/*/__pycache__" # Python cache
+    )
+    
+    for pattern in "${build_patterns[@]}"; do
+        for dir in $pattern; do
+            if [[ -d "$dir" ]]; then
+                local dir_size
+                dir_size=$(du -sh "$dir" 2>/dev/null | cut -f1 || echo "unknown")
+                
+                # Only clean if directory is reasonably large (>100MB)
+                local size_mb
+                size_mb=$(du -sm "$dir" 2>/dev/null | cut -f1 || echo "0")
+                
+                if [[ $size_mb -gt 100 ]]; then
+                    case "$dir" in
+                        */target)
+                            safe_execute "rm -rf '$dir'" \
+                                        "Removing Rust target directory: $dir ($dir_size)"
+                            ;;
+                        */node_modules)
+                            safe_execute "rm -rf '$dir'" \
+                                        "Removing Node.js modules: $dir ($dir_size)"
+                            ;;
+                        */__pycache__)
+                            safe_execute "rm -rf '$dir'" \
+                                        "Removing Python cache: $dir ($dir_size)"
+                            ;;
+                        */build)
+                            echo "Found large build directory: $dir ($dir_size)"
+                            if [[ "$DRY_RUN" == "false" ]]; then
+                                echo "Remove this build directory? (y/N)"
+                                read -r response
+                                if [[ "$response" =~ ^[Yy]$ ]]; then
+                                    rm -rf "$dir"
+                                    green "Removed: $dir"
+                                fi
+                            else
+                                cyan "[DRY RUN] Would ask to remove: $dir"
+                            fi
+                            ;;
+                    esac
+                fi
+            fi
+        done
+    done
+}
+
+# Update package database and check for updates
+update_system() {
+    blue "=== System Update Check ==="
+    
+    safe_execute "sudo pacman -Sy" \
+                "Synchronizing package database"
+    
+    # Check for available updates
+    local updates
+    updates=$(pacman -Qu 2>/dev/null || echo "")
+    
+    if [[ -n "$updates" ]]; then
+        local update_count
+        update_count=$(echo "$updates" | wc -l)
+        yellow "$update_count package updates available:"
+        echo "$updates" | head -10
+        
+        if [[ $(echo "$updates" | wc -l) -gt 10 ]]; then
+            yellow "... and more"
+        fi
+        
+        if [[ "$DRY_RUN" == "false" ]]; then
+            echo
+            echo "Run 'sudo pacman -Su' to upgrade all packages"
+        fi
+    else
+        green "System is up to date"
+    fi
+}
+
+# Generate cleanup report
+generate_report() {
+    blue "=== Cleanup Report ==="
+    
+    # Disk space summary
+    echo "Disk Space:"
+    df -h / | grep -v Filesystem
+    echo
+    
+    # Package statistics
+    echo "Package Statistics:"
+    echo "  Installed packages: $(pacman -Q | wc -l)"
+    echo "  Explicitly installed: $(pacman -Qe | wc -l)"
+    echo "  AUR packages: $(pacman -Qm 2>/dev/null | wc -l)"
+    echo "  Orphaned packages: $(pacman -Qtd 2>/dev/null | wc -l)"
+    echo
+    
+    # Cache information
+    if [[ -d /var/cache/pacman/pkg ]]; then
+        echo "Package Cache:"
+        echo "  Size: $(du -sh /var/cache/pacman/pkg | cut -f1)"
+        echo "  Files: $(find /var/cache/pacman/pkg -name "*.pkg.tar.*" | wc -l)"
+        echo
+    fi
+    
+    # Log size
+    echo "System Logs:"
+    echo "  Journal size: $(journalctl --disk-usage 2>/dev/null | grep -o 'archived.*' || echo 'unknown')"
+    echo "  /var/log size: $(du -sh /var/log 2>/dev/null | cut -f1)"
+    echo
+    
+    # Last cleanup
+    if [[ -f "$LOG_FILE" ]]; then
+        echo "Last cleanup: $(tail -1 "$LOG_FILE" | cut -d' ' -f1,2)"
+    else
+        echo "No previous cleanup recorded"
+    fi
+}
+
+# Show usage
+show_usage() {
+    green "squishArchClean v2.0-safe - Safe Arch Linux Cleanup"
+    echo
+    yellow "USAGE:"
+    echo "  $0 {quick|full|report|cache|orphans|logs|user} [--dry-run]"
+    echo
+    yellow "COMMANDS:"
+    echo "  quick      - Quick cleanup (cache + orphans)"
+    echo "  full       - Full system cleanup"
+    echo "  report     - Show system status report"
+    echo "  cache      - Clean package cache only"
+    echo "  orphans    - Remove orphaned packages only"
+    echo "  logs       - Clean system logs only"
+    echo "  user       - Clean user cache only"
+    echo "  build      - Clean build artifacts only"
+    echo
+    yellow "OPTIONS:"
+    echo "  --dry-run  - Show what would be done without making changes"
+    echo
+    yellow "SAFETY FEATURES:"
+    echo "  • Never removes critical system packages"
+    echo "  • Keeps $KEEP_CACHE_VERSIONS versions of packages in cache"
+    echo "  • Prompts before removing orphaned packages"
+    echo "  • Logs all actions to $LOG_FILE"
+    echo "  • Checks for Arch Linux before proceeding"
+    echo
+    yellow "EXAMPLES:"
+    echo "  $0 quick               # Quick safe cleanup"
+    echo "  $0 full --dry-run      # See what full cleanup would do"
+    echo "  $0 report              # Show system status"
+    echo "  DRY_RUN=true $0 full   # Alternative dry-run syntax"
+}
+
+# Main function
+main() {
+    local command="${1:-}"
+    
+    # Check for dry-run flag
+    if [[ "$*" =~ --dry-run ]]; then
+        export DRY_RUN=true
+        blue "DRY RUN MODE - No changes will be made"
+        echo
+    fi
+    
+    # Remove --dry-run from arguments
+    set -- "${@/--dry-run/}"
+    command="${1:-}"
+    
+    # Safety checks
+    check_arch_system
+    check_disk_space
+    
+    log "Starting cleanup: $command (DRY_RUN=$DRY_RUN)"
+    
+    case "$command" in
+        "quick")
+            clean_package_cache
+            clean_orphaned_packages
+            green "Quick cleanup completed"
+            ;;
+        "full")
+            clean_package_cache
+            clean_orphaned_packages
+            clean_user_cache
+            clean_system_logs
+            clean_build_artifacts
+            update_system
+            green "Full cleanup completed"
+            ;;
+        "report")
+            generate_report
+            ;;
+        "cache")
+            clean_package_cache
+            ;;
+        "orphans")
+            clean_orphaned_packages
+            ;;
+        "logs")
+            clean_system_logs
+            ;;
+        "user")
+            clean_user_cache
+            ;;
+        "build")
+            clean_build_artifacts
+            ;;
+        "-h"|"--help"|"")
+            show_usage
+            ;;
+        *)
+            red "Unknown command: $command"
+            show_usage
+            exit 1
+            ;;
+    esac
+    
+    log "Cleanup completed: $command"
+}
+
+# Entry point
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    main "$@"
+fi

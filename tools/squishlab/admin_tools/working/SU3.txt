@@ -1,0 +1,241 @@
+# SU (SquishUtils) Framework - Consolidated Architecture
+
+## Core Principles
+- **5 Operational Groups**: Build → Lock → Work → Monitor → Fix
+- **Backup-First**: All operations create restore points
+- **Validation Framework**: Pre-execution checks with specific error guidance
+- **Provider Abstraction**: System-agnostic operations
+
+## Framework Structure
+
+```
+su/
+├── core/
+│   ├── base.py           # SuModule, SuResult, validation framework
+│   ├── providers.py      # Package, Service, Network, VM providers
+│   ├── config.py         # YAML config with dot notation access
+│   └── utils.py          # Command execution, logging, system detection
+├── operations/
+│   ├── build/            # System setup and installation
+│   ├── lock/             # Security hardening and firewall
+│   ├── work/             # Services and connectivity
+│   ├── monitor/          # Health checks and diagnostics
+│   └── fix/              # Cleanup and recovery
+└── cli/
+    └── main.py           # Command interface
+```
+
+## Consolidated Module Mappings
+
+### Build Operations
+**Core Function**: System foundation setup
+- **Python Environment**: virtualenv, homeassistant, user directories
+- **Kernel Hardening**: compilation with security flags, UEFI/SecureBoot
+- **VM Infrastructure**: storage pools, disk creation, libvirt setup
+- **Network Base**: NetworkManager, static/DHCP, interface configuration
+
+**Key Scripts**: `installpython.txt`, `newkernel-tight.txt`, `setupNetworkManager.txt`, `vm_createpool.txt`
+
+### Lock Operations
+**Core Function**: Security hardening
+- **Firewall**: zone-based rules, SSH tunneling (port 7717), service restrictions
+- **Boot Security**: UEFI keys, SecureBoot configuration
+- **File Permissions**: service users, config protection
+- **Process Isolation**: firejail, apparmor profiles
+
+**Key Scripts**: `addfirerestrict.txt`, `bootupd.txt`, `strictfileperms.txt`, `sec.txt`
+
+### Work Operations
+**Core Function**: Service connectivity
+- **SSH Tunneling**: multi-device keys, VNC/SPICE forwarding, validation framework
+- **Home Assistant**: OAuth integration, Duck DNS, configuration templates
+- **VM Management**: deployment, tunnel automation, remote access
+- **Service Integration**: systemd management, configuration deployment
+
+**Key Scripts**: `vm_tunnels.txt`, `setupgoogleconsole.txt`, `setupduckdns.txt`, `vm_deployvm.txt`
+
+### Monitor Operations
+**Core Function**: Health validation
+- **Service Health**: status checking, log analysis, connectivity tests
+- **System Diagnostics**: IOMMU groups, network validation, SSH verification
+- **VM Status**: libvirt monitoring, storage pool health
+- **Configuration Validation**: pre-execution checks, dependency verification
+
+**Key Scripts**: `testing.txt`, `temp.txt`, `vm_tunnels.txt` (validation sections)
+
+### Fix Operations
+**Core Function**: Recovery and cleanup
+- **Service Reset**: firewall cleanup, libvirt restoration, service rebuilding
+- **Permission Repair**: user ownership, config restoration
+- **Network Recovery**: DNS cleanup, interface reset
+- **State Rollback**: backup restoration, configuration recovery
+
+**Key Scripts**: `cleanfirewallbase.txt`, `resetlibvirtd.txt`, `alternativepermfix.txt`
+
+## Enhanced Core Classes
+
+### SuOperation (Unified Base)
+```python
+class SuOperation:
+    def __init__(self, config, logger, providers)
+    def validate_system(self) -> ValidationResult
+    def backup_state(self) -> BackupInfo  
+    def execute(self, **kwargs) -> OperationResult
+    def verify_completion(self) -> VerificationResult
+    def rollback(self, backup_info) -> bool
+```
+
+### ValidationFramework
+```python
+class ValidationFramework:
+    def check_prerequisites(self) -> List[ValidationError]
+    def verify_network_connectivity(self) -> ConnectivityResult
+    def validate_ssh_configuration(self) -> SSHConfigResult
+    def check_service_dependencies(self) -> DependencyResult
+```
+
+### ProviderManager
+```python
+class ProviderManager:
+    def get_package_provider(self) -> PackageProvider
+    def get_service_provider(self) -> ServiceProvider  
+    def get_network_provider(self) -> NetworkProvider
+    def get_vm_provider(self) -> VMProvider
+```
+
+## Unified Command Interface
+
+```bash
+# Build operations
+su build python --homeassistant --version 3.11
+su build kernel --hardened --security-flags
+su build vm-pool --path /home/evm/windows
+su build network --static --interface enp3s0
+
+# Lock operations  
+su lock firewall --zone-based --ssh-port 7717
+su lock boot --secure-boot --generate-keys
+su lock permissions --service homeassistant
+su lock process --firejail --apparmor
+
+# Work operations
+su work tunnel --vm 0 --ports vnc,spice
+su work homeassistant --oauth --duckdns
+su work vm --deploy windows10-clean
+su work ssh --multi-device --tunneling
+
+# Monitor operations
+su monitor services --health-check
+su monitor network --connectivity --dns
+su monitor vm --status --tunnels
+su monitor system --iommu --validation
+
+# Fix operations
+su fix firewall --clean --reset
+su fix permissions --restore --service all
+su fix network --dns --interfaces
+su fix vm --libvirt --storage-pools
+```
+
+## Enhanced Configuration Schema
+
+```yaml
+su:
+  system:
+    distribution: arch
+    validation_level: comprehensive
+    backup_retention: 30
+  
+  providers:
+    package: pacman
+    service: systemd
+    network: networkmanager
+    vm: libvirt
+  
+  build:
+    python:
+      version: "3.11"
+      services: [homeassistant]
+    kernel:
+      hardened: true
+      security_flags: [lockdown, module_sig, randomize_base]
+    vm:
+      storage_pools: [windows-vms, iso-images]
+      uefi_firmware: /usr/share/edk2/x64/OVMF_CODE.4m.fd
+  
+  lock:
+    firewall:
+      default_zone: drop
+      ssh_port: 7717
+      allowed_networks: ["10.0.0.0/24"]
+    boot:
+      secure_boot: false
+      generate_keys: true
+    permissions:
+      homeassistant_user: 750
+      config_files: 640
+  
+  work:
+    ssh:
+      tunneling: true
+      multi_device: true
+      key_type: rsa4096
+    homeassistant:
+      external_url: "https://iSquish.duckdns.org:8170"
+      oauth_providers: [google_nest]
+    vm:
+      default_memory: 8GB
+      default_vcpus: 6
+      network_bridge: virbr1
+  
+  monitor:
+    health_checks:
+      interval: 300
+      services: [homeassistant, sshd, libvirtd]
+    validation:
+      network_timeout: 15
+      ssh_connectivity: true
+      vm_status: true
+```
+
+## Implementation Priority
+
+1. **Core Framework** - Base classes, validation, providers
+2. **Build Module** - Foundation setup operations  
+3. **Lock Module** - Security hardening
+4. **Work Module** - Service connectivity
+5. **Monitor Module** - Health validation
+6. **Fix Module** - Recovery operations
+
+## Key Consolidated Patterns
+
+- **Validation-First**: All operations validate prerequisites with specific error guidance
+- **Backup-Before-Modify**: State preservation with rollback capability
+- **Provider Abstraction**: System-agnostic operations through provider interfaces
+- **Structured Results**: Consistent success/failure reporting with detailed metadata
+- **Configuration Templates**: YAML-based configuration with environment-specific overrides
+
+## Next Steps
+
+**New Session**: "Implement SU Consolidated Framework"
+**Priority**: Core → Build → Lock → Work → Monitor → Fix
+**Focus**: Validation framework, provider abstraction, unified operations
+
+
+Framework consolidated. Key changes:
+Structure: 5 operational groups (Build/Lock/Work/Monitor/Fix) with unified base classes and validation framework.
+Removed Redundancies:
+
+Merged logging/utils/config into core utilities
+Consolidated provider interfaces
+Unified command patterns across modules
+
+Enhanced Components:
+
+Comprehensive validation with SSH/network/VM checks
+Provider abstraction for system-agnostic operations
+Backup-first operations with rollback capability
+Structured result reporting
+
+Implementation Path: Core framework → Build operations → Security hardening → Service connectivity → Health monitoring → Recovery operations.
+Ready for next session: "Implement SU Consolidated Framework"

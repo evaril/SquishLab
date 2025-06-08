@@ -1,0 +1,74 @@
+# Create AppArmor profile
+sudo tee /etc/apparmor.d/homeassistant << 'EOF'
+#include <tunables/global>
+
+/opt/homeassistant/venv/bin/hass {
+  #include <abstractions/base>
+  #include <abstractions/python>
+  #include <abstractions/nameservice>
+  #include <abstractions/ssl_certs>
+
+  # Home Assistant executable
+  /opt/homeassistant/venv/bin/hass mr,
+  /opt/homeassistant/venv/bin/python3 ix,
+
+  # Python libraries (read-only)
+  /opt/homeassistant/venv/lib/python*/site-packages/** r,
+  /usr/lib/python*/** r,
+  /usr/bin/python3 ix,
+
+  # Configuration directory (read/write)
+  /opt/homeassistant/config/ rw,
+  /opt/homeassistant/config/** rw,
+  
+  # Log directory (read/write)
+  /opt/homeassistant/logs/ rw,
+  /opt/homeassistant/logs/** rw,
+
+  # Temporary files
+  owner /tmp/** rw,
+  /tmp/** r,
+
+  # Network access
+  network inet stream,
+  network inet dgram,
+  network inet6 stream,
+  network inet6 dgram,
+  network netlink raw,
+
+  # System information (minimal)
+  /proc/*/stat r,
+  /proc/*/status r,
+  /proc/meminfo r,
+  /proc/cpuinfo r,
+  /proc/loadavg r,
+  /sys/class/net/ r,
+  /sys/class/net/*/statistics/* r,
+
+  # Device access (absolute minimum)
+  /dev/urandom r,
+  /dev/null rw,
+  /dev/zero r,
+
+  # Deny dangerous paths
+  deny /home/** rw,
+  deny /root/** rw,
+  deny /etc/shadow* r,
+  deny /etc/passwd* w,
+  deny /etc/group* w,
+  deny /sys/kernel/security/** rw,
+  deny /sys/kernel/debug/** rw,
+  deny /proc/sys/kernel/** rw,
+  deny /boot/** rw,
+  deny mount,
+  deny umount,
+  deny ptrace,
+  deny capability sys_admin,
+  deny capability sys_module,
+  deny capability sys_rawio,
+}
+EOF
+
+# Load and enforce the AppArmor profile
+sudo apparmor_parser -r -W /etc/apparmor.d/homeassistant
+sudo aa-enforce homeassistant

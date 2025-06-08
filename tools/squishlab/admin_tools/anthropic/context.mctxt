@@ -1,0 +1,370 @@
+# Complete Server & VM Configuration Summary
+
+## **Server Infrastructure**
+- **Host**: Arch Linux server running wayland-hyperctl, libvirtd, qemu, KVM
+- **IP Address**: 192.168.72.54
+- **Gateway**: 192.168.72.1
+- **DNS**: 149.112.112.11 (Quad9 primary), 9.9.9.11 (Quad9 secondary)
+- **Additional Services**: Home Assistant, firejail, apparmor
+- **User**: evm (primary user managing VMs)
+
+## **VM Configuration**
+- **VM Name**: windows10-minimal
+- **UUID**: b5fc0ae1-9e10-4374-bb6e-ee1c88085f25
+- **OS**: Windows 10
+- **RAM**: 8GB (8388608 KiB)
+- **vCPUs**: 6 cores (host passthrough)
+- **Architecture**: UEFI (secure boot disabled for compatibility)
+
+### **Storage Layout**
+- **Primary Disk**: `/home/evm/windows/winhome` (existing qcow2, system disk)
+- **Data Disk**: `/home/evm/windows/win10-data.qcow2` (larger, user data)
+- **VirtIO Drivers**: `/home/evm/iso/virtio-win.iso`
+- **Goal**: Separate root (smaller) and home/data (larger) for potential cross-OS sharing
+
+## **Network Configuration**
+- **VM Network**: Isolated bridge `virbr1` (192.168.100.x subnet)
+- **VM Bridge IP**: 192.168.100.1/24
+- **DHCP Pool**: 192.168.100.10-110
+- **VM Target IP**: 192.168.100.10 (expected DHCP assignment)
+- **Security**: VM isolated from main network, NAT through bridge
+
+## **Display & Connectivity Ports**
+- **SSH**: Port 7717 (custom, non-standard for security)
+- **VNC**: Port 11010 (fixed, not autoport)
+- **SPICE**: Port 11011 (fixed, not autoport)
+- **RDP Tunnel**: Port 11111 (client-side tunnel endpoint)
+- **Protocol Strategy**:
+  - VNC: Universal compatibility, mobile devices, emergency access
+  - SPICE: High-performance desktop work, Linux clients
+  - RDP: Native Windows experience, especially Surface Pro touch/pen
+
+## **Client Device Requirements**
+### **Primary Device**
+- **Surface Pro** (critical first target)
+- Native Windows RDP integration for touch/pen support
+- SSH tunneling capability required
+
+### **Additional Devices**
+- Windows laptop
+- Android mobile (Termux + VNC apps)
+- Apple mobile (Termius + VNC Viewer)
+- iPad (similar to Apple mobile)
+- Various other devices (disparate processing power)
+
+## **Security Architecture**
+### **Access Control**
+- **SSH User**: `vmuser` (restricted, tunnel-only access)
+- **Authentication**: Device-specific SSH keys (Ed25519)
+- **Shell Access**: Disabled (`/bin/false`)
+- **Port Restrictions**: Only VM display ports + RDP tunnel allowed
+- **Connection Logging**: Timestamped access logs
+
+### **Network Security**
+- **Principle**: KISS (Keep It Simple, Stupid)
+- **Design**: Secure by default, easy to modify/shutdown
+- **Isolation**: VM on separate network segment
+- **Firewall**: Integrated configuration for common firewall systems
+- **Tunneling**: All client access via SSH tunnels
+
+## **Intended GPU Passthrough (Future)**
+- **GPU**: NVIDIA GTX 1070
+- **Audio**: Realtek 8159 (approximate model)
+- **Host**: IGD (Integrated Graphics) for host, GPU passed to VM
+- **Goal**: Disable GPU on host, pass to VM for later capture/proxy
+- **Requirement**: VFIO configuration needed
+
+## **Remote Access Strategy**
+- **Primary Method**: SSH tunneling from clients to server
+- **Secondary Goal**: VM capture/proxy capability for later remote access
+- **Client Flexibility**: Support multiple device types with varying capabilities
+- **Performance Scaling**: Clients use available processing power appropriately
+
+## **Storage Philosophy**
+- **Root Disk**: Smaller, OS-only, efficient
+- **Data Disk**: Larger, accommodates file sharing between potential multiple OS installations
+- **Shared Storage**: Potential for linking different OS home directories
+- **Backup/Portability**: Separate disks enable easier management
+
+## **Management Tools Created**
+1. **win10.xml**: Clean VM definition ready for virt-manager
+2. **vm_reloadstack.sh**: Comprehensive virtualization stack refresh
+3. **vm_configconnectivity.sh**: Server-side connectivity configuration
+4. **vm_clientconnect.sh**: Client-side setup and connection management
+
+## **Current State & Known Issues**
+- **libvirtd Restart Issues**: VM configuration conflicts during service restarts
+- **NVRAM Management**: UEFI variables need proper cleanup during redefines
+- **Bridge Configuration**: Custom bridge setup required for isolated networking
+- **Key Distribution**: Manual SSH key distribution to client devices needed
+
+## **Immediate Goals**
+1. Stable VM with working display connectivity
+2. Secure SSH tunnel access from multiple device types
+3. Clean, repeatable configuration management
+4. Foundation for future GPU passthrough
+
+## **Long-term Vision**
+- GPU passthrough for high-performance VM
+- Remote capture/proxy capabilities
+- Multi-OS environment with shared storage
+- Scalable remote access architecture
+- Security-first design with operational flexibility
+
+## **Configuration Philosophy**
+- **Security First**: Minimal attack surface, restricted access
+- **Reusable**: Scripts that can be run multiple times safely
+- **Clear**: Comprehensive logging and status reporting
+- **Functional**: Tested workflows with proper error handling
+- **KISS Principle**: Simple enough to understand and modify as needed
+
+This summary provides the complete context for your server configuration, VM setup, security requirements, and intended functionality for future reference.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Complete Server & VM Configuration Summary
+
+## **Server Infrastructure**
+- **Host**: Arch Linux server running wayland-hyperctl, libvirtd, qemu, KVM
+- **IP Address**: 192.168.72.54
+- **Gateway**: 192.168.72.1
+- **DNS**: 149.112.112.11 (Quad9 primary), 9.9.9.11 (Quad9 secondary)
+- **Additional Services**: Home Assistant, firejail, apparmor
+- **User**: evm (primary user managing VMs)
+
+## **Boot Configuration**
+- **Kernel**: linux-hardened with UKI (Unified Kernel Image)
+- **Boot Manager**: rEFInd
+- **Encryption**: LUKS2 on root and home partitions with key file automation
+- **Security**: Hardened kernel parameters, IOMMU enabled for GPU passthrough prep
+
+### **UKI Configuration**
+- **Location**: `/boot/EFI/Linux/arch-hardened.efi`
+- **Key File**: `/etc/keys/root.key` (permissions 600, root:root)
+- **LUKS Devices**: 
+  - Root: `5046cd3a-0df3-4b10-aef0-84e1fa432d69` → `UUID=52067193-03d1-4958-88b4-f88f2a33b28f`
+  - Home: `65e52138-42b8-4d74-b602-7705fd58e6fb` → `UUID=f4110af7-de95-4125-92b2-ff92a041d045`
+
+### **Kernel Command Line (in UKI)**
+```
+rd.luks.uuid=5046cd3a-0df3-4b10-aef0-84e1fa432d69 
+rd.luks.key=5046cd3a-0df3-4b10-aef0-84e1fa432d69=/etc/keys/root.key 
+root=UUID=52067193-03d1-4958-88b4-f88f2a33b28f 
+rw quiet audit=1 slub_debug=FZP page_poison=1 vsyscall=none pti=on 
+spectre_v2=on spec_store_bypass_disable=on l1tf=full,force mds=full,nosmt 
+tsx=off kvm.nx_huge_pages=force intel_iommu=on iommu=pt
+```
+
+### **mkinitcpio Configuration**
+```bash
+# /etc/mkinitcpio.conf
+MODULES=(i915 virtio virtio_blk virtio_pci virtio_net)
+FILES=(/etc/keys/root.key)
+HOOKS=(base systemd autodetect microcode modconf kms keyboard sd-vconsole block sd-encrypt filesystems fsck)
+```
+
+### **Pacman Hook for UKI Auto-rebuild**
+```ini
+# /etc/pacman.d/hooks/95-uki-build.hook
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = linux-hardened
+
+[Action]
+Description = Rebuilding UKI...
+When = PostTransaction
+Exec = /usr/bin/ukify build --linux=/boot/vmlinuz-linux-hardened --initrd=/boot/initramfs-linux-hardened.img --cmdline="rd.luks.uuid=5046cd3a-0df3-4b10-aef0-84e1fa432d69 rd.luks.key=5046cd3a-0df3-4b10-aef0-84e1fa432d69=/etc/keys/root.key root=UUID=52067193-03d1-4958-88b4-f88f2a33b28f rw quiet audit=1 slub_debug=FZP page_poison=1 vsyscall=none pti=on spectre_v2=on spec_store_bypass_disable=on l1tf=full,force mds=full,nosmt tsx=off kvm.nx_huge_pages=force intel_iommu=on iommu=pt" --output=/boot/EFI/Linux/arch-hardened.efi
+```
+
+### **rEFInd Configuration**
+```
+# /boot/EFI/refind/refind.conf
+use_nvram false
+
+menuentry "Arch Hardened UKI" {
+    loader /EFI/Linux/arch-hardened.efi
+}
+```
+
+## **VM Configuration**
+- **VM Name**: windows10-minimal
+- **UUID**: b5fc0ae1-9e10-4374-bb6e-ee1c88085f25
+- **OS**: Windows 10
+- **RAM**: 8GB (8388608 KiB)
+- **vCPUs**: 6 cores (host passthrough)
+- **Architecture**: UEFI (secure boot disabled for compatibility)
+
+### **Storage Layout**
+- **Primary Disk**: `/home/evm/windows/winhome` (existing qcow2, system disk)
+- **Data Disk**: `/home/evm/windows/win10-data.qcow2` (larger, user data)
+- **VirtIO Drivers**: `/home/evm/iso/virtio-win.iso`
+- **Goal**: Separate root (smaller) and home/data (larger) for potential cross-OS sharing
+
+## **Network Configuration**
+- **VM Network**: Isolated bridge `virbr1` (192.168.100.x subnet)
+- **VM Bridge IP**: 192.168.100.1/24
+- **DHCP Pool**: 192.168.100.10-110
+- **VM Target IP**: 192.168.100.10 (expected DHCP assignment)
+- **Security**: VM isolated from main network, NAT through bridge
+
+## **Display & Connectivity Ports**
+- **SSH**: Port 7717 (custom, non-standard for security)
+- **VNC**: Port 11010 (fixed, not autoport)
+- **SPICE**: Port 11011 (fixed, not autoport)
+- **RDP Tunnel**: Port 11111 (client-side tunnel endpoint)
+- **Protocol Strategy**:
+  - VNC: Universal compatibility, mobile devices, emergency access
+  - SPICE: High-performance desktop work, Linux clients
+  - RDP: Native Windows experience, especially Surface Pro touch/pen
+
+## **Client Device Requirements**
+### **Primary Device**
+- **Surface Pro** (critical first target)
+- Native Windows RDP integration for touch/pen support
+- SSH tunneling capability required
+
+### **Additional Devices**
+- Windows laptop
+- Android mobile (Termux + VNC apps)
+- Apple mobile (Termius + VNC Viewer)
+- iPad (similar to Apple mobile)
+- Various other devices (disparate processing power)
+
+## **Security Architecture**
+### **Access Control**
+- **SSH User**: `vmuser` (restricted, tunnel-only access)
+- **Authentication**: Device-specific SSH keys (Ed25519)
+- **Shell Access**: Disabled (`/bin/false`)
+- **Port Restrictions**: Only VM display ports + RDP tunnel allowed
+- **Connection Logging**: Timestamped access logs
+
+### **Network Security**
+- **Principle**: KISS (Keep It Simple, Stupid)
+- **Design**: Secure by default, easy to modify/shutdown
+- **Isolation**: VM on separate network segment
+- **Firewall**: Integrated configuration for common firewall systems
+- **Tunneling**: All client access via SSH tunnels
+
+## **Intended GPU Passthrough (Future)**
+- **GPU**: NVIDIA GTX 1070
+- **Audio**: Realtek 8159 (approximate model)
+- **Host**: IGD (Integrated Graphics) for host, GPU passed to VM
+- **Goal**: Disable GPU on host, pass to VM for later capture/proxy
+- **Requirement**: VFIO configuration needed
+- **Status**: IOMMU already enabled in kernel cmdline, VFIO modules prepared in mkinitcpio
+
+## **Remote Access Strategy**
+- **Primary Method**: SSH tunneling from clients to server
+- **Secondary Goal**: VM capture/proxy capability for later remote access
+- **Client Flexibility**: Support multiple device types with varying capabilities
+- **Performance Scaling**: Clients use available processing power appropriately
+
+## **Storage Philosophy**
+- **Root Disk**: Smaller, OS-only, efficient
+- **Data Disk**: Larger, accommodates file sharing between potential multiple OS installations
+- **Shared Storage**: Potential for linking different OS home directories
+- **Backup/Portability**: Separate disks enable easier management
+
+## **Management Tools Created**
+1. **win10.xml**: Clean VM definition ready for virt-manager
+2. **vm_reloadstack.sh**: Comprehensive virtualization stack refresh
+3. **vm_configconnectivity.sh**: Server-side connectivity configuration
+4. **vm_clientconnect.sh**: Client-side setup and connection management
+
+## **Current State & Known Issues**
+- **UKI Boot**: Working with automatic LUKS unlock using key file
+- **Boot Security**: Hardened kernel parameters active, ready for Secure Boot if needed
+- **libvirtd Restart Issues**: VM configuration conflicts during service restarts
+- **NVRAM Management**: UEFI variables need proper cleanup during redefines
+- **Bridge Configuration**: Custom bridge setup required for isolated networking
+- **Key Distribution**: Manual SSH key distribution to client devices needed
+
+## **Immediate Goals**
+1. ~~Stable UKI boot with automatic LUKS unlock~~ ✅ **COMPLETED**
+2. ~~Security hardening with appropriate kernel parameters~~ ✅ **COMPLETED**
+3. Stable VM with working display connectivity
+4. Secure SSH tunnel access from multiple device types
+5. Clean, repeatable configuration management
+6. Foundation for future GPU passthrough
+
+## **Long-term Vision**
+- GPU passthrough for high-performance VM
+- Remote capture/proxy capabilities
+- Multi-OS environment with shared storage
+- Scalable remote access architecture
+- Security-first design with operational flexibility
+
+## **Configuration Philosophy**
+- **Security First**: Minimal attack surface, restricted access
+- **Reusable**: Scripts that can be run multiple times safely
+- **Clear**: Comprehensive logging and status reporting
+- **Functional**: Tested workflows with proper error handling
+- **KISS Principle**: Simple enough to understand and modify as needed
+
+This summary provides the complete context for your server configuration, VM setup, security requirements, and intended functionality for future reference.

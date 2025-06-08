@@ -1,0 +1,35 @@
+# Disable mDNS, LLMNR, and multicast from systemd-resolved
+mkdir -p /etc/systemd/resolved.conf.d
+cat <<EOF > /etc/systemd/resolved.conf.d/disable-llmnr-mdns.conf
+[Resolve]
+LLMNR=no
+MulticastDNS=no
+DNSSEC=yes
+DNSOverTLS=yes
+FallbackDNS=
+Cache=no-negative
+EOF
+
+# Apply hardened sysctl to eliminate link-local / multicast traffic and IPv6 noise
+cat <<EOF > /etc/sysctl.d/99-network-hardening.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+EOF
+
+sysctl --system
+
+# Disable Avahi if installed (handles mDNS)
+systemctl disable --now avahi-daemon.service avahi-daemon.socket 2>/dev/null || true
+
+# Optional: drop multicast traffic at firewall level
+nft add table inet filter
+nft add chain inet filter input { type filter hook input priority 0 \; policy accept \; }
+nft add rule inet filter input ip daddr 224.0.0.0/4 drop
+nft add rule inet filter input ip6 daddr ff00::/8 drop

@@ -1,0 +1,6 @@
+blacklist r8169
+blacklist rfkill
+blacklist realtek
+blacklist mdio_devres
+blacklist mii
+blacklist libphy

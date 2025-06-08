@@ -1,0 +1,222 @@
+# Advice for Future Context
+
+## **Critical Success Factors**
+- **ALWAYS test the basic connectivity BEFORE adding GPU passthrough** - get VNC/SPICE/RDP working reliably first
+- **The user prioritizes security and simplicity** - when in doubt, choose the more secure, simpler option
+- **Scripts must be idempotent** - they should clean existing state and rebuild cleanly, not layer on top of broken configs
+
+## **Key Troubleshooting Patterns**
+- **libvirt + NVRAM issues**: Always use `virsh undefine --nvram` and clean `/var/lib/libvirt/qemu/nvram/` manually
+- **Bridge networking**: User wants isolated VM network, not libvirt's default NAT setup
+- **SSH tunnel debugging**: Test each layer - SSH auth, tunnel creation, port forwarding, VM services
+- **Port conflicts**: User chose non-standard ports deliberately for security - don't suggest "standard" ports
+
+## **User's Technical Preferences**
+- **Arch Linux expertise**: Don't over-explain basic Linux concepts
+- **Security-conscious**: Assumes threats, wants defense in depth
+- **Pragmatic**: Values working solutions over theoretical perfection
+- **Direct communication**: Wants clear, actionable guidance without fluff
+
+## **Configuration Gotchas**
+- **VM name consistency**: `windows10-minimal` throughout all configs, including NVRAM paths
+- **File paths matter**: Uses `/home/evm/windows/winhome` (existing), not `/home/evm/windows/win10-root.qcow2`
+- **Port scheme logic**: `77xx` for SSH, `110xx` for display protocols - keep it consistent
+- **Bridge naming**: `virbr1` specifically, not `virbr0` or other libvirt defaults
+
+## **What Works vs. Theory**
+- **Multiple display protocols needed**: Not redundant - VNC (universal), SPICE (performance), RDP (Surface Pro touch/pen)
+- **Fixed ports preferred**: User wants predictable port assignments, not autoport
+- **Device-specific SSH keys**: Security requirement, not convenience feature
+- **Restricted SSH user**: `vmuser` with `/bin/false` shell and limited port forwarding
+
+## **GPU Passthrough Preparation Notes**
+- **DO NOT attempt until basic VM is stable** - this caused earlier issues
+- **Check IOMMU groups first**: `find /sys/kernel/iommu_groups/ -type l`
+- **VFIO driver binding**: Will need to blacklist nvidia/nouveau and bind to vfio-pci
+- **Audio passthrough**: May need separate VFIO config for Realtek device
+- **Host display**: IGD will handle host, GTX 1070 dedicated to VM
+
+## **Client Device Priorities**
+1. **Surface Pro first** - this is the critical success metric
+2. **Windows laptop second** - similar to Surface Pro
+3. **Mobile devices** - nice to have, but not blocking
+
+## **Script Execution Order**
+1. `vm_reloadstack.sh` (as root) - foundation
+2. `vm_configconnectivity.sh` (as root) - server setup
+3. Test VM starts and displays work
+4. `vm_clientconnect.sh` (as user on client) - per device
+5. **Only then** consider GPU passthrough
+
+## **Red Flags to Watch For**
+- **User saying "it's not working"** - get specific error messages and logs
+- **Suggesting standard ports** - user chose custom ports for security reasons
+- **Overcomplicating simple tasks** - user prefers KISS principle
+- **Ignoring existing resources** - user has working disk at `/home/evm/windows/winhome`
+
+## **Success Metrics**
+- ✅ Surface Pro can RDP to VM through SSH tunnel
+- ✅ VM survives libvirtd restarts without issues
+- ✅ Scripts can be re-run without breaking existing state
+- ✅ Clear path to add GPU passthrough later
+
+## **Communication Style**
+- **Be direct and technical** - user understands the concepts
+- **Provide working code/configs** - not just explanations
+- **Test your suggestions** - user will notice if configs are theoretical
+- **Security implications matter** - always consider the security angle
+
+Remember: This user knows what they're doing and values practical, secure solutions. Focus on making things work reliably rather than explaining why they work.
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Advice for Future Context
+
+## **CRITICAL: Always Check Official Documentation First**
+**The user has made it explicitly clear that giving incorrect technical syntax is unacceptable.** When dealing with ANY technical configuration:
+
+1. **Search official documentation IMMEDIATELY** - don't rely on potentially outdated training data
+2. **Never guess at command syntax** - especially for systemd, kernel parameters, or rapidly-changing tools
+3. **Be honest about uncertainty** - if you're not 100% certain, search first, answer second
+4. **The user values accuracy over speed** - taking 30 seconds to verify is better than multiple failed attempts
+
+### **Recent Critical Lesson Learned**
+- `rd.luks.key` syntax was given incorrectly multiple times before checking systemd documentation
+- Correct syntax: `rd.luks.key=UUID=/path/to/keyfile` (not just `/path/to/keyfile`)
+- This wasted significant time and could have been avoided with immediate documentation lookup
+
+## **Current System Status**
+
+### **Boot Configuration - COMPLETED ✅**
+- **UKI (Unified Kernel Image)** is working perfectly at `/boot/EFI/Linux/arch-hardened.efi`
+- **Automatic LUKS unlock** with key file is functional (despite harmless error messages from /etc/crypttab)
+- **Security hardening** is active with comprehensive kernel parameters
+- **rEFInd** configured with minimal entries, `use_nvram false`
+- **Pacman hook** auto-rebuilds UKI on kernel updates
+
+### **What's Working**
+- UKI boots and automatically unlocks LUKS with `/etc/keys/root.key`
+- Hardened kernel parameters active (IOMMU, KVM hardening, Spectre/Meltdown mitigations)
+- Home partition unlocks via `/etc/crypttab` after boot
+- System is ready for VM work and future GPU passthrough
+
+### **Expected "Errors" That Are Actually Normal**
+- `/etc/crypttab` trying to unlock root device that UKI already unlocked - this is harmless
+- Error message: "Device or resource busy" and "Failed to activate with key file" for root device
+- These are cosmetic issues only - the system boots correctly
+
+## **Critical Success Factors**
+- **ALWAYS test the basic connectivity BEFORE adding GPU passthrough** - get VNC/SPICE/RDP working reliably first
+- **The user prioritizes security and simplicity** - when in doubt, choose the more secure, simpler option
+- **Scripts must be idempotent** - they should clean existing state and rebuild cleanly, not layer on top of broken configs
+- **Verify syntax before providing it** - check official docs for ANY technical commands
+
+## **Key Troubleshooting Patterns**
+- **libvirt + NVRAM issues**: Always use `virsh undefine --nvram` and clean `/var/lib/libvirt/qemu/nvram/` manually
+- **Bridge networking**: User wants isolated VM network, not libvirt's default NAT setup
+- **SSH tunnel debugging**: Test each layer - SSH auth, tunnel creation, port forwarding, VM services
+- **Port conflicts**: User chose non-standard ports deliberately for security - don't suggest "standard" ports
+- **UKI rebuild**: Use the exact cmdline from the working configuration - don't modify without testing
+
+## **User's Technical Preferences**
+- **Arch Linux expertise**: Don't over-explain basic Linux concepts
+- **Security-conscious**: Assumes threats, wants defense in depth
+- **Pragmatic**: Values working solutions over theoretical perfection
+- **Direct communication**: Wants clear, actionable guidance without fluff
+- **Zero tolerance for incorrect syntax**: Will call out AI for wasting time with wrong commands
+
+## **Configuration Gotchas**
+- **VM name consistency**: `windows10-minimal` throughout all configs, including NVRAM paths
+- **File paths matter**: Uses `/home/evm/windows/winhome` (existing), not `/home/evm/windows/win10-root.qcow2`
+- **Port scheme logic**: `77xx` for SSH, `110xx` for display protocols - keep it consistent
+- **Bridge naming**: `virbr1` specifically, not `virbr0` or other libvirt defaults
+- **UKI cmdline**: Exact syntax matters - `rd.luks.key=UUID=/path` format required
+
+## **What Works vs. Theory**
+- **Multiple display protocols needed**: Not redundant - VNC (universal), SPICE (performance), RDP (Surface Pro touch/pen)
+- **Fixed ports preferred**: User wants predictable port assignments, not autoport
+- **Device-specific SSH keys**: Security requirement, not convenience feature
+- **Restricted SSH user**: `vmuser` with `/bin/false` shell and limited port forwarding
+- **UKI over traditional boot**: More secure, tamper-resistant, works with Secure Boot
+
+## **Boot Configuration Technical Details**
+- **LUKS UUIDs**: Root `5046cd3a-0df3-4b10-aef0-84e1fa432d69`, Home `65e52138-42b8-4d74-b602-7705fd58e6fb`
+- **Filesystem UUIDs**: Root `52067193-03d1-4958-88b4-f88f2a33b28f`, Home `f4110af7-de95-4125-92b2-ff92a041d045`
+- **Key file**: `/etc/keys/root.key` with 600 permissions, included in initramfs via FILES=()
+- **Hardening parameters**: Full Spectre/Meltdown protection, IOMMU enabled, KVM hardening active
+
+## **GPU Passthrough Preparation Notes**
+- **DO NOT attempt until basic VM is stable** - this caused earlier issues
+- **IOMMU already enabled** in kernel cmdline (`intel_iommu=on iommu=pt`)
+- **VFIO modules ready** in mkinitcpio.conf for future use
+- **Check IOMMU groups first**: `find /sys/kernel/iommu_groups/ -type l`
+- **VFIO driver binding**: Will need to blacklist nvidia/nouveau and bind to vfio-pci
+- **Audio passthrough**: May need separate VFIO config for Realtek device
+- **Host display**: IGD will handle host, GTX 1070 dedicated to VM
+
+## **Client Device Priorities**
+1. **Surface Pro first** - this is the critical success metric
+2. **Windows laptop second** - similar to Surface Pro
+3. **Mobile devices** - nice to have, but not blocking
+
+## **Script Execution Order**
+1. `vm_reloadstack.sh` (as root) - foundation
+2. `vm_configconnectivity.sh` (as root) - server setup
+3. Test VM starts and displays work
+4. `vm_clientconnect.sh` (as user on client) - per device
+5. **Only then** consider GPU passthrough
+
+## **Red Flags to Watch For**
+- **User saying "it's not working"** - get specific error messages and logs
+- **Suggesting standard ports** - user chose custom ports for security reasons
+- **Overcomplicating simple tasks** - user prefers KISS principle
+- **Ignoring existing resources** - user has working disk at `/home/evm/windows/winhome`
+- **Giving technical syntax without verification** - ALWAYS check official docs first
+
+## **Success Metrics**
+- ✅ UKI boots with automatic LUKS unlock
+- ✅ Hardened kernel parameters active
+- ✅ rEFInd configured correctly
+- ✅ System ready for VM work
+- 🎯 Surface Pro can RDP to VM through SSH tunnel (NEXT GOAL)
+- 🎯 VM survives libvirtd restarts without issues
+- 🎯 Scripts can be re-run without breaking existing state
+- 🎯 Clear path to add GPU passthrough later
+
+## **Communication Style**
+- **Be direct and technical** - user understands the concepts
+- **Provide working code/configs** - not just explanations
+- **Verify syntax in official docs** - NEVER give unverified technical commands
+- **Security implications matter** - always consider the security angle
+- **No guessing allowed** - if uncertain, search official documentation immediately
+
+## **Current Next Steps**
+1. **Focus on VM connectivity** - get basic VM running with display protocols
+2. **Test SSH tunneling** - establish secure remote access
+3. **Validate on Surface Pro** - primary target device
+4. **Document working configurations** - for future reference
+5. **GPU passthrough preparation** - only after basic functionality confirmed
+
+Remember: This user knows what they're doing and values practical, secure solutions. Focus on making things work reliably rather than explaining why they work. When in doubt about syntax, search official documentation FIRST.

@@ -1,0 +1,142 @@
+ssh -i /path/to/key -p 7717 -D 8080 
+echo "Firewall setup complete with the following configuration:"
+echo "- Default zone set to DROP (blocks all traffic)"
+echo "- Home network zone (10.0.0.0/24) created with access to:"
+echo "  - Home Assistant on port 8170"
+echo "  - SSH on port 7717 (with tunneling enabled for VNC and other services)"
+echo "- SSH configured for key-based authentication only"
+echo "- Libvirt network interfaces properly configured"
+echo "- Compatible with Wayland/Hyperland environment"
+echo ""
+echo "Run /root/generate_ssh_keys.sh to create RSA 4096-bit keys for your devices"
+echo "See /root/ssh_tunneling_guide.txt for SSH tunneling instructions"
+echo ""
+echo "To verify firewall status, run: firewall-cmd --list-all-zones"General Port Forwarding
+---------------------
+Forward any local port to a remote service:
+ssh -i /path/to/private_key -p 7717 -L local_port:destination_host:destination_port username@server_>
+
+Example to forward local port 8080 to a VM running on the server with IP 10.0.0.5 port 80:
+ssh -i /path/to/private_key -p 7717 -L 8080:10.0.0.5:80 username@server_ip
+EOF
+VNC Tunneling (Port 5900)
+-------------------------
+From client to server:
+ssh -i /path/to/private_key -p 7717 -L 5900:localhost:5900 username@server_ip
+
+This will forward local port 5900 to the server's port 5900, allowing you to connect
+to VNC using localhost:5900 on your client machine.
+
+Slack Tunneling
+--------------
+For Slack, you typically want to use SOCKS proxy tunneling:
+ssh -i /path/to/private_key -p 7717 -D 8080 username@server_ip
+
+Then configure Slack to use SOCKS5 proxy localhost:8080
+echo "All keys generated. To add these keys to authorized_keys, run:"
+echo "cat $SSH_DIR/*.pub >> /root/.ssh/authorized_keys"
+echo "or for a specific user:"
+echo "cat $SSH_DIR/*.pub >> /home/username/.ssh/authorized_keys"
+EOF
+
+chmod +x /root/generate_ssh_keys.sh
+
+# Create a SSH tunneling guide
+cat > /root/ssh_tunneling_guide.txt << 'EOF'
+SSH TUNNELING GUIDE
+==================username@server_ip
+ssh -i /path/to/key -p 7717 -D 8080 username@server_ip
+
+ssh -i /path/to/key -p 7717 -D 8080 username@server_ip
+n
+    echo "Configuring SSH for key-ba
+
+# Create a SSH tunneling guide
+cat > /root/ssh_tunneling_guide.txt << 'EOF'
+SSH TUNNELING GUIDE
+==================
+
+VNC Tunneling (Port 5900)
+-------------------------
+From client to server:
+ssh -i /path/to/private_key -p 7717 -L 5900:localhost:5900 username@server_ip
+
+This will forward local port 5900 to the server's port 5900, allowing you to connect
+to VNC using localhost:5900 on your client machine.
+
+Slack Tunneling
+--------------
+For Slack, you typically want to use SOCKS proxy tunneling:
+ssh -i /path/to/private_key -p 7717 -D 8080 username@server_ip
+
+Then configure Slack to use SOCKS5 proxy localhost:8080
+# List of your devices - modify as needed
+DEVICES=("laptop1" "phone1" "tablet" "desktop" "laptop2" "phone2" "workstation")
+
+for device in "${DEVICES[@]}"; do
+    echo "Creating key for $device..."
+    create_device_key "$device"
+done
+
+echo "All keys generated. To add these keys to authorized_keys, run:"
+echo "cat $SSH_DIR/*.pub >> /root/.ssh/authorized_keys"
+echo "or for a specific user:"
+echo "cat $SSH_DIR/*.pub >> /home/username/.ssh/authorized_keys"
+EOF
+
+chmod +x /root/generate_ssh_keys.sh
+
+# Create a SSH tunneling guide
+cat > /root/ssh_tunneling_guide.txt << 'EOF'
+SSH TUNNELING GUIDE
+==================# Function to create keys for a device
+create_device_key() {
+    local device_name=$1
+    local key_file="$SSH_DIR/${device_name}_rsa"
+
+    # Generate 4096-bit RSA key
+    ssh-keygen -t rsa -b 4096 -f "$key_file" -N "" -C "${device_name}_$(date +%Y%m%d)"
+    
+    echo "Key for $device_name created at $key_file"
+    echo "Public key:"
+    cat "${key_file}.pub"
+    echo ""
+}# Configure SSH for key-based auth and tunneling
+if [ -f /etc/ssh/sshd_config ]; then
+    echo "Configuring SSH for key-based authentication and tunneling..."
+    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+    
+    # Change SSH port and enable tunneling features
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+    sed -i 's/#Port 22/Port 7717/' /etc/ssh/sshd_config
+    sed -i 's/Port 22/Port 7717/' /etc/ssh/sshd_config
+    
+    # Ensure these are set to yes for tunneling
+    sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/' /etc/ssh/sshd_config
+    sed -i 's/#PermitTunnel no/PermitTunnel yes/' /etc/ssh/sshd_config
+    sed -i 's/#GatewayPorts no/GatewayPorts clientspecified/' /etc/ssh/sshd_config
+    
+    systemctl restart sshd
+fi
+
+# Create a script to generate SSH keys for your 7 devices
+cat > /root/generate_ssh_keys.sh << 'EOF'
+#!/bin/bash
+# Script to generate and manage SSH keys for multiple devices
+# Configure SSH for key-based auth and tunneling
+if [ -f /etc/ssh/sshd_config ]; then
+    echo "Configuring SSH for key-based authentication and tunneling..."
+    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+    
+    # Change SSH port and enable tunneling features
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+    sed -i 's/#Port 22/Port 7717/' /etc/ssh/sshd_config
+    sed -i 's/Port 22/Port 7717/' /etc/ssh/sshd_config
+    
+    # Ensure these are set to yes for tunneling
+    sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/' /etc/ssh/sshd_config
+    sed -i 's/#PermitTunnel no/PermitTunnel yes/' /etc/ssh/sshd_config
+    sed -i 's/#GatewayPorts no/GatewayPorts clientspecified/' /etc/ssh/sshd_config
+    
+    systemctl restart sshd
+fi

@@ -1,0 +1,4 @@
+sudo chmod +x /opt/homeassistant/update.sh
+sudo chmod +x /opt/homeassistant/backup.sh
+sudo chmod +x /opt/homeassistant/rotate-logs.sh
+sudo chown homeassistant:homeassistant /opt/homeassistant/*.sh

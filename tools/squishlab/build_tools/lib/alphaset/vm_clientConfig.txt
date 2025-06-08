@@ -1,0 +1,545 @@
+#!/bin/bash
+# vm_clientconnect.sh - Configure client-side connectivity
+# Security first, reusable, functional
+
+set -euo pipefail
+
+LOG_FILE="$HOME/vm_clientconnect.log"
+SSH_PORT="${SSH_PORT:-7717}"
+VNC_PORT="${VNC_PORT:-11010}"
+SPICE_PORT="${SPICE_PORT:-11011}"
+RDP_TUNNEL_PORT="${RDP_TUNNEL_PORT:-11111}"
+SERVER_IP="${SERVER_IP:-192.168.72.54}"
+DEVICE_NAME=""
+KEY_FILE=""
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
+}
+
+error_exit() {
+    log "ERROR: $1"
+    exit 1
+}
+
+detect_platform() {
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        PLATFORM="linux"
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        PLATFORM="mac"
+    elif [[ "$OSTYPE" == "cygwin" ]] || [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+        PLATFORM="windows"
+    else
+        PLATFORM="unknown"
+    fi
+    
+    log "Detected platform: $PLATFORM"
+}
+
+get_user_input() {
+    log "Gathering client configuration..."
+    
+    echo "=== VM Client Connectivity Setup ==="
+    echo "Current settings:"
+    echo "  Server IP: $SERVER_IP"
+    echo "  SSH Port: $SSH_PORT"
+    echo "  VNC Port: $VNC_PORT"
+    echo "  SPICE Port: $SPICE_PORT"
+    echo "  RDP Tunnel Port: $RDP_TUNNEL_PORT"
+    echo ""
+    
+    read -p "Use these settings? (y/n): " -n 1 -r
+    echo
+    
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        read -p "Server IP [$SERVER_IP]: " input_ip
+        SERVER_IP="${input_ip:-$SERVER_IP}"
+        
+        read -p "SSH Port [$SSH_PORT]: " input_ssh
+        SSH_PORT="${input_ssh:-$SSH_PORT}"
+        
+        read -p "VNC Port [$VNC_PORT]: " input_vnc
+        VNC_PORT="${input_vnc:-$VNC_PORT}"
+        
+        read -p "SPICE Port [$SPICE_PORT]: " input_spice
+        SPICE_PORT="${input_spice:-$SPICE_PORT}"
+        
+        read -p "RDP Tunnel Port [$RDP_TUNNEL_PORT]: " input_rdp
+        RDP_TUNNEL_PORT="${input_rdp:-$RDP_TUNNEL_PORT}"
+    fi
+    
+    echo ""
+    echo "Available device types:"
+    echo "  1. surface-pro"
+    echo "  2. windows-laptop"
+    echo "  3. android-mobile"
+    echo "  4. apple-mobile"
+    echo "  5. ipad"
+    echo "  6. custom"
+    echo ""
+    
+    read -p "Select device type (1-6): " device_choice
+    
+    case $device_choice in
+        1) DEVICE_NAME="surface-pro" ;;
+        2) DEVICE_NAME="windows-laptop" ;;
+        3) DEVICE_NAME="android-mobile" ;;
+        4) DEVICE_NAME="apple-mobile" ;;
+        5) DEVICE_NAME="ipad" ;;
+        6) 
+            read -p "Enter custom device name: " custom_name
+            DEVICE_NAME="$custom_name"
+            ;;
+        *) DEVICE_NAME="surface-pro" ;;
+    esac
+    
+    KEY_FILE="$HOME/.ssh/vm-access-$DEVICE_NAME"
+    
+    log "Configuration: Server=$SERVER_IP:$SSH_PORT, Device=$DEVICE_NAME"
+}
+
+check_dependencies() {
+    log "Checking required dependencies..."
+    
+    # Check SSH client
+    if ! command -v ssh &> /dev/null; then
+        case $PLATFORM in
+            "windows")
+                error_exit "SSH client not found. Install OpenSSH or Git Bash"
+                ;;
+            "linux")
+                error_exit "SSH client not found. Install with: sudo apt install openssh-client (Debian/Ubuntu) or sudo yum install openssh-clients (RHEL/CentOS)"
+                ;;
+            "mac")
+                error_exit "SSH client not found. Install with: brew install openssh"
+                ;;
+        esac
+    fi
+    
+    # Check netcat for port testing
+    if ! command -v nc &> /dev/null && ! command -v netcat &> /dev/null && ! command -v ncat &> /dev/null; then
+        log "⚠ netcat not found - port testing will be limited"
+    fi
+    
+    log "✓ Dependencies checked"
+}
+
+setup_ssh_key() {
+    log "Setting up SSH key for device: $DEVICE_NAME"
+    
+    # Create .ssh directory if it doesn't exist
+    mkdir -p "$HOME/.ssh"
+    chmod 700 "$HOME/.ssh"
+    
+    # Check if key already exists
+    if [[ -f "$KEY_FILE" ]]; then
+        echo "SSH key already exists at: $KEY_FILE"
+        read -p "Replace existing key? (y/n): " -n 1 -r
+        echo
+        
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            log "Using existing key: $KEY_FILE"
+            return
+        fi
+    fi
+    
+    echo ""
+    echo "=== SSH Key Setup ==="
+    echo "You need to obtain the SSH private key from the server."
+    echo "Server key location: /opt/vm-access/keys/vm-access-$DEVICE_NAME"
+    echo ""
+    echo "Options:"
+    echo "  1. Copy key file manually"
+    echo "  2. Enter key content directly"
+    echo "  3. Download from server (if you have access)"
+    echo ""
+    
+    read -p "Select option (1-3): " key_option
+    
+    case $key_option in
+        1)
+            echo "Copy the private key file to: $KEY_FILE"
+            echo "Then press Enter to continue..."
+            read
+            ;;
+        2)
+            echo "Paste the private key content (finish with Ctrl+D):"
+            cat > "$KEY_FILE"
+            ;;
+        3)
+            read -p "Enter server SSH user (for copying key): " server_user
+            read -p "Enter server SSH port [22]: " server_ssh_port
+            server_ssh_port="${server_ssh_port:-22}"
+            
+            echo "Downloading key from server..."
+            scp -P "$server_ssh_port" "$server_user@$SERVER_IP:/opt/vm-access/keys/vm-access-$DEVICE_NAME" "$KEY_FILE"
+            ;;
+        *)
+            error_exit "Invalid option selected"
+            ;;
+    esac
+    
+    # Verify key exists and set permissions
+    if [[ ! -f "$KEY_FILE" ]]; then
+        error_exit "SSH key not found at: $KEY_FILE"
+    fi
+    
+    chmod 600 "$KEY_FILE"
+    
+    # Verify key format
+    if ! ssh-keygen -l -f "$KEY_FILE" &>/dev/null; then
+        error_exit "Invalid SSH key format: $KEY_FILE"
+    fi
+    
+    log "✓ SSH key configured: $KEY_FILE"
+}
+
+test_connection() {
+    log "Testing connection to VM server..."
+    
+    # Test basic connectivity
+    if command -v nc &> /dev/null; then
+        if nc -z "$SERVER_IP" "$SSH_PORT" 2>/dev/null; then
+            log "✓ Server reachable on port $SSH_PORT"
+        else
+            log "✗ Cannot reach server on port $SSH_PORT"
+            return 1
+        fi
+    fi
+    
+    # Test SSH key authentication
+    log "Testing SSH key authentication..."
+    if ssh -i "$KEY_FILE" -p "$SSH_PORT" -o ConnectTimeout=10 -o BatchMode=yes vmuser@"$SERVER_IP" exit 2>/dev/null; then
+        log "✓ SSH key authentication successful"
+    else
+        log "✗ SSH key authentication failed"
+        echo "Troubleshooting tips:"
+        echo "  1. Verify key file: $KEY_FILE"
+        echo "  2. Check server IP: $SERVER_IP"
+        echo "  3. Verify SSH port: $SSH_PORT"
+        echo "  4. Ensure vmuser account exists on server"
+        return 1
+    fi
+    
+    return 0
+}
+
+create_tunnel() {
+    log "Creating SSH tunnel..."
+    
+    # Kill any existing tunnels
+    pkill -f "vmuser@$SERVER_IP" 2>/dev/null || true
+    sleep 2
+    
+    # Create tunnel
+    ssh -i "$KEY_FILE" \
+        -p "$SSH_PORT" \
+        -L "$VNC_PORT:127.0.0.1:$VNC_PORT" \
+        -L "$SPICE_PORT:127.0.0.1:$SPICE_PORT" \
+        -L "$RDP_TUNNEL_PORT:192.168.100.10:3389" \
+        -N -f \
+        vmuser@"$SERVER_IP"
+    
+    if [[ $? -eq 0 ]]; then
+        log "✓ SSH tunnel established"
+        sleep 2
+        return 0
+    else
+        log "✗ Failed to establish SSH tunnel"
+        return 1
+    fi
+}
+
+test_tunnel() {
+    log "Testing tunnel functionality..."
+    
+    # Test if tunnel process is running
+    if pgrep -f "vmuser@$SERVER_IP" > /dev/null; then
+        log "✓ Tunnel process is running"
+    else
+        log "✗ Tunnel process not found"
+        return 1
+    fi
+    
+    # Test forwarded ports
+    local success=0
+    
+    for port in $VNC_PORT $SPICE_PORT $RDP_TUNNEL_PORT; do
+        if command -v nc &> /dev/null; then
+            if nc -z 127.0.0.1 "$port" 2>/dev/null; then
+                log "✓ Port $port is accessible"
+                ((success++))
+            else
+                log "⚠ Port $port not accessible (VM may not be running)"
+            fi
+        else
+            # Alternative test using bash
+            if timeout 2 bash -c "</dev/tcp/127.0.0.1/$port" 2>/dev/null; then
+                log "✓ Port $port is accessible"
+                ((success++))
+            else
+                log "⚠ Port $port not accessible (VM may not be running)"
+            fi
+        fi
+    done
+    
+    if [[ $success -gt 0 ]]; then
+        log "✓ Tunnel is functional ($success ports accessible)"
+        return 0
+    else
+        log "✗ No ports accessible through tunnel"
+        return 1
+    fi
+}
+
+install_client_software() {
+    log "Checking/installing client software..."
+    
+    case $PLATFORM in
+        "linux")
+            # Check for VNC/SPICE clients
+            if command -v virt-viewer &> /dev/null; then
+                log "✓ virt-viewer (SPICE client) available"
+            else
+                echo "Install SPICE client: sudo apt install virt-viewer (Debian/Ubuntu)"
+            fi
+            
+            if command -v vncviewer &> /dev/null; then
+                log "✓ VNC client available"
+            else
+                echo "Install VNC client: sudo apt install tigervnc-viewer"
+            fi
+            
+            if command -v rdesktop &> /dev/null || command -v xfreerdp &> /dev/null; then
+                log "✓ RDP client available"
+            else
+                echo "Install RDP client: sudo apt install freerdp2-x11"
+            fi
+            ;;
+            
+        "mac")
+            if command -v virt-viewer &> /dev/null; then
+                log "✓ virt-viewer available"
+            else
+                echo "Install SPICE client: brew install virt-viewer"
+            fi
+            
+            echo "For VNC: Use built-in Screen Sharing or install VNC Viewer"
+            echo "For RDP: Use Microsoft Remote Desktop from App Store"
+            ;;
+            
+        "windows")
+            echo "For Windows clients:"
+            echo "  - VNC: Install TightVNC Viewer or RealVNC"
+            echo "  - RDP: Use built-in Remote Desktop Connection (mstsc)"
+            echo "  - SPICE: Install virt-viewer for Windows"
+            ;;
+    esac
+    
+    log "✓ Client software recommendations provided"
+}
+
+create_connection_scripts() {
+    log "Creating connection scripts..."
+    
+    local script_dir="$HOME/vm-scripts"
+    mkdir -p "$script_dir"
+    
+    # Connection script
+    cat > "$script_dir/connect.sh" << EOF
+#!/bin/bash
+# VM Connection Script for $DEVICE_NAME
+# Generated by vm_clientconnect.sh
+
+KEY_FILE="$KEY_FILE"
+SERVER="$SERVER_IP"
+SSH_PORT="$SSH_PORT"
+VNC_PORT="$VNC_PORT"
+SPICE_PORT="$SPICE_PORT"
+RDP_PORT="$RDP_TUNNEL_PORT"
+
+echo "Connecting to VM..."
+
+# Kill existing tunnels
+pkill -f "vmuser@\$SERVER" 2>/dev/null || true
+sleep 1
+
+# Create tunnel
+ssh -i "\$KEY_FILE" \\
+    -p "\$SSH_PORT" \\
+    -L "\$VNC_PORT:127.0.0.1:\$VNC_PORT" \\
+    -L "\$SPICE_PORT:127.0.0.1:\$SPICE_PORT" \\
+    -L "\$RDP_PORT:192.168.100.10:3389" \\
+    -N -f \\
+    vmuser@\$SERVER
+
+if [ \$? -eq 0 ]; then
+    echo "✓ Tunnel established!"
+    echo ""
+    echo "Available connections:"
+    echo "  VNC:   localhost:\$VNC_PORT"
+    echo "  SPICE: localhost:\$SPICE_PORT"
+    echo "  RDP:   localhost:\$RDP_PORT"
+    echo ""
+    
+    # Auto-launch based on platform
+    case "\$(uname -s)" in
+        Linux*)
+            if command -v virt-viewer &> /dev/null; then
+                echo "Launching SPICE client..."
+                virt-viewer spice://localhost:\$SPICE_PORT &
+            fi
+            ;;
+        Darwin*)
+            echo "Use VNC Viewer to connect to localhost:\$VNC_PORT"
+            ;;
+    esac
+else
+    echo "✗ Failed to establish tunnel"
+    exit 1
+fi
+EOF
+    
+    # Disconnect script
+    cat > "$script_dir/disconnect.sh" << EOF
+#!/bin/bash
+# VM Disconnect Script
+echo "Disconnecting VM tunnels..."
+pkill -f "vmuser@$SERVER_IP" 2>/dev/null || true
+echo "✓ Disconnected"
+EOF
+    
+    # Status script
+    cat > "$script_dir/status.sh" << EOF
+#!/bin/bash
+# VM Connection Status
+echo "=== VM Connection Status ==="
+
+if pgrep -f "vmuser@$SERVER_IP" > /dev/null; then
+    echo "✓ Tunnel: ACTIVE"
+    
+    for port in $VNC_PORT $SPICE_PORT $RDP_TUNNEL_PORT; do
+        if nc -z 127.0.0.1 \$port 2>/dev/null; then
+            echo "✓ Port \$port: ACCESSIBLE"
+        else
+            echo "⚠ Port \$port: NOT ACCESSIBLE"
+        fi
+    done
+else
+    echo "✗ Tunnel: INACTIVE"
+fi
+EOF
+    
+    chmod +x "$script_dir"/*.sh
+    
+    log "✓ Connection scripts created in: $script_dir"
+}
+
+generate_summary() {
+    log "=== CLIENT CONNECTIVITY SETUP SUMMARY ==="
+    
+    echo "=== Configuration ===" | tee -a "$LOG_FILE"
+    echo "  Platform: $PLATFORM" | tee -a "$LOG_FILE"
+    echo "  Device: $DEVICE_NAME" | tee -a "$LOG_FILE"
+    echo "  Server: $SERVER_IP:$SSH_PORT" | tee -a "$LOG_FILE"
+    echo "  SSH Key: $KEY_FILE" | tee -a "$LOG_FILE"
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Connection Status ===" | tee -a "$LOG_FILE"
+    
+    if [[ -f "$KEY_FILE" ]]; then
+        echo "✓ SSH Key: CONFIGURED" | tee -a "$LOG_FILE"
+    else
+        echo "✗ SSH Key: NOT FOUND" | tee -a "$LOG_FILE"
+    fi
+    
+    if pgrep -f "vmuser@$SERVER_IP" > /dev/null; then
+        echo "✓ Tunnel: ACTIVE" | tee -a "$LOG_FILE"
+        
+        for port in $VNC_PORT $SPICE_PORT $RDP_TUNNEL_PORT; do
+            if command -v nc &> /dev/null && nc -z 127.0.0.1 "$port" 2>/dev/null; then
+                echo "✓ Port $port: ACCESSIBLE" | tee -a "$LOG_FILE"
+            else
+                echo "⚠ Port $port: CHECK NEEDED" | tee -a "$LOG_FILE"
+            fi
+        done
+    else
+        echo "⚠ Tunnel: INACTIVE" | tee -a "$LOG_FILE"
+    fi
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Connection Information ===" | tee -a "$LOG_FILE"
+    echo "  VNC:   localhost:$VNC_PORT" | tee -a "$LOG_FILE"
+    echo "  SPICE: localhost:$SPICE_PORT" | tee -a "$LOG_FILE"
+    echo "  RDP:   localhost:$RDP_TUNNEL_PORT" | tee -a "$LOG_FILE"
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Quick Scripts ===" | tee -a "$LOG_FILE"
+    if [[ -d "$HOME/vm-scripts" ]]; then
+        echo "  Connect:    $HOME/vm-scripts/connect.sh" | tee -a "$LOG_FILE"
+        echo "  Disconnect: $HOME/vm-scripts/disconnect.sh" | tee -a "$LOG_FILE"
+        echo "  Status:     $HOME/vm-scripts/status.sh" | tee -a "$LOG_FILE"
+    fi
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "=== Recommended Clients ===" | tee -a "$LOG_FILE"
+    case $PLATFORM in
+        "linux")
+            echo "  SPICE: virt-viewer spice://localhost:$SPICE_PORT" | tee -a "$LOG_FILE"
+            echo "  VNC:   vncviewer localhost:$VNC_PORT" | tee -a "$LOG_FILE"
+            echo "  RDP:   xfreerdp /v:localhost:$RDP_TUNNEL_PORT" | tee -a "$LOG_FILE"
+            ;;
+        "mac")
+            echo "  VNC:   Screen Sharing to localhost:$VNC_PORT" | tee -a "$LOG_FILE"
+            echo "  RDP:   Microsoft Remote Desktop" | tee -a "$LOG_FILE"
+            ;;
+        "windows")
+            echo "  RDP:   mstsc /v:localhost:$RDP_TUNNEL_PORT" | tee -a "$LOG_FILE"
+            echo "  VNC:   Use TightVNC or RealVNC Viewer" | tee -a "$LOG_FILE"
+            ;;
+    esac
+    
+    echo "" | tee -a "$LOG_FILE"
+    echo "Log file: $LOG_FILE" | tee -a "$LOG_FILE"
+}
+
+main() {
+    log "Starting client connectivity setup..."
+    
+    # Clear previous log
+    > "$LOG_FILE"
+    
+    log "Phase 1: Detecting platform..."
+    detect_platform
+    
+    log "Phase 2: Getting user input..."
+    get_user_input
+    
+    log "Phase 3: Checking dependencies..."
+    check_dependencies
+    
+    log "Phase 4: Setting up SSH key..."
+    setup_ssh_key
+    
+    log "Phase 5: Testing connection..."
+    if test_connection; then
+        log "Phase 6: Creating tunnel..."
+        if create_tunnel; then
+            log "Phase 7: Testing tunnel..."
+            test_tunnel
+        fi
+    fi
+    
+    log "Phase 8: Installing/checking client software..."
+    install_client_software
+    
+    log "Phase 9: Creating connection scripts..."
+    create_connection_scripts
+    
+    log "Phase 10: Generating summary..."
+    generate_summary
+    
+    log "✓ Client connectivity setup completed"
+}
+
+main "$@"

@@ -1,0 +1,4 @@
+# Create isolated user and directory structure
+sudo useradd -r -m -s /bin/false -d /opt/homeassistant homeassistant
+sudo mkdir -p /opt/homeassistant/{config,venv,logs,backups}
+sudo chown -R homeassistant:homeassistant /opt/homeassistant

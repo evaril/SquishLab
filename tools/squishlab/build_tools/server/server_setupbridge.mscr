@@ -1,0 +1,54 @@
+#!/bin/bash
+# Bridge Network Setup for VM Host
+# Eliminates dnsmasq entirely, uses router DHCP
+
+set -euo pipefail
+
+INTERFACE="enp3s0"  # Your ethernet interface
+BRIDGE="br0"
+SERVER_IP="192.168.72.54"
+ROUTER_IP="192.168.72.1"
+NETMASK="255.255.255.0"
+
+echo "Setting up bridge network without dnsmasq..."
+
+# 1. Create bridge interface
+sudo ip link add name $BRIDGE type bridge
+sudo ip link set $BRIDGE up
+
+# 2. Add ethernet interface to bridge
+sudo ip link set $INTERFACE master $BRIDGE
+
+# 3. Move IP configuration from interface to bridge
+sudo ip addr flush dev $INTERFACE
+sudo ip addr add $SERVER_IP/24 dev $BRIDGE
+sudo ip route add default via $ROUTER_IP dev $BRIDGE
+
+# 4. Create libvirt bridge network (no DHCP/DNS)
+cat > /tmp/bridge-only.xml << EOF
+<network>
+  <name>bridge-only</name>
+  <forward mode='bridge'/>
+  <bridge name='$BRIDGE'/>
+</network>
+EOF
+
+# 5. Configure libvirt network
+sudo virsh net-define /tmp/bridge-only.xml
+sudo virsh net-autostart bridge-only
+sudo virsh net-start bridge-only
+
+# 6. Remove any existing dnsmasq-based networks
+sudo virsh net-list --all | grep -E "default|nat" | awk '{print $1}' | while read net; do
+    if [ "$net" != "Name" ] && [ -n "$net" ]; then
+        sudo virsh net-destroy "$net" 2>/dev/null || true
+        sudo virsh net-undefine "$net" 2>/dev/null || true
+    fi
+done
+
+echo "Bridge network setup complete!"
+echo "VMs will now:"
+echo "  - Get DHCP from router ($ROUTER_IP)"
+echo "  - Use systemd-resolved for DNS"
+echo "  - Appear as direct devices on your LAN"
+echo "  - No dnsmasq processes running"

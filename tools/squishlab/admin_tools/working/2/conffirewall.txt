@@ -1,0 +1,19 @@
+# Install and configure firewall (if not already done)
+sudo pacman -S ufw
+sudo ufw enable
+
+# Default deny all incoming
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+
+# Allow SSH (change port from default if you use different port)
+sudo ufw allow 7717/tcp
+
+# Allow Home Assistant only from local network
+sudo ufw allow from 10.0.0.0/24 to any port 8123
+
+# Block all other access to HA port
+sudo ufw deny 8123
+
+# Check status
+sudo ufw status verbose

@@ -1,0 +1,8 @@
+# Stop Home Assistant
+sudo systemctl stop homeassistant
+
+# Create a new admin user
+sudo -u homeassistant /opt/homeassistant/venv/bin/hass --config /opt/homeassistant/config --script auth --config /opt/homeassistant/config  add admin
+
+# Start Home Assistant again
+sudo systemctl start homeassistant

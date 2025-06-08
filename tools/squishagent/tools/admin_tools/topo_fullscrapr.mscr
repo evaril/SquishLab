@@ -1,0 +1,63 @@
+#!/bin/bash
+# save as snapshot_full.sh, chmod +x, run as root for max output
+
+set -euo pipefail
+
+SNAPDIR="/var/snapshots/sys_snapshot_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$SNAPDIR"
+
+echo "[*] Gathering virtualization context..." | tee "$SNAPDIR/summary.txt"
+{
+    echo -n "systemd-detect-virt: "; systemd-detect-virt
+    echo -n "Container marker: "; grep -qa container= /proc/1/environ && echo "yes" || echo "no"
+    echo -n "Chassis: "; hostnamectl status | grep -i Chassis || echo "unknown"
+    echo -n "Hypervisor flag: "; grep -qi hypervisor /proc/cpuinfo && echo "yes" || echo "no"
+    echo -n "CPU virt flags: "; grep -E -o 'vmx|svm' /proc/cpuinfo | sort | uniq
+    echo -n "DMI Product: "; dmidecode -s system-product-name
+} >> "$SNAPDIR/summary.txt" 2>/dev/null
+
+echo "[*] Hardware/firmware/devices snapshot..." | tee -a "$SNAPDIR/summary.txt"
+lscpu > "$SNAPDIR/lscpu.txt"
+lspci -vvv > "$SNAPDIR/lspci.txt"
+lsusb -vvv > "$SNAPDIR/lsusb.txt"
+dmidecode > "$SNAPDIR/dmidecode.txt"
+lsblk > "$SNAPDIR/lsblk.txt"
+
+echo "[*] Kernel/modules..." | tee -a "$SNAPDIR/summary.txt"
+uname -a > "$SNAPDIR/uname.txt"
+cat /proc/cmdline > "$SNAPDIR/cmdline.txt"
+lsmod > "$SNAPDIR/lsmod.txt"
+cat /proc/kallsyms > "$SNAPDIR/kallsyms.txt"
+
+echo "[*] Namespaces/cgroups/slices..." | tee -a "$SNAPDIR/summary.txt"
+lsns > "$SNAPDIR/lsns.txt"
+cat /proc/self/cgroup > "$SNAPDIR/cgroup.txt"
+systemctl status > "$SNAPDIR/systemctl_status.txt"
+
+echo "[*] VMs/containers..." | tee -a "$SNAPDIR/summary.txt"
+if command -v virsh >/dev/null; then virsh list --all > "$SNAPDIR/virsh.txt"; fi
+if command -v docker >/dev/null; then docker ps -a > "$SNAPDIR/docker.txt"; fi
+if command -v podman >/dev/null; then podman ps -a > "$SNAPDIR/podman.txt"; fi
+machinectl list > "$SNAPDIR/machinectl.txt" 2>/dev/null || true
+
+echo "[*] Process tree, active mounts, net..." | tee -a "$SNAPDIR/summary.txt"
+ps auxf > "$SNAPDIR/ps_auxf.txt"
+findmnt > "$SNAPDIR/findmnt.txt"
+ss -ltnup > "$SNAPDIR/netstat.txt"
+
+echo "[*] Key log/journal aggregation status..." | tee -a "$SNAPDIR/summary.txt"
+journalctl --flush
+journalctl --disk-usage > "$SNAPDIR/journal_disk_usage.txt"
+journalctl -b -1 > "$SNAPDIR/journal_prevboot.txt" 2>/dev/null || true
+journalctl -b > "$SNAPDIR/journal_currentboot.txt"
+cat /etc/systemd/journald.conf > "$SNAPDIR/journald_conf.txt"
+
+echo "[*] Quick integrity scan (AIDE, hashes)..." | tee -a "$SNAPDIR/summary.txt"
+if command -v aide >/dev/null; then aide --check > "$SNAPDIR/aide_check.txt" 2>&1; fi
+sha256sum /boot/vmlinuz* /boot/initramfs* 2>/dev/null > "$SNAPDIR/boot_hashes.txt"
+sha256sum /etc/passwd /etc/shadow /etc/sudoers /etc/hosts 2>/dev/null > "$SNAPDIR/etc_hashes.txt"
+
+echo "[*] Snapshot complete: $SNAPDIR" | tee -a "$SNAPDIR/summary.txt"
+echo "[*] To analyze memory: install LiME and Volatility (manual, not automated here for stability)."
+
+# End of script

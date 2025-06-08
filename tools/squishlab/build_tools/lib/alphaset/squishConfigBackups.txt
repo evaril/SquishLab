@@ -1,0 +1,42 @@
+#!/bin/bash
+# Install and setup Restic backup system
+sudo pacman -S restic
+
+# Create backup script
+mkdir -p ~/.local/bin ~/.config/restic
+cat > ~/.local/bin/backup-system << 'EOF'
+#!/bin/bash
+# SquishBackup - Complete system backup with Restic
+
+BACKUP_NAME="squish-$(hostname)-$(date +%Y%m%d-%H%M)"
+BACKUP_DIR="${HOME}/Backups"
+REPO_DIR="${BACKUP_DIR}/restic-repo"
+
+mkdir -p "$BACKUP_DIR"
+
+# Initialize repo if it doesn't exist
+if [[ ! -d "$REPO_DIR" ]]; then
+    echo "Initializing backup repository..."
+    restic init --repo "$REPO_DIR"
+fi
+
+# Backup system
+echo "Creating backup: $BACKUP_NAME"
+export RESTIC_REPOSITORY="$REPO_DIR"
+
+restic backup \
+    /home/$USER \
+    /etc \
+    --exclude='/home/*/.cache' \
+    --exclude='/home/*/.local/share/Trash' \
+    --exclude='*.tmp' \
+    --tag "$BACKUP_NAME" \
+    --tag "full-system"
+
+# Show backup info
+restic snapshots --latest 1
+echo "Backup stored in: $REPO_DIR"
+echo "Backup can be moved/copied anywhere for offsite storage"
+EOF
+
+chmod +x ~/.local/bin/backup-system

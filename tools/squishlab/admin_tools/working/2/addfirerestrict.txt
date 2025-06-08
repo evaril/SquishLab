@@ -1,0 +1,250 @@
+#!/bin/bash
+# Script to set up firewalld with specific restrictions for your Arch/Wayland environment
+# Configures for Home Assistant (8123), SSH (7717), and VNC tunneling
+
+echo "Setting up firewalld with restrictions for your Arch/Wayland environment..."
+
+# Install firewalld if not already installed
+if ! pacman -Qi firewalld &>/dev/null; then
+    echo "Installing firewalld..."
+    pacman -S firewalld --noconfirm
+fi
+
+# Stop firewalld to ensure clean configuration
+systemctl stop firewalld 2>/dev/null
+
+# Remove any previous custom zones to avoid conflicts
+rm -f /etc/firewalld/zones/home.xml 2>/dev/null
+
+# Enable and start firewalld
+systemctl enable firewalld
+systemctl start firewalld
+
+# Wait for firewalld to fully start
+sleep 3
+
+# Configure the default zone to drop all incoming traffic
+firewall-cmd --set-default-zone=drop
+
+# Create a new zone for your 10.0.0.0/24 network
+echo "Creating home network zone..."
+firewall-cmd --permanent --new-zone=squishhome
+firewall-cmd --permanent --zone=squishhome --set-description="Squish Home Network Zone"
+
+# Add your actual home network subnet - using 10.0.0.0/24
+firewall-cmd --permanent --zone=squishhome --add-source=10.0.0.0/24
+
+# Add specific required services and ports
+echo "Adding required services and ports..."
+# Home Assistant on port 8123
+firewall-cmd --permanent --zone=squishhome --add-port=8123/tcp
+
+# SSH on port 7717 instead of default 22
+firewall-cmd --permanent --zone=squishhome --add-port=7717/tcp
+
+# Configure for DNS and DHCP
+firewall-cmd --permanent --zone=squishhome --add-service=dns
+firewall-cmd --permanent --zone=squishhome --add-service=dhcpv6-client
+
+# Basic ICMP access for ping and troubleshooting
+firewall-cmd --permanent --zone=squishhome --add-protocol=icmp
+firewall-cmd --permanent --zone=squishhome --add-protocol=ipv6-icmp
+
+# Home Assistant discovery protocols
+firewall-cmd --permanent --zone=squishhome --add-port=1900/udp # SSDP
+firewall-cmd --permanent --zone=squishhome --add-port=5353/udp # mDNS
+
+# Properly handle libvirt bridges
+if systemctl is-active libvirtd &>/dev/null; then
+    echo "Configuring firewalld for libvirt..."
+    
+    # Create a separate zone for libvirt bridges
+    firewall-cmd --permanent --new-zone=libvirt
+    firewall-cmd --permanent --zone=libvirt --set-description="Libvirt Virtual Networks"
+    
+    # Add both bridges to the libvirt zone
+    firewall-cmd --permanent --zone=libvirt --add-interface=virbr0
+    firewall-cmd --permanent --zone=libvirt --add-interface=virbr1
+    
+    # Allow required services for VM networking
+    firewall-cmd --permanent --zone=libvirt --add-service=dhcp
+    firewall-cmd --permanent --zone=libvirt --add-service=dns
+    firewall-cmd --permanent --zone=libvirt --add-service=tftp
+    
+    # Enable masquerading for VM connectivity
+    firewall-cmd --permanent --zone=libvirt --add-masquerade
+    
+    # Allow established connections
+    firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 0 -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+    firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 1 -i virbr0 -o enp3s0 -j ACCEPT
+    firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD 1 -i virbr1 -o enp3s0 -j ACCEPT
+fi
+
+# Configure rich rules for SSH to handle tunneling (including VNC)
+echo "Configuring SSH with tunneling support for services like VNC (5900)..."
+firewall-cmd --permanent --zone=squishhome --add-rich-rule='rule family="ipv4" port port="7717" protocol="tcp" accept'
+
+# Configure local loopback for Wayland/Hyperland
+firewall-cmd --permanent --zone=trusted --add-interface=lo
+
+# Reload firewall to apply all changes
+firewall-cmd --reload
+
+# Configure SSH for security and tunneling
+if [ -f /etc/ssh/sshd_config ]; then
+    echo "Configuring SSH for key-based authentication and tunneling..."
+    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+    
+    # Security settings
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+    sed -i 's/PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+    
+    # Change default port
+    sed -i 's/#Port 22/Port 7717/' /etc/ssh/sshd_config
+    sed -i 's/Port 22/Port 7717/' /etc/ssh/sshd_config
+    
+    # Enable tunneling features
+    sed -i 's/#AllowTcpForwarding yes/AllowTcpForwarding yes/' /etc/ssh/sshd_config
+    sed -i 's/#PermitTunnel no/PermitTunnel yes/' /etc/ssh/sshd_config
+    sed -i 's/#GatewayPorts no/GatewayPorts clientspecified/' /etc/ssh/sshd_config
+    
+    # Restart SSH with new configuration
+    systemctl restart sshd
+fi
+
+# Create a script to generate SSH keys for your 7 devices
+cat > /root/generate_ssh_keys.sh << 'EOF'
+#!/bin/bash
+# Script to generate and manage SSH keys for multiple devices
+
+SSH_DIR="/root/device_keys"
+mkdir -p "$SSH_DIR"
+
+# Function to create keys for a device
+create_device_key() {
+    local device_name=$1
+    local key_file="$SSH_DIR/${device_name}_rsa"
+    
+    # Generate 4096-bit RSA key
+    ssh-keygen -t rsa -b 4096 -f "$key_file" -N "" -C "${device_name}_$(date +%Y%m%d)"
+    
+    echo "Key for $device_name created at $key_file"
+    echo "Public key:"
+    cat "${key_file}.pub"
+    echo ""
+}
+
+# List of your devices - modify as needed
+DEVICES=("laptop1" "phone1" "tablet" "desktop" "laptop2" "phone2" "workstation")
+
+for device in "${DEVICES[@]}"; do
+    echo "Creating key for $device..."
+    create_device_key "$device"
+done
+
+echo "All keys generated. To add these keys to authorized_keys, run:"
+echo "mkdir -p ~/.ssh"
+echo "chmod 700 ~/.ssh"
+echo "cat $SSH_DIR/*.pub >> ~/.ssh/authorized_keys"
+echo "chmod 600 ~/.ssh/authorized_keys"
+EOF
+
+chmod +x /root/generate_ssh_keys.sh
+
+# Create a simple SSH tunneling guide
+cat > /root/ssh_tunneling_guide.txt << 'EOF'
+SSH TUNNELING GUIDE
+==================
+
+VNC Tunneling (Port 5900)
+-------------------------
+From client to server:
+ssh -i /path/to/private_key -p 7717 -L 5900:localhost:5900 username@server_ip
+
+This forwards local port 5900 to the server's port 5900, allowing you to connect
+to VNC using localhost:5900 on your client.
+
+Slack Tunneling
+--------------
+For Slack, use SOCKS proxy tunneling:
+ssh -i /path/to/private_key -p 7717 -D 8080 username@server_ip
+
+Then configure Slack to use SOCKS5 proxy localhost:8080
+
+Home Assistant Remote Access
+---------------------------
+To securely access Home Assistant from outside your network:
+ssh -i /path/to/private_key -p 7717 -L 8123:localhost:8123 username@server_ip
+
+Then access Home Assistant at http://localhost:8123 on your client machine.
+
+Fixing "Network Unreachable" Errors in Home Assistant
+----------------------------------------------------
+If Home Assistant shows "Network is unreachable" errors:
+
+1. Check Home Assistant's network configuration:
+   nano /etc/systemd/system/home-assistant.service
+   
+   Add:
+   [Service]
+   Environment="HA_IP_BIND=0.0.0.0"
+   
+2. Verify Home Assistant can reach the network:
+   systemctl restart home-assistant
+EOF
+
+# Test configuration for Home Assistant
+if systemctl is-active home-assistant &>/dev/null; then
+    echo "Checking Home Assistant service configuration..."
+    
+    # Create network environment file for Home Assistant if it doesn't exist
+    if [ ! -f /etc/systemd/system/home-assistant.service.d/override.conf ]; then
+        mkdir -p /etc/systemd/system/home-assistant.service.d
+        cat > /etc/systemd/system/home-assistant.service.d/override.conf << 'EOF'
+[Service]
+Environment="HA_IP_BIND=0.0.0.0"
+EOF
+        systemctl daemon-reload
+        systemctl restart home-assistant
+    fi
+fi
+
+# Update AppArmor for Firejail if needed (observed from log errors)
+if pacman -Qi apparmor &>/dev/null && pacman -Qi firejail &>/dev/null; then
+    echo "Updating AppArmor profiles for Firejail..."
+    
+    # Create override for chromium in firejail
+    mkdir -p /etc/firejail
+    cat > /etc/firejail/chromium.local << 'EOF'
+# Local customizations for chromium
+noblacklist ${HOME}/.config/chromium
+whitelist ${HOME}/.config/chromium
+include whitelist-common.local
+EOF
+
+    # Update AppArmor profile if needed
+    if [ -f /etc/apparmor.d/firejail-default ]; then
+        cp /etc/apparmor.d/firejail-default /etc/apparmor.d/firejail-default.bak
+        echo "  # Allow ptrace for chromium" >> /etc/apparmor.d/firejail-default
+        echo "  ptrace (read, readby) peer=chromium//&firejail-default," >> /etc/apparmor.d/firejail-default
+        
+        # Reload AppArmor profile
+        if systemctl is-active apparmor &>/dev/null; then
+            apparmor_parser -r /etc/apparmor.d/firejail-default
+        fi
+    fi
+fi
+
+echo "Firewall setup complete with the following configuration:"
+echo "- Default zone set to DROP (blocks all traffic)"
+echo "- Home network zone (10.0.0.0/24) created with access to:"
+echo "  - Home Assistant on port 8123"
+echo "  - SSH on port 7717 (with tunneling enabled for VNC and other services)"
+echo "- Libvirt networks properly configured in a separate zone"
+echo "- SSH configured for key-based authentication with tunneling support"
+echo ""
+echo "Run /root/generate_ssh_keys.sh to create RSA 4096-bit keys for your devices"
+echo "See /root/ssh_tunneling_guide.txt for SSH tunneling instructions"
+echo ""
+echo "To verify firewall status, run: firewall-cmd --list-all-zones"
+echo "To test Home Assistant connectivity: curl http://localhost:8123"
